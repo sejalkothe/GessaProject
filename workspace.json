@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "pages-gessa": "apps/pages-gessa",
+    "pages-gessa-e2e": "apps/pages-gessa-e2e"
+  }
+}
