@@ -8,7 +8,6 @@ const Dashboard = () => <Typography variant="h2">Dashboard</Typography>;
 const Orders = () => <Typography variant="h2">Orders</Typography>;
 const Customers = () => <Typography variant="h2">Customers</Typography>;
 const Reports = () => <Typography variant="h2">Reports</Typography>;
-console.log(MFViewPageApp.components.ViewPageAppComponent);
 
 const AppMain = () => (
   <>
