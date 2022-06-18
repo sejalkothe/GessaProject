@@ -20,13 +20,13 @@ export function App() {
           <MicroFrontendProvider>
             <ReduxProvider>
               <RouteProvider>
-                <HashRouter>
-                  <StyledEngineProvider injectFirst>
-                    <CssBaseline />
-                    view page app
-                    {/* <LayoutWrapper></LayoutWrapper> */}
-                  </StyledEngineProvider>
-                </HashRouter>
+                {/* <HashRouter> */}
+                <StyledEngineProvider injectFirst>
+                  <CssBaseline />
+                  view page app
+                  {/* <LayoutWrapper></LayoutWrapper> */}
+                </StyledEngineProvider>
+                {/* </HashRouter> */}
               </RouteProvider>
             </ReduxProvider>
           </MicroFrontendProvider>

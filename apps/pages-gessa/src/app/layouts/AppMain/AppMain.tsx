@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { Microfrontend } from 'apps/pages-gessa/src/micro-frontend';
+import { Microfrontend } from '../../../micro-frontend';
 import React from 'react';
 import { Outlet } from 'react-router';
 import MFViewPageApp from '../../../micro-frontend/remotes/view-page-app';

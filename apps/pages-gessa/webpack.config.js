@@ -23,7 +23,7 @@ module.exports = (config, context) => {
       name: 'pagesGessaApp',
       filename: 'remoteEntry.js',
       remotes: {
-        ViewPageApp: `ViewPageApp@http://localhost:8001`,
+        ViewPageApp: `ViewPageApp@//http://localhost:8001/remoteEntry.js`,
       },
       exposes: {
         // Module

@@ -25,7 +25,8 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^6.3.0",
     "regenerator-runtime": "0.13.7",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "webpack": "^5.73.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "11.7.2",
