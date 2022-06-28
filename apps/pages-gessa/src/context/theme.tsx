@@ -4,6 +4,11 @@ import * as React from 'react';
 import themes, { ITheme, ThemeContextType } from '../theme';
 
 export const ThemeContext = React.createContext<ThemeContextType | null>(null);
+const apiConst: any = {
+  soulify: {
+    btnColor: 'red',
+  },
+};
 
 export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   children,
@@ -12,6 +17,12 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   const changeTheme = (theme: ITheme) => {
     setTheme(createTheme(theme));
   };
+  /** fetch theme from backend */
+
+  React.useEffect(() => {
+    themes.default.palette = { ...themes.default.palette, ...apiConst };
+    setTheme(createTheme(themes.default));
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, changeTheme }}>

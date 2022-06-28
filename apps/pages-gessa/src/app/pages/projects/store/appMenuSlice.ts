@@ -25,7 +25,7 @@ export const getAppMenu = createAsyncThunk(
       `http://gessa.io/rbac/features`,
       menuContent.data
     );
-    debugger;
+
     const data: any = response.data.result.data;
     dispatch(setMenus(data));
     //   dispatch(setNodes(data[0].nodes));

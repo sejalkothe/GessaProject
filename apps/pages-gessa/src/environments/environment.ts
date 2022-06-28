@@ -3,4 +3,5 @@
 
 export const environment = {
   production: false,
+  NX_THEME_BASE_URL: 'http://gessa.io/gessa-dataflow',
 };

@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import AppMenu from './AppMenu';
 import { useTheme } from '@mui/material';
+import { useAppDispatch } from 'apps/pages-gessa/src/context/redux';
+import { useDispatch } from 'react-redux';
+import { getColorTheme } from '../../pages/projects/store/themeSlice';
 
 interface Props {
   anchor: 'left' | 'right';
   drawerOpen: boolean;
-  toggleDrawer: (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => void;
+  toggleDrawer: (
+    open: boolean
+  ) => (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 function AppDrawer({ anchor = 'left', drawerOpen, toggleDrawer }: Props) {
+  const dispatch = useAppDispatch();
+  const data: any = '';
+  useEffect(() => {
+    dispatch(getColorTheme(data));
+    // .unwrap()
+    // .then((response) => {
+    //   console.log('response', response);
+    // });
+  }, []);
   const theme = useTheme();
 
   return (

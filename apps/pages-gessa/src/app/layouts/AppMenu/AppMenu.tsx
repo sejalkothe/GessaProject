@@ -15,10 +15,10 @@ function AppMenu({ menuType }: Props) {
 
   useEffect(() => {
     dispatch(getAppMenu({ page: 1, size: 8 }))
-      .then((data) => {
+      .then((data: any) => {
         console.log('data', data);
       })
-      .catch((reason) => {
+      .catch((reason: any) => {
         console.log('reason', reason);
       });
   });
