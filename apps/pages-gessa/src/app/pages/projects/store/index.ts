@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import gridSlice from './gridSlice';
-import themeSlice from './themeSlice';
+import themeColorSlice from './themeSlice';
 const reducer = combineReducers({
   gridSlice,
-  themeSlice,
+  themeColorSlice,
 });
 
 export default reducer;

@@ -1,7 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { HashRouter } from 'react-router-dom';
-/* import keycloak from '../keycloak/keycloak'; */
 import {
   RouteProvider,
   SettingProvider,
@@ -10,7 +9,7 @@ import {
   MicroFrontendProvider,
   ReduxProvider,
 } from '../context';
-import LayoutWrapper from './layout/layout';
+
 import AppLayout from './layouts/AppLayout';
 
 export function App() {
@@ -25,7 +24,6 @@ export function App() {
                   <StyledEngineProvider injectFirst>
                     <CssBaseline />
                     <AppLayout />
-                    {/* <LayoutWrapper></LayoutWrapper> */}
                   </StyledEngineProvider>
                 </HashRouter>
               </RouteProvider>

@@ -1,14 +1,14 @@
 import { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom';
 import './main.css';
-
+import { createRoot } from 'react-dom/client';
 import App from './app/app';
 import KeycloakLogin from './app/keycloakLogin';
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container!); // createRoot(container!) if you use TypeScript
+root.render(
   <StrictMode>
     {/* <KeycloakLogin /> */}
     <App />
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 );

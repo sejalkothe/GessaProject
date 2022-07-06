@@ -100,9 +100,11 @@ const colorPalette = {
   },
 };
 
-mock
-  .onGet(new RegExp(environment.NX_THEME_BASE_URL + '/color'))
-  .reply((request: any) => {
-    console.log('colorPalette', request);
-    return [];
-  });
+mock.onGet(`/color/`).reply(200, colorPalette);
+// mock
+//   .onGet(new RegExp(environment.NX_THEME_BASE_URL + '/color'))
+//   .reply((request: any) => {
+//     console.log('colorPalette', request);
+//     return [];
+//   });
+
