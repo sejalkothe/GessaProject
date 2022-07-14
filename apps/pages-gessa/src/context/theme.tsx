@@ -40,7 +40,6 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
           ...res.fonts,
         };
         setTheme(createTheme(themes.default));
-        console.log('themes', themes);
       })
       .catch((error: any) => {
         console.log('error', error);

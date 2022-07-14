@@ -35,8 +35,8 @@ export function getIcon(label: string) {
 
 interface Props {
   label: string;
-  link: string | undefined;
-  items: any;
+  link?: string | undefined;
+  items?: any;
 }
 
 function AppMenuItem(props: Props) {

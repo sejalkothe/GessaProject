@@ -9,7 +9,7 @@ import {
   MicroFrontendProvider,
   ReduxProvider,
 } from '../context';
-
+import ProjectContainer from '../app/pages/projects/Project';
 import AppLayout from './layouts/AppLayout';
 
 export function App() {
@@ -23,7 +23,7 @@ export function App() {
                 <HashRouter>
                   <StyledEngineProvider injectFirst>
                     <CssBaseline />
-                    <AppLayout />
+                    <ProjectContainer />
                   </StyledEngineProvider>
                 </HashRouter>
               </RouteProvider>
