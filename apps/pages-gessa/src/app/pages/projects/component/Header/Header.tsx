@@ -1,13 +1,14 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React from 'react';
 
 function Header() {
+  const theme = useTheme();
   return (
     <Box
       sx={{
         width: '100%',
         height: '8vh',
-        borderBottom: '1px solid #808080',
+        borderBottom: `1px solid ${theme.palette.background['paper']}`,
       }}
     >
       Header

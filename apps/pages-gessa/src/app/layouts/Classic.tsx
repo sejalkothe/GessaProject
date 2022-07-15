@@ -26,13 +26,13 @@ function Classic({ right = false }) {
         sx={{
           backgroundColor: theme.palette.background.default,
           color: theme.palette.primary.main,
-          borderRight: `1px solid ${theme.palette.grey[900]}`,
+          borderRight: `1px solid ${theme.palette.background['paper']}`,
         }}
       >
         <AppMenu menuType="classic" />
       </Box>
       <Box component="main" className="main__classic">
-        <Box
+        {/* <Box
           component="header"
           className="header__classic"
           sx={{
@@ -40,9 +40,7 @@ function Classic({ right = false }) {
             color: theme.palette.primary.main,
             borderBottom: `1px solid ${theme.palette.grey[900]}`,
           }}
-        >
-          <AppHeader toggleDrawer={toggleDrawer} />
-        </Box>
+        ></Box> */}
         <Box
           component="div"
           className="main__content"

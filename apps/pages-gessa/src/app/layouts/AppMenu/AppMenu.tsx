@@ -10,6 +10,7 @@ import {
   selectAllMenu,
 } from '../../pages/projects/store/appMenuSlice';
 import { IRootState } from '../../../store/index';
+import { Link } from 'react-router-dom';
 
 interface Props {
   menuType: string;
@@ -40,12 +41,17 @@ function AppMenu({ menuType }: Props) {
       {menuType === 'classic' ? (
         <List component="nav" disablePadding>
           {menuData?.map((item: any, index: number) => (
-            <AppMenuItem
-              label={item.name}
-              // link={item.link}
-              // items={item?.items}
-              key={index}
-            />
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`${(index + 1).toString()}`}
+            >
+              <AppMenuItem
+                label={item.name}
+                // link={item.link}
+                // items={item?.items}
+                key={index}
+              />
+            </Link>
           ))}
         </List>
       ) : (

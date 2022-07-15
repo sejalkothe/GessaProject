@@ -11,15 +11,13 @@ function Enterprise({ bottom = false }) {
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-  const toggleDrawer = (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (
-      event &&
-      event.type === 'keydown' 
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
+  const toggleDrawer =
+    (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (event && event.type === 'keydown') {
+        return;
+      }
+      setDrawerOpen(open);
+    };
 
   return (
     <Box

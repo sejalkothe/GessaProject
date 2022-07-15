@@ -4,13 +4,13 @@
 
   grid-template-columns: 250px 1fr;
 
-  grid-template-areas: "aside main";
+  grid-template-areas: 'aside main';
 }
 
 .container__classic__RT {
   grid-template-columns: 1fr 260px;
 
-  grid-template-areas: "main aside";
+  grid-template-areas: 'main aside';
 }
 
 .aside__classic {
@@ -22,13 +22,13 @@
 }
 
 .main__classic {
-  grid-area: main;
+  /* grid-area: main; */
 
   display: grid;
-  grid-template-rows: 60px 1fr;
+  grid-template-rows: 0px 1fr;
   grid-template-areas:
-    "header"
-    "main__content";
+    'header'
+    'main__content';
   height: 100vh;
 }
 

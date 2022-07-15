@@ -1,10 +1,17 @@
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 import React from 'react';
-import AppLayout from '../../layouts/AppLayout';
+// import AppLayout from '../../layouts/AppLayout';
 import Header from './component/Header/Header';
 import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
 
+import { Link, Route, Routes } from 'react-router-dom';
+import { routes } from '../../layout/route';
+import LayoutWrapper from '../../layout/layout';
+const AppLayout = React.lazy(() => import('../../layouts/AppLayout'));
+
 function Project() {
+  const theme = useTheme();
+  console.log('sadasdasd', theme?.palette?.text?.['primary']);
   return (
     <Box>
       <Header />
@@ -13,31 +20,45 @@ function Project() {
           sx={{
             width: '50px',
             height: '92vh',
-            borderRight: '1px solid #808080',
+            borderRight: `1px solid ${theme.palette.background['paper']}`,
           }}
         >
           <Stack direction="column">
-            <IconComponent
-              name={'view_quilt_black_24dp'}
-              size={25}
-              label={'Quilt'}
-              color={'white'}
-            />
-            <IconComponent
-              name={'tips_and_updates_black_24dp'}
-              size={25}
-              label={'tips_and_updates'}
-              color={'white'}
-            />
-            <IconComponent
-              name={'settings_black_24dp'}
-              size={25}
-              label={'Settings'}
-              color={'white'}
-            />
+            <Link to="/1" style={{ textDecoration: 'none' }}>
+              <IconComponent
+                name={'view_quilt_black_24dp'}
+                size={25}
+                label={'Quilt'}
+                color={theme?.palette?.text?.['primary']}
+              />
+            </Link>
+
+            <Link to="/2" style={{ textDecoration: 'none' }}>
+              <IconComponent
+                name={'tips_and_updates_black_24dp'}
+                size={25}
+                label={'tips_and_updates'}
+                color={theme?.palette?.text?.['primary']}
+              />
+            </Link>
+
+            <Link to="/3" style={{ textDecoration: 'none' }}>
+              <IconComponent
+                name={'settings_black_24dp'}
+                size={25}
+                label={'Settings'}
+                color={theme?.palette?.text?.['primary']}
+              />
+            </Link>
           </Stack>
         </Box>
-        <AppLayout />
+        <Box
+          sx={{
+            flexGrow: 1,
+          }}
+        >
+          <LayoutWrapper />
+        </Box>
       </Stack>
     </Box>
   );
