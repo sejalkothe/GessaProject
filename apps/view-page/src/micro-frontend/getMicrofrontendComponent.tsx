@@ -45,7 +45,6 @@ const useDynamicScript = (args: any) => {
     document.head.appendChild(element);
 
     return () => {
-      console.log(`Dynamic Script Removed: ${args.url}`);
       document.head.removeChild(element);
     };
   }, [args.url]);

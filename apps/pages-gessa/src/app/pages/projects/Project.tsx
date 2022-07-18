@@ -1,17 +1,13 @@
 import { Box, Stack, useTheme } from '@mui/material';
 import React from 'react';
-// import AppLayout from '../../layouts/AppLayout';
 import Header from './component/Header/Header';
-import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
-
+import { IconComponent } from '@iauro/soulify';
 import { Link, Route, Routes } from 'react-router-dom';
 import { routes } from '../../layout/route';
 import LayoutWrapper from '../../layout/layout';
-const AppLayout = React.lazy(() => import('../../layouts/AppLayout'));
 
 function Project() {
   const theme = useTheme();
-  console.log('sadasdasd', theme?.palette?.text?.['primary']);
   return (
     <Box>
       <Header />

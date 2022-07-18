@@ -17,7 +17,6 @@ export interface IPalette {
 
 const getColorTheme = createAsyncThunk('users/color', async () => {
   const response = await axios.get(`http://localhost:3001`);
-  console.log();
   return response.data;
 });
 

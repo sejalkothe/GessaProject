@@ -68,7 +68,6 @@ const MicrofrontendFile = (url: string, scope: string, module: string) => {
       element.parentElement.removeChild(element);
 
       const Component = (await loadComponent(scope, module)()).default;
-      // console.log('Component', Component.default);
       resolve(Component);
 
       // eslint-disable-next-line @typescript-eslint/no-var-requires

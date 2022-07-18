@@ -6,9 +6,7 @@ import './db/color-font-db';
 const enableMock = true;
 
 if (enableMock) {
-  console.log('enableMock', enableMock);
   mock.onAny().passThrough();
 } else {
-  console.log('enableMock else', enableMock);
   mock.restore();
 }

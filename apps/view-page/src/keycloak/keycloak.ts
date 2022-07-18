@@ -14,6 +14,5 @@ const keycloakConfig = {
   // },
   // cors:true
 };
-console.log(keycloakConfig);
 const keycloak = Keycloak(keycloakConfig);
 export default keycloak;

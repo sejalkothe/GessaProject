@@ -9,13 +9,6 @@ import { styled } from '@mui/system';
 import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-
 import AppMenuItemComponent from './AppMenuItemComponent';
 
 export function getIcon(label: string) {

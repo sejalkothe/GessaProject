@@ -25,7 +25,7 @@ function AppMenu({ menuType }: Props) {
   useEffect(() => {
     dispatch(getAppMenu({ tenantid: 'master', page: 0, size: 8 })).catch(
       (reason: any) => {
-        console.log('error', reason);
+        //  Todod :
       }
     );
   }, []);

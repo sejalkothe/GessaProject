@@ -1,9 +1,10 @@
 import Keycloak from 'keycloak-js';
+import { environment } from '../environments/environment';
 
-const AUTH_SERVER_URL = process.env.NX_KEYCLOCK_AUTH_SERVER_URL;
-const DATABASE = process.env.NX_KEYCLOCK_DATABASE;
-const CLIENT_ID = process.env.NX_KEYCLOCK_CLIENT_ID;
-const SECRET_KEY = process.env.NX_KEYCLOCK_SECRET_KEY;
+const AUTH_SERVER_URL = environment.NX_KEYCLOCK_AUTH_SERVER_URL;
+const DATABASE = environment.NX_KEYCLOCK_DATABASE;
+const CLIENT_ID = environment.NX_KEYCLOCK_CLIENT_ID;
+const SECRET_KEY = environment.NX_KEYCLOCK_SECRET_KEY;
 
 const keycloakConfig = {
   url: AUTH_SERVER_URL,
@@ -14,6 +15,6 @@ const keycloakConfig = {
   // },
   // cors:true
 };
-console.log(keycloakConfig);
+
 const keycloak = Keycloak(keycloakConfig);
 export default keycloak;
