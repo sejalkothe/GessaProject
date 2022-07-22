@@ -9,11 +9,6 @@ const keycloakConfig = {
   url: AUTH_SERVER_URL,
   realm: DATABASE,
   clientId: CLIENT_ID,
-  // credentials:{
-  //   secret:SECRET_KEY
-  // },
-  // cors:true
 };
-console.log(keycloakConfig);
 const keycloak = Keycloak(keycloakConfig);
 export default keycloak;

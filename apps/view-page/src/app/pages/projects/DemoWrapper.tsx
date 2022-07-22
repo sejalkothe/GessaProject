@@ -17,7 +17,6 @@ export interface Props {
 const DemoWrapper = ({ page_id = '1' }: any) => {
   const dispatch = useDispatch();
   const rootState = useSelector((state: IRootState) => state);
-  console.log(rootState);
   const gridDataStore = selectGridData(rootState);
   const [gridData, setGridData] = useState<any>([]);
 

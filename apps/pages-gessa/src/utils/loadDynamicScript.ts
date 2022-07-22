@@ -9,7 +9,7 @@ const loadDynamicScript = (
     element.async = true;
 
     element.onload = async () => {
-      // console.log(`Dynamic Script Loaded: ${url}`);
+    
       resolve({
         message: 'Dynamic script added successfully',
         element,
@@ -17,7 +17,7 @@ const loadDynamicScript = (
     };
 
     element.onerror = () => {
-      // console.error(`Dynamic Script Error: ${url}`);
+    
       reject({ message: `Dynamic Script Error: ${url}`, element });
     };
 

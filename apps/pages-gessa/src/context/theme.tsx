@@ -2,16 +2,72 @@ import { createTheme, Theme } from '@mui/material';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
 import themes, { ITheme, ThemeContextType } from '../theme';
+import WebFont from 'webfontloader';
 
 export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   children,
 }: any) => {
-  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.dark));
+  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.default));
   const changeTheme = (theme: ITheme) => {
     setTheme(createTheme(theme));
   };
+  const [posts, setPosts] = React.useState({});
+
+  React.useEffect(() => {
+    fetch(`http://localhost:3003/font`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        const result = res.json();
+        return result;
+      })
+      .then((res) => {
+        const WebFontConfig = {
+          custom: {
+            families: res?.families,
+            urls: res?.urls,
+          },
+        };
+        WebFont.load(WebFontConfig);
+        themes.default.typography = {
+          ...themes.default.typography,
+          ...res.fonts,
+        };
+
+        setTheme(createTheme(themes.default));
+      })
+      .catch((error: any) => {
+        //  ToDo:
+      });
+  }, []);
+
+  React.useEffect(() => {
+    fetch(`http://localhost:3002/color`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        const result = res.json();
+        return result;
+      })
+      .then((res) => {
+        setPosts(res);
+        themes.default.palette = { ...themes.default.palette, ...res };
+        setTheme(createTheme(themes.default));
+      })
+      .catch((error: any) => {
+        //ToDO:
+      });
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, changeTheme }}>

@@ -1,7 +1,7 @@
 import { IMicroFrontend } from '.';
 
 const MFViewPageApp = {
-  url: 'http://localhost:8001/',
+  url: 'http://localhost:8001/remoteEntry.js',
   scope: 'ViewPageApp',
   components: {
     ViewPageAppComponent: './ViewPageAppComponent',

@@ -8,10 +8,8 @@ export function KeycloakLogin() {
   const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {
     keycloakData.init({ onLoad: 'login-required' }).then((authenticated) => {
-      console.log('authenticated', authenticated);
       setInitKeycloak(keycloakData);
       setIsAuth(authenticated);
-      console.log(keycloak.token);
     });
   }, []);
 

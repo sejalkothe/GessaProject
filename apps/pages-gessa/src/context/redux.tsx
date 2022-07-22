@@ -10,10 +10,13 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import reducers from '../store';
 import { Provider } from 'react-redux';
 import { MicroFrontendContext } from '.';
+import { useDispatch } from 'react-redux';
 
 const _store = configureStore({
   reducer: reducers,
 });
+export type AppDispatch = typeof _store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const ReduxContext = createContext<any>(null);
 
 export const ReduxProvider: FC<ReactNode> | any = ({ children }: any) => {

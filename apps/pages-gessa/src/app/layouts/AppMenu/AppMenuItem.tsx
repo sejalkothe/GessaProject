@@ -1,48 +1,99 @@
-import React from "react";
-import List from "@mui/material/List";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import Collapse from "@mui/material/Collapse";
-
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-
-import AppMenuItemComponent from "./AppMenuItemComponent";
+import React from 'react';
+import { Box, Stack, useTheme } from '@mui/material';
+import List from '@mui/material/List';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import Collapse from '@mui/material/Collapse';
+import { styled } from '@mui/system';
+import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AppMenuItemComponent from './AppMenuItemComponent';
 
 export function getIcon(label: string) {
+  const theme = useTheme();
   switch (label) {
-    case "Dashboard":
-      return <DashboardIcon />;
-    case "Orders":
-      return <ShoppingCartIcon />;
-    case "Customers":
-      return <PeopleAltIcon />;
-    case "Reports":
-      return <BarChartIcon />;
-    case "Nested Pages":
-      return <LibraryBooksIcon />;
+    case 'Dashboard':
+      return (
+        <IconComponent
+          name={'view_quilt_black_24dp'}
+          size={25}
+          label={'Quilt'}
+          color={theme?.palette?.text?.['primary']}
+        />
+      );
+    case 'Orders':
+      return (
+        <IconComponent
+          name={'view_quilt_black_24dp'}
+          size={25}
+          label={'Quilt'}
+          color={theme?.palette?.text?.['primary']}
+        />
+      );
+    case 'Customers':
+      return (
+        <IconComponent
+          name={'view_quilt_black_24dp'}
+          size={25}
+          label={'Quilt'}
+          color={theme?.palette?.text?.['primary']}
+        />
+      );
+    case 'Reports':
+      return (
+        <IconComponent
+          name={'view_quilt_black_24dp'}
+          size={25}
+          label={'Quilt'}
+          color={theme?.palette?.text?.['primary']}
+        />
+      );
+    case 'Nested Pages':
+      return (
+        <IconComponent
+          name={'view_quilt_black_24dp'}
+          size={25}
+          label={'Quilt'}
+          color={theme?.palette?.text?.['primary']}
+        />
+      );
     default:
-      return null;
+      return (
+        <IconComponent
+          name={'analytics_black_24dp'}
+          size={25}
+          label={'Quilt'}
+          color={theme?.palette?.text?.['primary']}
+        />
+      );
   }
-};
+}
 
-interface Props{
-  label: string,
-  link: string | undefined,
-  items: any
+interface Props {
+  label: string;
+  link?: string | undefined;
+  items?: any;
 }
 
 function AppMenuItem(props: Props) {
   const { label, link, items = [] } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
+
+  const CustomTheme = styled(ListItemText)(({ theme }) => {
+    return {
+      '& .MuiListItemText-primary': {
+        color: theme?.palette?.['text']?.primary,
+        textTransform: 'capitalize',
+        disableRipple: true,
+      },
+      '& .MuiButtonBase': {
+        disableRipple: true, // No more ripple, on the whole application!
+      },
+    };
+  });
 
   function handleClick() {
     setOpen(!open);
@@ -51,17 +102,10 @@ function AppMenuItem(props: Props) {
   const Icon: any = getIcon(label);
 
   const MenuItemRoot = (
-    <AppMenuItemComponent
-      link={link}
-      onClick={handleClick}
-    >
+    <AppMenuItemComponent link={link} onClick={handleClick}>
       {/* Display an icon if any */}
-      {!!Icon && (
-        <ListItemIcon>
-          {Icon}
-        </ListItemIcon>
-      )}
-      <ListItemText primary={label} inset={!Icon} />
+      {!!Icon && <ListItemIcon>{Icon}</ListItemIcon>}
+      <CustomTheme className="text-red" primary={label} inset={!Icon} />
       {/* Display the expand menu if the item has children */}
       {isExpandable && !open && <ExpandMoreIcon />}
       {isExpandable && open && <ExpandLessIcon />}
