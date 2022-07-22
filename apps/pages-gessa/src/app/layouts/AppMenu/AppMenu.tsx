@@ -42,6 +42,7 @@ function AppMenu({ menuType }: Props) {
         <List component="nav" disablePadding>
           {menuData?.map((item: any, index: number) => (
             <Link
+             key={index}
               style={{ textDecoration: 'none' }}
               to={`${(index + 1).toString()}`}
             >
