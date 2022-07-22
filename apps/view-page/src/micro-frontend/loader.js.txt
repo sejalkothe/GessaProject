@@ -33,7 +33,7 @@ const useDynamicScript = (args) => {
     setFailed(false);
 
     element.onload = () => {
-      console.log(`Dynamic Script Loaded: ${args.url}`);
+  
       setReady(true);
     };
 
