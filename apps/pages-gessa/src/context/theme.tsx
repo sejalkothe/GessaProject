@@ -16,7 +16,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   const [posts, setPosts] = React.useState({});
 
   React.useEffect(() => {
-    fetch(`http://localhost:3004/font`, {
+    fetch(`http://localhost:3003/font`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -48,7 +48,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   }, []);
 
   React.useEffect(() => {
-    fetch(`http://localhost:3002/theme`, {
+    fetch(`http://localhost:3002/color`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

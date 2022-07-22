@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import keycloakData from '../keycloak/keycloak';
-import keycloak from '../keycloak/keycloak';
+import keycloakData, { keycloakConfig } from '../keycloak/keycloak';
+
 
 export function KeycloakLogin({ children }: any) {
   const [initKeycloak, setInitKeycloak] = useState({});
   const [isAuth, setIsAuth] = useState(false);
+
   useEffect(() => {
-    debugger;
+    const newUrl = window.location.href.replace("#", "");
+    var url = new URL(newUrl);
+    var realm = url.searchParams.get("realm");
+    keycloakConfig.realm = realm || keycloakConfig.realm;
     keycloakData.init({ onLoad: 'login-required' }).then((authenticated) => {
-      debugger;
       setInitKeycloak(keycloakData);
       setIsAuth(authenticated);
     });
