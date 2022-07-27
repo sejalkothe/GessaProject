@@ -37,7 +37,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   };
   const [posts, setPosts] = React.useState({});
   const themeFunc = (projectId: any) => {
-    const someCall = new Promise((resolve, reject) => {
+    const apicall = new Promise((resolve, reject) => {
       const someThunkCall = new Promise((resolve, reject) => {
         resolve(dispatch(getTheme(projectId)));
       }).then((res: any) => {
