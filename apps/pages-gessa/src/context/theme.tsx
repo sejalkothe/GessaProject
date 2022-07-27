@@ -53,7 +53,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   };
 
   const colorthemeFunc = (projectId: any) => {
-    const someCall = new Promise((resolve, reject) => {
+    const apicall = new Promise((resolve, reject) => {
       const someThunkCall = new Promise((resolve, reject) => {
         resolve(dispatch(getThemePalette(projectId)));
       }).then((res: any) => {
