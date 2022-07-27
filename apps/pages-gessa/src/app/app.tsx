@@ -14,11 +14,11 @@ import AppLayout from './layouts/AppLayout';
 
 export function App() {
   return (
-    <ThemeProvider>
-      <SettingProvider>
-        <AuthProvider>
-          <MicroFrontendProvider>
-            <ReduxProvider>
+    <MicroFrontendProvider>
+      <ReduxProvider>
+        <ThemeProvider>
+          <SettingProvider>
+            <AuthProvider>
               <RouteProvider>
                 <HashRouter>
                   <StyledEngineProvider injectFirst>
@@ -27,11 +27,11 @@ export function App() {
                   </StyledEngineProvider>
                 </HashRouter>
               </RouteProvider>
-            </ReduxProvider>
-          </MicroFrontendProvider>
-        </AuthProvider>
-      </SettingProvider>
-    </ThemeProvider>
+            </AuthProvider>
+          </SettingProvider>
+        </ThemeProvider>
+      </ReduxProvider>
+    </MicroFrontendProvider>
   );
 }
 
