@@ -13,11 +13,12 @@ import LayoutWrapper from './layout/layout';
 
 export function App() {
   return (
+    <ReduxProvider>
     <ThemeProvider>
       <SettingProvider>
         <AuthProvider>
           <MicroFrontendProvider>
-            <ReduxProvider>
+           
               <RouteProvider>
                 {/* <HashRouter> */}
                 <StyledEngineProvider injectFirst>
@@ -25,11 +26,12 @@ export function App() {
                 </StyledEngineProvider>
                 {/* </HashRouter> */}
               </RouteProvider>
-            </ReduxProvider>
+        
           </MicroFrontendProvider>
         </AuthProvider>
       </SettingProvider>
     </ThemeProvider>
+    </ReduxProvider>
   );
 }
 

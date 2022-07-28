@@ -6,12 +6,16 @@ import { IPalette } from '../app/pages/projects/store/themeSlice';
 export { default as grid } from '../app/pages/projects/store';
 import menuListSlice from '../app/pages/projects/store/appMenuSlice';
 import { IRMenuList } from '../app/pages/projects/store/appMenuSlice';
+import themeContextSlice, {IRThemeContext} from "./themeContextSlice"
+import themePaletteSlice, {IRThemePaletteContext} from "./colorPalleteSlice"
 
 export interface IRootState {
   grid: {
     themeSlice: IPalette;
     gridSlice: IRGridData;
     menuListSlice: IRMenuList;
+    themeContextSlice: IRThemeContext,
+    themePaletteSlice:IRThemePaletteContext
   };
 }
 
