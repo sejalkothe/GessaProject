@@ -3,7 +3,7 @@
 
 export const environment = {
   production: false,
-  NX_THEME_BASE_URL: 'http://gessa.io/gessa-dataflow',
+  NX_THEME_BASE_URL: 'http://gessa.io/gessa-project',
 
   NX_KEYCLOCK_AUTH_SERVER_URL: 'http://auth-dev.gessa.io',
   NX_KEYCLOCK_DATABASE: 'gessa-studio',

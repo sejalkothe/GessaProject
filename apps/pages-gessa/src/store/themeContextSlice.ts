@@ -6,6 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import { IRootState } from './index';
 import axios from 'axios';
+import  {environment} from "../environments/environment"
 
 type _IRTheme = EntityState<IRTheme>;
 export interface IRThemeContext extends _IRTheme {
@@ -21,7 +22,7 @@ export const getTheme = createAsyncThunk(
   'projects',
   async (params: any, { dispatch }: any) => {
     const response: any = await axios.get(
-      `http://gessa.io/gessa-project/fonts/${params}`
+      `${environment.NX_THEME_BASE_URL}/fonts/${params}`
     );
        const themeObject: IRTheme = {
       project_id: params,

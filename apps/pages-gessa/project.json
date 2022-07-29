@@ -32,6 +32,10 @@
             {
               "replace": "apps/pages-gessa/src/environments/environment.ts",
               "with": "apps/pages-gessa/src/environments/environment.prod.ts"
+            },
+            {
+              "replace": "apps/pages-gessa/webpack.config.js",
+              "with": "apps/pages-gessa/webpack.config.prod.js"
             }
           ],
           "optimization": true,

@@ -3,7 +3,7 @@ import { SwipeableDrawer } from '@mui/material';
 import AppMenu from './AppMenu';
 import { useTheme } from '@mui/material';
 import { useAppDispatch } from 'apps/pages-gessa/src/context/redux';
-import { getColorTheme } from '../../pages/projects/store/themeSlice';
+// import { getColorTheme } from '../../pages/projects/store/themeSlice';
 
 interface Props {
   anchor: 'left' | 'right';
@@ -16,9 +16,9 @@ interface Props {
 function AppDrawer({ anchor = 'left', drawerOpen, toggleDrawer }: Props) {
   const dispatch = useAppDispatch();
   const data: any = '';
-  useEffect(() => {
-    dispatch(getColorTheme());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getColorTheme());
+  // }, []);
   const theme = useTheme();
 
   return (
