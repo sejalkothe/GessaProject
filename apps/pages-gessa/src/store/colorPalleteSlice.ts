@@ -6,6 +6,8 @@ import {
 } from '@reduxjs/toolkit';
 import { IRootState } from './index';
 import axios from 'axios';
+import  {environment} from "../environments/environment"
+
 
 
 type _IRThemePalette = EntityState<IRThemePalette>;
@@ -22,7 +24,7 @@ export const getThemePalette = createAsyncThunk(
   'projects',
   async (params: any, { dispatch }: any) => {
        const response: any = await axios.get(
-      `http://gessa.io/gessa-project/colors/${params}`
+      `${environment.NX_THEME_BASE_URL}/colors/${params}`
     );
       const themeObject: IRThemePalette = { project_id: params, color: {} };
     // dispatch(setThemeContext(themeObject))
