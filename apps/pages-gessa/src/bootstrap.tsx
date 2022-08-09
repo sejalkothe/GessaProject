@@ -6,11 +6,10 @@ import * as ReactDOM from 'react-dom';
 import './main.css';
 import keycloak from './keycloak/keycloak';
 
-
 ReactDOM.render(
   <StrictMode>
-  <KeycloakLogin />
-   {/* <App /> */}
- </StrictMode>,
+    <KeycloakLogin />
+    {/* <App /> */}
+  </StrictMode>,
   document.getElementById('root')
-  );
+);
