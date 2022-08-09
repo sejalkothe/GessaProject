@@ -1,4 +1,8 @@
 export const environment = {
   production: true,
   NX_THEME_BASE_URL: 'https://gessa.io/gessa-project',
+  NX_KEYCLOCK_AUTH_SERVER_URL: 'https://auth-dev.gessa.io',
+  NX_KEYCLOCK_DATABASE: 'dynamic-realm',
+  NX_KEYCLOCK_CLIENT_ID: 'masterClient',
+  NX_KEYCLOCK_SECRET_KEY: 'v52XsV7Hn3XRuf1ZJJlmmAekRJL1nDR9',
 };
