@@ -72,7 +72,7 @@ export const getAppMenu = createAsyncThunk(
   'features',
   async (menuContent: any, { dispatch }) => {
     const response: any = await axios.get(
-      `http://gessa.io/rbac/features?page=0&size=10`,
+      `https://gessa.io/rbac/features?page=0&size=10`,
       {
         headers: {
           tenantid: menuContent.tenantid,
