@@ -9,6 +9,8 @@ interface IThemePaletteText {
   primary: string;
   secondary?: string;
   disabled?: string;
+  c100?: string
+  c50?: string
 }
 
 interface IThemePaletteSystem {
@@ -16,19 +18,27 @@ interface IThemePaletteSystem {
 }
 
 interface IThemePaletteBackground {
-  default: string;
-  paper: string;
+  default?: string;
+  // paper?: string;
 }
 
 export interface IThemePalette {
   mode: 'dark' | 'light';
-  common?: IThemePaletteCommon;
+  // common?: IThemePaletteCommon;
   primary?: IThemeColor;
   secondary?: IThemeColor;
+  systemColor1?: IThemeColor;
+  systemColor2?: IThemeColor;
+  systemColor3?: IThemeColor;
+  systemColor4?: IThemeColor;
+  systemColor5?: IThemeColor;
+  systemColor6?: IThemeColor;
+  dark?:IThemeColor;
+  light?:IThemeColor;
   text?: IThemePaletteText;
-  system?: IThemePaletteSystem;
+  // system?: IThemePaletteSystem;
   background?: IThemePaletteBackground;
-  custom?: any;
+  // custom?: any;
 }
 
 export { default as dark } from './dark';

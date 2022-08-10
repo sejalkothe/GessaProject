@@ -6,7 +6,9 @@ import {
   EntityState,
 } from '@reduxjs/toolkit';
 import { IRootState } from '../../../../store';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../../utils/NetworkLayer';
+import  {environment} from "../../../../environments/environment"
 
 type _IRMenuList = EntityState<IMenuList>;
 export interface IRMenuList extends _IRMenuList {
@@ -72,7 +74,7 @@ export const getAppMenu = createAsyncThunk(
   'features',
   async (menuContent: any, { dispatch }) => {
     const response: any = await axios.get(
-      `http://gessa.io/rbac/features?page=0&size=10`,
+      `${environment.NX_FEATURE_BASE_URL}/features?page=0&size=10`,
       {
         headers: {
           tenantid: menuContent.tenantid,

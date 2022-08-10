@@ -5,7 +5,8 @@ import {
   EntityState,
 } from '@reduxjs/toolkit';
 import { IRootState } from './index';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../utils/NetworkLayer';
 import  {environment} from "../environments/environment"
 
 type _IRTheme = EntityState<IRTheme>;

@@ -1,17 +1,23 @@
-import { Box, useTheme } from '@mui/material';
 import React from 'react';
+import { Typography } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
+import { ITheme } from 'apps/pages-gessa/src/theme';
+
+
 
 function Header() {
-  const theme = useTheme();
+  const theme : ITheme = useTheme();
+  console.log("theme",  theme?.palette)
   return (
     <Box
       sx={{
         width: '100%',
         height: '8vh',
-        borderBottom: `1px solid ${theme.palette.background['paper']}`,
+        borderBottom: `1px solid ${theme.palette?.systemColor5?.main}`,
       }}
     >
-      Header
+    
+     <Typography color={theme?.palette?.text?.primary} variant="body1">Header</Typography>
     </Box>
   );
 }

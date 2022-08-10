@@ -1,6 +1,6 @@
 import { IThemeColor } from '.';
 
-const black: IThemeColor = {
+const black: any = {
   '50': '#e0e0e0',
   '100': '#b3b3b3',
   '200': '#808080',
