@@ -4,14 +4,54 @@ import { Microfrontend } from '../../../micro-frontend';
 import React from 'react';
 import { Outlet } from 'react-router';
 import MFViewPageApp from '../../../micro-frontend/remotes/view-page-app';
+import Button from '@mui/material/Button';
+import Rating from '@mui/material/Rating';
 
 const Dashboard = () => <Typography variant="h2">Dashboard</Typography>;
 const Orders = () => <Typography variant="h2">Orders</Typography>;
 const Customers = () => <Typography variant="h2">Customers</Typography>;
 const Reports = () => <Typography variant="h2">Reports</Typography>;
 
+
+const obj =[
+  {
+    id: 1,
+    name: "button",
+    x: "10",
+    y: "10"
+  },
+  {
+    id: 2,
+    name: "header",
+    x: "20",
+    y: "30"
+  },
+]
+
+const Tmponents = (strig: string) =>  {
+ const map: {
+  [string: string]: () => JSX.Element
+ } = {
+    "button": () => {
+      return <><Button /></>
+    },
+    "header": () => {
+      return <><Button /></>
+    }
+ }
+
+ return map[strig]();
+}
+
+const RenderWidget = () => {
+  obj.map((item)=> {
+    return (<div>asdsad</div>)
+  })
+ 
+}
+
 const Test = () => {
-  return <Typography variant="body1">Loading...</Typography>;
+  return <>{RenderWidget()}</>;
 };
 
 const Nest = () => {

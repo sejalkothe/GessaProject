@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import keycloakData, { keycloakConfig } from '../keycloak/keycloak';
-
+import App from '../app/app';
 
 export function KeycloakLogin({ children }: any) {
   const [initKeycloak, setInitKeycloak] = useState({});
@@ -18,10 +18,11 @@ export function KeycloakLogin({ children }: any) {
   }, []);
 
   if (initKeycloak) {
-    if (isAuth) return children;
+    if (isAuth) return <App />;
     else return <div>Loading Keycloak...</div>;
   }
   return <div>Initializing Keycloak...</div>;
 }
 
 export default KeycloakLogin;
+

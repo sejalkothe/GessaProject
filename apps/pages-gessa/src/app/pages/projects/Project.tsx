@@ -1,13 +1,17 @@
 import { Box, Stack, useTheme } from '@mui/material';
+// import {useTheme} from "@mui/system"
 import React from 'react';
 import Header from './component/Header/Header';
 import { IconComponent } from '@iauro/soulify';
 import { Link, Route, Routes } from 'react-router-dom';
 import { routes } from '../../layout/route';
 import LayoutWrapper from '../../layout/layout';
+import  {ITheme} from "../../../theme/index"
+
 
 function Project() {
-  const theme = useTheme();
+  const theme : ITheme = useTheme();
+  console.log("usetheme", theme.palette?.systemColor5)
   return (
     <Box>
       <Header />
@@ -16,7 +20,7 @@ function Project() {
           sx={{
             width: '50px',
             height: '92vh',
-            borderRight: `1px solid ${theme.palette.background['paper']}`,
+            borderRight: `1px solid ${theme.palette?.systemColor5?.main}`,
           }}
         >
           <Stack direction="column">
@@ -25,7 +29,8 @@ function Project() {
                 name={'view_quilt_black_24dp'}
                 size={25}
                 label={'Quilt'}
-                color={theme?.palette?.text?.['primary']}
+                color={theme?.palette?.text?.primary}
+                // color={theme?.palette?.text?.['primary']}
               />
             </Link>
 
@@ -34,7 +39,7 @@ function Project() {
                 name={'tips_and_updates_black_24dp'}
                 size={25}
                 label={'tips_and_updates'}
-                color={theme?.palette?.text?.['primary']}
+                color={theme?.palette?.text?.primary}
               />
             </Link>
 
@@ -43,7 +48,7 @@ function Project() {
                 name={'settings_black_24dp'}
                 size={25}
                 label={'Settings'}
-                color={theme?.palette?.text?.['primary']}
+                color={theme?.palette?.text?.primary}
               />
             </Link>
           </Stack>

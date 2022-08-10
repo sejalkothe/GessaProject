@@ -1,6 +1,6 @@
 import { IThemeColor } from '.';
 
-const ebonyClay: IThemeColor = {
+const ebonyClay: any = {
   50: '#e5e6e8',
   100: '#bec1c5',
   200: '#92979f',

@@ -6,7 +6,8 @@ import {
   EntityState,
 } from '@reduxjs/toolkit';
 import { IRootState } from '../../../../store';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../../utils/NetworkLayer';
 
 type _IRMenuList = EntityState<IMenuList>;
 export interface IRMenuList extends _IRMenuList {

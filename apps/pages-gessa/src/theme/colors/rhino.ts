@@ -1,6 +1,6 @@
 import { IThemeColor } from '.';
 
-const rhino: IThemeColor = {
+const rhino: any = {
   50: '#e7e9ed',
   100: '#c2c8d2',
   200: '#9aa4b4',

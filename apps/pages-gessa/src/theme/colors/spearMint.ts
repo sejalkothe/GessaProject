@@ -1,6 +1,6 @@
 import { IThemeColor } from '.';
 
-const spearMint: IThemeColor = {
+const spearMint: any = {
   '50': '#edf9f5',
   '100': '#d1f1e6',
   '200': '#b3e7d5',

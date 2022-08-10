@@ -8,9 +8,8 @@ import keycloak from './keycloak/keycloak';
 
 
 ReactDOM.render(
-  <StrictMode>
-  <KeycloakLogin />
-   {/* <App /> */}
- </StrictMode>,
+  // <App />,
+  <KeycloakLogin />,
+
   document.getElementById('root')
-  );
+);

@@ -23,6 +23,9 @@ function AppMenuItemComponent(props: Props) {
   }
 
   return (
+    <div style={{
+      border: "1px solid green",
+    }}>
     <ListItem
       button
       className={className}
@@ -33,6 +36,7 @@ function AppMenuItemComponent(props: Props) {
       // ))}
       to={link}
     />
+    </div>
   );
 }
 
