@@ -13,6 +13,11 @@ import { MicroFrontendContext } from '.';
 import { useDispatch } from 'react-redux';
 
 const _store = configureStore({
+  //TODO: Need to remove this comment and add serilize object in redux store
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    }),
   reducer: reducers,
 });
 export type AppDispatch = typeof _store.dispatch;
