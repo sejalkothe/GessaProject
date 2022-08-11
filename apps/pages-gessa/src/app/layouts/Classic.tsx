@@ -4,12 +4,13 @@ import AppHeader from './AppHeader/AppHeader';
 import AppMain from './AppMain/AppMain';
 import AppDrawer from './AppMenu/AppDrawer';
 import AppMenu from './AppMenu/AppMenu';
+import { ITheme } from 'apps/pages-gessa/src/theme';
 import './Classic.css';
 
 function Classic({ right = false }) {
-  const theme = useTheme();
+  const theme: ITheme = useTheme();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-
+  {console.log("colros", theme.palette )}
   const toggleDrawer =
     (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
       if (event && event.type === 'keydown') {
@@ -20,13 +21,14 @@ function Classic({ right = false }) {
 
   return (
     <div className={`container__classic ${right && 'container__classic__RT'}`}>
+      
       <Box
         component="aside"
         className="aside__classic"
         sx={{
-          backgroundColor: theme.palette.background.default,
-          color: theme.palette.primary.main,
-          borderRight: `1px solid ${theme.palette.background['paper']}`,
+          backgroundColor: theme.palette?.background?.default,
+          color: theme.palette.primary?.main,
+          borderRight: `1px solid ${theme.palette?.systemColor5?.main}`,
         }}
       >
         <AppMenu menuType="classic" />
@@ -45,8 +47,8 @@ function Classic({ right = false }) {
           component="div"
           className="main__content"
           sx={{
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.background?.default,
+            color: theme.palette.text?.primary,
           }}
         >
           <AppMain />

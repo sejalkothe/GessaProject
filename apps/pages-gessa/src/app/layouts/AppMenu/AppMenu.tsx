@@ -21,9 +21,12 @@ function AppMenu({ menuType }: Props) {
   const [menuData, setMenuData]: any = useState([]);
   const dispatch = useAppDispatch();
   const tempmenuList = selectAllMenu(rootState);
+  const newUrl = window.location.href.replace('#', '');
+  var url = new URL(newUrl);
+  var projectId = url.searchParams.get('projectId');
 
   useEffect(() => {
-    dispatch(getAppMenu({ tenantid: 'master', page: 0, size: 8 })).catch(
+    dispatch(getAppMenu({ tenantid: projectId, page: 0, size: 8 })).catch(
       (reason: any) => {
         //  Todod :
       }

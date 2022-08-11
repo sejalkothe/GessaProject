@@ -6,7 +6,8 @@ import {
   EntityState,
 } from '@reduxjs/toolkit';
 import { IRootState } from '../../../../store';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../../utils/NetworkLayer';
 
 type _IRGridData = EntityState<IRGrid>;
 export interface IRGridData extends _IRGridData {

@@ -115,9 +115,12 @@ function AppMenuItem(props: Props) {
   const MenuItemChildren = isExpandable ? (
     <Collapse in={open} timeout="auto" unmountOnExit>
       <Divider />
+      <p>fsdfds</p>
       <List component="div" disablePadding>
         {items.map((item: any, index: number) => (
+          <> <p>fsdfds</p>
           <AppMenuItem {...item} key={index} />
+          </>
         ))}
       </List>
     </Collapse>
