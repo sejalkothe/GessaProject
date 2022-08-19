@@ -15,11 +15,11 @@ const Nest = () => {
 
 export const routesObj = [
   {
-    path: '2',
+    path: '/2',
     element: <Test />,
   },
   {
-    path: '3',
+    path: '/3',
     element: <Nest />,
   },
 ];

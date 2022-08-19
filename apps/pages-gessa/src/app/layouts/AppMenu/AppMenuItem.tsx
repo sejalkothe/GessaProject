@@ -77,29 +77,17 @@ interface Props {
   label: string;
   link?: string | undefined;
   items?: any;
+  icon?: any;
 }
 
 function AppMenuItem(props: Props) {
-  const { label, link, items = [] } = props;
+  const { label, icon, link, items = [] } = props;
+  console.log('props', props);
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
   const [isClicked, setClicked]: any = useState(false);
   const childMenus = useContext(ChildMenuContext);
   const theme: ITheme = useTheme();
-  console.log('childMenus', childMenus);
-
-  const CustomTheme = styled(ListItemText)(({ theme }) => {
-    return {
-      '& .MuiListItemText-primary': {
-        color: theme?.palette?.['text']?.primary,
-        textTransform: 'capitalize',
-        disableRipple: true,
-      },
-      '& .MuiButtonBase': {
-        disableRipple: true, // No more ripple, on the whole application!
-      },
-    };
-  });
 
   function handleClick() {
     setOpen(!open);
@@ -108,41 +96,53 @@ function AppMenuItem(props: Props) {
   const Icon: any = getIcon(label);
 
   const MenuItemRoot = (
-    <AppMenuItemComponent link={link} onClick={handleClick}>
-      {/* Display an icon if any */}
-      <Box
-        sx={{
-          color: isClicked
-            ? theme?.palette?.primary?.main
-            : theme?.palette?.text?.primary,
-          background: isClicked
-            ? theme?.palette?.background?.default
-            : theme?.palette?.light?.c50,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '300px',
-          // border: '1px solid red',
-          // textTransform: 'capitalize',
-        }}
-        onClick={() => {
-          setClicked(!isClicked);
-        }}
-      >
-        {!!Icon && <ListItemIcon>{Icon}</ListItemIcon>}
-        <ListItemText
+    <Box
+      sx={{
+        background: isClicked
+          ? theme?.palette?.background?.default
+          : theme?.palette?.light?.c50,
+      }}
+    >
+      <AppMenuItemComponent link={link} onClick={handleClick}>
+        {/* Display an icon if any */}
+        <Box
           sx={{
-            textTransform: 'capitalize',
+            color: isClicked
+              ? theme?.palette?.primary?.main
+              : theme?.palette?.text?.primary,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '300px',
           }}
-          className="text-red"
-          primary={label}
-          inset={!Icon}
-        />
-      </Box>
-      {/* Display the expand menu if the item has children */}
-      {isExpandable && !open && <ExpandMoreIcon />}
-      {isExpandable && open && <ExpandLessIcon />}
-    </AppMenuItemComponent>
+          onClick={() => {
+            setClicked(!isClicked);
+          }}
+        >
+          <IconComponent
+            name={icon}
+            size={25}
+            label={'Quilt'}
+            color={
+              isClicked
+                ? theme?.palette?.primary?.main
+                : theme?.palette?.text?.primary
+            }
+          />
+          <ListItemText
+            sx={{
+              textTransform: 'capitalize',
+            }}
+            className="text-red"
+            primary={label}
+            inset={!Icon}
+          />
+        </Box>
+        {/* Display the expand menu if the item has children */}
+        {isExpandable && !open && <ExpandMoreIcon />}
+        {isExpandable && open && <ExpandLessIcon />}
+      </AppMenuItemComponent>
+    </Box>
   );
 
   const MenuItemChildren = isExpandable ? (

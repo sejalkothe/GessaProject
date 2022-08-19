@@ -5,8 +5,6 @@ import { ITheme } from '../../../../theme/index';
 
 interface SearchInputTypes {
   label: string;
-  backgroundColor: string;
-  borderColor: string;
   value: string;
   onChange?: (e: any) => void;
 }
@@ -25,13 +23,6 @@ function SearchInput(props: SearchInputTypes) {
       className="Search_Field"
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
-        {/* <InputLabel
-          htmlFor="report-name"
-          className="report_input_labels"
-          sx={{ marginBottom: '5px' }}
-        >
-          {props.label}
-        </InputLabel> */}
         <Paper
           component="form"
           sx={{
@@ -40,8 +31,8 @@ function SearchInput(props: SearchInputTypes) {
             alignItems: 'center',
             height: 34,
             width: '100%',
-            background: props.backgroundColor,
-            border: `1px solid ${props.borderColor}`,
+            background: theme?.palette?.background?.default,
+            border: `1px solid ${theme.palette?.text?.c100}`,
           }}
         >
           <IconButton sx={{ p: '10px' }} aria-label="search">
@@ -58,7 +49,7 @@ function SearchInput(props: SearchInputTypes) {
               flex: 1,
               y: 25,
               fontSize: '12px',
-              color: theme?.palette?.text?.disabled,
+              color: theme?.palette?.text?.primary,
             }}
             placeholder="Search"
             name="search"

@@ -1,9 +1,8 @@
-import React, { lazy, useState } from 'react';
-import { Stack, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Stack } from '@mui/material';
 import { Box } from '@mui/material';
 import { ITheme } from '../../../../../theme/index';
 import { alpha, styled, useTheme } from '@mui/system';
-import TextField from '@mui/material/TextField';
 import SearchInput from '../SearchBox';
 import { IconComponent } from '@iauro/soulify';
 import Avatar from '@mui/material/Avatar';
@@ -16,20 +15,6 @@ function Header({ title, searchBar, logo }: any) {
     const lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
-  const TextField = lazy(() => import('@mui/material/TextField'));
-
-  const StyledHeader = styled(Stack)(({ theme }): any => {
-    return {
-      // MuiInputBase-input MuiOutlinedInput-input css-1sw4ac3-MuiInputBase-input-MuiOutlinedInput-input
-      '& .MuiInputBase-root': {
-        height: '10px',
-      },
-
-      '& .MuiOutlinedInput-input': {
-        height: '10px',
-      },
-    };
-  });
 
   function stringAvatar(name: string) {
     return {
@@ -38,7 +23,6 @@ function Header({ title, searchBar, logo }: any) {
   }
 
   const theme: ITheme = useTheme();
-  console.log('inputText', inputText);
   return (
     <Stack
       direction="row"
@@ -62,38 +46,38 @@ function Header({ title, searchBar, logo }: any) {
         <Box
           sx={{
             width: '75px',
+            background: theme.palette?.light?.c50,
             height: '22px',
           }}
         >
           <img src={logo} alt="logo" />
         </Box>
       </Box>
-      <Box sx={{ width: '25%' }}></Box>
+      <Box sx={{ width: '27%' }}></Box>
       <Box
         sx={{
-          width: '40%',
+          width: '30%',
           height: '4vh',
           margin: '12px',
-          //  borderBottom: `1px solid ${theme.palette?.systemColor5?.main}`,
+          justifyContent: 'center',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         {searchBar ? (
           <SearchInput
             label="Search"
-            backgroundColor={theme?.palette?.background?.default || ''}
-            borderColor={`1px solid ${theme.palette?.text?.c100}`}
             value={inputText}
-            onChange={() => inputHandler}
+            onChange={(e: any) => inputHandler(e)}
           />
         ) : (
           ''
         )}
       </Box>
-      <Box sx={{ width: '25%' }}></Box>
+      <Box sx={{ width: '27%' }}></Box>
       <Stack
         direction="row"
         spacing={1}
-        // mt={2}
         sx={{
           width: '8%',
           height: '8vh',
@@ -101,14 +85,11 @@ function Header({ title, searchBar, logo }: any) {
           padding: '8px',
           justifyContent: 'center',
           display: 'flex',
-          //  borderBottom: `1px solid ${theme.palette?.systemColor5?.main}`,
         }}
       >
         <Box
           sx={{
             paddingBottom: '18px',
-            // justifyContent: 'center',
-            // display: 'flex',
           }}
         >
           <IconComponent
@@ -121,6 +102,7 @@ function Header({ title, searchBar, logo }: any) {
         <Avatar
           sx={{
             bgcolor: theme?.palette?.secondary?.main,
+            color: theme?.palette?.light?.main,
             width: '36px',
             height: '36px',
             fontSize: '12px',

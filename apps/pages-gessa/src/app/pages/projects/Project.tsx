@@ -9,7 +9,7 @@ import { Box, Stack, useTheme } from '@mui/material';
 // import {useTheme} from "@mui/system"
 import Header from './component/Header/Header';
 import { IconComponent } from '@iauro/soulify';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { routes } from '../../layout/route';
 import LayoutWrapper from '../../layout/layout';
 import { ITheme } from '../../../theme/index';
@@ -20,8 +20,6 @@ import {
   selectAllMenu,
 } from '../../pages/projects/store/appMenuSlice';
 import { useAppDispatch } from '../../../context/redux';
-// import { responseWrapper } from '../../../utils/responseWrapper';
-//  import MyButton from "@iauro/dsl/MyButton"
 
 // const Button = lazy(() => import('@mui/material/Button'));
 // const TextField = lazy(() => import('@mui/material/TextField'));
@@ -35,14 +33,7 @@ function Project() {
   const [isClicked, setClicked]: any = useState(false);
   const dispatch = useAppDispatch();
   const [menuChilds, setMenuChilds]: any = useState([]);
-  // const [arrParents, setParents] = useState([]);
 
-  const params: any = useParams();
-
-  const newUrl = window.location.href.replace('#', '');
-  const url = new URL(newUrl);
-  console.log('url', url);
-  // var project = url.searchParams.get("projectId");
   useEffect(() => {
     fetch('http://localhost:3004/widget')
       .then((respone) => {
@@ -53,7 +44,7 @@ function Project() {
         setWidgetData(res);
       })
       .catch((error) => {
-        console.log('widget error', error);
+        //  ToDo:
       });
   }, []);
 
@@ -92,10 +83,6 @@ function Project() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   getMyComponent(widgetData);
-  // }, [widgetData]);
-
   // const getMyComponent = (widgetData: any) => {
   //   switch (widgetData?.component) {
   //     case 'button':
@@ -121,8 +108,6 @@ function Project() {
         background: theme.palette?.background?.default,
       }}
     >
-      {/* <MyButton text="sds"/> */}
-
       {/* <Box style={{
         border: "1px solid red"
       }}>
@@ -149,22 +134,21 @@ function Project() {
           }}
         >
           <Stack direction="column">
-            {console.log('params', params)}
             {appMenu?.map((item: any, index: any) => {
               return (
                 <Link
                   key={index}
-                  to={`62fdf3b0e671d3a7fc5da656/` + (index + 1)}
+                  to={'/' + (index + 1)}
                   style={{ textDecoration: 'none' }}
                 >
                   <Box
                     sx={{
                       width: '50px',
                       height: '50px',
-                      justifyContent: 'center',
-                      marginTop: '10px',
                       display: 'flex',
+                      justifyContent: 'center',
                       alignItems: 'center',
+                      marginTop: '10px',
                       background:
                         isClicked === index
                           ? theme?.palette?.background?.default
@@ -184,7 +168,6 @@ function Project() {
                           ? theme?.palette?.primary?.main
                           : theme?.palette?.text?.primary
                       }
-                      // color={theme?.palette?.text?.['primary']}
                     />
                   </Box>
                 </Link>

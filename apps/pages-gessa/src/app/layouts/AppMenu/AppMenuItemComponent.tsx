@@ -1,17 +1,18 @@
-import { ListItem } from "@mui/material";
-import React, { forwardRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { ListItem } from '@mui/material';
+import { Box } from '@mui/system';
+import React, { forwardRef } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
-interface Props{
-  className?: string,
-  onClick: () => void,
-  link: string | undefined,
-  children: React.ReactNode
+interface Props {
+  className?: string;
+  onClick: () => void;
+  link: string | undefined;
+  children: React.ReactNode;
 }
 
 function AppMenuItemComponent(props: Props) {
   const { className, onClick, link, children } = props;
-  if (!link || typeof link !== "string") {
+  if (!link || typeof link !== 'string') {
     return (
       <ListItem
         button
@@ -23,19 +24,18 @@ function AppMenuItemComponent(props: Props) {
   }
 
   return (
-    <div style={{
-      border: "1px solid green",
-    }}>
-    <ListItem
-      button
-      className={className}
-      children={children}
-      component={Link}
-      // component={forwardRef((props, ref) => (
-      //   <NavLink exact {...props} innerRef={ref} />
-      // ))}
-      to={link}
-    />
+    <div
+      style={{
+        border: '1px solid green',
+      }}
+    >
+      <ListItem
+        button
+        className={className}
+        children={children}
+        component={Link}
+        to={link}
+      />
     </div>
   );
 }
