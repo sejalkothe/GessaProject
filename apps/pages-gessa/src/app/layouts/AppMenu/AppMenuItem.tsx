@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -10,9 +10,11 @@ import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AppMenuItemComponent from './AppMenuItemComponent';
+import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
+import { ITheme } from 'apps/pages-gessa/src/theme';
 
 export function getIcon(label: string) {
-  const theme = useTheme();
+  const theme: ITheme = useTheme();
   switch (label) {
     case 'Dashboard':
       return (
@@ -81,6 +83,10 @@ function AppMenuItem(props: Props) {
   const { label, link, items = [] } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
+  const [isClicked, setClicked]: any = useState(false);
+  const childMenus = useContext(ChildMenuContext);
+  const theme: ITheme = useTheme();
+  console.log('childMenus', childMenus);
 
   const CustomTheme = styled(ListItemText)(({ theme }) => {
     return {
@@ -104,8 +110,35 @@ function AppMenuItem(props: Props) {
   const MenuItemRoot = (
     <AppMenuItemComponent link={link} onClick={handleClick}>
       {/* Display an icon if any */}
-      {!!Icon && <ListItemIcon>{Icon}</ListItemIcon>}
-      <CustomTheme className="text-red" primary={label} inset={!Icon} />
+      <Box
+        sx={{
+          color: isClicked
+            ? theme?.palette?.primary?.main
+            : theme?.palette?.text?.primary,
+          background: isClicked
+            ? theme?.palette?.background?.default
+            : theme?.palette?.light?.c50,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '300px',
+          // border: '1px solid red',
+          // textTransform: 'capitalize',
+        }}
+        onClick={() => {
+          setClicked(!isClicked);
+        }}
+      >
+        {!!Icon && <ListItemIcon>{Icon}</ListItemIcon>}
+        <ListItemText
+          sx={{
+            textTransform: 'capitalize',
+          }}
+          className="text-red"
+          primary={label}
+          inset={!Icon}
+        />
+      </Box>
       {/* Display the expand menu if the item has children */}
       {isExpandable && !open && <ExpandMoreIcon />}
       {isExpandable && open && <ExpandLessIcon />}
@@ -118,8 +151,10 @@ function AppMenuItem(props: Props) {
       <p>fsdfds</p>
       <List component="div" disablePadding>
         {items.map((item: any, index: number) => (
-          <> <p>fsdfds</p>
-          <AppMenuItem {...item} key={index} />
+          <>
+            {' '}
+            <p>fsdfds</p>
+            <AppMenuItem {...item} key={index} />
           </>
         ))}
       </List>

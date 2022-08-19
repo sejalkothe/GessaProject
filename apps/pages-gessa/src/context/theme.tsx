@@ -92,13 +92,10 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   }, [themeData]);
 
   React.useEffect(() => {
-   
-    console.log("themePaletteData[0]?.color.result",themePaletteData[0]?.color?.result?.colors)
        setPosts(themePaletteData[0]?.color.result);
     themes.default.palette = { ...themes.default.palette, ...themePaletteData[0]?.color.result.colors };
     setTheme(createTheme(themes.default));
-    console.log("themes.default.palette", themes.default.palette)
-  }, [themePaletteData]);
+    }, [themePaletteData]);
 
   return (
     <ThemeContext.Provider value={{ theme, changeTheme }}>

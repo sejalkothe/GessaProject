@@ -1,56 +1,195 @@
+import React, {
+  Suspense,
+  lazy,
+  useEffect,
+  useState,
+  createContext,
+} from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 // import {useTheme} from "@mui/system"
-import React from 'react';
 import Header from './component/Header/Header';
 import { IconComponent } from '@iauro/soulify';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 import { routes } from '../../layout/route';
 import LayoutWrapper from '../../layout/layout';
-import  {ITheme} from "../../../theme/index"
+import { ITheme } from '../../../theme/index';
+import Logo from '../../../assets/logo.svg';
+import ChildMenuContext from './component/ChildMenusContext';
+import {
+  getAppMenu,
+  selectAllMenu,
+} from '../../pages/projects/store/appMenuSlice';
+import { useAppDispatch } from '../../../context/redux';
+// import { responseWrapper } from '../../../utils/responseWrapper';
+//  import MyButton from "@iauro/dsl/MyButton"
 
+// const Button = lazy(() => import('@mui/material/Button'));
+// const TextField = lazy(() => import('@mui/material/TextField'));
+// const MyButton = lazy(() => import('@iauro/dsl'));
+// const TextField = lazy(() => import('@iauro/dsl/lib/Atoms/textfield'));
 
 function Project() {
-  const theme : ITheme = useTheme();
-  console.log("usetheme", theme.palette?.systemColor5)
+  const theme: ITheme = useTheme();
+  const [widgetData, setWidgetData] = useState([]);
+  const [appMenu, setAppMenu]: any = useState();
+  const [isClicked, setClicked]: any = useState(false);
+  const dispatch = useAppDispatch();
+  const [menuChilds, setMenuChilds]: any = useState([]);
+  // const [arrParents, setParents] = useState([]);
+
+  const params: any = useParams();
+
+  const newUrl = window.location.href.replace('#', '');
+  const url = new URL(newUrl);
+  console.log('url', url);
+  // var project = url.searchParams.get("projectId");
+  useEffect(() => {
+    fetch('http://localhost:3004/widget')
+      .then((respone) => {
+        const result = respone.json();
+        return result;
+      })
+      .then((res) => {
+        setWidgetData(res);
+      })
+      .catch((error) => {
+        console.log('widget error', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAppMenu({ page: 0, size: 8 }))
+      .then((res) => {
+        const parents: any = {};
+        const createParent = (id: string, item: any) => {
+          parents[id] = {
+            child: [],
+            data: { ...item },
+          };
+        };
+        res?.payload.forEach((item: any) => {
+          const parentId = item?.parentId || '';
+          if (parentId === '') {
+            if (!parents[parentId]) {
+              createParent(item._id, item);
+            }
+          } else if (item.parentId) {
+            if (parents[parentId]) {
+              parents[parentId].child.push(item);
+            } else {
+              createParent(parentId, item);
+            }
+          }
+        });
+        const arrPar = [];
+        for (const key in parents) {
+          arrPar.push(parents[key]);
+        }
+        setAppMenu(arrPar);
+      })
+      .catch((reason: any) => {
+        //  Todod :
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   getMyComponent(widgetData);
+  // }, [widgetData]);
+
+  // const getMyComponent = (widgetData: any) => {
+  //   switch (widgetData?.component) {
+  //     case 'button':
+  //              return <Button variant='outlined' {...widgetData.style}>fsdfs</Button>;
+  //     case 'textFeild':
+  //            return (
+  //         <TextField
+  //           id="outlined-basic"
+  //           label="Outlined"
+  //           variant="outlined"
+  //           {...widgetData.style}
+  //         />
+  //       );
+  //     default:
+  //       console.log('widgetData?.component', widgetData?.component);
+  //       return <div>wrong component</div>;
+  //   }
+  // };
+
   return (
-    <Box>
-      <Header />
+    <Box
+      sx={{
+        background: theme.palette?.background?.default,
+      }}
+    >
+      {/* <MyButton text="sds"/> */}
+
+      {/* <Box style={{
+        border: "1px solid red"
+      }}>
+        {widgetData.map((item) => {
+          return <Suspense fallback={<div>loading...</div>}>
+          <main>{getMyComponent(item)}</main>
+          </Suspense>
+        })}
+        </Box> */}
+
+      <Header title="iauro" searchBar="true" logo={Logo} />
+
+      {/* <MyButton /> */}
+
       <Stack direction="row">
         <Box
           sx={{
-            width: '50px',
+            width: '62px',
             height: '92vh',
-            borderRight: `1px solid ${theme.palette?.systemColor5?.main}`,
+            justifyContent: 'center',
+            display: 'flex',
+            background: theme.palette?.light?.c50,
+            borderRight: `1px solid ${theme.palette?.text?.c100}`,
           }}
         >
           <Stack direction="column">
-            <Link to="/1" style={{ textDecoration: 'none' }}>
-              <IconComponent
-                name={'view_quilt_black_24dp'}
-                size={25}
-                label={'Quilt'}
-                color={theme?.palette?.text?.primary}
-                // color={theme?.palette?.text?.['primary']}
-              />
-            </Link>
-
-            <Link to="/2" style={{ textDecoration: 'none' }}>
-              <IconComponent
-                name={'tips_and_updates_black_24dp'}
-                size={25}
-                label={'tips_and_updates'}
-                color={theme?.palette?.text?.primary}
-              />
-            </Link>
-
-            <Link to="/3" style={{ textDecoration: 'none' }}>
-              <IconComponent
-                name={'settings_black_24dp'}
-                size={25}
-                label={'Settings'}
-                color={theme?.palette?.text?.primary}
-              />
-            </Link>
+            {console.log('params', params)}
+            {appMenu?.map((item: any, index: any) => {
+              return (
+                <Link
+                  key={index}
+                  to={`62fdf3b0e671d3a7fc5da656/` + (index + 1)}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Box
+                    sx={{
+                      width: '50px',
+                      height: '50px',
+                      justifyContent: 'center',
+                      marginTop: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      background:
+                        isClicked === index
+                          ? theme?.palette?.background?.default
+                          : theme?.palette?.light?.c50,
+                    }}
+                    onClick={() => {
+                      setClicked(isClicked !== index ? index : -1);
+                      setMenuChilds(item.child);
+                    }}
+                  >
+                    <IconComponent
+                      name={item.data.icon}
+                      size={25}
+                      label={'Quilt'}
+                      color={
+                        isClicked === index
+                          ? theme?.palette?.primary?.main
+                          : theme?.palette?.text?.primary
+                      }
+                      // color={theme?.palette?.text?.['primary']}
+                    />
+                  </Box>
+                </Link>
+              );
+            })}
           </Stack>
         </Box>
         <Box
@@ -58,7 +197,9 @@ function Project() {
             flexGrow: 1,
           }}
         >
-          <LayoutWrapper />
+          <ChildMenuContext.Provider value={menuChilds}>
+            <LayoutWrapper />
+          </ChildMenuContext.Provider>
         </Box>
       </Stack>
     </Box>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { List } from '@mui/material';
 import AppMenuItem from './AppMenuItem';
 import NavMenuItem from './NavMenuItem';
@@ -10,7 +10,8 @@ import {
   selectAllMenu,
 } from '../../pages/projects/store/appMenuSlice';
 import { IRootState } from '../../../store/index';
-import { Link } from 'react-router-dom';
+import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 
 interface Props {
   menuType: string;
@@ -22,16 +23,8 @@ function AppMenu({ menuType }: Props) {
   const dispatch = useAppDispatch();
   const tempmenuList = selectAllMenu(rootState);
   const newUrl = window.location.href.replace('#', '');
-  var url = new URL(newUrl);
-  var projectId = url.searchParams.get('projectId');
-
-  useEffect(() => {
-    dispatch(getAppMenu({ tenantid: projectId, page: 0, size: 8 })).catch(
-      (reason: any) => {
-        //  Todod :
-      }
-    );
-  }, []);
+  const childMenus = useContext(ChildMenuContext);
+  const params: any = useParams();
 
   useEffect(() => {
     if (tempmenuList) {
@@ -43,11 +36,13 @@ function AppMenu({ menuType }: Props) {
     <div>
       {menuType === 'classic' ? (
         <List component="nav" disablePadding>
-          {menuData?.map((item: any, index: number) => (
+          {childMenus?.map((item: any, index: number) => (
             <Link
-             key={index}
+              key={index}
               style={{ textDecoration: 'none' }}
-              to={`${(index + 1).toString()}`}
+              to={`/${params.projectId}/${params.menuId}/${(
+                index + 1
+              ).toString()}`}
             >
               <AppMenuItem
                 label={item.name}
