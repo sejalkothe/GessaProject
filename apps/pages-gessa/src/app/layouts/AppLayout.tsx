@@ -6,7 +6,6 @@ import Empty from './Empty';
 
 const AppLayout = () => {
   const { settings, setSettings } = React.useContext(SettingContext);
-
   switch (settings.layout) {
     case 'classic-ltr':
       return <Classic />;

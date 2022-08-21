@@ -6,15 +6,15 @@ import white from '../colors/white';
 const dark: IThemePalette = {
   mode: 'dark',
   text: {
-    primary: '#BDBDBD',
+    primary: '#636A75',
     secondary: '#BDBDBD',
-    disabled: '#BDBDBD',
-    c100: '#619FDE',
+    disabled: '#848B96',
+    c100: '#E2E7EF',
     c50: '#A9D4FF',
   },
   primary: {
     dark: '#ffffff',
-    main: '#ffffff',
+    main: '#E5E5E5',
     light: '#ffffff',
     c100: '#ffffff',
     c50: '#ffffff',
@@ -27,7 +27,7 @@ const dark: IThemePalette = {
     c50: '#d1f1e6',
   },
   background: {
-    default: '#1B2A3F',
+    default: '#F2F4F8',
   },
   dark: {
     dark: '#231F1F',
@@ -40,8 +40,8 @@ const dark: IThemePalette = {
     dark: '#EBE4E4',
     main: '#F0EBEB',
     light: '#F5F2F2 ',
-    c100: '#F6F5FF',
-    c50: '#F6F5FF',
+    c100: '#ffffff',
+    c50: '#ffffff',
   },
   systemColor1: {
     dark: '#CE1322',
@@ -73,7 +73,7 @@ const dark: IThemePalette = {
   },
   systemColor5: {
     dark: '#FADB14',
-    main: '#FA8C16 ',
+    main: '#ffffff',
     light: '#FFEC3D',
     c100: '#FFF566',
     c50: '#FFFFB8',

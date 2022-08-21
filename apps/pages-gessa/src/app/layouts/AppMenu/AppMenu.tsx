@@ -1,62 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { List } from '@mui/material';
+import React, { useContext, useMemo } from 'react';
+import { List, Typography } from '@mui/material';
 import AppMenuItem from './AppMenuItem';
 import NavMenuItem from './NavMenuItem';
 import { appMenuItems } from './app-menu-items';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../../context/redux';
-import {
-  getAppMenu,
-  selectAllMenu,
-} from '../../pages/projects/store/appMenuSlice';
-import { IRootState } from '../../../store/index';
 import { Link } from 'react-router-dom';
+import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   menuType: string;
 }
 
 function AppMenu({ menuType }: Props) {
-  const rootState = useSelector((state: IRootState) => state);
-  const [menuData, setMenuData]: any = useState([]);
-  const dispatch = useAppDispatch();
-  const tempmenuList = selectAllMenu(rootState);
-  const newUrl = window.location.href.replace('#', '');
-  var url = new URL(newUrl);
-  var projectId = url.searchParams.get('projectId');
+  const childMenus = useContext(ChildMenuContext);
 
-  useEffect(() => {
-    dispatch(getAppMenu({ tenantid: projectId, page: 0, size: 8 })).catch(
-      (reason: any) => {
-        //  Todod :
-      }
-    );
-  }, []);
+  const params = useParams();
 
-  useEffect(() => {
-    if (tempmenuList) {
-      setMenuData(tempmenuList);
-    }
-  }, [tempmenuList]);
+  /** get the menu id from url params */
+  const menuDetails = useMemo(() => {
+    const menu = params['*']?.split('/');
+    const menuId = menu?.[1];
+    const subMenuId = menu?.[3];
+    return { menuId, subMenuId };
+  }, [params]);
 
   return (
     <div>
       {menuType === 'classic' ? (
         <List component="nav" disablePadding>
-          {menuData?.map((item: any, index: number) => (
-            <Link
-             key={index}
-              style={{ textDecoration: 'none' }}
-              to={`${(index + 1).toString()}`}
-            >
-              <AppMenuItem
-                label={item.name}
-                // link={item.link}
-                // items={item?.items}
+          {childMenus.length !== 0 ? (
+            childMenus?.map((item: any, index: number) => (
+              <Link
                 key={index}
-              />
-            </Link>
-          ))}
+                style={{ textDecoration: 'none' }}
+                to={`menu/${menuDetails.menuId}/sub-menu/${item.name}/`}
+              >
+                <AppMenuItem
+                  label={item.name}
+                  icon={item.icon}
+                  key={index}
+                  isSelected={menuDetails.subMenuId === item.name}
+                />
+              </Link>
+            ))
+          ) : (
+            <Typography
+              sx={{
+                justifyContent: 'center',
+                display: 'flex',
+                marginTop: '22px',
+              }}
+              variant="caption"
+            >
+              No Feature Available
+            </Typography>
+          )}
         </List>
       ) : (
         <NavMenuItem appMenuItems={appMenuItems} />

@@ -1,5 +1,5 @@
 interface ISettings {
-  layout: string;
+  layout?: string;
   showHeader: boolean;
 }
 

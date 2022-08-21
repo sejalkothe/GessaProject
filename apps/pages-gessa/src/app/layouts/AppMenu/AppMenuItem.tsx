@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -10,9 +10,11 @@ import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AppMenuItemComponent from './AppMenuItemComponent';
+import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
+import { ITheme } from 'apps/pages-gessa/src/theme';
 
 export function getIcon(label: string) {
-  const theme = useTheme();
+  const theme: ITheme = useTheme();
   switch (label) {
     case 'Dashboard':
       return (
@@ -75,25 +77,16 @@ interface Props {
   label: string;
   link?: string | undefined;
   items?: any;
+  icon?: any;
+  isSelected: boolean;
 }
 
 function AppMenuItem(props: Props) {
-  const { label, link, items = [] } = props;
+  const { label, icon, link, items = [] } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
-
-  const CustomTheme = styled(ListItemText)(({ theme }) => {
-    return {
-      '& .MuiListItemText-primary': {
-        color: theme?.palette?.['text']?.primary,
-        textTransform: 'capitalize',
-        disableRipple: true,
-      },
-      '& .MuiButtonBase': {
-        disableRipple: true, // No more ripple, on the whole application!
-      },
-    };
-  });
+  const childMenus = useContext(ChildMenuContext);
+  const theme: ITheme = useTheme();
 
   function handleClick() {
     setOpen(!open);
@@ -102,24 +95,59 @@ function AppMenuItem(props: Props) {
   const Icon: any = getIcon(label);
 
   const MenuItemRoot = (
-    <AppMenuItemComponent link={link} onClick={handleClick}>
-      {/* Display an icon if any */}
-      {!!Icon && <ListItemIcon>{Icon}</ListItemIcon>}
-      <CustomTheme className="text-red" primary={label} inset={!Icon} />
-      {/* Display the expand menu if the item has children */}
-      {isExpandable && !open && <ExpandMoreIcon />}
-      {isExpandable && open && <ExpandLessIcon />}
-    </AppMenuItemComponent>
+    <Box
+      sx={{
+        background: props.isSelected
+          ? theme?.palette?.background?.default
+          : theme?.palette?.light?.c50,
+      }}
+    >
+      <AppMenuItemComponent link={link} onClick={handleClick}>
+        {/* Display an icon if any */}
+        <Box
+          sx={{
+            color: props.isSelected
+              ? theme?.palette?.primary?.main
+              : theme?.palette?.text?.primary,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '300px',
+          }}
+        >
+          <IconComponent
+            name={icon}
+            size={25}
+            label={'Quilt'}
+            color={
+              props.isSelected
+                ? theme?.palette?.primary?.main
+                : theme?.palette?.text?.primary
+            }
+          />
+          <ListItemText
+            sx={{
+              textTransform: 'capitalize',
+            }}
+            className="text-red"
+            primary={label}
+            inset={!Icon}
+          />
+        </Box>
+        {/* Display the expand menu if the item has children */}
+        {isExpandable && !open && <ExpandMoreIcon />}
+        {isExpandable && open && <ExpandLessIcon />}
+      </AppMenuItemComponent>
+    </Box>
   );
 
   const MenuItemChildren = isExpandable ? (
     <Collapse in={open} timeout="auto" unmountOnExit>
       <Divider />
-      <p>fsdfds</p>
       <List component="div" disablePadding>
         {items.map((item: any, index: number) => (
-          <> <p>fsdfds</p>
-          <AppMenuItem {...item} key={index} />
+          <>
+            <AppMenuItem {...item} key={index} />
           </>
         ))}
       </List>

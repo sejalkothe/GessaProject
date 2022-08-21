@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import keycloakData, { keycloakConfig } from '../keycloak/keycloak';
-import { removeItem, setLocalStorage } from '../utils/localStorageService';
+import { setLocalStorage } from '../utils/localStorageService';
 import keycloak from '../keycloak/keycloak';
 import App from '../app/app';
 
@@ -9,20 +9,22 @@ export function KeycloakLogin({ children }: any) {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    const newUrl = window.location.href.replace("#", "");
-    var url = new URL(newUrl);
-    var realm = url.searchParams.get("projectId");
-    keycloakConfig.realm = realm || keycloakConfig.realm;
-     keycloakData.init({ onLoad: 'login-required' }).then((authenticated: any) => {
-           setInitKeycloak(keycloakData);
-      setIsAuth(authenticated);
-      const userInfo = {
-        userName: '',
-        sessionKey: keycloak.token || '',
-        projectId:  keycloakConfig.realm
-      };
-      setLocalStorage('userInfo', userInfo);
-    });
+    const newUrl = window.location.href.replace('#', '');
+    const url = newUrl?.split('&')?.shift?.()?.split('/')[5];
+
+    keycloakConfig.realm = url || keycloakConfig.realm;
+    keycloakData
+      .init({ onLoad: 'login-required' })
+      .then((authenticated: any) => {
+        setInitKeycloak(keycloakData);
+        setIsAuth(authenticated);
+        const userInfo = {
+          userName: '',
+          sessionKey: keycloak.token || '',
+          projectId: keycloakConfig.realm,
+        };
+        setLocalStorage('userInfo', userInfo);
+      });
   }, []);
 
   if (initKeycloak) {
@@ -33,4 +35,3 @@ export function KeycloakLogin({ children }: any) {
 }
 
 export default KeycloakLogin;
-
