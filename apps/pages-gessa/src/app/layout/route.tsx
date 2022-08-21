@@ -4,7 +4,7 @@ const AppLayout = lazy(() => import('../layouts/AppLayout'));
 
 export const routes: any = [
   {
-    path: ':projectId/',
+    path: '/project/:projectId/',
     element: <AppLayout />,
     exact: false,
     children: [{ path: '*' }],

@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { List, Typography } from '@mui/material';
 import AppMenuItem from './AppMenuItem';
 import NavMenuItem from './NavMenuItem';
 import { appMenuItems } from './app-menu-items';
 import { Link } from 'react-router-dom';
 import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   menuType: string;
@@ -12,6 +13,16 @@ interface Props {
 
 function AppMenu({ menuType }: Props) {
   const childMenus = useContext(ChildMenuContext);
+
+  const params = useParams();
+
+  /** get the menu id from url params */
+  const menuDetails = useMemo(() => {
+    const menu = params['*']?.split('/');
+    const menuId = menu?.[1];
+    const subMenuId = menu?.[3];
+    return { menuId, subMenuId };
+  }, [params]);
 
   return (
     <div>
@@ -22,9 +33,14 @@ function AppMenu({ menuType }: Props) {
               <Link
                 key={index}
                 style={{ textDecoration: 'none' }}
-                to={`${(index + 1).toString()}`}
+                to={`menu/${menuDetails.menuId}/sub-menu/${item.name}/`}
               >
-                <AppMenuItem label={item.name} icon={item.icon} key={index} />
+                <AppMenuItem
+                  label={item.name}
+                  icon={item.icon}
+                  key={index}
+                  isSelected={menuDetails.subMenuId === item.name}
+                />
               </Link>
             ))
           ) : (

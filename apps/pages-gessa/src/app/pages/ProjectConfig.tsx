@@ -1,29 +1,45 @@
-import { Navigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { Navigate, Outlet } from 'react-router';
+import { IPageConfig } from '../../types/pageConfig';
+import Project from './projects/Project';
+
+const ProjectWrapper = lazy(
+  () => import('./projects/component/ProjectWrapper')
+);
 
 const MyRoutes = {
   routes: [
     {
-      path: '',
-      element: <Navigate to="project" />,
-    },
-
-    {
-      path: 'dashboard',
-      element: <Navigate to="dashboard" />,
+      path: 'project',
+      element: <ProjectWrapper />,
       children: [
         {
-          path: 'master',
-          element: <></>,
-        },
-      ],
-    },
-    {
-      path: 'setting',
-      element: <Navigate to="setting" />,
-      children: [
-        {
-          path: 'master',
-          element: <></>,
+          path: ':projectId/',
+          element: (
+            <>
+              <div>test</div>
+            </>
+          ),
+          children: [
+            {
+              path: ':menuId/',
+              element: (
+                <>
+                  <div>test1</div>
+                </>
+              ),
+              children: [
+                {
+                  path: ':subFeatureId/',
+                  element: (
+                    <>
+                      <div>test2</div>
+                    </>
+                  ),
+                },
+              ],
+            },
+          ],
         },
       ],
     },

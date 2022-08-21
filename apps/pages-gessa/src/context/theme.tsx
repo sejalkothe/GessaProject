@@ -31,7 +31,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   const newUrl = window.location.href.replace('#', '');
   var url = new URL(newUrl);
   var projectId = url.searchParams.get('projectId');
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const changeTheme = (theme: ITheme) => {
     setTheme(createTheme(theme));
   };
@@ -70,8 +70,8 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   };
 
   React.useEffect(() => {
-    var url = new URL(newUrl);
-    var projectId = url.searchParams.get('projectId');
+    const newUrl = window.location.href.replace('#', '');
+    const projectId = newUrl?.split('&')?.shift?.()?.split('/')[5];
     themeFunc(projectId);
     colorthemeFunc(projectId);
   }, []);
@@ -92,10 +92,13 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   }, [themeData]);
 
   React.useEffect(() => {
-       setPosts(themePaletteData[0]?.color.result);
-    themes.default.palette = { ...themes.default.palette, ...themePaletteData[0]?.color.result.colors };
+    setPosts(themePaletteData[0]?.color.result);
+    themes.default.palette = {
+      ...themes.default.palette,
+      ...themePaletteData[0]?.color.result.colors,
+    };
     setTheme(createTheme(themes.default));
-    }, [themePaletteData]);
+  }, [themePaletteData]);
 
   return (
     <ThemeContext.Provider value={{ theme, changeTheme }}>

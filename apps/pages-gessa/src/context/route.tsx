@@ -30,7 +30,6 @@ export const RouteProvider: FC<ReactNode> | any = ({ children }: any) => {
     });
     setRoutes(filteredRoutes);
   };
-
   return (
     <RouteContext.Provider value={{ routes, addRoute, removeRoute }}>
       {children}

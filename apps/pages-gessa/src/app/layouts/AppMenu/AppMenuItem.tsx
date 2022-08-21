@@ -78,14 +78,13 @@ interface Props {
   link?: string | undefined;
   items?: any;
   icon?: any;
+  isSelected: boolean;
 }
 
 function AppMenuItem(props: Props) {
   const { label, icon, link, items = [] } = props;
-  console.log('props', props);
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
-  const [isClicked, setClicked]: any = useState(false);
   const childMenus = useContext(ChildMenuContext);
   const theme: ITheme = useTheme();
 
@@ -98,7 +97,7 @@ function AppMenuItem(props: Props) {
   const MenuItemRoot = (
     <Box
       sx={{
-        background: isClicked
+        background: props.isSelected
           ? theme?.palette?.background?.default
           : theme?.palette?.light?.c50,
       }}
@@ -107,7 +106,7 @@ function AppMenuItem(props: Props) {
         {/* Display an icon if any */}
         <Box
           sx={{
-            color: isClicked
+            color: props.isSelected
               ? theme?.palette?.primary?.main
               : theme?.palette?.text?.primary,
             display: 'flex',
@@ -115,16 +114,13 @@ function AppMenuItem(props: Props) {
             alignItems: 'center',
             width: '300px',
           }}
-          onClick={() => {
-            setClicked(!isClicked);
-          }}
         >
           <IconComponent
             name={icon}
             size={25}
             label={'Quilt'}
             color={
-              isClicked
+              props.isSelected
                 ? theme?.palette?.primary?.main
                 : theme?.palette?.text?.primary
             }
@@ -148,12 +144,9 @@ function AppMenuItem(props: Props) {
   const MenuItemChildren = isExpandable ? (
     <Collapse in={open} timeout="auto" unmountOnExit>
       <Divider />
-      <p>fsdfds</p>
       <List component="div" disablePadding>
         {items.map((item: any, index: number) => (
           <>
-            {' '}
-            <p>fsdfds</p>
             <AppMenuItem {...item} key={index} />
           </>
         ))}

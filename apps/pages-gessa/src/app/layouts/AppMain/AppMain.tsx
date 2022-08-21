@@ -6,7 +6,7 @@ import { Outlet } from 'react-router';
 import MFViewPageApp from '../../../micro-frontend/remotes/view-page-app';
 
 const Test = () => {
-  return <Typography variant="body1">Loading...</Typography>;
+  return <Typography variant="body1">feature3</Typography>;
 };
 
 const Nest = () => {
@@ -15,7 +15,7 @@ const Nest = () => {
 
 export const routesObj = [
   {
-    path: '/2',
+    path: '/menu/:menuId/sub-menu/feature3/',
     element: <Test />,
   },
   {

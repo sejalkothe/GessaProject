@@ -1,15 +1,8 @@
-import React, {
-  Suspense,
-  lazy,
-  useEffect,
-  useState,
-  createContext,
-} from 'react';
+import React, { useMemo, lazy, useEffect, useState } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
-// import {useTheme} from "@mui/system"
 import Header from './component/Header/Header';
 import { IconComponent } from '@iauro/soulify';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 import { routes } from '../../layout/route';
 import LayoutWrapper from '../../layout/layout';
 import { ITheme } from '../../../theme/index';
@@ -20,11 +13,7 @@ import {
   selectAllMenu,
 } from '../../pages/projects/store/appMenuSlice';
 import { useAppDispatch } from '../../../context/redux';
-
-// const Button = lazy(() => import('@mui/material/Button'));
-// const TextField = lazy(() => import('@mui/material/TextField'));
-// const MyButton = lazy(() => import('@iauro/dsl'));
-// const TextField = lazy(() => import('@iauro/dsl/lib/Atoms/textfield'));
+import { useLocation } from 'react-router-dom';
 
 function Project() {
   const theme: ITheme = useTheme();
@@ -32,7 +21,7 @@ function Project() {
   const [appMenu, setAppMenu]: any = useState();
   const [isClicked, setClicked]: any = useState(false);
   const dispatch = useAppDispatch();
-  const [menuChilds, setMenuChilds]: any = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     fetch('http://localhost:3004/widget')
@@ -83,24 +72,18 @@ function Project() {
       });
   }, []);
 
-  // const getMyComponent = (widgetData: any) => {
-  //   switch (widgetData?.component) {
-  //     case 'button':
-  //              return <Button variant='outlined' {...widgetData.style}>fsdfs</Button>;
-  //     case 'textFeild':
-  //            return (
-  //         <TextField
-  //           id="outlined-basic"
-  //           label="Outlined"
-  //           variant="outlined"
-  //           {...widgetData.style}
-  //         />
-  //       );
-  //     default:
-  //       console.log('widgetData?.component', widgetData?.component);
-  //       return <div>wrong component</div>;
-  //   }
-  // };
+  const urlParams = useParams();
+  const menuName: any = useMemo(() => {
+    let menuChild: any[] = [];
+    const menu = urlParams['*']?.split('/')?.[1];
+    appMenu?.forEach((item: any, index: any) => {
+      if (item.data.name === menu) {
+        menuChild = item.child;
+      }
+    });
+
+    return { menu, menuChild };
+  }, [appMenu, urlParams]);
 
   return (
     <Box
@@ -108,20 +91,7 @@ function Project() {
         background: theme.palette?.background?.default,
       }}
     >
-      {/* <Box style={{
-        border: "1px solid red"
-      }}>
-        {widgetData.map((item) => {
-          return <Suspense fallback={<div>loading...</div>}>
-          <main>{getMyComponent(item)}</main>
-          </Suspense>
-        })}
-        </Box> */}
-
       <Header title="iauro" searchBar="true" logo={Logo} />
-
-      {/* <MyButton /> */}
-
       <Stack direction="row">
         <Box
           sx={{
@@ -138,7 +108,7 @@ function Project() {
               return (
                 <Link
                   key={index}
-                  to={'/' + (index + 1)}
+                  to={'menu/' + item.data.name + '/'}
                   style={{ textDecoration: 'none' }}
                 >
                   <Box
@@ -150,13 +120,12 @@ function Project() {
                       alignItems: 'center',
                       marginTop: '10px',
                       background:
-                        isClicked === index
+                        menuName.menu === item.data.name
                           ? theme?.palette?.background?.default
                           : theme?.palette?.light?.c50,
                     }}
                     onClick={() => {
                       setClicked(isClicked !== index ? index : -1);
-                      setMenuChilds(item.child);
                     }}
                   >
                     <IconComponent
@@ -164,7 +133,7 @@ function Project() {
                       size={25}
                       label={'Quilt'}
                       color={
-                        isClicked === index
+                        menuName.menu === item.data.name
                           ? theme?.palette?.primary?.main
                           : theme?.palette?.text?.primary
                       }
@@ -180,7 +149,7 @@ function Project() {
             flexGrow: 1,
           }}
         >
-          <ChildMenuContext.Provider value={menuChilds}>
+          <ChildMenuContext.Provider value={menuName.menuChild}>
             <LayoutWrapper />
           </ChildMenuContext.Provider>
         </Box>
