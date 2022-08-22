@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { environment } from '../environments/environment';
 import { clearLocalStorage, getLocalStorage } from './localStorageService';
 
 const instance = axios.create();
