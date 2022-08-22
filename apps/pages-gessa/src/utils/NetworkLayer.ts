@@ -13,7 +13,7 @@ instance.interceptors.request.use(
       ? getLocalStorage('userInfo').projectId
       : '';
     request.headers.common['Authorization'] = `Bearer ${authToken}`;
-    request.headers.common['x-tenant-id'] = '62fdf3b0e671d3a7fc5da656';
+    request.headers.common['x-tenant-id'] = projectId;
     return request;
   },
   (error) => {
