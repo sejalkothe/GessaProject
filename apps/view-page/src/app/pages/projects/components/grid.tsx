@@ -76,135 +76,120 @@ const Grid = ({
   useEffect(() => {
     gridRef.current = GridStack.init({
       // cellHeight: 120,
-      minRow: 5, // don't collapse when empty
-      margin: 4,
-      resizable: {
-        handles: 'all',
-      },
-      animate: true,
+      minRow: 20, // don't collapse when empty
+      margin: 10,
       acceptWidgets: true,
-      dragIn: '.droppable', // class that can be dragged from outside
-      dragInOptions: {
-        revert: 'invalid',
-        scroll: true,
-        appendTo: 'body',
-        helper: 'clone',
-      },
+      disableDrag: true,
+      disableResize: true,
     });
 
     const grid = gridRef.current;
 
     if (grid) {
-      grid.on('drag', function (event: any) {
-        //if newly added widget dragged inside
-        console.log('on drag in useeffect');
-      });
-      grid.on('dragstart', function (event: Event, el: GridItemHTMLElement) {
-        //if already added widget dragged
-        console.log('drag start');
-      });
-      grid.on('dragstop', function (event: Event, el: any) {
-        //if already added widget dragged and stopped
-        const width = parseInt(el.getAttribute('gs-w')) || 0;
-        const height = parseInt(el.getAttribute('gs-h')) || 0;
-        const id = el.getAttribute('id');
-        const gsx = parseInt(el.getAttribute('gs-x')) || 0;
-        const gsy = parseInt(el.getAttribute('gs-y')) || 0;
-        // or all values...
-        const obj = gridRef.current.update(el, {
-          width,
-          height,
-          gsx,
-          gsy,
-          id,
-        });
-        const obj1 = gridRef.current.save();
-        // setWidgets([obj1[0]]);
-
-        setWidgets((widgets: any) => {
-          const oldData = JSON.parse(JSON.stringify(widgets));
-          const index = oldData.findIndex((value: any) => value.id === id);
-          if (index !== -1) {
-            oldData[index].x = gsx;
-            oldData[index].y = gsy;
-            oldData[index].h = height;
-            oldData[index].w = width;
-          }
-          return oldData;
-        });
-
-        // updateWidgetProps([obj1[0]]);
-      });
-
-      grid.on('change', function (event: Event, items: GridStackNode[]) {
-        console.log('on change');
-      });
-      grid.on('resizestart', function (event: Event, el: GridItemHTMLElement) {
-        console.log('resize started');
-      });
-      grid.on('resizestop', function (event: Event, el: any) {
-        const width = parseInt(el.getAttribute('gs-w')) || 0;
-        const height = parseInt(el.getAttribute('gs-h')) || 0;
-        const id = el.getAttribute('id');
-        const gsx = parseInt(el.getAttribute('gs-x')) || 0;
-        const gsy = parseInt(el.getAttribute('gs-y')) || 0;
-        // or all values...
-        const obj = gridRef.current.update(el, {
-          w: width,
-          h: height,
-          x: gsx,
-          y: gsy,
-          id,
-        });
-        const obj1 = gridRef.current.save();
-        setWidgets((widgets: any) => {
-          const oldData = widgets;
-          const index = oldData.findIndex((value: any) => value.id === id);
-          if (index !== -1) {
-            oldData[index].x = gsx || 0;
-            oldData[index].y = gsy || 0;
-            oldData[index].h = height || 4;
-            oldData[index].w = width || 4;
-          }
-          return oldData;
-        });
-      });
-      grid.on('resize', function (event: Event, el: any) {
-        const width = parseInt(el.getAttribute('gs-w')) || 0;
-        const height = parseInt(el.getAttribute('gs-h')) || 0;
-        const id = el.getAttribute('id');
-        const gsx = parseInt(el.getAttribute('gs-x')) || 0;
-        const gsy = parseInt(el.getAttribute('gs-y')) || 0;
-      });
-      grid.on(
-        'dropped',
-        function (event: any, previousWidget: any, newWidget: any) {
-          const { el, w, h, x, y } = newWidget;
-          const _WIDGET_v1: any = JSON.parse(JSON.stringify(WIDGETS_V1));
-          const index = _WIDGET_v1.findIndex(
-            (value: any) => value.type === el.dataset.type
-          );
-
-          grid.removeWidget(el);
-          const payload = {
-            id: generateRandomString(),
-            type: el.dataset.type,
-            w: _WIDGET_v1[index].data.w,
-            h: _WIDGET_v1[index].data.h,
-            x,
-            y,
-          };
-
-          setWidgets((items: any) => [...items, payload]);
-          setSelectedWidget(payload);
-          // saveLayout();
-          // Enable Drawer
-          setSelectedWidgetProp(payload);
-          setOpenWidgetConfigDrawer(true);
-
-          //reset form config data when new widget dropped
-        }
-      );
+      // grid.on('drag', function (event: any) {
+      //   //if newly added widget dragged inside
+      //   console.log('on drag in useeffect');
+      // });
+      // grid.on('dragstart', function (event: Event, el: GridItemHTMLElement) {
+      //   //if already added widget dragged
+      //   console.log('drag start');
+      // });
+      // grid.on('dragstop', function (event: Event, el: any) {
+      //   //if already added widget dragged and stopped
+      //   const width = parseInt(el.getAttribute('gs-w')) || 0;
+      //   const height = parseInt(el.getAttribute('gs-h')) || 0;
+      //   const id = el.getAttribute('id');
+      //   const gsx = parseInt(el.getAttribute('gs-x')) || 0;
+      //   const gsy = parseInt(el.getAttribute('gs-y')) || 0;
+      //   // or all values...
+      //   const obj = gridRef.current.update(el, {
+      //     width,
+      //     height,
+      //     gsx,
+      //     gsy,
+      //     id,
+      //   });
+      //   const obj1 = gridRef.current.save();
+      //   // setWidgets([obj1[0]]);
+      //   setWidgets((widgets: any) => {
+      //     const oldData = JSON.parse(JSON.stringify(widgets));
+      //     const index = oldData.findIndex((value: any) => value.id === id);
+      //     if (index !== -1) {
+      //       oldData[index].x = gsx;
+      //       oldData[index].y = gsy;
+      //       oldData[index].h = height;
+      //       oldData[index].w = width;
+      //     }
+      //     return oldData;
+      //   });
+      //   // updateWidgetProps([obj1[0]]);
+      // });
+      // grid.on('change', function (event: Event, items: GridStackNode[]) {
+      //   console.log('on change');
+      // });
+      // grid.on('resizestart', function (event: Event, el: GridItemHTMLElement) {
+      //   console.log('resize started');
+      // });
+      // grid.on('resizestop', function (event: Event, el: any) {
+      //   const width = parseInt(el.getAttribute('gs-w')) || 0;
+      //   const height = parseInt(el.getAttribute('gs-h')) || 0;
+      //   const id = el.getAttribute('id');
+      //   const gsx = parseInt(el.getAttribute('gs-x')) || 0;
+      //   const gsy = parseInt(el.getAttribute('gs-y')) || 0;
+      //   // or all values...
+      //   const obj = gridRef.current.update(el, {
+      //     w: width,
+      //     h: height,
+      //     x: gsx,
+      //     y: gsy,
+      //     id,
+      //   });
+      //   const obj1 = gridRef.current.save();
+      //   setWidgets((widgets: any) => {
+      //     const oldData = widgets;
+      //     const index = oldData.findIndex((value: any) => value.id === id);
+      //     if (index !== -1) {
+      //       oldData[index].x = gsx || 0;
+      //       oldData[index].y = gsy || 0;
+      //       oldData[index].h = height || 4;
+      //       oldData[index].w = width || 4;
+      //     }
+      //     return oldData;
+      //   });
+      // });
+      // grid.on('resize', function (event: Event, el: any) {
+      //   const width = parseInt(el.getAttribute('gs-w')) || 0;
+      //   const height = parseInt(el.getAttribute('gs-h')) || 0;
+      //   const id = el.getAttribute('id');
+      //   const gsx = parseInt(el.getAttribute('gs-x')) || 0;
+      //   const gsy = parseInt(el.getAttribute('gs-y')) || 0;
+      // });
+      // grid.on(
+      //   'dropped',
+      //   function (event: any, previousWidget: any, newWidget: any) {
+      //     const { el, w, h, x, y } = newWidget;
+      //     const _WIDGET_v1: any = JSON.parse(JSON.stringify(WIDGETS_V1));
+      //     const index = _WIDGET_v1.findIndex(
+      //       (value: any) => value.type === el.dataset.type
+      //     );
+      //     grid.removeWidget(el);
+      //     const payload = {
+      //       id: generateRandomString(),
+      //       type: el.dataset.type,
+      //       w: _WIDGET_v1[index].data.w,
+      //       h: _WIDGET_v1[index].data.h,
+      //       x,
+      //       y,
+      //     };
+      //     setWidgets((items: any) => [...items, payload]);
+      //     setSelectedWidget(payload);
+      //     // saveLayout();
+      //     // Enable Drawer
+      //     setSelectedWidgetProp(payload);
+      //     setOpenWidgetConfigDrawer(true);
+      //     //reset form config data when new widget dropped
+      //   }
+      // );
     }
   }, [setWidgets, setFormConfig]);
 
@@ -349,11 +334,12 @@ const Grid = ({
       component={'main'}
       sx={{
         // position: 'relative',
-        background: theme.palette['background'].paper,
-        backgroundImage: `linear-gradient(${theme.palette['background'].default} 1px, transparent 1px), linear-gradient(90deg, ${theme.palette['background'].default} 1px, transparent 1px)`,
+        // background: theme?.palette['light']['c50'],
+        // backgroundImage: `linear-gradient(${theme.palette['background'].default} 1px, transparent 1px), linear-gradient(90deg, ${theme.palette['background'].default} 1px, transparent 1px)`,
         backgroundSize: '100px 70px, 8.33%',
         // backgroundSize: '50px 50px, 4%', // for smaller and presentable grids on background
-        backgroundPosition: '0px -4px, -4px 0px',
+        // backgroundPosition: '0px -4px, -4px 0px',
+        margin: '14px',
       }}
       className="h-full"
     >

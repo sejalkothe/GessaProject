@@ -89,6 +89,7 @@ function Project() {
     <Box
       sx={{
         background: theme.palette?.background?.default,
+        overflow: 'hidden',
       }}
     >
       <Header title="iauro" searchBar="true" />

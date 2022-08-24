@@ -53,8 +53,8 @@ export default function GridCard(props: IGridCard) {
     <Box
       className="grid-stack-item "
       style={{
-        border: '1px solid #414141',
-        borderRadius: '4px',
+        backgroundColor: `${theme?.palette['light']['c50']} !important`,
+        overflow: 'hidden',
       }}
       id={props.id} // convert to string
       w={props.w}
@@ -67,8 +67,12 @@ export default function GridCard(props: IGridCard) {
       <Box
         className="grid-stack-item-content overflow-hidden"
         sx={{
-          border: `1px solid ${theme.palette['background'].default} !important`,
-          background: `${theme.palette['background'].default} !important`,
+          border: `1px solid #dadce0`,
+          borderRadius: '4px',
+          // border: `1px solid ${theme?.palette['light']['c50']} !important`,
+          background: `${theme?.palette['light']['c50']} !important`,
+          padding: '10px !important',
+          overflow: 'hidden !important',
         }}
       >
         <header
@@ -140,6 +144,7 @@ export default function GridCard(props: IGridCard) {
             top: '20px',
             height: 'calc(100% - 20px)',
             position: 'relative',
+            overflow: 'hidden',
           }}
         >
           {currentCompomponent}
