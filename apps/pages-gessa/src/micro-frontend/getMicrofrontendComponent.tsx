@@ -78,7 +78,7 @@ const Microfrontend = (props: {
   }
 
   const Component = React.lazy(loadComponent(props.scope, props.module));
-
+  console.log(props.props);
   return (
     <React.Suspense fallback="Loading Microfrontend">
       <Component {...props.props} />

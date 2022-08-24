@@ -6,7 +6,7 @@ import { Link, Route, Routes, useParams } from 'react-router-dom';
 import { routes } from '../../layout/route';
 import LayoutWrapper from '../../layout/layout';
 import { ITheme } from '../../../theme/index';
-import Logo from '../../../assets/logo.svg';
+// import Logo from '../../../assets/logo.svg';
 import ChildMenuContext from './component/ChildMenusContext';
 import {
   getAppMenu,
@@ -91,7 +91,7 @@ function Project() {
         background: theme.palette?.background?.default,
       }}
     >
-      <Header title="iauro" searchBar="true" logo={Logo} />
+      <Header title="iauro" searchBar="true" />
       <Stack direction="row">
         <Box
           sx={{

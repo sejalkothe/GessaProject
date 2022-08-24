@@ -6,8 +6,9 @@ import App from './app/app';
 import KeycloakLogin from './app/keycloakLogin';
 
 ReactDOM.render(
-  // <StrictMode>
-    <KeycloakLogin />,
-  // </StrictMode>,
+  <StrictMode>
+    <App pageId="" />
+    {/* <KeycloakLogin />, */}
+  </StrictMode>,
   document.getElementById('root')
 );

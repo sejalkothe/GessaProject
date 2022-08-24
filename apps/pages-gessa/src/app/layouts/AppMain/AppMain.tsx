@@ -4,6 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import { Microfrontend } from '../../../micro-frontend';
 import { Outlet } from 'react-router';
 import MFViewPageApp from '../../../micro-frontend/remotes/view-page-app';
+import ViewPageUi from './Page-ui/viewPageUi';
 
 const Test = () => {
   return <Typography variant="body1">feature3</Typography>;
@@ -16,7 +17,7 @@ const Nest = () => {
 export const routesObj = [
   {
     path: '/menu/:menuId/sub-menu/feature3/',
-    element: <Test />,
+    element: <ViewPageUi tabData={{}} />,
   },
   {
     path: '/3',
@@ -29,16 +30,12 @@ export const Routing = () => {
 };
 
 const AppMain = () => (
-  <Routing />
-  // <>
-  //   <Microfrontend
-  //     url={MFViewPageApp.url}
-  //     scope={MFViewPageApp.scope}
-  //     module={MFViewPageApp.components.ViewPageAppComponent}
-  //     props={{}}
-  //   />
-  //   <Outlet />
-  // </>
+  <Microfrontend
+    url={MFViewPageApp.url}
+    scope={MFViewPageApp.scope}
+    module={MFViewPageApp.components.ViewPageAppComponent}
+    props={{}}
+  />
 );
 
 export default AppMain;

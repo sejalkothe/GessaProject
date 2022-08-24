@@ -1,13 +1,14 @@
 import { IMicroFrontend } from '.';
+import { environment } from '../../environments/environment';
 
 const MFViewPageApp = {
-  url: 'http://localhost:8001/remoteEntry.js',
+  url: environment.NX_VIEW_PAGE_MF,
   scope: 'ViewPageApp',
   components: {
     ViewPageAppComponent: './ViewPageAppComponent',
   },
   slices: {
-    // ViewPageSlice: './ViewPageSlice',
+    ViewPageSlice: './ViewPageSlice',
   },
   routes: {
     // default: './RoutingDemoConfig',

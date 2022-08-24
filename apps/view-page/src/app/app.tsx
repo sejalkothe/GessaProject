@@ -10,28 +10,34 @@ import {
   ReduxProvider,
 } from '../context';
 import LayoutWrapper from './layout/layout';
+import DemoWrapper from './pages/projects/DemoWrapper';
+export interface IAppProps {
+  pageId: string;
+}
 
-export function App() {
+export function App(props: IAppProps) {
+  console.log(props);
   return (
-    <ReduxProvider>
-    <ThemeProvider>
-      <SettingProvider>
-        <AuthProvider>
-          <MicroFrontendProvider>
-           
+    <MicroFrontendProvider>
+      <ReduxProvider>
+        <ThemeProvider>
+          <SettingProvider>
+            <AuthProvider>
               <RouteProvider>
                 {/* <HashRouter> */}
                 <StyledEngineProvider injectFirst>
                   <CssBaseline />
+                  <DemoWrapper
+                    page_id={props.pageId || '63060232a2ac773173b69959'}
+                  />
                 </StyledEngineProvider>
                 {/* </HashRouter> */}
               </RouteProvider>
-        
-          </MicroFrontendProvider>
-        </AuthProvider>
-      </SettingProvider>
-    </ThemeProvider>
-    </ReduxProvider>
+            </AuthProvider>
+          </SettingProvider>
+        </ThemeProvider>
+      </ReduxProvider>
+    </MicroFrontendProvider>
   );
 }
 

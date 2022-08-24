@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import { RouteContext } from '../../context';
 import { useRoutes } from 'react-router';
 import { RouteContextType } from '../../types/routes';
@@ -13,4 +13,4 @@ const LayoutWrapper = (props: any) => {
   return <Layout />;
 };
 
-export default LayoutWrapper;
+export default memo(LayoutWrapper);
