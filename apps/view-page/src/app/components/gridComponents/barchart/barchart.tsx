@@ -37,6 +37,8 @@ export function Barchart({
   xLabel = '',
   yLabel = '',
 }: BarChartProps) {
+  const theme = useTheme();
+
   const [barChartData, setBarchartData] = useState<any>({
     datasets: [],
     labels: [],
@@ -46,17 +48,22 @@ export function Barchart({
     x: {
       grid: {
         display: false,
+        color: 'red',
       },
+      ticks: { color: theme.palette['text'].primary },
       title: {
         display: true,
         text: xLabel,
+        color: theme.palette['text'].primary,
       },
     },
     y: {
       grid: {},
+      ticks: { color: theme.palette['text'].primary },
       title: {
         display: true,
         text: yLabel,
+        color: theme.palette['text'].primary,
       },
     },
   });
@@ -66,8 +73,6 @@ export function Barchart({
     const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
     return color + _opacity.toString(16).toUpperCase();
   }
-
-  const theme = useTheme();
 
   useEffect(() => {
     if (data && data.datasets && data.datasets.length && data.labels.length) {
@@ -108,9 +113,11 @@ export function Barchart({
               legend: {
                 display: true,
                 position: 'bottom',
+
                 labels: {
                   usePointStyle: true,
                   pointStyle: 'rectRounded',
+                  color: theme.palette['text'].primary,
                 },
               },
             },

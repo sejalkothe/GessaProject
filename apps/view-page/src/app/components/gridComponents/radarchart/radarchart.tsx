@@ -76,6 +76,7 @@ export function RadarChart({ data, legend = 'bottom' }: RadarChartProps) {
               labels: {
                 usePointStyle: true,
                 pointStyle: 'rectRounded',
+                color: theme.palette['text'].primary,
               },
             },
           },

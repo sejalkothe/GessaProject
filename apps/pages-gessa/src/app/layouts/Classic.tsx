@@ -19,7 +19,10 @@ function Classic({ right = false }) {
     };
 
   return (
-    <div className={`container__classic ${right && 'container__classic__RT'}`}>
+    <div
+      className={`container__classic ${right && 'container__classic__RT'}`}
+      style={{ overflow: 'hidden' }}
+    >
       <Box
         component="aside"
         className="aside__classic"

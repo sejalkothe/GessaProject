@@ -78,6 +78,7 @@ export function DoughnutChart({ data, legend = 'bottom' }: DoughnutChartProps) {
               labels: {
                 usePointStyle: true,
                 pointStyle: 'rectRounded',
+                color: theme.palette['text'].primary,
               },
             },
             title: {

@@ -78,6 +78,7 @@ export function PieChart({ data, legend = 'bottom' }: PieChartProps) {
               labels: {
                 usePointStyle: true,
                 pointStyle: 'rectRounded',
+                color: theme.palette['text'].primary,
               },
             },
           },

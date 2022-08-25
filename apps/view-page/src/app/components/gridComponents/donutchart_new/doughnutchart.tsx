@@ -81,6 +81,7 @@ export default function DoughnutChart({
               labels: {
                 usePointStyle: true,
                 pointStyle: 'cirlce',
+                color: theme.palette['text'].primary,
               },
             },
             title: {

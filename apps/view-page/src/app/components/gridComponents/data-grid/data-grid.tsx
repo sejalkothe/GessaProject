@@ -12,7 +12,7 @@ export interface DatagridProps {
 const StyledDataGrid = styled('div')(({ theme }) => {
   return {
     '&': {
-      backgroundColor: theme.palette['background'].paper,
+      backgroundColor: theme.palette['background'].default,
     },
   };
 });
@@ -25,25 +25,24 @@ export function Datagrid(props: DatagridProps) {
       <div
         className="w-full h-full"
         style={{
-          backgroundColor: theme.palette['background'].paper,
-          color: theme.palette['getContrastText'](
-            theme.palette['background'].paper
-          ),
+          backgroundColor: theme.palette['background'].default,
+          color: theme.palette['text'].primary,
         }}
       >
         <DataGrid
           style={{
             minHeight: 300,
-            backgroundColor: theme.palette['background'].paper,
-            color: theme.palette['getContrastText'](
-              theme.palette['background'].paper
-            ),
+            backgroundColor: theme.palette['background'].default,
+            color: theme.palette['text'].primary,
             borderRadius: '0px',
           }}
           sx={{
             '& .MuiDataGrid-cell:hover': {
-              color: 'primary.main',
+              color: theme.palette['text'].primary,
             },
+            // '& .MuiDataGrid-columnHeaders': {
+            //   borderBottom: '1px solid red !important',
+            // },
           }}
           rows={props.rows}
           columns={props.columns}

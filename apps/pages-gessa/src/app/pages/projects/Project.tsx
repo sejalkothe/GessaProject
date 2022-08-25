@@ -89,7 +89,7 @@ function Project() {
     <Box
       sx={{
         background: theme.palette?.background?.default,
-        overflow: 'hidden',
+        overflow: 'hidden !important',
       }}
     >
       <Header title="iauro" searchBar="true" />
@@ -148,6 +148,7 @@ function Project() {
         <Box
           sx={{
             flexGrow: 1,
+            overflow: 'hidden',
           }}
         >
           <ChildMenuContext.Provider value={menuName.menuChild}>

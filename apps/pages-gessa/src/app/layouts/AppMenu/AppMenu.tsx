@@ -25,7 +25,7 @@ function AppMenu({ menuType }: Props) {
   }, [params]);
 
   return (
-    <div style={{ height: '92vh' }}>
+    <div>
       {menuType === 'classic' ? (
         <List component="nav" disablePadding>
           {childMenus.length !== 0 ? (

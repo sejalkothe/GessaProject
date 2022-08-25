@@ -36,6 +36,7 @@ export const PolarChart = (props: IPolarChartProps) => {
     datasets: [],
     labels: [],
   });
+
   function addAlpha(color: string, opacity: number) {
     // coerce values so ti is between 0 and 1.
     const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
@@ -88,7 +89,6 @@ export const PolarChart = (props: IPolarChartProps) => {
         options={{
           maintainAspectRatio: true,
           aspectRatio: 1,
-
           plugins: {
             legend: {
               display: true,
@@ -96,10 +96,12 @@ export const PolarChart = (props: IPolarChartProps) => {
               labels: {
                 usePointStyle: true,
                 pointStyle: 'circle',
+                color: theme.palette['text'].primary,
               },
             },
             title: {
               display: true,
+
               // text: 'Doughnut Chart',
             },
           },

@@ -34,6 +34,7 @@ export interface LineChartProps {
 }
 
 export function LineChart({ data, xLabel, yLabel }: LineChartProps) {
+  const theme = useTheme();
   const [lineChartData, setLinechartData] = useState<any>({
     datasets: [],
     labels: [],
@@ -43,27 +44,29 @@ export function LineChart({ data, xLabel, yLabel }: LineChartProps) {
       grid: {
         display: false,
       },
+      ticks: { color: theme.palette['text'].primary },
       title: {
         display: true,
         text: xLabel,
+        color: theme.palette['text'].primary,
       },
     },
     y: {
       grid: {},
+      ticks: { color: theme.palette['text'].primary },
       title: {
         display: true,
         text: yLabel,
+        color: theme.palette['text'].primary,
       },
     },
   });
-
   function addAlpha(color: string, opacity: number) {
     // coerce values so ti is between 0 and 1.
     const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
     return color + _opacity.toString(16).toUpperCase();
   }
 
-  const theme = useTheme();
   // data &&
   //   Array.isArray(data.datasets) &&
   //   data.datasets.forEach((element: any, index: number) => {
@@ -111,6 +114,7 @@ export function LineChart({ data, xLabel, yLabel }: LineChartProps) {
               labels: {
                 usePointStyle: true,
                 pointStyle: 'rectRounded',
+                color: theme.palette['text'].primary,
               },
             },
           },

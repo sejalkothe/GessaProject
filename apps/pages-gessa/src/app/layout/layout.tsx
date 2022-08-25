@@ -1,7 +1,11 @@
 import AppLayout from '../layouts/AppLayout';
 
 const LayoutWrapper = () => {
-  return <AppLayout />;
+  return (
+    <div style={{ overflow: 'hidden' }}>
+      <AppLayout />
+    </div>
+  );
 };
 
 export default LayoutWrapper;
