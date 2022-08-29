@@ -6,6 +6,7 @@ import { alpha, styled, useTheme } from '@mui/system';
 import SearchInput from '../SearchBox';
 import { IconComponent } from '@iauro/soulify';
 import Avatar from '@mui/material/Avatar';
+import { url } from 'inspector';
 
 function Header({ title, searchBar, logo }: any) {
   const [inputText, setInputText] = useState('');
@@ -50,14 +51,14 @@ function Header({ title, searchBar, logo }: any) {
             height: '22px',
           }}
         >
-          <img src={logo} alt="logo" />
+          <img src={'../../../../assets/Logo.svg'} alt="logo" />
         </Box>
       </Box>
       <Box sx={{ width: '27%' }}></Box>
       <Box
         sx={{
           width: '30%',
-          height: '4vh',
+          // height: '100%',
           margin: '12px',
           justifyContent: 'center',
           display: 'flex',
