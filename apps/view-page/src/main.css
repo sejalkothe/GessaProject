@@ -2,3 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 @import '../dist/gridstack.css';
+@import '../../../node_modules/@iauro/component-library/static/assets/icons/icomoon/style.css';

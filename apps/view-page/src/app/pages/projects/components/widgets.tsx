@@ -14,13 +14,15 @@ import {
   heatmapData,
   polarData,
   scatterData,
+  barData,
 } from 'apps/view-page/src/fake-db/scatterData';
-import Barchart from '../../../components/gridComponents/barchart/barchart';
+// import Barchart from '../../../components/gridComponents/barchart/barchart';
+import { Barchart, LineChart, ScatterChart } from '@gessa/component-library';
 import RadarChart from '../../../components/gridComponents/radarchart/radarchart';
 import DoughnutChart from '../../../components/gridComponents/donutchart_new/doughnutchart';
 import PieChart from '../../../components/gridComponents/piechar/piechart';
-import LineChart from '../../../components/gridComponents/linechart/linechart';
-import ScatterChart from '../../../components/gridComponents/scatter-chart/scatter-chart';
+// import LineChart from '../../../components/gridComponents/linechart/linechart';
+// import ScatterChart from '../../../components/gridComponents/scatter-chart/scatter-chart';
 import HeatMap from '../../../components/gridComponents/heat-map/heat-map1';
 import PolarChart from '../../../components/gridComponents/polar-chart/polar-chart';
 import BubbleChart from '../../../components/gridComponents/bubble-chart/bubble-chart';
@@ -51,6 +53,7 @@ export interface IWidgetType {
 }
 
 const ScatterData = scatterData;
+const BarData: any = barData;
 
 export const WIDGETS_V1: IWidgetType[] = [
   {
@@ -104,7 +107,13 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Barchart {...props} />
+          <Barchart
+            data={BarData.data}
+            xLabel={'hello'}
+            yLabel={'moto'}
+            stacked={false}
+            horizontal={false}
+          />
         ) : (
           <Barchart
             data={{
@@ -112,7 +121,7 @@ export const WIDGETS_V1: IWidgetType[] = [
               datasets: [],
             }}
             stacked={false}
-            horizontal={false}
+            horizontal={true}
           />
         );
       },

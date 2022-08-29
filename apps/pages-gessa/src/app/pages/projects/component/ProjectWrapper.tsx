@@ -12,7 +12,7 @@ const ProjectWrapper = () => {
 
   return (
     <div className="flex flex-row overflow-y-hidden">
-      {Router}
+      <Project />
       <Outlet />
     </div>
   );

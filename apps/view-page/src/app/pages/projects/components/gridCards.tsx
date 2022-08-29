@@ -49,6 +49,10 @@ export default function GridCard(props: IGridCard) {
     props.actions.handleEnableMove(flag);
   };
 
+  const itemClicked = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <Box
       className="grid-stack-item "
@@ -99,8 +103,8 @@ export default function GridCard(props: IGridCard) {
               _selectedWidget.formData.formData.title}
           </h2>
 
-          {/* <Box sx={{ ml: 'auto' }}>
-            <button
+          <Box sx={{ ml: 'auto' }}>
+            {/* <button
               title="Edit widget"
               onClick={() => {
                 setWidgetToBeUpdated(
@@ -120,24 +124,23 @@ export default function GridCard(props: IGridCard) {
                   label: 'Edit',
                 }}
               ></IconComponent>
-            </button>
+            </button> */}
 
-            <button
-              title="Delete widget"
+            <div
               onClick={() => {
-                props.actions.handleRemove(ref.current);
+                itemClicked(props);
               }}
             >
               <IconComponent
                 {...{
-                  name: 'Close',
+                  name: 'info_black_24dp',
                   color: '#727cad',
                   size: 25,
-                  label: 'Close',
+                  label: 'info_black_24dp',
                 }}
               ></IconComponent>
-            </button>
-          </Box> */}
+            </div>
+          </Box>
         </header>
         <div
           style={{

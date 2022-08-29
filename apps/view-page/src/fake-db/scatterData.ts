@@ -1,3 +1,18 @@
+export const barData = {
+  data: {
+    labels: ['value1', 'value2', 'value3', 'value4', 'value5', 'value6'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 1,
+        borderRadius: 5,
+      },
+    ],
+  },
+};
 export const scatterData = {
   labels: ['a', 'b', 'c'],
   datasets: [

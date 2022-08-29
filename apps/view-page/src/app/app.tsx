@@ -27,9 +27,7 @@ export function App(props: IAppProps) {
                 {/* <HashRouter> */}
                 <StyledEngineProvider injectFirst>
                   <CssBaseline />
-                  <DemoWrapper
-                    page_id={props.pageId || '6306f5fa916c785f6ef1857a'}
-                  />
+                  <DemoWrapper page_id={'630c6d19dc1e45226aa4a9dc'} />
                 </StyledEngineProvider>
                 {/* </HashRouter> */}
               </RouteProvider>

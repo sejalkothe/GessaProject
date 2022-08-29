@@ -89,7 +89,12 @@ function Header({ title, searchBar, logo }: any) {
       >
         <Box
           sx={{
-            paddingBottom: '18px',
+            // paddingBottom: '18px',
+
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
           }}
         >
           <IconComponent
@@ -99,16 +104,27 @@ function Header({ title, searchBar, logo }: any) {
             color={theme?.palette?.text?.primary}
           />
         </Box>
-        <Avatar
+        <Box
           sx={{
-            bgcolor: theme?.palette?.secondary?.main,
-            color: theme?.palette?.light?.main,
-            width: '36px',
-            height: '36px',
-            fontSize: '12px',
+            // paddingBottom: '18px',
+
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
           }}
-          {...stringAvatar('Kent Dodds')}
-        />
+        >
+          <Avatar
+            sx={{
+              bgcolor: theme?.palette?.secondary?.main,
+              color: theme?.palette?.light?.main,
+              width: '36px',
+              height: '36px',
+              fontSize: '12px',
+            }}
+            {...stringAvatar('Kent Dodds')}
+          />
+        </Box>
       </Stack>
     </Stack>
   );

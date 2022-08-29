@@ -24,17 +24,17 @@ function Project() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch('http://localhost:3004/widget')
-      .then((respone) => {
-        const result = respone.json();
-        return result;
-      })
-      .then((res) => {
-        setWidgetData(res);
-      })
-      .catch((error) => {
-        //  ToDo:
-      });
+    // fetch('http://localhost:3004/widget')
+    //   .then((respone) => {
+    //     const result = respone.json();
+    //     return result;
+    //   })
+    //   .then((res) => {
+    //     setWidgetData(res);
+    //   })
+    //   .catch((error) => {
+    //     //  ToDo:
+    //   });
   }, []);
 
   useEffect(() => {
