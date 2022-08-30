@@ -39,6 +39,7 @@ export const getPageDataByIdApi = createAsyncThunk(
         params: {},
       })
     ).data.result;
+    dispatch(setGridDatatore([]));
     dispatch(setGridDatatore([response]));
   }
 );
@@ -81,8 +82,9 @@ const gridSlice = createSlice({
   initialState: gridDataAdapter.getInitialState({ activePageId: '-1' }),
   reducers: {
     setGridDatatore: gridDataAdapter.upsertMany,
+    deleteAllStore: gridDataAdapter.removeAll,
   },
 });
 
-export const { setGridDatatore } = gridSlice.actions;
+export const { setGridDatatore, deleteAllStore } = gridSlice.actions;
 export default gridSlice.reducer;

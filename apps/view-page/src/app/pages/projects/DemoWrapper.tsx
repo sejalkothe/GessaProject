@@ -9,6 +9,7 @@ import {
   getGridDataResource,
 } from './store/gridDataRenderSlice';
 import {
+  deleteAllStore,
   getPageDataByIdApi,
   savePageConfigurationApi,
   selectGridData,
@@ -253,7 +254,6 @@ const DemoWrapper = (props: IGridProps) => {
       size: 500,
     };
     dispatch(getAllWidgets(payload));
-    console.log('hellopage', props.page_id);
 
     if (props && props.page_id) {
       const payload2 = {
@@ -261,7 +261,7 @@ const DemoWrapper = (props: IGridProps) => {
         page: 0,
         size: 100,
       };
-      dispatch(setGridDatatore([]));
+      dispatch(deleteAllStore());
 
       dispatch(getPageDataByIdApi(payload2));
     }
