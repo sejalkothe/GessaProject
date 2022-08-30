@@ -34,7 +34,6 @@ const AppMain = (props: any) => {
   const [_props, setProps] = useState<any>();
 
   useEffect(() => {
-    console.log(props);
     if (props && props.pageId) {
       setProps(props);
     }
@@ -42,7 +41,7 @@ const AppMain = (props: any) => {
   return _props && _props.pageId && _props.pageId.length > 0 ? (
     <ViewPageUi tabData={_props}></ViewPageUi>
   ) : (
-    <>nodata</>
+    <></>
   );
 };
 

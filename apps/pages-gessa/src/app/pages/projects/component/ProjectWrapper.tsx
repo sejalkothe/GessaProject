@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const ProjectWrapper = () => {
   const params = useParams();
   useEffect(() => {
-    console.log('params', params);
+    // console.log('params', params);
   }, [params]);
 
   return (

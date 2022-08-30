@@ -35,7 +35,7 @@ function Project() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    console.log('params', params);
+    // console.log('params', params);
   }, [params]);
   const location = useLocation();
   const headerComponentProps = {
@@ -109,7 +109,7 @@ function Project() {
   const menuName: any = useMemo(() => {
     let menuChild: any[] = [];
     const menu = urlParams['*']?.split('/')?.[1];
-    console.log('aaa', params);
+    // console.log('aaa', params);
     if (selectedMenu) {
       appMenu?.forEach((item: any, index: any) => {
         if (

@@ -18,7 +18,7 @@ export interface IAppProps {
 
 export function App(props: any) {
   useEffect(() => {
-    console.log('viwepage', props);
+    // console.log('viwepage', props);
   }, [props]);
   return (
     <MicroFrontendProvider>

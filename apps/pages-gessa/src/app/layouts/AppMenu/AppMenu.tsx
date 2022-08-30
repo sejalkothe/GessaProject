@@ -18,7 +18,6 @@ function AppMenu(props: Props) {
   const [selectedPage, setSealectedPage] = useState<any>('');
 
   useEffect(() => {
-    console.log('rrr', params, childMenus);
     if (params && params.subMenuId && childMenus && childMenus.length > 0) {
       const _menu = childMenus.find(
         (value: any) => value.name === params.subMenuId
@@ -41,10 +40,10 @@ function AppMenu(props: Props) {
     }
   }, [selectedPage]);
   useEffect(() => {
-    console.log('childMenus', childMenus);
+    // console.log('childMenus', childMenus);
   }, [childMenus]);
   useEffect(() => {
-    console.log('selectedPage', selectedPage);
+    // console.log('selectedPage', selectedPage);
   }, [selectedPage]);
 
   return (
