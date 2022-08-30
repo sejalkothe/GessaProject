@@ -66,15 +66,15 @@ const Microfrontend = (props: {
   });
 
   if (!props) {
-    return <h2>Not props specified</h2>;
+    return <h5>Not props specified</h5>;
   }
 
   if (!ready) {
-    return <h2>Loading dynamic script: {props.url}</h2>;
+    return <h5>Loading dynamic script: {props.url}</h5>;
   }
 
   if (failed) {
-    return <h2>Failed to load dynamic script: {props.url}</h2>;
+    return <h5>Failed to load dynamic script: {props.url}</h5>;
   }
 
   const Component = React.lazy(loadComponent(props.scope, props.module));
