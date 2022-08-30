@@ -109,13 +109,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Barchart
-            data={BarData.data}
-            xLabel={'hello'}
-            yLabel={'moto'}
-            stacked={false}
-            horizontal={false}
-          />
+          <Barchart {...props} />
         ) : (
           <Barchart
             data={{
@@ -141,8 +135,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          // <RadarChart {...props} />
-          <RadarChart {...RadarData} />
+          <RadarChart {...props} />
         ) : (
           <RadarChart
             data={{
@@ -166,7 +159,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <DoughnutChart {...DouhnutData} />
+          <DoughnutChart {...props} />
         ) : (
           // <DoughnutChart {...props} />
           <DoughnutChart
@@ -191,7 +184,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PieChart {...PiechartData} />
+          <PieChart {...props} />
         ) : (
           // <PieChart {...props} />
           <PieChart
@@ -217,7 +210,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart data={BarData.data} xLabel={'hello'} yLabel={'moto'} />
+          <LineChart {...props} />
         ) : (
           <LineChart
             data={{
@@ -242,8 +235,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <ScatterChart
-            labels={ScatterData.labels}
-            datasets={ScatterData.datasets}
+            labels={props.labels || []}
+            datasets={props.datasets || []}
           />
         ) : (
           <ScatterChart labels={[]} datasets={[]} />
@@ -264,12 +257,12 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <HeatMap
-            columnAxisLabel={heatmapData.columnAxisLabel}
-            data={heatmapData.data}
-            rowAxisLabel={heatmapData.rowAxisLabel}
-            threshold={heatmapData.threshold}
-            colLabel={heatmapData.colLabel}
-            rowLabel={heatmapData.rowLabel}
+            columnAxisLabel={props.columnAxisLabel || []}
+            data={props.data || []}
+            rowAxisLabel={props.rowAxisLabel || []}
+            threshold={props.threshold || []}
+            colLabel={props.colLabel || ''}
+            rowLabel={props.rowLabel || ''}
           />
         ) : (
           <HeatMap
@@ -296,7 +289,10 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PolarChart {...PolarData} />
+          <PolarChart
+            datasets={props.data.datasets || []}
+            labels={props.data.labels || []}
+          />
         ) : (
           // <PolarChart
           //   datasets={props.data.datasets || []}
@@ -320,8 +316,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <BubbleChart
-            datasets={scatterData.datasets}
-            labels={scatterData.labels}
+            datasets={props.datasets || []}
+            labels={props.labels || []}
           />
         ) : (
           <BubbleChart datasets={[]} labels={[]} />
