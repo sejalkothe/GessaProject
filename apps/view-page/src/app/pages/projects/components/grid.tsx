@@ -387,4 +387,4 @@ const Grid = ({
   );
 };
 
-export default forwardRef(Grid);
+export default Grid;

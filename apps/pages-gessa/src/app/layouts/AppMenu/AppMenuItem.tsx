@@ -147,7 +147,13 @@ function AppMenuItem(props: Props) {
       <List component="div" disablePadding>
         {items.map((item: any, index: number) => (
           <>
-            <AppMenuItem {...item} key={index} />
+            <AppMenuItem
+              {...item}
+              key={index}
+              onClick={(e: any) => {
+                console.log(e);
+              }}
+            />
           </>
         ))}
       </List>

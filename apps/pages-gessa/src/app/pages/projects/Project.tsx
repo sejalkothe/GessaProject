@@ -2,7 +2,13 @@ import React, { useMemo, lazy, useEffect, useState } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import Header from './component/Header/Header';
 import { IconComponent } from '@iauro/soulify';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Routes,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { routes } from '../../layout/route';
 import LayoutWrapper from '../../layout/layout';
 import { ITheme } from '../../../theme/index';
@@ -15,13 +21,20 @@ import {
 import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
 import { HeaderComponent } from '@gessa/component-library';
+import { URLSearchParams } from 'url';
 
 function Project() {
   const theme: ITheme = useTheme();
   const [widgetData, setWidgetData] = useState([]);
   const [appMenu, setAppMenu]: any = useState();
   const [isClicked, setClicked]: any = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState<string>('');
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const params = useParams();
+
+  useEffect(() => {}, [params]);
   const location = useLocation();
   const headerComponentProps = {
     searchData: {
@@ -94,18 +107,17 @@ function Project() {
   const menuName: any = useMemo(() => {
     let menuChild: any[] = [];
     const menu = urlParams['*']?.split('/')?.[1];
-    appMenu?.forEach((item: any, index: any) => {
-      if (item.data.name === menu) {
-        menuChild = item.child;
-      }
-    });
-
+    if (selectedMenu) {
+      appMenu?.forEach((item: any, index: any) => {
+        if (item.data.name === selectedMenu) {
+          menuChild = item.child;
+        }
+      });
+    }
     return { menu, menuChild };
   }, [appMenu, urlParams]);
 
-  useEffect(() => {
-    console.log('appMenu', appMenu);
-  }, [appMenu]);
+  useEffect(() => {}, [appMenu]);
 
   return (
     <Box
@@ -132,7 +144,11 @@ function Project() {
               return (
                 <Link
                   key={index}
-                  to={'menu/' + item.data.name + '/'}
+                  to={
+                    '/project/630c6ce8dc1e45226aa4a9b9/menu/' +
+                    item.data.name +
+                    '/'
+                  }
                   style={{ textDecoration: 'none' }}
                 >
                   <Box
@@ -150,14 +166,15 @@ function Project() {
                     }}
                     onClick={() => {
                       setClicked(isClicked !== index ? index : -1);
+                      setSelectedMenu(item.data.name);
                     }}
                   >
                     <IconComponent
                       name={item.data.icon}
                       size={25}
-                      label={'Quilt'}
+                      label={item.data.icon}
                       color={
-                        menuName.menu === item.data.name
+                        selectedMenu === item.data.name
                           ? theme?.palette?.primary?.main
                           : theme?.palette?.text?.primary
                       }

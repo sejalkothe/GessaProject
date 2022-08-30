@@ -12,6 +12,7 @@ import {
   getPageDataByIdApi,
   savePageConfigurationApi,
   selectGridData,
+  setGridDatatore,
 } from './store/gridSlice';
 import { getAllReportsLabelApi } from './store/reportLabelSlice';
 import { getAllReportsApi, selectAllReports } from './store/reportSlice';
@@ -50,6 +51,7 @@ const DemoWrapper = (props: IGridProps) => {
   useEffect(() => {
     const keysArray: any = [];
     const promiseArray: any = [];
+    setGridData([]);
     if (gridDataStore && gridDataStore.length && gridDataStore[0].widgets) {
       for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
         keysArray.push([
@@ -251,15 +253,18 @@ const DemoWrapper = (props: IGridProps) => {
       size: 500,
     };
     dispatch(getAllWidgets(payload));
+    console.log('hellopage', props.page_id);
 
-    const payload2 = {
-      page_id: props.page_id,
-      page: 0,
-      size: 100,
-    };
+    if (props && props.page_id) {
+      const payload2 = {
+        page_id: props.page_id,
+        page: 0,
+        size: 100,
+      };
+      dispatch(setGridDatatore([]));
 
-    dispatch(getPageDataByIdApi(payload2));
-
+      dispatch(getPageDataByIdApi(payload2));
+    }
     const payload3 = {
       page: 0,
       size: 500,

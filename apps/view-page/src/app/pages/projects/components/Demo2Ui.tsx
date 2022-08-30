@@ -70,6 +70,7 @@ export const Demo2Ui = (props: Demo2Props) => {
   };
 
   useEffect(() => {
+    setWidgets([]);
     if (props && props.data) {
       setWidgets(
         [...props.data].filter((value, index, self) => {

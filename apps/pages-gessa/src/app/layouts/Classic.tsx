@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import AppHeader from './AppHeader/AppHeader';
 import AppMain from './AppMain/AppMain';
 import AppDrawer from './AppMenu/AppDrawer';
@@ -9,6 +9,7 @@ import './Classic.css';
 
 function Classic({ right = false }) {
   const theme: ITheme = useTheme();
+  const [menuData, setMenuData] = useState<any>();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const toggleDrawer =
     (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,7 +33,12 @@ function Classic({ right = false }) {
           borderRight: `1px solid ${theme.palette?.text?.c100}`,
         }}
       >
-        <AppMenu menuType="classic" />
+        <AppMenu
+          menuType="classic"
+          openPage={(e: any) => {
+            setMenuData(e);
+          }}
+        />
       </Box>
       <Box component="main" className="main__classic">
         <Box
@@ -43,7 +49,7 @@ function Classic({ right = false }) {
             color: theme.palette.text?.primary,
           }}
         >
-          <AppMain />
+          <AppMain pageId={(menuData && menuData.pageId) || ''} />
         </Box>
       </Box>
       <AppDrawer

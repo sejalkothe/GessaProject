@@ -12,7 +12,7 @@ const viewPageUi = (props: IViewPageProps) => {
       url={MFViewPageApp.url}
       scope={MFViewPageApp.scope}
       module={MFViewPageApp.components.ViewPageAppComponent}
-      props={{ pageId: '62fdff720da5a8a8a63ce47f' }}
+      props={props.tabData}
     />
   );
 };

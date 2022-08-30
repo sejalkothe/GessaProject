@@ -1,5 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { useEffect } from 'react';
 import { HashRouter } from 'react-router-dom';
 import {
   RouteProvider,
@@ -15,8 +16,10 @@ export interface IAppProps {
   pageId: string;
 }
 
-export function App(props: IAppProps) {
-  console.log(props);
+export function App(props: any) {
+  useEffect(() => {
+    console.log('viwepage', props);
+  }, [props]);
   return (
     <MicroFrontendProvider>
       <ReduxProvider>
@@ -27,7 +30,9 @@ export function App(props: IAppProps) {
                 {/* <HashRouter> */}
                 <StyledEngineProvider injectFirst>
                   <CssBaseline />
-                  <DemoWrapper page_id={'630c6d19dc1e45226aa4a9dc'} />
+                  <DemoWrapper
+                    page_id={JSON.parse(JSON.stringify(props)).pageId}
+                  />
                 </StyledEngineProvider>
                 {/* </HashRouter> */}
               </RouteProvider>
