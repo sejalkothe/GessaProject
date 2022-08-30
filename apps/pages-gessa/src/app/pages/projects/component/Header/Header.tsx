@@ -6,7 +6,6 @@ import { alpha, styled, useTheme } from '@mui/system';
 import SearchInput from '../SearchBox';
 import { IconComponent } from '@iauro/soulify';
 import Avatar from '@mui/material/Avatar';
-import { url } from 'inspector';
 
 function Header({ title, searchBar, logo }: any) {
   const [inputText, setInputText] = useState('');
@@ -88,7 +87,7 @@ function Header({ title, searchBar, logo }: any) {
           display: 'flex',
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             // paddingBottom: '18px',
 
@@ -97,14 +96,14 @@ function Header({ title, searchBar, logo }: any) {
             alignItems: 'center',
             justifyContent: 'flex-start',
           }}
-        >
-          <IconComponent
-            name={'Notification_24dp'}
-            size={25}
-            label={'notification'}
-            color={theme?.palette?.text?.primary}
-          />
-        </Box>
+        > */}
+        <IconComponent
+          name={'Notification_24dp'}
+          size={35}
+          label={'notification'}
+          color={theme?.palette?.text?.primary}
+        />
+        {/* </Box> */}
         <Box
           sx={{
             // paddingBottom: '18px',

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { useConfigForm } from 'apps/view-page/src/context/form';
 import { useEffect, useRef, useState } from 'react';
@@ -87,7 +87,7 @@ export default function GridCard(props: IGridCard) {
             alignItems: 'center',
           }}
         >
-          <h2
+          <Typography
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -101,7 +101,7 @@ export default function GridCard(props: IGridCard) {
               _selectedWidget.formData &&
               _selectedWidget.formData.formData &&
               _selectedWidget.formData.formData.title}
-          </h2>
+          </Typography>
 
           <Box sx={{ ml: 'auto' }}>
             {/* <button

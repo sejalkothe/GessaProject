@@ -1,32 +1,30 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useEffect, useState } from 'react';
 import { TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 
 import { IWidget } from '../store/widgetsSlice';
 import { __values } from 'tslib';
-// import BubbleChart from 'libs/ui/src/lib/Charts/bubble-chart/bubble-chart';
-import generateRandomString from 'apps/view-page/src/utils/randomString';
-// import ScatterChart from 'libs/ui/src/lib/Charts/scatter-chart/scatter-chart';
-// import HeatMap from 'libs/ui/src/lib/Charts/heat-map/heat-map1';
-// import PolarChart from 'libs/ui/src/lib/Charts/polar-chart/polar-chart';
 import {
   heatmapData,
   polarData,
   scatterData,
   barData,
+  doughnutData,
+  piechartData,
+  radarData,
 } from 'apps/view-page/src/fake-db/scatterData';
-// import Barchart from '../../../components/gridComponents/barchart/barchart';
-import { Barchart, LineChart, ScatterChart } from '@gessa/component-library';
-import RadarChart from '../../../components/gridComponents/radarchart/radarchart';
-import DoughnutChart from '../../../components/gridComponents/donutchart_new/doughnutchart';
-import PieChart from '../../../components/gridComponents/piechar/piechart';
-// import LineChart from '../../../components/gridComponents/linechart/linechart';
-// import ScatterChart from '../../../components/gridComponents/scatter-chart/scatter-chart';
-import HeatMap from '../../../components/gridComponents/heat-map/heat-map1';
-import PolarChart from '../../../components/gridComponents/polar-chart/polar-chart';
-import BubbleChart from '../../../components/gridComponents/bubble-chart/bubble-chart';
-import StatCard from '../../../components/gridComponents/StatCard/StatCard';
+import {
+  Barchart,
+  BubbleChart,
+  DoughnutChart,
+  HeatMap,
+  LineChart,
+  PieChart,
+  PolarChart,
+  RadarChart,
+  ScatterChart,
+  StatCard,
+} from '@gessa/component-library';
 import Datagrid from '../../../components/gridComponents/data-grid/data-grid';
 
 export interface IWidgetProps {
@@ -54,6 +52,10 @@ export interface IWidgetType {
 
 const ScatterData = scatterData;
 const BarData: any = barData;
+const PolarData: any = polarData;
+const DouhnutData: any = doughnutData;
+const PiechartData: any = piechartData;
+const RadarData: any = radarData;
 
 export const WIDGETS_V1: IWidgetType[] = [
   {
@@ -139,7 +141,8 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <RadarChart {...props} />
+          // <RadarChart {...props} />
+          <RadarChart {...RadarData} />
         ) : (
           <RadarChart
             data={{
@@ -163,8 +166,9 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <DoughnutChart {...props} />
+          <DoughnutChart {...DouhnutData} />
         ) : (
+          // <DoughnutChart {...props} />
           <DoughnutChart
             data={{
               labels: [],
@@ -187,8 +191,9 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PieChart {...props} />
+          <PieChart {...PiechartData} />
         ) : (
+          // <PieChart {...props} />
           <PieChart
             data={{
               labels: [],
@@ -212,7 +217,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart {...props} />
+          <LineChart data={BarData.data} xLabel={'hello'} yLabel={'moto'} />
         ) : (
           <LineChart
             data={{
@@ -291,11 +296,12 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PolarChart
-            datasets={props.data.datasets || []}
-            labels={props.data.labels || []}
-          />
+          <PolarChart {...PolarData} />
         ) : (
+          // <PolarChart
+          //   datasets={props.data.datasets || []}
+          //   labels={props.data.labels || []}
+          // />
           <PolarChart datasets={[]} labels={[]} />
         );
       },

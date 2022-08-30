@@ -14,6 +14,7 @@ import {
 } from '../../pages/projects/store/appMenuSlice';
 import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
+import { HeaderComponent } from '@gessa/component-library';
 
 function Project() {
   const theme: ITheme = useTheme();
@@ -22,6 +23,23 @@ function Project() {
   const [isClicked, setClicked]: any = useState(false);
   const dispatch = useAppDispatch();
   const location = useLocation();
+  const headerComponentProps = {
+    searchData: {
+      label: 'Search',
+      placeholder: 'Search',
+      value: '',
+    },
+    notificationData: {
+      name: 'Notification_24dp',
+      size: 55,
+      color: '#ff00ff',
+      label: 'notification',
+    },
+
+    userData: {
+      text: 'Unknown User',
+    },
+  };
 
   useEffect(() => {
     // fetch('http://localhost:3004/widget')
@@ -85,6 +103,10 @@ function Project() {
     return { menu, menuChild };
   }, [appMenu, urlParams]);
 
+  useEffect(() => {
+    console.log('appMenu', appMenu);
+  }, [appMenu]);
+
   return (
     <Box
       sx={{
@@ -92,7 +114,8 @@ function Project() {
         overflow: 'hidden !important',
       }}
     >
-      <Header title="iauro" searchBar="true" />
+      <HeaderComponent {...headerComponentProps} />
+      {/* <Header title="iauro" searchBar="true" /> */}
       <Stack direction="row">
         <Box
           sx={{

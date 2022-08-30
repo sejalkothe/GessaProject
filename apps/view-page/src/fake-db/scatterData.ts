@@ -1184,3 +1184,67 @@ export const heatmapData = {
     },
   ],
 };
+
+export const doughnutData = {
+  data: {
+    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: [],
+
+        borderWidth: 1,
+      },
+    ],
+  },
+};
+
+export const piechartData = {
+  data: {
+    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: [],
+
+        borderWidth: 1,
+      },
+      {
+        label: '# of ',
+        data: [null, null, null, null, null],
+        backgroundColor: [],
+
+        borderWidth: 1,
+      },
+    ],
+  },
+};
+
+export const radarData = {
+  data: {
+    labels: [
+      'Eating',
+      'Drinking',
+      'Sleeping',
+      'Designing',
+      'Coding',
+      'Cycling',
+    ],
+    datasets: [
+      {
+        label: '1st Dataset',
+        data: [2, 9, 3, 5, 2, 3],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+      },
+      {
+        label: '2nd Dataset',
+        data: [9, 2, 7, 8, 1, 5],
+        borderColor: '#37A2EB',
+        borderWidth: 1,
+      },
+    ],
+  },
+};
