@@ -160,7 +160,7 @@ function Project() {
                       alignItems: 'center',
                       marginTop: '10px',
                       background:
-                        menuName.menu === item.data.name
+                        selectedMenu === item.data.name
                           ? theme?.palette?.background?.default
                           : theme?.palette?.light?.c50,
                     }}

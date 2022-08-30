@@ -34,6 +34,9 @@ function AppMenu(props: Props) {
   useEffect(() => {
     console.log('childMenus', childMenus);
   }, [childMenus]);
+  useEffect(() => {
+    console.log('selectedPage', selectedPage);
+  }, [selectedPage]);
 
   return (
     <div>
@@ -41,19 +44,19 @@ function AppMenu(props: Props) {
         <List component="nav" disablePadding>
           {childMenus && childMenus.length !== 0 ? (
             childMenus?.map((item: any, index: number) => (
-              <Link
+              <div
                 key={index}
                 style={{ textDecoration: 'none' }}
-                to={`/project/630c6ce8dc1e45226aa4a9b9/menu/${menuDetails.menuId}/sub-menu/${item.name}/`}
+                // to={`/project/630c6ce8dc1e45226aa4a9b9/menu/${menuDetails.menuId}/sub-menu/${item.name}/`}
                 onClick={() => setSealectedPage(item)}
               >
                 <AppMenuItem
                   label={item.name}
                   icon={item.icon}
                   key={index}
-                  isSelected={menuDetails.subMenuId === item.name}
+                  isSelected={item.name === selectedPage.name}
                 />
-              </Link>
+              </div>
             ))
           ) : (
             <Typography
