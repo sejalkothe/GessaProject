@@ -1,15 +1,18 @@
 import { Box, useTheme } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppHeader from './AppHeader/AppHeader';
 import AppMain from './AppMain/AppMain';
 import AppDrawer from './AppMenu/AppDrawer';
 import AppMenu from './AppMenu/AppMenu';
 import { ITheme } from '../../theme/index';
 import './Classic.css';
+import childMenuContext from '../pages/projects/component/ChildMenusContext';
+import { useParams } from 'react-router-dom';
 
 function Classic({ right = false }) {
   const theme: ITheme = useTheme();
   const [menuData, setMenuData] = useState<any>();
+
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const toggleDrawer =
     (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,7 +21,6 @@ function Classic({ right = false }) {
       }
       setDrawerOpen(open);
     };
-
   return (
     <div
       className={`container__classic ${right && 'container__classic__RT'}`}
@@ -52,11 +54,11 @@ function Classic({ right = false }) {
           <AppMain pageId={(menuData && menuData.pageId) || ''} />
         </Box>
       </Box>
-      <AppDrawer
+      {/* <AppDrawer
         anchor="left"
         drawerOpen={drawerOpen}
         toggleDrawer={toggleDrawer}
-      />
+      /> */}
     </div>
   );
 }

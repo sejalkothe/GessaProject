@@ -9,6 +9,7 @@ import {
   MicroFrontendProvider,
   ReduxProvider,
 } from '../context';
+import LayoutWrapper from './layout/layout';
 import ProjectWrapper from './pages/projects/component/ProjectWrapper';
 
 export function App() {
@@ -22,7 +23,7 @@ export function App() {
                 <HashRouter>
                   <StyledEngineProvider injectFirst>
                     <CssBaseline />
-                    <ProjectWrapper />
+                    <LayoutWrapper />
                   </StyledEngineProvider>
                 </HashRouter>
               </RouteProvider>

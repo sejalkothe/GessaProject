@@ -22,19 +22,21 @@ import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
 import { HeaderComponent } from '@gessa/component-library';
 import { URLSearchParams } from 'url';
+import AppLayout from '../../layouts/AppLayout';
 
 function Project() {
+  const params: any = useParams();
   const theme: ITheme = useTheme();
   const [widgetData, setWidgetData] = useState([]);
   const [appMenu, setAppMenu]: any = useState();
   const [isClicked, setClicked]: any = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<string>('');
+  const [selectedMenu, setSelectedMenu] = useState<string>(params.menuId || '');
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const params = useParams();
-
-  useEffect(() => {}, [params]);
+  useEffect(() => {
+    console.log('params', params);
+  }, [params]);
   const location = useLocation();
   const headerComponentProps = {
     searchData: {
@@ -107,15 +109,19 @@ function Project() {
   const menuName: any = useMemo(() => {
     let menuChild: any[] = [];
     const menu = urlParams['*']?.split('/')?.[1];
+    console.log('aaa', params);
     if (selectedMenu) {
       appMenu?.forEach((item: any, index: any) => {
-        if (item.data.name === selectedMenu) {
+        if (
+          item.data.name === selectedMenu ||
+          item.data.name === params.menuId
+        ) {
           menuChild = item.child;
         }
       });
     }
     return { menu, menuChild };
-  }, [appMenu, urlParams]);
+  }, [appMenu, urlParams, params]);
 
   useEffect(() => {}, [appMenu]);
 
@@ -144,11 +150,9 @@ function Project() {
               return (
                 <Link
                   key={index}
-                  to={
-                    '/project/630c6ce8dc1e45226aa4a9b9/menu/' +
-                    item.data.name +
-                    '/'
-                  }
+                  to={`/project/${params.projectId}/${
+                    item.data.name || params.menuId
+                  }`}
                   style={{ textDecoration: 'none' }}
                 >
                   <Box
@@ -192,7 +196,7 @@ function Project() {
           }}
         >
           <ChildMenuContext.Provider value={menuName.menuChild}>
-            <LayoutWrapper />
+            <AppLayout />
           </ChildMenuContext.Provider>
         </Box>
       </Stack>

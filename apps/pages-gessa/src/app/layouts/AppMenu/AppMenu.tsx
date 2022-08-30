@@ -13,16 +13,25 @@ interface Props {
 }
 
 function AppMenu(props: Props) {
+  const params: any = useParams();
   const childMenus = useContext(ChildMenuContext);
   const [selectedPage, setSealectedPage] = useState<any>('');
 
-  const params = useParams();
+  useEffect(() => {
+    console.log('rrr', params, childMenus);
+    if (params && params.subMenuId && childMenus && childMenus.length > 0) {
+      const _menu = childMenus.find(
+        (value: any) => value.name === params.subMenuId
+      );
+      setSealectedPage(_menu);
+    }
+  }, [params, childMenus]);
 
   /** get the menu id from url params */
   const menuDetails = useMemo(() => {
-    const menu = params['*']?.split('/');
-    const menuId = menu?.[1];
-    const subMenuId = menu?.[3];
+    // const menu = params['*']?.split('/');
+    const menuId = params.menuId;
+    const subMenuId = params.subMenuId;
     return { menuId, subMenuId };
   }, [params]);
 
@@ -44,19 +53,24 @@ function AppMenu(props: Props) {
         <List component="nav" disablePadding>
           {childMenus && childMenus.length !== 0 ? (
             childMenus?.map((item: any, index: number) => (
-              <div
+              <Link
                 key={index}
                 style={{ textDecoration: 'none' }}
-                // to={`/project/630c6ce8dc1e45226aa4a9b9/menu/${menuDetails.menuId}/sub-menu/${item.name}/`}
+                to={`/project/${params.projectId}/${params.menuId}/${
+                  item.name || params.subMenuId
+                }/`}
                 onClick={() => setSealectedPage(item)}
               >
                 <AppMenuItem
                   label={item.name}
                   icon={item.icon}
                   key={index}
-                  isSelected={item.name === selectedPage.name}
+                  isSelected={
+                    item.name === selectedPage.name ||
+                    item.name === params.subMenuId
+                  }
                 />
-              </div>
+              </Link>
             ))
           ) : (
             <Typography

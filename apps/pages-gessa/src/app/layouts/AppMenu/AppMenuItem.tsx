@@ -85,7 +85,6 @@ function AppMenuItem(props: Props) {
   const { label, icon, link, items = [] } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
-  const childMenus = useContext(ChildMenuContext);
   const theme: ITheme = useTheme();
 
   function handleClick() {

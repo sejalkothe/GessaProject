@@ -256,14 +256,15 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <HeatMap
-            columnAxisLabel={props.columnAxisLabel || []}
-            data={props.data || []}
-            rowAxisLabel={props.rowAxisLabel || []}
-            threshold={props.threshold || []}
-            colLabel={props.colLabel || ''}
-            rowLabel={props.rowLabel || ''}
-          />
+          // <HeatMap
+          //   columnAxisLabel={props.columnAxisLabel || []}
+          //   data={props.data || []}
+          //   rowAxisLabel={props.rowAxisLabel || []}
+          //   threshold={props.threshold || []}
+          //   colLabel={props.colLabel || ''}
+          //   rowLabel={props.rowLabel || ''}
+          // />
+          <></>
         ) : (
           <HeatMap
             columnAxisLabel={[]}
