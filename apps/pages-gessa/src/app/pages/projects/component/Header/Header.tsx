@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { ITheme } from '../../../../../theme/index';
 import { alpha, styled, useTheme } from '@mui/system';
 import SearchInput from '../SearchBox';
-import { IconComponent } from '@iauro/soulify';
+import { IconComponent } from '@gessa/component-library';
 import Avatar from '@mui/material/Avatar';
 
 function Header({ title, searchBar, logo }: any) {

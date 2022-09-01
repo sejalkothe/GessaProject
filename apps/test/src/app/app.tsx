@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
-import { Barchart } from '@iauro/component-library';
+import { Barchart } from '@gessa/component-library';
 import { TextField } from '@mui/material';
 import { connectorIcons } from './componentMapper';
 import Microfrontend from './getMicrofrontend';

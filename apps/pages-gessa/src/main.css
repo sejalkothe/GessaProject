@@ -1,3 +1,4 @@
+@import '../src/assets/icons/icomoon/style.css';
 @import 'gridstack/dist/gridstack.css';
 @tailwind base;
 @tailwind components;

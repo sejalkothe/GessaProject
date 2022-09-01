@@ -1,7 +1,7 @@
 import React, { useMemo, lazy, useEffect, useState } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import Header from './component/Header/Header';
-import { IconComponent } from '@iauro/soulify';
+import { IconComponent } from '@gessa/component-library';
 import {
   Link,
   Route,
@@ -9,8 +9,6 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import { routes } from '../../layout/route';
-import LayoutWrapper from '../../layout/layout';
 import { ITheme } from '../../../theme/index';
 // import Logo from '../../../assets/logo.svg';
 import ChildMenuContext from './component/ChildMenusContext';
@@ -21,7 +19,6 @@ import {
 import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
 import { HeaderComponent } from '@gessa/component-library';
-import { URLSearchParams } from 'url';
 import AppLayout from '../../layouts/AppLayout';
 
 function Project() {
@@ -39,6 +36,8 @@ function Project() {
   }, [params]);
   const location = useLocation();
   const headerComponentProps = {
+    logoImagePath:
+      'https://gessa-fileservice.s3.eu-central-1.amazonaws.com/Logo.svg',
     searchData: {
       label: 'Search',
       placeholder: 'Search',

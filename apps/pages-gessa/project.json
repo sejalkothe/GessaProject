@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/web:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
@@ -20,7 +22,7 @@
           "apps/pages-gessa/src/assets"
         ],
         "styles": [
-          "node_modules/@iauro/soulify/static/assets/icons/icomoon/style.css"
+          "node_modules/@gessa/component-library/libs/dsl/src/static/assets/assets/icons/icomoon/style.css"
         ],
         "scripts": [],
         "webpackConfigOld": "@nrwl/react/plugins/webpack",
@@ -63,14 +65,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/pages-gessa/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "apps/pages-gessa/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/pages-gessa"],
+      "outputs": [
+        "coverage/apps/pages-gessa"
+      ],
       "options": {
         "jestConfig": "apps/pages-gessa/jest.config.js",
         "passWithNoTests": true

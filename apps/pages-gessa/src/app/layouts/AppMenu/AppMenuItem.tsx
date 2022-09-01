@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 import { styled } from '@mui/system';
-import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
+import { IconComponent, Button, Drawer, Menu2 } from '@gessa/component-library';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AppMenuItemComponent from './AppMenuItemComponent';

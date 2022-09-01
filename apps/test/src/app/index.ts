@@ -1,9 +1,9 @@
-import { Barchart } from '@iauro/component-library/index';
-import { LineChart } from '@iauro/component-library/index';
-// import { RadarChart } from '@iauro/component-library';
-// import { BubbleChart } from '@iauro/component-library';
-// import { ScatterChart } from '@iauro/component-library';
-import { Dsl } from '@iauro/component-library/index';
-// import {  } from '@iauro/component-library'
+import { Barchart } from '@gessa/component-library/index';
+import { LineChart } from '@gessa/component-library/index';
+// import { RadarChart } from '@gessa/component-library';
+// import { BubbleChart } from '@gessa/component-library';
+// import { ScatterChart } from '@gessa/component-library';
+import { Dsl } from '@gessa/component-library/index';
+// import {  } from '@gessa/component-library'
 
 export { Barchart, LineChart, Dsl };
