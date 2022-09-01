@@ -10,38 +10,77 @@ const ProjectWrapper = lazy(
 const MyRoutes = {
   routes: [
     {
-      path: 'project',
+      path: 'project/:projectId/:menuId/:subMenuId/',
       element: <ProjectWrapper />,
       children: [
         {
           path: ':projectId/',
           element: (
-            <>
-              <div>test</div>
-            </>
+            <Suspense fallback={<>...</>}>
+              <ProjectWrapper />
+            </Suspense>
           ),
           children: [
             {
               path: ':menuId/',
               element: (
-                <>
-                  <div>test1</div>
-                </>
+                <Suspense fallback={<>...</>}>
+                  <ProjectWrapper />
+                </Suspense>
               ),
               children: [
                 {
-                  path: ':subFeatureId/',
+                  path: ':subMenuId',
                   element: (
-                    <>
-                      <div>test2</div>
-                    </>
+                    <Suspense fallback={<>...</>}>
+                      <ProjectWrapper />
+                    </Suspense>
                   ),
+                  children: [],
                 },
               ],
             },
           ],
         },
       ],
+    },
+    {
+      path: 'project/:projectId/:menuId',
+      element: (
+        <Suspense fallback={<>...</>}>
+          <ProjectWrapper />
+        </Suspense>
+      ),
+      children: [
+        {
+          path: ':projectId/',
+          element: (
+            <Suspense fallback={<>...</>}>
+              <ProjectWrapper />
+            </Suspense>
+          ),
+          children: [
+            {
+              path: ':menuId/',
+              element: (
+                <Suspense fallback={<>...</>}>
+                  <ProjectWrapper />
+                </Suspense>
+              ),
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      path: 'project/:projectId/',
+      element: (
+        <Suspense fallback={<>...</>}>
+          <ProjectWrapper />
+        </Suspense>
+      ),
+      children: [],
     },
   ],
 };

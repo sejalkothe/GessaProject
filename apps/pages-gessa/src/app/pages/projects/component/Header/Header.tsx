@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { ITheme } from '../../../../../theme/index';
 import { alpha, styled, useTheme } from '@mui/system';
 import SearchInput from '../SearchBox';
-import { IconComponent } from '@iauro/soulify';
+import { IconComponent } from '@gessa/component-library';
 import Avatar from '@mui/material/Avatar';
 
 function Header({ title, searchBar, logo }: any) {
@@ -50,14 +50,14 @@ function Header({ title, searchBar, logo }: any) {
             height: '22px',
           }}
         >
-          <img src={logo} alt="logo" />
+          <img src={'../../../../assets/Logo.svg'} alt="logo" />
         </Box>
       </Box>
       <Box sx={{ width: '27%' }}></Box>
       <Box
         sx={{
           width: '30%',
-          height: '4vh',
+          // height: '100%',
           margin: '12px',
           justifyContent: 'center',
           display: 'flex',
@@ -87,28 +87,44 @@ function Header({ title, searchBar, logo }: any) {
           display: 'flex',
         }}
       >
+        {/* <Box
+          sx={{
+            // paddingBottom: '18px',
+
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }}
+        > */}
+        <IconComponent
+          name={'Notification_24dp'}
+          size={35}
+          label={'notification'}
+          color={theme?.palette?.text?.primary}
+        />
+        {/* </Box> */}
         <Box
           sx={{
-            paddingBottom: '18px',
+            // paddingBottom: '18px',
+
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
           }}
         >
-          <IconComponent
-            name={'Notification_24dp'}
-            size={25}
-            label={'notification'}
-            color={theme?.palette?.text?.primary}
+          <Avatar
+            sx={{
+              bgcolor: theme?.palette?.secondary?.main,
+              color: theme?.palette?.light?.main,
+              width: '36px',
+              height: '36px',
+              fontSize: '12px',
+            }}
+            {...stringAvatar('Kent Dodds')}
           />
         </Box>
-        <Avatar
-          sx={{
-            bgcolor: theme?.palette?.secondary?.main,
-            color: theme?.palette?.light?.main,
-            width: '36px',
-            height: '36px',
-            fontSize: '12px',
-          }}
-          {...stringAvatar('Kent Dodds')}
-        />
       </Stack>
     </Stack>
   );

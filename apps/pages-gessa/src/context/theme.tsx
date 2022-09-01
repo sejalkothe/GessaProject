@@ -24,7 +24,7 @@ export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   children,
 }: any) => {
-  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.default));
+  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.dark));
   const rootState = useSelector((state: IRootState) => state);
   const themeData = selectThemeContext(rootState);
   const themePaletteData = selectThemePaletteContext(rootState);

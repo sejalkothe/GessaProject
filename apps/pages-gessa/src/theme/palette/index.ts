@@ -9,8 +9,8 @@ interface IThemePaletteText {
   primary: string;
   secondary?: string;
   disabled?: string;
-  c100?: string
-  c50?: string
+  c100?: string;
+  c50?: string;
 }
 
 interface IThemePaletteSystem {
@@ -33,12 +33,12 @@ export interface IThemePalette {
   systemColor4?: IThemeColor;
   systemColor5?: IThemeColor;
   systemColor6?: IThemeColor;
-  dark?:IThemeColor;
-  light?:IThemeColor;
+  dark?: IThemeColor;
+  light?: IThemeColor;
   text?: IThemePaletteText;
   // system?: IThemePaletteSystem;
   background?: IThemePaletteBackground;
-  // custom?: any;
+  chart?: any;
 }
 
 export { default as dark } from './dark';

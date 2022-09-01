@@ -1,6 +1,7 @@
 import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
-import { HashRouter } from 'react-router-dom';
+import { useState } from 'react';
+import { HashRouter, useParams } from 'react-router-dom';
 import {
   RouteProvider,
   SettingProvider,
@@ -8,29 +9,76 @@ import {
   AuthProvider,
   MicroFrontendProvider,
   ReduxProvider,
+  KeycloakProvider,
 } from '../context';
+import keycloak from '../keycloak/keycloak';
+import { setLocalStorage } from '../utils/localStorageService';
+import LayoutWrapper from './layout/layout';
 import ProjectWrapper from './pages/projects/component/ProjectWrapper';
 
+const keycloakProviderInitConfig = {
+  onLoad: 'login-required',
+};
+
 export function App() {
+  const [initKeycloak, setInitKeycloak] = useState({});
+  const params = useParams();
+  const onKeycloakEvent = (event: any, error: any) => {
+    // On Logout
+    if (event === 'onAuthLogout') {
+      // Cleanup stored Keycloak realm name
+      localStorage.removeItem('userInfo');
+      setInitKeycloak(false);
+
+      // Cleanup keycloak instance
+      // setState({
+      //   keycloak: null
+      // });
+    }
+  };
+
+  const onKeycloakTokens = (tokens: any) => {
+    const userInfo = {
+      userName:
+        (keycloak && keycloak.tokenParsed && keycloak.tokenParsed?.name) || '',
+      sessionKey: tokens.token || '',
+      projectId: params.projectId || '',
+      email:
+        (keycloak && keycloak.tokenParsed && keycloak.tokenParsed?.email) || '',
+      data: tokens,
+    };
+    setLocalStorage('userInfo', userInfo);
+    setInitKeycloak(true);
+  };
+
   return (
-    <MicroFrontendProvider>
-      <ReduxProvider>
-        <ThemeProvider>
-          <SettingProvider>
-            <AuthProvider>
-              <RouteProvider>
-                <HashRouter>
-                  <StyledEngineProvider injectFirst>
-                    <CssBaseline />
-                    <ProjectWrapper />
-                  </StyledEngineProvider>
-                </HashRouter>
-              </RouteProvider>
-            </AuthProvider>
-          </SettingProvider>
-        </ThemeProvider>
-      </ReduxProvider>
-    </MicroFrontendProvider>
+    <KeycloakProvider
+      keycloak={keycloak}
+      initConfig={keycloakProviderInitConfig}
+      onEvent={onKeycloakEvent}
+      onTokens={onKeycloakTokens}
+    >
+      {initKeycloak && (
+        <MicroFrontendProvider>
+          <ReduxProvider>
+            <ThemeProvider>
+              <SettingProvider>
+                <AuthProvider>
+                  <RouteProvider>
+                    <HashRouter>
+                      <StyledEngineProvider injectFirst>
+                        <CssBaseline />
+                        <LayoutWrapper />
+                      </StyledEngineProvider>
+                    </HashRouter>
+                  </RouteProvider>
+                </AuthProvider>
+              </SettingProvider>
+            </ThemeProvider>
+          </ReduxProvider>
+        </MicroFrontendProvider>
+      )}
+    </KeycloakProvider>
   );
 }
 

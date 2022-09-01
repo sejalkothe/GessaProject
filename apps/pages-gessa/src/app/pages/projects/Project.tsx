@@ -1,12 +1,16 @@
 import React, { useMemo, lazy, useEffect, useState } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import Header from './component/Header/Header';
-import { IconComponent } from '@iauro/soulify';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
-import { routes } from '../../layout/route';
-import LayoutWrapper from '../../layout/layout';
+import { IconComponent } from '@gessa/component-library';
+import {
+  Link,
+  Route,
+  Routes,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { ITheme } from '../../../theme/index';
-import Logo from '../../../assets/logo.svg';
+// import Logo from '../../../assets/logo.svg';
 import ChildMenuContext from './component/ChildMenusContext';
 import {
   getAppMenu,
@@ -14,32 +18,61 @@ import {
 } from '../../pages/projects/store/appMenuSlice';
 import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
+import { HeaderComponent } from '@gessa/component-library';
+import AppLayout from '../../layouts/AppLayout';
+import {
+  getLocalStorage,
+  setLocalStorage,
+} from 'apps/pages-gessa/src/utils/localStorageService';
 
 function Project() {
+  const params: any = useParams();
   const theme: ITheme = useTheme();
   const [widgetData, setWidgetData] = useState([]);
   const [appMenu, setAppMenu]: any = useState();
   const [isClicked, setClicked]: any = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState<string>(params.menuId || '');
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const _userInfo = getLocalStorage('userInfo');
+
+  useEffect(() => {
+    if (params && params.projectId) {
+      const userInfo = {
+        ..._userInfo,
+        ...{ projectId: params.projectId },
+      };
+      setLocalStorage('userInfo', userInfo);
+    }
+  }, [params]);
   const location = useLocation();
+  const headerComponentProps = {
+    logoImagePath:
+      'https://gessa-fileservice.s3.eu-central-1.amazonaws.com/Logo.svg',
+    searchData: {
+      label: 'Search',
+      placeholder: 'Search',
+      value: '',
+    },
+    notificationData: {
+      name: 'Notification_24dp',
+      size: 55,
+      color: '#ff00ff',
+      label: 'notification',
+    },
+
+    userData: {
+      text: _userInfo.userName,
+    },
+  };
 
   useEffect(() => {
-    fetch('http://localhost:3004/widget')
-      .then((respone) => {
-        const result = respone.json();
-        return result;
-      })
-      .then((res) => {
-        setWidgetData(res);
-      })
-      .catch((error) => {
-        //  ToDo:
-      });
-  }, []);
-
-  useEffect(() => {
-    dispatch(getAppMenu({ page: 0, size: 8 }))
-      .then((res) => {
+    const menuParams = {
+      page: 0,
+      size: 100,
+    };
+    dispatch(getAppMenu(menuParams))
+      .then((res: any) => {
         const parents: any = {};
         const createParent = (id: string, item: any) => {
           parents[id] = {
@@ -76,22 +109,31 @@ function Project() {
   const menuName: any = useMemo(() => {
     let menuChild: any[] = [];
     const menu = urlParams['*']?.split('/')?.[1];
-    appMenu?.forEach((item: any, index: any) => {
-      if (item.data.name === menu) {
-        menuChild = item.child;
-      }
-    });
-
+    // console.log('aaa', params);
+    if (selectedMenu) {
+      appMenu?.forEach((item: any, index: any) => {
+        if (
+          item.data.name === selectedMenu ||
+          item.data.name === params.menuId
+        ) {
+          menuChild = item.child;
+        }
+      });
+    }
     return { menu, menuChild };
-  }, [appMenu, urlParams]);
+  }, [appMenu, urlParams, params]);
+
+  useEffect(() => {}, [appMenu]);
 
   return (
     <Box
       sx={{
         background: theme.palette?.background?.default,
+        overflow: 'hidden !important',
       }}
     >
-      <Header title="iauro" searchBar="true" logo={Logo} />
+      <HeaderComponent {...headerComponentProps} />
+      {/* <Header title="iauro" searchBar="true" /> */}
       <Stack direction="row">
         <Box
           sx={{
@@ -108,7 +150,9 @@ function Project() {
               return (
                 <Link
                   key={index}
-                  to={'menu/' + item.data.name + '/'}
+                  to={`/project/${params.projectId}/${
+                    item.data.name || params.menuId
+                  }`}
                   style={{ textDecoration: 'none' }}
                 >
                   <Box
@@ -120,20 +164,21 @@ function Project() {
                       alignItems: 'center',
                       marginTop: '10px',
                       background:
-                        menuName.menu === item.data.name
+                        selectedMenu === item.data.name
                           ? theme?.palette?.background?.default
                           : theme?.palette?.light?.c50,
                     }}
                     onClick={() => {
                       setClicked(isClicked !== index ? index : -1);
+                      setSelectedMenu(item.data.name);
                     }}
                   >
                     <IconComponent
                       name={item.data.icon}
                       size={25}
-                      label={'Quilt'}
+                      label={item.data.icon}
                       color={
-                        menuName.menu === item.data.name
+                        selectedMenu === item.data.name
                           ? theme?.palette?.primary?.main
                           : theme?.palette?.text?.primary
                       }
@@ -147,10 +192,11 @@ function Project() {
         <Box
           sx={{
             flexGrow: 1,
+            overflow: 'hidden',
           }}
         >
           <ChildMenuContext.Provider value={menuName.menuChild}>
-            <LayoutWrapper />
+            <AppLayout />
           </ChildMenuContext.Provider>
         </Box>
       </Stack>

@@ -4,3 +4,4 @@ export { ThemeContext, ThemeProvider } from './theme';
 export { SettingContext, SettingProvider } from './setting';
 export { MicroFrontendContext, MicroFrontendProvider } from './micro-frontend';
 export { ReduxContext, ReduxProvider } from './redux';
+export { ReactKeycloakContext, KeycloakProvider } from './keycloak';

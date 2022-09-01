@@ -88,6 +88,25 @@ const dark: any = {
     100: '#D3ADF7',
     50: '#EFDBFF',
   },
+  chart: [
+    '#ff6083',
+    '#8b5cf6',
+    '#fbbf24',
+    '#84cc16',
+    '#35a2ec',
+    '#be123c',
+    '#86efac',
+    '#4bc1bd',
+    '#64748b',
+    '#a5f3fc',
+    '#6b21a8',
+    '#fecdd3',
+    '#f87171',
+    '#d9f99d',
+    '#f0abfc',
+    '#7f1d1d',
+    '#c4b5fd',
+  ],
 };
 
 export default dark;

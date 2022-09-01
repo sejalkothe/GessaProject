@@ -18,7 +18,9 @@ function Enterprise({ bottom = false }) {
       }
       setDrawerOpen(open);
     };
-    {console.log("colros", theme.palette )}
+  {
+    console.log('colros', theme.palette);
+  }
 
   return (
     <Box
@@ -59,7 +61,7 @@ function Enterprise({ bottom = false }) {
           color: theme.palette.text.primary,
         }}
       >
-        <AppMain />
+        <AppMain pageId={'asa'} />
       </Box>
 
       <AppDrawer

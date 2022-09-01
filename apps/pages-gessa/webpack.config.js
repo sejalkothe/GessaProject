@@ -24,16 +24,9 @@ module.exports = (config, context) => {
       filename: 'remoteEntry.js',
       remotes: {
         //TODO: Need fix this issue later
-        // ViewPageApp: `ViewPageApp@//http://localhost:8001/remoteEntry.js`,
+        ViewPageApp: `ViewPageApp@//http://localhost:8001/remoteEntry.js`,
       },
-      exposes: {
-        // Module
-        // './someModule': './apps/test-app/src/app/someModule',
-        // Slice
-        // './someSlice': './apps/test-app/src/app/store/someSlice',
-        // Route
-        // './someRoute': './apps/test-app/src/app/routes/someRoute',
-      },
+      exposes: {},
       shared: {
         ..._shared,
       },

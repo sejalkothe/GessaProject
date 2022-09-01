@@ -33,6 +33,7 @@ function SearchInput(props: SearchInputTypes) {
             width: '100%',
             background: theme?.palette?.background?.default,
             border: `1px solid ${theme.palette?.text?.c100}`,
+            boxShadow: 'none',
           }}
         >
           <IconButton sx={{ p: '10px' }} aria-label="search">

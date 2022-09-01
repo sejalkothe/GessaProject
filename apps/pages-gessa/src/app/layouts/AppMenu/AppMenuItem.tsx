@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 import { styled } from '@mui/system';
-import { IconComponent, Button, Drawer, Menu2 } from '@iauro/soulify';
+import { IconComponent, Button, Drawer, Menu2 } from '@gessa/component-library';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AppMenuItemComponent from './AppMenuItemComponent';
@@ -85,7 +85,6 @@ function AppMenuItem(props: Props) {
   const { label, icon, link, items = [] } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
-  const childMenus = useContext(ChildMenuContext);
   const theme: ITheme = useTheme();
 
   function handleClick() {
@@ -147,7 +146,13 @@ function AppMenuItem(props: Props) {
       <List component="div" disablePadding>
         {items.map((item: any, index: number) => (
           <>
-            <AppMenuItem {...item} key={index} />
+            <AppMenuItem
+              {...item}
+              key={index}
+              onClick={(e: any) => {
+                console.log(e);
+              }}
+            />
           </>
         ))}
       </List>
