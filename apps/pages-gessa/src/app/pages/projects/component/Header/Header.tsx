@@ -1,111 +1,126 @@
-import React, { useState } from 'react';
-import { Stack } from '@mui/material';
-import { Box } from '@mui/material';
-import { ITheme } from '../../../../../theme/index';
-import { alpha, styled, useTheme } from '@mui/system';
-import SearchInput from '../SearchBox';
-import { IconComponent } from '@gessa/component-library';
-import Avatar from '@mui/material/Avatar';
+import { IconComponent, IconComponentProps, UserAvatar } from '@gessa/component-library';
+import { useTheme } from '@mui/system';
+import React, { useEffect, useState } from 'react';
+import SearchInput, { ISearchInputTypes } from '../SearchBox';
+export interface IHeaderComponentProps {
+  logoImagePath?: string;
+  searchData: ISearchInputTypes;
+  userData: any;
+  notificationData: IconComponentProps;
+  searchdivEvent?: (data?: any) => any;
+  notificationClickEvent?: (data?: any) => any;
+  headerLogoClickEvent?: (data?: any) => any;
+}
 
-function Header({ title, searchBar, logo }: any) {
+export const HeaderComponent = (props: IHeaderComponentProps) => {
   const [inputText, setInputText] = useState('');
 
   const inputHandler = (e: any) => {
-    //convert input text to lower case
     const lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
 
-  function stringAvatar(name: string) {
-    return {
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-  }
+  const notificationClicked = () => {
+    props && props.notificationClickEvent && props.notificationClickEvent();
+  };
 
-  const theme: ITheme = useTheme();
+  useEffect(() => {
+    // console.log(props);
+  }, [props]);
+
+  const theme: any = useTheme();
+
   return (
-    <Stack
-      direction="row"
-      sx={{
+    <div
+      style={{
         width: '100%',
+        boxSizing: 'border-box',
+        minHeight: '8vh',
         height: '8vh',
-        justifyContent: 'center',
         display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         background: theme.palette?.light?.c50,
         borderBottom: `1px solid ${theme.palette?.text?.c100}`,
       }}
     >
-      <Box
-        sx={{
-          width: '8%',
-          justifyContent: 'center',
+      <div
+        style={{
+          height: '100%',
+          justifyContent: 'flex-start',
           display: 'flex',
           alignItems: 'center',
         }}
       >
-        <Box
-          sx={{
-            width: '75px',
+        <div
+          style={{
             background: theme.palette?.light?.c50,
             height: '22px',
+            paddingLeft: '10px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}
+          onClick={() => {
+            console.log('headerlogoClickEvent');
+            props && props.headerLogoClickEvent && props.headerLogoClickEvent();
           }}
         >
-          <img src={'../../../../assets/Logo.svg'} alt="logo" />
-        </Box>
-      </Box>
-      <Box sx={{ width: '27%' }}></Box>
-      <Box
-        sx={{
+          {props.logoImagePath && <img src={props.logoImagePath} />}
+        </div>
+      </div>
+      <div
+        style={{
           width: '30%',
           // height: '100%',
           margin: '12px',
           justifyContent: 'center',
           display: 'flex',
           alignItems: 'center',
+          background: theme.palette?.light?.c50,
         }}
       >
-        {searchBar ? (
+        {props && props.searchData && (
           <SearchInput
-            label="Search"
-            value={inputText}
+            label={props.searchData.label || 'Search'}
+            placeholder={props.searchData.placeholder || 'Search'}
+            value={props.searchData.value || ''}
             onChange={(e: any) => inputHandler(e)}
           />
-        ) : (
-          ''
         )}
-      </Box>
-      <Box sx={{ width: '27%' }}></Box>
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          width: '8%',
-          height: '8vh',
-          margin: '0px',
-          padding: '8px',
-          justifyContent: 'center',
+      </div>
+      <div
+        style={{
           display: 'flex',
+          flexDirection: 'row',
+          padding: '8px',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          gap: '10px',
         }}
       >
-        {/* <Box
-          sx={{
-            // paddingBottom: '18px',
-
+        <div
+          style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'flex-start',
           }}
-        > */}
-        <IconComponent
-          name={'Notification_24dp'}
-          size={35}
-          label={'notification'}
-          color={theme?.palette?.text?.primary}
-        />
-        {/* </Box> */}
-        <Box
-          sx={{
+          onClick={() => {
+            console.log('notificationClickEvent');
+            notificationClicked();
+          }}
+        >
+          <IconComponent
+            name={props.notificationData.name}
+            size={props.notificationData.size}
+            label={props.notificationData.label}
+            color={props.notificationData.color}
+          />
+        </div>
+        <div
+          style={{
             // paddingBottom: '18px',
 
             display: 'flex',
@@ -114,20 +129,11 @@ function Header({ title, searchBar, logo }: any) {
             justifyContent: 'flex-start',
           }}
         >
-          <Avatar
-            sx={{
-              bgcolor: theme?.palette?.secondary?.main,
-              color: theme?.palette?.light?.main,
-              width: '36px',
-              height: '36px',
-              fontSize: '12px',
-            }}
-            {...stringAvatar('Kent Dodds')}
-          />
-        </Box>
-      </Stack>
-    </Stack>
+          <UserAvatar text={props.userData.text || ''} />
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
-export default Header;
+export default HeaderComponent;

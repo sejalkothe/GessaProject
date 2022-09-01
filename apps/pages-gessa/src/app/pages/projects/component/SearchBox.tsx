@@ -1,15 +1,18 @@
 import { Box, IconButton, InputBase, InputLabel, Paper } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTheme } from '@mui/system';
-import { ITheme } from '../../../../theme/index';
+import { useState } from 'react';
+import { ITheme } from 'apps/pages-gessa/src/theme';
 
-interface SearchInputTypes {
+export interface ISearchInputTypes {
   label: string;
+  placeholder: string;
   value: string;
   onChange?: (e: any) => void;
 }
 
-function SearchInput(props: SearchInputTypes) {
+export const SearchInput = (props: ISearchInputTypes) => {
+  const [searchText, setSearchText] = useState<string>('');
   const theme: ITheme = useTheme();
   return (
     <Box
@@ -19,6 +22,7 @@ function SearchInput(props: SearchInputTypes) {
         alignItems: 'flex-start',
         position: 'relative',
         width: '100%',
+        background: theme.palette?.light?.c50,
       }}
       className="Search_Field"
     >
@@ -31,7 +35,7 @@ function SearchInput(props: SearchInputTypes) {
             alignItems: 'center',
             height: 34,
             width: '100%',
-            background: theme?.palette?.background?.default,
+            background: theme.palette?.light?.c50,
             border: `1px solid ${theme.palette?.text?.c100}`,
             boxShadow: 'none',
           }}
@@ -50,18 +54,22 @@ function SearchInput(props: SearchInputTypes) {
               flex: 1,
               y: 25,
               fontSize: '12px',
+              background: theme.palette?.light?.c50,
               color: theme?.palette?.text?.primary,
             }}
-            placeholder="Search"
+            placeholder={props.placeholder}
+            value={searchText}
             name="search"
-            value={props.value}
-            onChange={props?.onChange}
+            onChange={(e: any) => {
+              setSearchText(e.target.value);
+              props && props.onChange && props.onChange(e.target.value);
+            }}
             inputProps={{ 'aria-label': 'search' }}
           />
         </Paper>
       </Box>
     </Box>
   );
-}
+};
 
 export default SearchInput;

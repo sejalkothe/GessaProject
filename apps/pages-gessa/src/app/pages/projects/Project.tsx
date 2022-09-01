@@ -133,7 +133,7 @@ function Project() {
       }}
     >
       <HeaderComponent {...headerComponentProps} />
-      {/* <Header title="iauro" searchBar="true" /> */}
+      {/* <Header {...headerComponentProps} /> */}
       <Stack direction="row">
         <Box
           sx={{

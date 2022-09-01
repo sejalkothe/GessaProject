@@ -23,7 +23,7 @@ module.exports = (config, context) => {
       name: 'pagesGessaApp',
       filename: 'remoteEntry.js',
       remotes: {
-        ViewPageApp: `ViewPageApp@//http://localhost:8001/remoteEntry.js`,
+        ViewPageApp: `ViewPageApp@//http://project-pages-mf.gessa.io/remoteEntry.js`,
       },
       exposes: {},
       shared: {
