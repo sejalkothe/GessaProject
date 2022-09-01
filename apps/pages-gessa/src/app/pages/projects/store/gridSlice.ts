@@ -41,12 +41,12 @@ const gridDataAdapter = createEntityAdapter<IRGrid>({
 
 export const { selectAll: selectGridData } = gridDataAdapter.getSelectors(
   (state: IRootState) => {
-    return state.grid.gridSlice;
+    return state.containerApp.gridSlice;
   }
 );
 
 export const selectActivePageId = createSelector(
-  (state: IRootState) => state.grid.gridSlice,
+  (state: IRootState) => state.containerApp.gridSlice,
   (data) => data
 );
 

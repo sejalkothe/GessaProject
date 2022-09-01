@@ -7,9 +7,7 @@ import {
 import { IRootState } from './index';
 // import axios from 'axios';
 import axios from '../utils/NetworkLayer';
-import  {environment} from "../environments/environment"
-
-
+import { environment } from '../environments/environment';
 
 type _IRThemePalette = EntityState<IRThemePalette>;
 export interface IRThemePaletteContext extends _IRThemePalette {
@@ -24,10 +22,10 @@ export interface IRThemePalette {
 export const getThemePalette = createAsyncThunk(
   'projects',
   async (params: any, { dispatch }: any) => {
-       const response: any = await axios.get(
+    const response: any = await axios.get(
       `${environment.NX_THEME_BASE_URL}/colors/${params}`
     );
-      const themeObject: IRThemePalette = { project_id: params, color: {} };
+    const themeObject: IRThemePalette = { project_id: params, color: {} };
     // dispatch(setThemeContext(themeObject))
     return response;
   }
@@ -39,9 +37,8 @@ const themePaletteAdapter = createEntityAdapter<IRThemePalette>({
 
 export const { selectAll: selectThemePaletteContext } =
   themePaletteAdapter.getSelectors(
-    (state: IRootState) => state.grid.themePaletteSlice
+    (state: IRootState) => state.containerApp.themePaletteSlice
   );
-
 
 const themePaletteSlice = createSlice({
   name: 'projects',

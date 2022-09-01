@@ -20,6 +20,10 @@ import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
 import { HeaderComponent } from '@gessa/component-library';
 import AppLayout from '../../layouts/AppLayout';
+import {
+  getLocalStorage,
+  setLocalStorage,
+} from 'apps/pages-gessa/src/utils/localStorageService';
 
 function Project() {
   const params: any = useParams();
@@ -30,9 +34,16 @@ function Project() {
   const [selectedMenu, setSelectedMenu] = useState<string>(params.menuId || '');
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+  const _userInfo = getLocalStorage('userInfo');
 
   useEffect(() => {
-    // console.log('params', params);
+    if (params && params.projectId) {
+      const userInfo = {
+        ..._userInfo,
+        ...{ projectId: params.projectId },
+      };
+      setLocalStorage('userInfo', userInfo);
+    }
   }, [params]);
   const location = useLocation();
   const headerComponentProps = {
@@ -51,27 +62,17 @@ function Project() {
     },
 
     userData: {
-      text: 'Unknown User',
+      text: _userInfo.userName,
     },
   };
 
   useEffect(() => {
-    // fetch('http://localhost:3004/widget')
-    //   .then((respone) => {
-    //     const result = respone.json();
-    //     return result;
-    //   })
-    //   .then((res) => {
-    //     setWidgetData(res);
-    //   })
-    //   .catch((error) => {
-    //     //  ToDo:
-    //   });
-  }, []);
-
-  useEffect(() => {
-    dispatch(getAppMenu({ page: 0, size: 8 }))
-      .then((res) => {
+    const menuParams = {
+      page: 0,
+      size: 100,
+    };
+    dispatch(getAppMenu(menuParams))
+      .then((res: any) => {
         const parents: any = {};
         const createParent = (id: string, item: any) => {
           parents[id] = {

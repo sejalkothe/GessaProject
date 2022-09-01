@@ -14,11 +14,6 @@ type _IRMenuList = EntityState<IMenuList>;
 export interface IRMenuList extends _IRMenuList {
   activeMenuId: string;
 }
-// export interface IMenuList extends _IRMenuList {
-//   id: string;
-//   page: string;
-//   data: any;
-// }
 
 export interface IcreatedBy {
   userId: string;
@@ -72,17 +67,17 @@ export interface IMenuList {
 
 export const getAppMenu = createAsyncThunk(
   'features',
-  async (menuContent: any, { dispatch }) => {
+  async (menuParams: any, { dispatch }) => {
+    console.log(menuParams);
     const response: any = await axios.get(
-      `${environment.NX_FEATURE_BASE_URL}/features?page=0&size=10`
+      `${environment.NX_FEATURE_BASE_URL}/features`,
+      { params: menuParams }
     );
 
     const data: any = response.data.result.data;
 
     dispatch(setMenus(data));
     return data;
-    //   dispatch(setNodes(data[0].nodes));
-    //   dispatch(setChart(data[0].flowchart));
   }
 );
 
@@ -90,11 +85,11 @@ const appMenuAdapter = createEntityAdapter<IMenuList>({
   selectId: ({ _id }) => _id,
 });
 export const { selectAll: selectAllMenu } = appMenuAdapter.getSelectors(
-  (state: any) => state.grid.menuListSlice
+  (state: any) => state.containerApp.menuListSlice
 );
 
 const menuListSlice = createSlice({
-  name: 'appMenu',
+  name: 'application-menu-store',
   initialState: appMenuAdapter.getInitialState({}),
   reducers: {
     setMenus: appMenuAdapter.setAll,

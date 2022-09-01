@@ -7,7 +7,7 @@ import {
 import { IRootState } from './index';
 // import axios from 'axios';
 import axios from '../utils/NetworkLayer';
-import  {environment} from "../environments/environment"
+import { environment } from '../environments/environment';
 
 type _IRTheme = EntityState<IRTheme>;
 export interface IRThemeContext extends _IRTheme {
@@ -25,7 +25,7 @@ export const getTheme = createAsyncThunk(
     const response: any = await axios.get(
       `${environment.NX_THEME_BASE_URL}/fonts/${params}`
     );
-       const themeObject: IRTheme = {
+    const themeObject: IRTheme = {
       project_id: params,
       font: {
         families: 'poppins',
@@ -42,9 +42,8 @@ const themeContextAdapter = createEntityAdapter<IRTheme>({
 
 export const { selectAll: selectThemeContext } =
   themeContextAdapter.getSelectors(
-    (state: IRootState) => state.grid.themeContextSlice
+    (state: IRootState) => state.containerApp.themeContextSlice
   );
-
 
 const themeContextSlice = createSlice({
   name: 'projects',
