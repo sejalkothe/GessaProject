@@ -1,10 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
+import { useParams } from 'react-router-dom';
 import { clearLocalStorage, getLocalStorage } from './localStorageService';
 
 const instance = axios.create();
 
 instance.interceptors.request.use(
   (request: any) => {
+    const params = useParams();
     const authToken = getLocalStorage('userInfo').sessionKey
       ? getLocalStorage('userInfo').sessionKey
       : '';
@@ -12,7 +14,7 @@ instance.interceptors.request.use(
       ? getLocalStorage('userInfo').projectId
       : '';
     request.headers.common['Authorization'] = `Bearer ${authToken}`;
-    request.headers.common['x-tenant-id'] = projectId;
+    request.headers.common['x-tenant-id'] = projectId || params.projectId || '';
     return request;
   },
   (error) => {
