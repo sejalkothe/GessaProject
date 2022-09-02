@@ -128,7 +128,7 @@ function Project() {
   return (
     <Box
       sx={{
-        background: theme.palette?.background?.default,
+        background: theme.palette?.light?.c50,
         overflow: 'hidden !important',
       }}
     >

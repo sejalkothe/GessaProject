@@ -66,7 +66,6 @@ export class KeycloakProvider extends PureComponent {
     keycloak.onTokenExpired = this.refreshKeycloakToken('onTokenExpired');
 
     keycloak.init({ ...defaultInitConfig, ...initConfig });
-    console.log('state', this.state);
   }
 
   onKeycloakError = (event) => (error) => {
