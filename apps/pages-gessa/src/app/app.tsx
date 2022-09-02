@@ -59,10 +59,6 @@ export function App() {
     setInitKeycloak(true);
   };
 
-  useEffect(() => {
-    console.log(keycloak);
-  }, [keycloak]);
-
   return (
     <KeycloakProvider
       keycloak={keycloak}
