@@ -36,6 +36,9 @@ export function App() {
       // setState({
       //   keycloak: null
       // });
+      if (event === 'keyCloakExists') {
+        setInitKeycloak(true);
+      }
     }
   };
   useEffect(() => {
