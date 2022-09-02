@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HashRouter, useParams } from 'react-router-dom';
 import {
   RouteProvider,
@@ -11,7 +11,7 @@ import {
   ReduxProvider,
   KeycloakProvider,
 } from '../context';
-import keycloak from '../keycloak/keycloak';
+import keycloak, { keycloakConfig } from '../keycloak/keycloak';
 import { setLocalStorage } from '../utils/localStorageService';
 import LayoutWrapper from './layout/layout';
 import ProjectWrapper from './pages/projects/component/ProjectWrapper';
@@ -22,6 +22,8 @@ const keycloakProviderInitConfig = {
 
 export function App() {
   const [initKeycloak, setInitKeycloak] = useState({});
+  const [isAuth, setIsAuth] = useState(false);
+
   const params = useParams();
   const onKeycloakEvent = (event: any, error: any) => {
     // On Logout
@@ -36,13 +38,19 @@ export function App() {
       // });
     }
   };
+  useEffect(() => {
+    const newUrl = window.location.href.replace('#', '');
+    const url = newUrl?.split('&')?.shift?.()?.split('/')[5];
+
+    keycloak.realm = url || keycloak.realm;
+  }, []);
 
   const onKeycloakTokens = (tokens: any) => {
     const userInfo = {
-      userName:
-        (keycloak && keycloak.tokenParsed && keycloak.tokenParsed?.name) || '',
+      // userName:
+      //   (keycloak && keycloak.tokenParsed && keycloak.tokenParsed?.name) || '',
       sessionKey: tokens.token || '',
-      projectId: params.projectId || '',
+      // projectId: params.projectId || '',
       email:
         (keycloak && keycloak.tokenParsed && keycloak.tokenParsed?.email) || '',
       data: tokens,
@@ -50,6 +58,10 @@ export function App() {
     setLocalStorage('userInfo', userInfo);
     setInitKeycloak(true);
   };
+
+  useEffect(() => {
+    console.log(keycloak);
+  }, [keycloak]);
 
   return (
     <KeycloakProvider
