@@ -79,7 +79,6 @@ export function App() {
                     <HashRouter>
                       <StyledEngineProvider injectFirst>
                         <CssBaseline />
-                        {console.log('hehe')}
                         <LayoutWrapper />
                       </StyledEngineProvider>
                     </HashRouter>
