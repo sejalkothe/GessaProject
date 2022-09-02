@@ -50,8 +50,8 @@ export function App() {
 
   const onKeycloakTokens = (tokens: any) => {
     const userInfo = {
-      // userName:
-      //   (keycloak && keycloak.tokenParsed && keycloak.tokenParsed?.name) || '',
+      userName:
+        (keycloak && keycloak.tokenParsed && keycloak.tokenParsed?.name) || '',
       sessionKey: tokens.token || '',
       // projectId: params.projectId || '',
       email:
@@ -79,6 +79,7 @@ export function App() {
                     <HashRouter>
                       <StyledEngineProvider injectFirst>
                         <CssBaseline />
+                        {console.log('hehe')}
                         <LayoutWrapper />
                       </StyledEngineProvider>
                     </HashRouter>
