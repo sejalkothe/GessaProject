@@ -68,7 +68,6 @@ export interface IMenuList {
 export const getAppMenu = createAsyncThunk(
   'features',
   async (menuParams: any, { dispatch }) => {
-    console.log(menuParams);
     const response: any = await axios.get(
       `${environment.NX_FEATURE_BASE_URL}/features`,
       { params: menuParams }
