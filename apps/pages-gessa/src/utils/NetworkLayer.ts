@@ -6,7 +6,6 @@ const instance = axios.create();
 
 instance.interceptors.request.use(
   (request: any) => {
-    const params = useParams();
     const authToken = getLocalStorage('userInfo').sessionKey
       ? getLocalStorage('userInfo').sessionKey
       : '';
@@ -14,7 +13,7 @@ instance.interceptors.request.use(
       ? getLocalStorage('userInfo').projectId
       : '';
     request.headers.common['Authorization'] = `Bearer ${authToken}`;
-    request.headers.common['x-tenant-id'] = projectId || params.projectId || '';
+    request.headers.common['x-tenant-id'] = projectId || '';
     return request;
   },
   (error) => {
