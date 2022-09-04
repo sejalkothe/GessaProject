@@ -8,7 +8,7 @@ const MFViewPageApp = {
     ViewPageAppComponent: './ViewPageAppComponent',
   },
   slices: {
-    ViewPageSlice: './ViewPageSlice',
+    grid: './grid',
   },
   routes: {
     // default: './RoutingDemoConfig',

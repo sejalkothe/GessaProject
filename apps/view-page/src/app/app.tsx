@@ -14,6 +14,7 @@ import LayoutWrapper from './layout/layout';
 import DemoWrapper from './pages/projects/DemoWrapper';
 export interface IAppProps {
   pageId: string;
+  themeObject: any;
 }
 
 export function App(props: any) {

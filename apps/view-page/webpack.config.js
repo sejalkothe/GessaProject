@@ -27,8 +27,7 @@ module.exports = (config, context) => {
         './ViewPageAppComponent': './apps/view-page/src/app/app.tsx',
 
         // Slice
-        './ViewPageSlice':
-          './apps/view-page/src/app/pages/projects/store/index.ts',
+        './grid': './apps/view-page/src/app/pages/projects/store/index.ts',
 
         // Route
         './RoutingDemoConfig':
