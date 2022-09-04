@@ -19,8 +19,9 @@ function Classic({ right = false }) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const params: any = useParams();
   const allMenus = selectAllMenu(rootState);
-  // const sortedMenus = selectAllSortedMenuById(params.projectId) || [];
+  const sortedMenus = selectAllSortedMenuById(rootState) || [];
   const [openMenuPage, setOpenMenuPage] = useState<any>();
+  const [openSubmenu, setOpenSubmenu] = useState<any>([]);
 
   const toggleDrawer =
     (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,17 +33,22 @@ function Classic({ right = false }) {
 
   useEffect(() => {
     if (params && params.menuId && childMenus.length === 0) {
-      console.log(allMenus);
-      const menuIndex = allMenus.findIndex(
-        (value: any) => value.name === params.menuId
-      );
-      if (menuIndex !== -1) {
-        setOpenMenuPage(allMenus[menuIndex]);
+      if (sortedMenus && sortedMenus.length > 0) {
+        const menuIndex = sortedMenus[0].data.findIndex(
+          (value: any) => value.data.name === params.menuId
+        );
+        if (menuIndex !== -1) {
+          if (sortedMenus[0].data[menuIndex].child.length > 0) {
+            setOpenMenuPage(sortedMenus[0].data[menuIndex].child);
+          } else {
+            setOpenMenuPage(sortedMenus[0].data[menuIndex].data);
+          }
+        }
       }
     } else if (childMenus && childMenus.length > 0) {
       setOpenMenuPage({});
     }
-  }, [params]);
+  }, [params, sortedMenus]);
 
   return (
     <div
@@ -69,6 +75,7 @@ function Classic({ right = false }) {
           }}
         >
           <AppMenu
+            menuList={openMenuPage}
             menuType="classic"
             openPage={(e: any) => {
               setMenuData(e);

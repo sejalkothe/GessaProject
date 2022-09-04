@@ -6,16 +6,37 @@ import { appMenuItems } from './app-menu-items';
 import { Link } from 'react-router-dom';
 import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { IRootState } from 'apps/pages-gessa/src/store';
+import { selectAllMenu } from '../../pages/projects/store/appMenuSlice';
+import { selectAllSortedMenuById } from '../../pages/projects/store/sortedMenuSlice';
 
 interface Props {
+  menuList?: any;
   menuType: string;
   openPage?: (data: any) => any;
 }
 
 function AppMenu(props: Props) {
   const params: any = useParams();
-  const childMenus = useContext(ChildMenuContext);
+  const rootState = useSelector((state: IRootState) => state);
+
+  // const childMenus = useContext(ChildMenuContext);
+  const [childMenus, setChildMenus] = useState<any>(params.menuList);
   const [selectedPage, setSealectedPage] = useState<any>('');
+  const allMenus = selectAllMenu(rootState);
+  const sortedMenus = selectAllSortedMenuById(rootState) || [];
+
+  useEffect(() => {
+    if (params && params.menuId) {
+      const menuIndex = sortedMenus[0].data.findIndex(
+        (value: any) => value.data.name === params.menuId
+      );
+      if (menuIndex !== -1) {
+        setChildMenus(sortedMenus[0].data[menuIndex].child);
+      }
+    }
+  }, [params, params.menuId]);
 
   useEffect(() => {
     if (params && params.subMenuId && childMenus && childMenus.length > 0) {

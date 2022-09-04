@@ -51,7 +51,6 @@ const sortedMenuListSlice = createSlice({
       state.selectedMenuNames = action.payload;
     },
     setActiveSubMenuName: (state, action) => {
-      console.log('action payload', action);
       state.selectedSubMenuNames = action.payload;
     },
   },

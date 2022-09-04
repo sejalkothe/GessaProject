@@ -1,4 +1,4 @@
-import React, { useMemo, lazy, useEffect, useState } from 'react';
+import React, { useMemo, lazy, useEffect, useState, memo } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import Header from './component/Header/Header';
 import { IconComponent } from '@gessa/component-library';
@@ -204,4 +204,4 @@ function Project() {
   );
 }
 
-export default Project;
+export default memo(Project);

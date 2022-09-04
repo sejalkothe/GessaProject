@@ -15,7 +15,6 @@ import {
   setSortedMenus,
 } from './sortedMenuSlice';
 import { getLocalStorage } from 'apps/pages-gessa/src/utils/localStorageService';
-const userInfo = getLocalStorage('userInfo');
 type _IRMenuList = EntityState<IMenuList>;
 export interface IRMenuList extends _IRMenuList {
   activeMenuId: string;
@@ -82,6 +81,8 @@ export const getAppMenu = createAsyncThunk(
     const data: any = response.data.result.data;
 
     const parents: any = {};
+    const userInfo = getLocalStorage('userInfo');
+
     const createParent = (id: string, item: any) => {
       parents[id] = {
         child: [],
@@ -111,8 +112,7 @@ export const getAppMenu = createAsyncThunk(
         _id: userInfo.projectId || '',
         data: arrPar,
       };
-
-      // dispatch(setSortedMenus(payload));
+      dispatch(setSortedMenus(payload));
       // dispatch(setActiveMenuName(arrPar[0].data.name));
       dispatch(setMenus(data));
     } else {
