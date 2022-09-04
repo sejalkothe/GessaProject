@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Dialog, DialogContent, styled, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { useConfigForm } from 'apps/view-page/src/context/form';
 import { useEffect, useRef, useState } from 'react';
 import IconComponent from '../../../components/gridComponents/icon-component/icon-component';
+import CustomModal, { BootstrapDialogTitle } from './customModal';
 
 export interface IGridCard {
   widgets: any;
@@ -18,6 +19,17 @@ export interface IGridCard {
   children: any;
   editWidget: (data: any) => void;
 }
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => {
+  return {
+    '& .MuiDialogContent-root': {
+      padding: 2,
+    },
+    '& .MuiDialogActions-root': {
+      padding: 2,
+    },
+  };
+});
 
 export default function GridCard(props: IGridCard) {
   const { widgets } = props;
@@ -48,9 +60,18 @@ export default function GridCard(props: IGridCard) {
     setToggle(flag);
     props.actions.handleEnableMove(flag);
   };
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const itemClicked = (data: any) => {
     console.log(data);
+    setOpen(!open);
   };
 
   return (
@@ -152,6 +173,23 @@ export default function GridCard(props: IGridCard) {
         >
           {currentCompomponent}
         </div>
+        <BootstrapDialog
+          fullWidth={true}
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={open}
+        >
+          <BootstrapDialogTitle
+            id="customized-dialog-title"
+            onClose={handleClose}
+          >
+            {_selectedWidget &&
+              _selectedWidget.formData &&
+              _selectedWidget.formData.formData &&
+              _selectedWidget.formData.formData.title}{' '}
+          </BootstrapDialogTitle>
+          <DialogContent dividers>{currentCompomponent}</DialogContent>
+        </BootstrapDialog>{' '}
       </Box>
     </Box>
   );

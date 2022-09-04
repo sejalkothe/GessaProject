@@ -21,6 +21,7 @@ import { useLocation } from 'react-router-dom';
 import { HeaderComponent } from '@gessa/component-library';
 import AppLayout from '../../layouts/AppLayout';
 import {
+  clearLocalStorage,
   getLocalStorage,
   setLocalStorage,
 } from 'apps/pages-gessa/src/utils/localStorageService';
@@ -28,6 +29,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SideNav from './SideNav';
 import { selectAllSortedMenuById } from './store/sortedMenuSlice';
 import { IRootState } from 'apps/pages-gessa/src/store';
+import keycloak from 'apps/pages-gessa/src/keycloak/keycloak';
 
 export function Project() {
   const params: any = useParams();
@@ -47,7 +49,6 @@ export function Project() {
 
   useEffect(() => {
     if (sortedMenus && sortedMenus.length > 0) {
-      console.log(sortedMenus);
       setSortedData(sortedMenus[0].data);
     }
   }, [sortedMenus]);
@@ -141,6 +142,11 @@ export function Project() {
 
   useEffect(() => {}, [appMenu]);
 
+  const logoutUser = (data?: any): any => {
+    clearLocalStorage();
+    keycloak.logout();
+  };
+
   return (
     <Box
       sx={{
@@ -148,7 +154,12 @@ export function Project() {
         overflow: 'hidden !important',
       }}
     >
-      <HeaderComponent {...headerComponentProps} />
+      <HeaderComponent
+        {...headerComponentProps}
+        logoutClickAction={(e: any) => {
+          logoutUser(e);
+        }}
+      />
       {/* <Header {...headerComponentProps} /> */}
       <Stack direction="row">
         <Box
