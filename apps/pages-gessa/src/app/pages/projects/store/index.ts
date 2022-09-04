@@ -4,9 +4,11 @@ import gridSlice from './gridSlice';
 import menuListSlice from './appMenuSlice';
 import themeContextSlice from '../../../../store/themeContextSlice';
 import themePaletteSlice from '../../../../store/colorPalleteSlice';
+import sortedMenuListSlice from './sortedMenuSlice';
 const reducer = combineReducers({
   gridSlice,
   menuListSlice,
+  sortedMenuListSlice,
   themeContextSlice,
   themePaletteSlice,
 });

@@ -1,16 +1,27 @@
 import { Box, useTheme } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppMain from './AppMain/AppMain';
 import AppMenu from './AppMenu/AppMenu';
 import { ITheme } from '../../theme/index';
 // import './Classic.css';
 import childMenuContext from '../pages/projects/component/ChildMenusContext';
+import { useParams } from 'react-router-dom';
+import { selectAllMenu } from '../pages/projects/store/appMenuSlice';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../store';
+import { selectAllSortedMenuById } from '../pages/projects/store/sortedMenuSlice';
 
 function Classic({ right = false }) {
   const theme: ITheme = useTheme();
+  const rootState = useSelector((state: IRootState) => state);
   const [menuData, setMenuData] = useState<any>();
   const childMenus: any = useContext(childMenuContext);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const params: any = useParams();
+  const allMenus = selectAllMenu(rootState);
+  // const sortedMenus = selectAllSortedMenuById(params.projectId) || [];
+  const [openMenuPage, setOpenMenuPage] = useState<any>();
+
   const toggleDrawer =
     (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
       if (event && event.type === 'keydown') {
@@ -18,6 +29,21 @@ function Classic({ right = false }) {
       }
       setDrawerOpen(open);
     };
+
+  useEffect(() => {
+    if (params && params.menuId && childMenus.length === 0) {
+      console.log(allMenus);
+      const menuIndex = allMenus.findIndex(
+        (value: any) => value.name === params.menuId
+      );
+      if (menuIndex !== -1) {
+        setOpenMenuPage(allMenus[menuIndex]);
+      }
+    } else if (childMenus && childMenus.length > 0) {
+      setOpenMenuPage({});
+    }
+  }, [params]);
+
   return (
     <div
       // className={`container__classic ${right && 'container__classic__RT'}`}
@@ -46,6 +72,7 @@ function Classic({ right = false }) {
             menuType="classic"
             openPage={(e: any) => {
               setMenuData(e);
+              setOpenMenuPage(e);
             }}
           />
         </Box>
@@ -70,7 +97,7 @@ function Classic({ right = false }) {
             width: '100%',
           }}
         >
-          <AppMain pageId={(menuData && menuData.pageId) || ''} />
+          <AppMain pageId={(openMenuPage && openMenuPage.pageId) || ''} />
         </Box>
       </Box>
     </div>
