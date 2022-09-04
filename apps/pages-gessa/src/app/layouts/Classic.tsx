@@ -7,7 +7,7 @@ import { ITheme } from '../../theme/index';
 import childMenuContext from '../pages/projects/component/ChildMenusContext';
 import { useParams } from 'react-router-dom';
 import { selectAllMenu } from '../pages/projects/store/appMenuSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import { selectAllSortedMenuById } from '../pages/projects/store/sortedMenuSlice';
 

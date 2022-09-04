@@ -14,7 +14,9 @@ const SideNav = (props: ISideNav) => {
   const params = useParams();
   const [appMenu, setAppMenu]: any = useState<Array<any>>([]);
   const [isClicked, setClicked]: any = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<string>(params.menuId || '');
+  const [selectedMenu, setSelectedMenu] = useState<string>(
+    params.menuId || props.selectedMenuName
+  );
 
   useEffect(() => {
     if (props && props.menuList) {
