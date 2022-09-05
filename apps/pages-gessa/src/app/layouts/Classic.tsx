@@ -102,6 +102,7 @@ function Classic({ right = false }) {
             backgroundColor: theme.palette.background?.default,
             color: theme.palette.text?.primary,
             width: '100%',
+            overflowY: 'auto',
           }}
         >
           <AppMain pageId={(openMenuPage && openMenuPage.pageId) || ''} />
