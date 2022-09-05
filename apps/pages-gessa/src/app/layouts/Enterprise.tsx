@@ -19,7 +19,7 @@ function Enterprise({ bottom = false }) {
       setDrawerOpen(open);
     };
   {
-    console.log('colros', theme.palette);
+    // console.log('colros', theme.palette);
   }
 
   return (
