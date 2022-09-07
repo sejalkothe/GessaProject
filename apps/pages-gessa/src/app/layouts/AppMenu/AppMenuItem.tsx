@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Box, Stack, useTheme } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -94,8 +94,8 @@ function AppMenuItem(props: Props) {
   const Icon: any = getIcon(label);
 
   const MenuItemRoot = (
-    <Box
-      sx={{
+    <div
+      style={{
         background: props.isSelected
           ? theme?.palette?.background?.default
           : theme?.palette?.light?.c50,
@@ -103,8 +103,8 @@ function AppMenuItem(props: Props) {
     >
       <AppMenuItemComponent link={link} onClick={handleClick}>
         {/* Display an icon if any */}
-        <Box
-          sx={{
+        <div
+          style={{
             color: props.isSelected
               ? theme?.palette?.primary?.main
               : theme?.palette?.text?.primary,
@@ -132,12 +132,12 @@ function AppMenuItem(props: Props) {
             primary={label}
             inset={!Icon}
           />
-        </Box>
+        </div>
         {/* Display the expand menu if the item has children */}
         {isExpandable && !open && <ExpandMoreIcon />}
         {isExpandable && open && <ExpandLessIcon />}
       </AppMenuItemComponent>
-    </Box>
+    </div>
   );
 
   const MenuItemChildren = isExpandable ? (

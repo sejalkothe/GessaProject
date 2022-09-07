@@ -31,15 +31,8 @@ const Nest = () => {
 // };
 
 const AppMain = (props: any) => {
-  const [_props, setProps] = useState<any>();
-
-  useEffect(() => {
-    if (props && props.pageId) {
-      setProps(props);
-    }
-  }, [props]);
-  return _props && _props.pageId && _props.pageId.length > 0 ? (
-    <ViewPageUi tabData={_props}></ViewPageUi>
+  return props && props.pageId && props.pageId.length > 0 ? (
+    <ViewPageUi tabData={props}></ViewPageUi>
   ) : (
     <></>
   );

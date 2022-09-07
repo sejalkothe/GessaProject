@@ -1,4 +1,8 @@
-import { IconComponent, IconComponentProps, UserAvatar } from '@gessa/component-library';
+import {
+  IconComponent,
+  IconComponentProps,
+  UserAvatar,
+} from '@gessa/component-library';
 import { useTheme } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import SearchInput, { ISearchInputTypes } from '../SearchBox';
@@ -63,7 +67,6 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
             alignItems: 'center',
           }}
           onClick={() => {
-            console.log('headerlogoClickEvent');
             props && props.headerLogoClickEvent && props.headerLogoClickEvent();
           }}
         >
@@ -108,7 +111,6 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
             justifyContent: 'flex-start',
           }}
           onClick={() => {
-            console.log('notificationClickEvent');
             notificationClicked();
           }}
         >

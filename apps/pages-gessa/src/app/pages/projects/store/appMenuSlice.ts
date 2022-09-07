@@ -9,7 +9,12 @@ import { IRootState } from '../../../../store';
 // import axios from 'axios';
 import axios from '../../../../utils/NetworkLayer';
 import { environment } from '../../../../environments/environment';
-
+import {
+  selectActiveMenuName,
+  setActiveMenuName,
+  setSortedMenus,
+} from './sortedMenuSlice';
+import { getLocalStorage } from 'apps/pages-gessa/src/utils/localStorageService';
 type _IRMenuList = EntityState<IMenuList>;
 export interface IRMenuList extends _IRMenuList {
   activeMenuId: string;
@@ -75,7 +80,50 @@ export const getAppMenu = createAsyncThunk(
 
     const data: any = response.data.result.data;
 
-    dispatch(setMenus(data));
+    const parents: any = {};
+    const userInfo = getLocalStorage('userInfo');
+
+    const createParent = (id: string, item: any) => {
+      parents[id] = {
+        child: [],
+        data: { ...item },
+      };
+    };
+    if (data && data.length > 0) {
+      data.forEach((item: any) => {
+        const parentId = item?.parentId || '';
+        if (parentId === '') {
+          if (!parents[parentId]) {
+            createParent(item._id, item);
+          }
+        } else if (item.parentId) {
+          if (parents[parentId]) {
+            parents[parentId].child.push(item);
+          } else {
+            createParent(parentId, item);
+          }
+        }
+      });
+      const arrPar = [];
+      for (const key in parents) {
+        arrPar.push(parents[key]);
+      }
+      const payload: any = {
+        _id: userInfo.projectId || '',
+        data: arrPar,
+      };
+      dispatch(setSortedMenus(payload));
+      // dispatch(setActiveMenuName(arrPar[0].data.name));
+      dispatch(setMenus(data));
+    } else {
+      dispatch(setMenus([]));
+      const payload: any = {
+        _id: '',
+        data: [],
+      };
+      dispatch(setSortedMenus(payload));
+    }
+
     return data;
   }
 );

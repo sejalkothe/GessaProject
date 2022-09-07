@@ -14,4 +14,5 @@ export const environment = {
   NX_PAGE_SERVICE: 'https://gessa.io/gessa-page',
   NX_REPORT_SERVICE: 'https://gessa.io/schema-service/api',
   NX_SCHEMA_SERVICE: 'https://gessa.io/schema-service/api',
+  NX_THEME_BASE_URL: 'https://gessa.io/gessa-project',
 };

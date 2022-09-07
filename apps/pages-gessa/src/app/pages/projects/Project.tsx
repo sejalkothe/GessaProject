@@ -1,4 +1,4 @@
-import React, { useMemo, lazy, useEffect, useState } from 'react';
+import React, { useMemo, lazy, useEffect, useState, memo } from 'react';
 import { Box, Stack, useTheme } from '@mui/material';
 import Header from './component/Header/Header';
 import { IconComponent } from '@gessa/component-library';
@@ -21,20 +21,37 @@ import { useLocation } from 'react-router-dom';
 import { HeaderComponent } from '@gessa/component-library';
 import AppLayout from '../../layouts/AppLayout';
 import {
+  clearLocalStorage,
   getLocalStorage,
   setLocalStorage,
 } from 'apps/pages-gessa/src/utils/localStorageService';
+import { useDispatch, useSelector } from 'react-redux';
+import SideNav from './SideNav';
+import { selectAllSortedMenuById } from './store/sortedMenuSlice';
+import { IRootState } from 'apps/pages-gessa/src/store';
+import keycloak from 'apps/pages-gessa/src/keycloak/keycloak';
 
-function Project() {
+export function Project() {
   const params: any = useParams();
   const theme: ITheme = useTheme();
+  const rootState = useSelector((state: IRootState) => state);
+
   const [widgetData, setWidgetData] = useState([]);
+  const sortedMenus = selectAllSortedMenuById(rootState) || [];
+
   const [appMenu, setAppMenu]: any = useState();
   const [isClicked, setClicked]: any = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<string>(params.menuId || '');
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const _userInfo = getLocalStorage('userInfo');
+  const [sortedData, setSortedData] = useState<any>([]);
+
+  useEffect(() => {
+    if (sortedMenus && sortedMenus.length > 0) {
+      setSortedData(sortedMenus[0].data);
+    }
+  }, [sortedMenus]);
 
   useEffect(() => {
     if (params && params.projectId) {
@@ -54,10 +71,10 @@ function Project() {
       placeholder: 'Search',
       value: '',
     },
+
     notificationData: {
       name: 'Notification_24dp',
-      size: 55,
-      color: '#ff00ff',
+      size: 25,
       label: 'notification',
     },
 
@@ -125,6 +142,11 @@ function Project() {
 
   useEffect(() => {}, [appMenu]);
 
+  const logoutUser = (data?: any): any => {
+    clearLocalStorage();
+    keycloak.logout();
+  };
+
   return (
     <Box
       sx={{
@@ -132,7 +154,15 @@ function Project() {
         overflow: 'hidden !important',
       }}
     >
-      <HeaderComponent {...headerComponentProps} />
+      <HeaderComponent
+        logoImagePath={headerComponentProps.logoImagePath}
+        searchData={headerComponentProps.searchData}
+        notificationData={headerComponentProps.notificationData}
+        userData={headerComponentProps.userData}
+        logoutClickAction={(e: any) => {
+          logoutUser(e);
+        }}
+      />
       {/* <Header {...headerComponentProps} /> */}
       <Stack direction="row">
         <Box
@@ -146,7 +176,14 @@ function Project() {
           }}
         >
           <Stack direction="column">
-            {appMenu?.map((item: any, index: any) => {
+            <SideNav
+              menuList={sortedData}
+              selectedMenuName={selectedMenu}
+              setSelectedMenuName={(data: any) => {
+                setSelectedMenu(data);
+              }}
+            />
+            {/* {appMenu?.map((item: any, index: any) => {
               return (
                 <Link
                   key={index}
@@ -186,7 +223,7 @@ function Project() {
                   </Box>
                 </Link>
               );
-            })}
+            })} */}
           </Stack>
         </Box>
         <Box
@@ -204,4 +241,4 @@ function Project() {
   );
 }
 
-export default Project;
+export default memo(Project);

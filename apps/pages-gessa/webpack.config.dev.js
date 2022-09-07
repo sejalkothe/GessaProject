@@ -20,19 +20,12 @@ module.exports = (config, context) => {
   config.context = process.cwd();
   config.plugins.push(
     new ModuleFederationPlugin({
-      name: 'ViewPageApp',
+      name: 'pagesGessaApp',
       filename: 'remoteEntry.js',
-      exposes: {
-        // Module
-        './ViewPageAppComponent': './apps/view-page/src/app/app.tsx',
-
-        // Slice
-        './grid': './apps/view-page/src/app/pages/projects/store/index.ts',
-
-        // Route
-        './RoutingDemoConfig':
-          './apps/view-page/src/app/pages/projects/DemoConfig.tsx',
+      remotes: {
+        ViewPageApp: `ViewPageApp@//https://project-pages-mf.gessa.io/remoteEntry.js`,
       },
+      exposes: {},
       shared: {
         ..._shared,
       },
@@ -41,7 +34,7 @@ module.exports = (config, context) => {
   config.optimization.runtimeChunk = false;
   config.output = {
     ...config.output,
-    uniqueName: 'view-page',
+    uniqueName: 'pagesGessaApp',
     publicPath: 'auto',
   };
 
