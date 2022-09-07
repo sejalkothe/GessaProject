@@ -1,7 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useEffect, useState } from 'react';
 import { TextField, Typography } from '@mui/material';
-
+import { useTheme } from '@mui/material';
 import { IWidget } from '../store/widgetsSlice';
 import { __values } from 'tslib';
 import {
@@ -9,13 +9,17 @@ import {
   polarData,
   scatterData,
   barData,
+  lineData,
   doughnutData,
+  tableData,
   piechartData,
   radarData,
+  bubbleData,
 } from 'apps/view-page/src/fake-db/scatterData';
 import {
   Barchart,
   BubbleChart,
+  Datagrid,
   DoughnutChart,
   HeatMap,
   LineChart,
@@ -25,7 +29,14 @@ import {
   ScatterChart,
   StatCard,
 } from '@gessa/component-library';
-import Datagrid from '../../../components/gridComponents/data-grid/data-grid';
+// import Datagrid from '../../../components/gridComponents/data-grid/data-grid';
+import themes from 'apps/view-page/src/theme';
+// import StatCard from '../../../components/gridComponents/StatCard/StatCard';
+// import RadarChart from '../../../components/gridComponents/radarchart/radarchart';
+// import DoughnutChart from '../../../components/gridComponents/donutchart_new/doughnutchart';
+// import PieChart from '../../../components/gridComponents/piechar/piechart';
+// import ScatterChart from '../../../components/gridComponents/scatter-chart/scatter-chart';
+// import BubbleChart from '../../../components/gridComponents/bubble-chart/bubble-chart';
 
 export interface IWidgetProps {
   rawWidget: IWidget[];
@@ -52,10 +63,12 @@ export interface IWidgetType {
 
 const ScatterData = scatterData;
 const BarData: any = barData;
+const BubbleData: any = bubbleData;
 const PolarData: any = polarData;
 const DouhnutData: any = doughnutData;
 const PiechartData: any = piechartData;
 const RadarData: any = radarData;
+const LineData: any = lineData;
 
 export const WIDGETS_V1: IWidgetType[] = [
   {
@@ -63,16 +76,22 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'card',
     data: {
       component: (props: any) => {
+        const theme = useTheme();
         const defaultProps = {
-          title: 'Title',
-          stat: 60,
-          iconName: 'Search',
+          title: 'Number of Payments',
+          stat: 600,
+          icon: {
+            name: 'Search',
+            size: 30,
+            color: themes.default.palette?.primary?.main,
+          },
           link: 'View All',
         };
         const formProps = { ...props };
         return props ? (
-          <StatCard data={props.data} />
+          <StatCard data={defaultProps} />
         ) : (
+          // <StatCard data={props.data} />
           <StatCard data={defaultProps} />
         );
       },
@@ -90,9 +109,10 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Datagrid columns={props.columns || []} rows={props.rows || []} />
+          // <Datagrid columns={props.columns || []} rows={props.rows || []} />
+          <Datagrid columns={tableData.columns} rows={tableData.rows} />
         ) : (
-          <Datagrid columns={[]} rows={[]} />
+          <Datagrid columns={tableData.columns} rows={tableData.rows} />
         );
       },
       props: {},
@@ -109,7 +129,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Barchart {...props} />
+          <Barchart {...BarData} />
         ) : (
           <Barchart
             data={{
@@ -135,7 +155,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <RadarChart {...props} />
+          <RadarChart {...RadarData} />
         ) : (
           <RadarChart
             data={{
@@ -159,7 +179,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <DoughnutChart {...props} />
+          <DoughnutChart {...DouhnutData} />
         ) : (
           // <DoughnutChart {...props} />
           <DoughnutChart
@@ -184,7 +204,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PieChart {...props} />
+          <PieChart {...PiechartData} />
         ) : (
           // <PieChart {...props} />
           <PieChart
@@ -210,7 +230,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart {...props} />
+          <LineChart {...LineData} />
         ) : (
           <LineChart
             data={{
@@ -234,10 +254,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <ScatterChart
-            labels={props.labels || []}
-            datasets={props.datasets || []}
-          />
+          // <ScatterChart
+          //   labels={props.labels || []}
+          //   datasets={props.datasets || []}
+          // />
+          <ScatterChart {...ScatterData} />
         ) : (
           <ScatterChart labels={[]} datasets={[]} />
         );
@@ -256,15 +277,15 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          // <HeatMap
-          //   columnAxisLabel={props.columnAxisLabel || []}
-          //   data={props.data || []}
-          //   rowAxisLabel={props.rowAxisLabel || []}
-          //   threshold={props.threshold || []}
-          //   colLabel={props.colLabel || ''}
-          //   rowLabel={props.rowLabel || ''}
-          // />
-          <></>
+          <HeatMap
+            columnAxisLabel={heatmapData.columnAxisLabel || []}
+            data={heatmapData.data || []}
+            rowAxisLabel={heatmapData.rowAxisLabel || []}
+            threshold={heatmapData.threshold || []}
+            colLabel={heatmapData.colLabel || ''}
+            rowLabel={heatmapData.rowLabel || ''}
+          />
+          // <></>
         ) : (
           <HeatMap
             columnAxisLabel={[]}
@@ -290,10 +311,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PolarChart
-            datasets={props.data.datasets || []}
-            labels={props.data.labels || []}
-          />
+          // <PolarChart
+          //   datasets={props.data.datasets || []}
+          //   labels={props.data.labels || []}
+          // />
+          <PolarChart {...PolarData} />
         ) : (
           // <PolarChart
           //   datasets={props.data.datasets || []}
@@ -317,9 +339,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <BubbleChart
-            datasets={props.datasets || []}
-            labels={props.labels || []}
-          />
+             {...BubbleData}
+            />
         ) : (
           <BubbleChart datasets={[]} labels={[]} />
         );
@@ -354,12 +375,15 @@ const makeSerializedWidget = (widgetData: IWidget[]): any => {
 };
 
 export default function Widgets(props: IWidgetProps) {
+  const theme = useTheme();
   const [dragableWidgets, setDragableWidgets] = useState(WIDGETS_V1);
   const [_dragableWidgets, _setDragableWidgets] = useState(WIDGETS_V1);
 
   useEffect(() => {
     const w2: IWidgetType[] = makeSerializedWidget(props.rawWidget);
   }, [props, props.rawWidget]);
+
+  console.log('hello colors',theme,themes.default)
 
   return (
     <div className="sticky top-0 w-full h-full flex flex-col border-box">

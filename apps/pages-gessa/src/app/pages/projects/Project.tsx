@@ -71,10 +71,10 @@ export function Project() {
       placeholder: 'Search',
       value: '',
     },
+
     notificationData: {
       name: 'Notification_24dp',
-      size: 55,
-      color: '#ff00ff',
+      size: 25,
       label: 'notification',
     },
 

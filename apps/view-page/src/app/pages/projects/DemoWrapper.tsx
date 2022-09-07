@@ -1,5 +1,7 @@
+import { useTheme } from '@mui/system';
 import ConfigFormProvider from 'apps/view-page/src/context/form';
 import { IRootState } from 'apps/view-page/src/store';
+import themes from 'apps/view-page/src/theme';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomSnackbar from '../../components/CustomSnackbar';
@@ -24,6 +26,8 @@ export interface IGridProps {
 }
 
 const DemoWrapper = (props: IGridProps) => {
+  const theme = useTheme();
+  const themeObj = themes.default;
   const dispatch = useDispatch();
   const rootState = useSelector((state: IRootState) => state);
   const gridDataStore: any = selectGridData(rootState);
@@ -164,6 +168,9 @@ const DemoWrapper = (props: IGridProps) => {
                     if (response.payload.data) {
                       switch (payload.type.toLowerCase()) {
                         case 'barchart':
+                          if (response && response.payload && response.payload.data && response.payload.data.datasets && response.payload.data.datasets.length > 0) {
+                            response.payload.data.datasets.map((element:any,index:number)=>{return element.backgroundColor = `theme.palette?.systemColor${index}?.main` ||'#'+(Math.random() * 0xfffff * 1000000).toString(16).slice(0,6)})
+                          }
                           payload.formProps = {
                             data: response.payload.data,
                             xLabel: data.formData.x_axis_label,
@@ -171,6 +178,9 @@ const DemoWrapper = (props: IGridProps) => {
                           };
                           break;
                         case 'linechart':
+                          if (response && response.payload && response.payload.data && response.payload.data.datasets && response.payload.data.datasets.length > 0) {
+                            response.payload.data.datasets.map((element:any,index:number)=>{return element.backgroundColor = `theme.palette?.systemColor${index}?.main` ||'#'+(Math.random() * 0xfffff * 1000000).toString(16).slice(0,6)})
+                          }
                           payload.formProps = {
                             data: response.payload.data,
                             xLabel: data.formData.x_axis_label,

@@ -46,6 +46,60 @@
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false
+        },
+        "staging": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pages-gessa/src/environments/environment.ts",
+              "with": "apps/pages-gessa/src/environments/environment.stage.ts"
+            },
+            {
+              "replace": "apps/pages-gessa/webpack.config.js",
+              "with": "apps/pages-gessa/webpack.config.stage.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "development": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pages-gessa/src/environments/environment.ts",
+              "with": "apps/pages-gessa/src/environments/environment.prod.ts"
+            },
+            {
+              "replace": "apps/pages-gessa/webpack.config.js",
+              "with": "apps/pages-gessa/webpack.config.dev.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "local": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pages-gessa/src/environments/environment.ts",
+              "with": "apps/pages-gessa/src/environments/environment.ts"
+            },
+            {
+              "replace": "apps/pages-gessa/webpack.config.js",
+              "with": "apps/pages-gessa/webpack.config.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
         }
       }
     },

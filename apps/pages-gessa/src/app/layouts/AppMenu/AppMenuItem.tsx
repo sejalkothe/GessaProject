@@ -112,12 +112,13 @@ function AppMenuItem(props: Props) {
             justifyContent: 'center',
             alignItems: 'center',
             width: '300px',
+            fontWeight: props.isSelected ? 600 : 400,
           }}
         >
           <IconComponent
             name={icon}
             size={25}
-            label={'Quilt'}
+            label={'icon'}
             color={
               props.isSelected
                 ? theme?.palette?.primary?.main
