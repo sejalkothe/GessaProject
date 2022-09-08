@@ -155,7 +155,10 @@ export function Project() {
       }}
     >
       <HeaderComponent
-        {...headerComponentProps}
+        logoImagePath={headerComponentProps.logoImagePath}
+        searchData={headerComponentProps.searchData}
+        notificationData={headerComponentProps.notificationData}
+        userData={headerComponentProps.userData}
         logoutClickAction={(e: any) => {
           logoutUser(e);
         }}
