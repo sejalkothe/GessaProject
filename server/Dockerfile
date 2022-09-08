@@ -13,8 +13,8 @@ RUN apk --no-cache add curl && apk --no-cache add vim &&  npm install pm2 -g && 
 # Bundle app source
 
 
-# COPY apps/pages-gessa/ pages-gessa/  
-COPY apps/view-page/ view-page/ 
+COPY apps/pages-gessa/ pages-gessa/  
+# COPY apps/view-page/ view-page/ 
 
 EXPOSE 80
 

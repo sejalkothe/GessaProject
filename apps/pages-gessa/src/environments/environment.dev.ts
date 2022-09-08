@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
+  CURRENT_ENV: 'dev',
+
   NX_THEME_BASE_URL: 'https://gessa.io/gessa-project',
   NX_FEATURE_BASE_URL: 'https://gessa.io/rbac',
   NX_KEYCLOCK_AUTH_SERVER_URL: 'https://auth-dev.gessa.io',

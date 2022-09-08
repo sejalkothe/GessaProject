@@ -169,6 +169,7 @@ export const Demo2Ui = (props: Demo2Props) => {
               {(actions: any) =>
                 widgets.map((widget: any) => {
                   const { component: Widget, label } = getData(widget);
+                  console.log(widget);
                   return (
                     Widget && (
                       <GridCard
@@ -179,6 +180,7 @@ export const Demo2Ui = (props: Demo2Props) => {
                         w={widget.w}
                         h={widget.h}
                         id={widget.id}
+                        type={widget.type}
                         title={label || widget.data?.label || ''}
                         selectedWidget={widget}
                         data={widget.data}

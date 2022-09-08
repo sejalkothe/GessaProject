@@ -1,6 +1,14 @@
-import { Box, Dialog, DialogContent, styled, Typography } from '@mui/material';
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  styled,
+  Typography,
+} from '@mui/material';
 import { useTheme } from '@mui/system';
 import { useConfigForm } from 'apps/view-page/src/context/form';
+import themes from 'apps/view-page/src/theme';
 import { useEffect, useRef, useState } from 'react';
 import IconComponent from '../../../components/gridComponents/icon-component/icon-component';
 import CustomModal, { BootstrapDialogTitle } from './customModal';
@@ -13,6 +21,7 @@ export interface IGridCard {
   h: number;
   x: number;
   y: number;
+  type?: string;
   selectedWidget: any;
   data: any;
   actions: any;
@@ -34,6 +43,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => {
 export default function GridCard(props: IGridCard) {
   const { widgets } = props;
   const theme = useTheme();
+  const themeChart = themes.default;
   const ref = useRef(null);
   const [_selectedWidget, _setselectedWidget] = useState<any>({});
   const [toggle, setToggle] = useState(true);
@@ -75,10 +85,9 @@ export default function GridCard(props: IGridCard) {
   };
 
   return (
-    <Box
+    <div
       className="grid-stack-item "
       style={{
-        backgroundColor: `${theme?.palette['light']['c50']} !important`,
         overflow: 'hidden',
       }}
       id={props.id} // convert to string
@@ -89,108 +98,118 @@ export default function GridCard(props: IGridCard) {
       {...props.data}
       ref={ref}
     >
-      <Box
+      <div
         className="grid-stack-item-content overflow-hidden"
-        sx={{
-          border: `1px solid ${theme.palette?.text?.c100}`,
+        style={{
+          border: `1px solid ${themeChart.palette?.text?.c100}`,
           borderRadius: '4px',
           // border: `1px solid ${theme?.palette['light']['c50']} !important`,
-          background: `${theme?.palette['light']['c50']} !important`,
-          padding: '10px !important',
-          overflow: 'hidden !important',
+          backgroundColor: themeChart.palette?.light?.c50,
+          // padding: '10px',
+          overflow: 'hidden',
         }}
       >
-        <header
-          style={{
-            height: '20px',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            // title="Double click to change title"
-            // onDoubleClick={() => handleToggle(false)}
-          >
-            {_selectedWidget &&
-              _selectedWidget.formData &&
-              _selectedWidget.formData.formData &&
-              _selectedWidget.formData.formData.title}
-          </Typography>
-
-          <Box sx={{ ml: 'auto' }}>
-            {/* <button
-              title="Edit widget"
-              onClick={() => {
-                setWidgetToBeUpdated(
-                  widgets.find((widget: any) => widget.id === props.id)
-                );
-                props.editWidget(
-                  widgets.find((widget: any) => widget.id === props.id)
-                );
-                // setOpenWidgetConfigDrawer(true);
-              }}
-            >
-              <IconComponent
-                {...{
-                  name: 'edit_black_24dp',
-                  color: '#727cad',
-                  size: 25,
-                  label: 'Edit',
-                }}
-              ></IconComponent>
-            </button> */}
-
-            <div
-              onClick={() => {
-                itemClicked(props);
-              }}
-            >
-              <IconComponent
-                {...{
-                  name: 'info_black_24dp',
-                  color: '#727cad',
-                  size: 25,
-                  label: 'info_black_24dp',
-                }}
-              ></IconComponent>
-            </div>
-          </Box>
-        </header>
         <div
           style={{
-            top: '20px',
-            height: 'calc(100% - 20px)',
+            borderBottom: `1px solid${themeChart.palette?.text?.c100}`,
+          }}
+        >
+          <header
+            style={{
+              height: '40px',
+              padding: '10px',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Typography
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              // title="Double click to change title"
+              // onDoubleClick={() => handleToggle(false)}
+            >
+              {_selectedWidget &&
+                _selectedWidget.formData &&
+                _selectedWidget.formData.formData &&
+                _selectedWidget.formData.formData.title}
+            </Typography>
+
+            <Box sx={{ ml: 'auto' }}>
+              <div
+                onClick={() => {
+                  itemClicked(props);
+                }}
+              >
+                <IconComponent
+                  {...{
+                    name: 'more_vert_black_24dp',
+                    color: theme.palette?.text?.primary,
+                    size: 25,
+                    label: 'more_vert_black_24dp',
+                  }}
+                ></IconComponent>
+              </div>
+            </Box>
+          </header>
+        </div>
+
+        <div
+          style={{
+            top: '10px',
+            padding: '20px',
+            height: 'calc(100% - 10px)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           {currentCompomponent}
         </div>
-        <BootstrapDialog
-          fullWidth={true}
-          onClose={handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={open}
-        >
-          <BootstrapDialogTitle
-            id="customized-dialog-title"
-            onClose={handleClose}
+
+        <Dialog onClose={handleClose} open={open} fullWidth={true}>
+          <div
+            style={{
+              height: '100%',
+              position: 'relative',
+              overflow: 'hidden',
+              padding: 20,
+              backgroundColor: theme.palette?.light?.c50,
+            }}
           >
-            {_selectedWidget &&
-              _selectedWidget.formData &&
-              _selectedWidget.formData.formData &&
-              _selectedWidget.formData.formData.title}{' '}
-          </BootstrapDialogTitle>
-          <DialogContent dividers>{currentCompomponent}</DialogContent>
-        </BootstrapDialog>{' '}
-      </Box>
-    </Box>
+            <header
+              style={{
+                height: '20px',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                // title="Double click to change title"
+                // onDoubleClick={() => handleToggle(false)}
+              >
+                {_selectedWidget &&
+                  _selectedWidget.formData &&
+                  _selectedWidget.formData.formData &&
+                  _selectedWidget.formData.formData.title}
+              </Typography>
+            </header>
+
+            {currentCompomponent}
+          </div>
+        </Dialog>
+      </div>
+    </div>
   );
 }

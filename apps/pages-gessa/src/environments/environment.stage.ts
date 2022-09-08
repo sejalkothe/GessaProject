@@ -1,6 +1,8 @@
 export const environment = {
   production: true,
-  NX_THEME_BASE_URL: 'https://gessa-project.qa.gessa.io/gessa-project',
+  CURRENT_ENV: 'staging',
+
+  NX_THEME_BASE_URL: 'https://api.qa.gessa.io/gessa-project',
   NX_FEATURE_BASE_URL: 'https://api.qa.gessa.io/rbac',
   NX_KEYCLOCK_AUTH_SERVER_URL: 'https://auth.qa.gessa.io/',
   NX_KEYCLOCK_DATABASE: 'gessa-studio',
