@@ -119,7 +119,6 @@ export default function GridCard(props: IGridCard) {
   };
 
   const itemClicked = (data: any) => {
-    console.log(data);
     setOpen(!open);
   };
   const openPreview = () => {

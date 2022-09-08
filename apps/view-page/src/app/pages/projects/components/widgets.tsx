@@ -396,7 +396,6 @@ export default function Widgets(props: IWidgetProps) {
     const w2: IWidgetType[] = makeSerializedWidget(props.rawWidget);
   }, [props, props.rawWidget]);
 
-  console.log('hello colors', theme, themes.default);
 
   return (
     <div className="sticky top-0 w-full h-full flex flex-col border-box">

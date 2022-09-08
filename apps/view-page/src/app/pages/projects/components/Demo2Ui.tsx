@@ -169,7 +169,6 @@ export const Demo2Ui = (props: Demo2Props) => {
               {(actions: any) =>
                 widgets.map((widget: any) => {
                   const { component: Widget, label } = getData(widget);
-                  console.log(widget);
                   return (
                     Widget && (
                       <GridCard

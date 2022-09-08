@@ -1,7 +1,6 @@
 import { useTheme } from '@mui/system';
 import themes from '../theme';
 const theme: any = themes.default;
-console.log(theme);
 
 export const tableData = {
   columns: [
