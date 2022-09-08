@@ -13,6 +13,8 @@ export const tableData = {
       headerName: 'Age',
       type: 'number',
       width: 200,
+      description: 'This column has value of age.',
+      sortable: false,
     },
     {
       field: 'fullName',
