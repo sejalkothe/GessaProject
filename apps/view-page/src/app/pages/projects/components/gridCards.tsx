@@ -92,7 +92,7 @@ export default function GridCard(props: IGridCard) {
       <Box
         className="grid-stack-item-content overflow-hidden"
         sx={{
-          border: `1px solid #dadce0`,
+          border: `1px solid ${theme.palette?.text?.c100}`,
           borderRadius: '4px',
           // border: `1px solid ${theme?.palette['light']['c50']} !important`,
           background: `${theme?.palette['light']['c50']} !important`,
