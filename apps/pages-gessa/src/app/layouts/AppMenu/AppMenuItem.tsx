@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Stack, useTheme } from '@mui/material';
+import { Stack, Typography, useTheme } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -112,12 +112,13 @@ function AppMenuItem(props: Props) {
             justifyContent: 'center',
             alignItems: 'center',
             width: '300px',
+            fontWeight: props.isSelected ? 600 : 400,
           }}
         >
           <IconComponent
             name={icon}
             size={25}
-            label={'Quilt'}
+            label={'icon'}
             color={
               props.isSelected
                 ? theme?.palette?.primary?.main
@@ -129,9 +130,10 @@ function AppMenuItem(props: Props) {
               textTransform: 'capitalize',
             }}
             className="text-red"
-            primary={label}
             inset={!Icon}
-          />
+          >
+            <Typography variant={'body1'}>{label}</Typography>
+          </ListItemText>
         </div>
         {/* Display the expand menu if the item has children */}
         {isExpandable && !open && <ExpandMoreIcon />}

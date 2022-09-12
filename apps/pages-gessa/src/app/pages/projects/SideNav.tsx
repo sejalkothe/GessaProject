@@ -2,7 +2,7 @@ import { IconComponent } from '@gessa/component-library';
 import { Box, Stack } from '@mui/material';
 import { useTheme } from '@mui/system';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
 export interface ISideNav {
   menuList: any;
@@ -11,6 +11,7 @@ export interface ISideNav {
 }
 const SideNav = (props: ISideNav) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const params = useParams();
   const [appMenu, setAppMenu]: any = useState<Array<any>>([]);
   const [isClicked, setClicked]: any = useState(false);
@@ -40,44 +41,54 @@ const SideNav = (props: ISideNav) => {
           appMenu.length > 0 &&
           appMenu.map((item: any, index: any) => {
             return (
-              <Link
-                key={index}
-                to={`/project/${params.projectId}/${
-                  item.data.name || params.menuId
-                }`}
-                style={{ textDecoration: 'none' }}
+              // <Link
+              //   key={index}
+              //   to={`/project/${params.projectId}/${
+              //     item.data.name || params.menuId
+              //   }`}
+              //   style={{ textDecoration: 'none' }}
+              // >
+              <div
+                style={{
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '10px',
+                  borderRadius: '4px',
+                  background:
+                    selectedMenu === item.data.name
+                      ? theme?.palette?.background?.default
+                      : theme?.palette?.light?.c50,
+                  color:
+                    selectedMenu === item.data.name
+                      ? theme?.palette?.primary?.main
+                      : theme?.palette?.text?.main,
+                }}
+                onClick={() => {
+                  setClicked(isClicked !== index ? index : -1);
+                  setSelectedMenu(item.data.name);
+                  props.setSelectedMenuName(item.data.name);
+                  navigate(
+                    `/project/${params.projectId}/${
+                      item.data.name || params.menuId
+                    }`
+                  );
+                }}
               >
-                <Box
-                  sx={{
-                    width: '50px',
-                    height: '50px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '10px',
-                    background:
-                      selectedMenu === item.data.name
-                        ? theme?.palette?.background?.default
-                        : theme?.palette?.light?.c50,
-                  }}
-                  onClick={() => {
-                    setClicked(isClicked !== index ? index : -1);
-                    setSelectedMenu(item.data.name);
-                    props.setSelectedMenuName(item.data.name);
-                  }}
-                >
-                  <IconComponent
-                    name={item.data.icon}
-                    size={25}
-                    label={item.data.icon}
-                    color={
-                      selectedMenu === item.data.name
-                        ? theme?.palette?.primary?.main
-                        : theme?.palette?.text?.primary
-                    }
-                  />
-                </Box>
-              </Link>
+                <IconComponent
+                  name={item.data.icon}
+                  size={25}
+                  label={item.data.icon}
+                  color={
+                    selectedMenu === item.data.name
+                      ? theme?.palette?.primary?.main
+                      : theme?.palette?.text?.main
+                  }
+                />
+              </div>
+              // </Link>
             );
           })}
       </Stack>

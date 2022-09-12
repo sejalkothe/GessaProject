@@ -24,7 +24,7 @@ export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   children,
 }: any) => {
-  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.dark));
+  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.default));
   const rootState = useSelector((state: IRootState) => state);
   const themeData = selectThemeContext(rootState);
   const themePaletteData = selectThemePaletteContext(rootState);
@@ -93,9 +93,112 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
 
   React.useEffect(() => {
     setPosts(themePaletteData[0]?.color.result);
+
     themes.default.palette = {
       ...themes.default.palette,
+      ...{
+        chart: [
+          '#ff6083',
+          '#8b5cf6',
+          '#fbbf24',
+          '#84cc16',
+          '#35a2ec',
+          '#be123c',
+          '#86efac',
+          '#4bc1bd',
+          '#64748b',
+          '#a5f3fc',
+          '#6b21a8',
+          '#fecdd3',
+          '#f87171',
+          '#d9f99d',
+          '#f0abfc',
+          '#7f1d1d',
+          '#c4b5fd',
+        ],
+      },
+
       ...themePaletteData[0]?.color.result.colors,
+      // text: {
+      //   primary: '#101425',
+      //   secondary: '#101425',
+      //   disabled: '#636A75',
+      //   c100: '#e2E7Ef',
+      //   c50: '#101425',
+      // },
+      // primary: {
+      //   dark: '#ffffff',
+      //   main: '#131CA2',
+      //   light: '#ffffff',
+      //   c100: '#ffffff',
+      //   c50: '#ffffff',
+      // },
+      // secondary: {
+      //   dark: '#0B8BB8',
+      //   main: '#00BDFF',
+      //   light: '#94ddc4',
+      //   c100: '#b3e7d5',
+      //   c50: '#DFF7FF',
+      // },
+      // background: {
+      //   default: '#F2F4F8',
+      // },
+      // dark: {
+      //   dark: '#101425',
+      //   main: '#332C2C ',
+      //   light: '#594E4E',
+      //   c100: '#877878',
+      //   c50: '#EBE4E4',
+      // },
+      // light: {
+      //   dark: '#EBE4E4',
+      //   main: '#F0EBEB',
+      //   light: '#F5F2F2 ',
+      //   c100: '#E2E7EF',
+      //   c50: '#FFFFFF',
+      // },
+      // systemColor1: {
+      //   dark: '#CE1322',
+      //   main: '#F62D38',
+      //   light: '#FF4D4F',
+      //   c100: '#FFA39E',
+      //   c50: '#FFCCC7',
+      // },
+      // systemColor2: {
+      //   dark: '#2F6E14',
+      //   main: '#52C41A',
+      //   light: '#95DE64',
+      //   c100: '#8dda90',
+      //   c50: '#D9F7BE',
+      // },
+      // systemColor3: {
+      //   dark: '#1D39C4',
+      //   main: '#2F54EB',
+      //   light: '#597EF7',
+      //   c100: '#DADDFB',
+      //   c50: '#D6E4FF',
+      // },
+      // systemColor4: {
+      //   dark: '#AD4E00',
+      //   main: '#FA8C16',
+      //   light: '#FFA940',
+      //   c100: '#FFC069',
+      //   c50: '#FFE7BA',
+      // },
+      // systemColor5: {
+      //   dark: '#FADB14',
+      //   main: '#FA8C16 ',
+      //   light: '#FFEC3D',
+      //   c100: '#FFF566',
+      //   c50: '#FFFFB8',
+      // },
+      // systemColor6: {
+      //   dark: '#131CA2',
+      //   main: '#722ED1',
+      //   light: '#B37FEB',
+      //   c100: '#D3ADF7',
+      //   c50: '#DADDFB',
+      // },
     };
     setTheme(createTheme(themes.default));
   }, [themePaletteData]);
