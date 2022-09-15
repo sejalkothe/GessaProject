@@ -11,7 +11,7 @@ type Props = {};
 const App = (props: Props) => {
   const [currentComponent, setCurrentComponent] = useState<string>('');
   useEffect(() => {
-    console.log(currentComponent);
+    // console.log(currentComponent);
     // if (currentComponent === 'barchart') {
     //   Component = connectorIcons['barchart'];
     // } else if (currentComponent === 'linechart') {

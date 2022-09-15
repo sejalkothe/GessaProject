@@ -80,7 +80,7 @@ const SideNav = (props: ISideNav) => {
                 <IconComponent
                   name={item.data.icon}
                   size={25}
-                  label={item.data.icon}
+                  label={item.data.name}
                   color={
                     selectedMenu === item.data.name
                       ? theme?.palette?.primary?.main

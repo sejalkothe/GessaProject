@@ -98,8 +98,11 @@ export default function GridCard(props: IGridCard) {
     setOpen(true);
   };
   const handleClose = () => {
-    setOpen(false);
     setOpenKebab(false);
+  };
+
+  const closePopup = () => {
+    setOpen(false);
   };
 
   const donloadJSON = (data: any) => {
@@ -121,10 +124,14 @@ export default function GridCard(props: IGridCard) {
   const itemClicked = (data: any) => {
     setOpen(!open);
   };
-  const openPreview = () => {
+  const openPreview = (e?: any) => {
     setOpen(true);
-    setOpenKebab(false);
+    // setOpenKebab(false);
   };
+
+  useEffect(() => {
+    console.log('open true2');
+  }, [open]);
 
   return (
     <div
@@ -180,7 +187,7 @@ export default function GridCard(props: IGridCard) {
               {_selectedWidget &&
                 _selectedWidget.formData &&
                 _selectedWidget.formData.formData &&
-                _selectedWidget.formData.formData.title}
+                _selectedWidget.formData.formData.Title}
             </Typography>
 
             <Box sx={{ ml: 'auto' }}>
@@ -232,7 +239,13 @@ export default function GridCard(props: IGridCard) {
                     >
                       Download
                     </MenuItem>
-                    <MenuItem onClick={openPreview}>Preview</MenuItem>
+                    <MenuItem
+                      onClick={(e) => {
+                        openPreview(e);
+                      }}
+                    >
+                      Preview
+                    </MenuItem>
                   </div>
                 </StyledIconComponent>
               </div>
@@ -297,14 +310,15 @@ export default function GridCard(props: IGridCard) {
                     {_selectedWidget &&
                       _selectedWidget.formData &&
                       _selectedWidget.formData.formData &&
-                      _selectedWidget.formData.formData.title}
+                      _selectedWidget.formData.formData.Title}
                   </Typography>
 
                   <Box sx={{ ml: 'auto' }}>
                     <div
                       style={{ position: 'relative' }}
                       onClick={() => {
-                        handleClose(); // setOpenKebab(true);
+                        closePopup();
+                        setOpenKebab(false);
                       }}
                     >
                       <IconComponent

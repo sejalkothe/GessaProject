@@ -26,8 +26,8 @@ export interface IGridProps {
 }
 
 const DemoWrapper = (props: IGridProps) => {
-  const theme = useTheme();
-  const themeObj = themes.default;
+  const theme: any = useTheme();
+  const themeObj: any = themes.default;
   const dispatch = useDispatch();
   const rootState = useSelector((state: IRootState) => state);
   const gridDataStore: any = selectGridData(rootState);
@@ -112,11 +112,12 @@ const DemoWrapper = (props: IGridProps) => {
             if (payload.type === 'grid' || payload.type === 'card') {
               if (payload.type === 'card') {
                 payload.formProps = {
-                  data: {
-                    title: data?.formData?.title || '',
-                    stat: 'This is subtitle',
-                    iconName: 'Search',
-                    link: 'View All',
+                  title: data?.formData?.title || payload.formData.title || '',
+                  stat: 650,
+                  icon: {
+                    name: 'Search',
+                    size: 30,
+                    color: themes.default.palette?.primary?.main,
                   },
                 };
               } else {
@@ -162,14 +163,39 @@ const DemoWrapper = (props: IGridProps) => {
                   };
                   resolve(obj);
                 }
-              }).then((response: any) => {
+              }).then((_response: any) => {
+                const response = JSON.parse(JSON.stringify(_response));
+
                 if (response && response.payload && response.payload.data) {
                   if (payload.type) {
                     if (response.payload.data) {
                       switch (payload.type.toLowerCase()) {
                         case 'barchart':
-                          if (response && response.payload && response.payload.data && response.payload.data.datasets && response.payload.data.datasets.length > 0) {
-                            response.payload.data.datasets.map((element:any,index:number)=>{return element.backgroundColor = `theme.palette?.systemColor${index}?.main` ||'#'+(Math.random() * 0xfffff * 1000000).toString(16).slice(0,6)})
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
                           }
                           payload.formProps = {
                             data: response.payload.data,
@@ -178,8 +204,35 @@ const DemoWrapper = (props: IGridProps) => {
                           };
                           break;
                         case 'linechart':
-                          if (response && response.payload && response.payload.data && response.payload.data.datasets && response.payload.data.datasets.length > 0) {
-                            response.payload.data.datasets.map((element:any,index:number)=>{return element.backgroundColor = `theme.palette?.systemColor${index}?.main` ||'#'+(Math.random() * 0xfffff * 1000000).toString(16).slice(0,6)})
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.c50;
+                                // element.fill = true;
+                                element.pointRadius = 2;
+                                element.borderWidth = 1;
+                                element.tension = 0.5;
+
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
                           }
                           payload.formProps = {
                             data: response.payload.data,
@@ -188,30 +241,104 @@ const DemoWrapper = (props: IGridProps) => {
                           };
                           break;
                         case 'card':
-                          //   const defaultProps = {
-                          //     title: 'This si title',
-                          //     stat: 'asdfg',
-                          //     iconName: 'Search',
-                          //     link: 'View All',
-                          //   };
+                          const defaultProps = {
+                            // title: 'This si title',
+                            // stat: 'asdfg',
+                            // iconName: 'Search',
+                            link: 'View All',
+                            title:
+                              data?.formData?.Title ||
+                              payload.formData.Title ||
+                              '',
+                            stat: 600,
+                            icon: {
+                              name: 'Search',
+                              size: 30,
+                              color: themes.default.palette?.primary?.main,
+                            },
+                          };
 
-                          //   payload.formProps = {};
+                          payload.formProps = defaultProps;
                           break;
                         case 'grid':
-                          console.log('im a grid type');
                           payload.formProps = response.payload.data;
                           break;
                         case 'radarchart':
+                          response.payload.data.datasets.map(
+                            (element: any, index: number) => {
+                              element.borderColor =
+                                themeObj.palette?.[
+                                  `systemColor${index + 1}`
+                                ]?.main;
+                              element.borderRadius = 5;
+                              return (element.backgroundColor = themeObj
+                                .palette?.[`systemColor${index + 1}`]?.main
+                                ? themeObj.palette?.[`systemColor${index + 1}`]
+                                    ?.main
+                                : '#' +
+                                  (Math.random() * 0xfffff * 1000000)
+                                    .toString(16)
+                                    .slice(0, 6));
+                            }
+                          );
+
                           payload.formProps = {
                             data: response.payload.data,
                           };
                           break;
                         case 'doughnutchart':
+                          response.payload.data.datasets.map(
+                            (element: any, index: number) => {
+                              const bgColorArr = [];
+                              for (
+                                let i = 0;
+                                i < response.payload.data.labels.length;
+                                i += 1
+                              ) {
+                                const color = themeObj.palette?.[
+                                  `systemColor${i + 1}`
+                                ]?.main
+                                  ? themeObj.palette?.[`systemColor${i + 1}`]
+                                      ?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6);
+
+                                bgColorArr.push(color);
+                              }
+                              return (element.backgroundColor = bgColorArr);
+                            }
+                          );
+
                           payload.formProps = {
                             data: response.payload.data,
                           };
                           break;
                         case 'piechart':
+                          response.payload.data.datasets.map(
+                            (element: any, index: number) => {
+                              const bgColorArr = [];
+                              for (
+                                let i = 0;
+                                i < response.payload.data.labels.length;
+                                i += 1
+                              ) {
+                                const color = themeObj.palette?.[
+                                  `systemColor${i + 1}`
+                                ]?.main
+                                  ? themeObj.palette?.[`systemColor${i + 1}`]
+                                      ?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6);
+
+                                bgColorArr.push(color);
+                              }
+                              return (element.backgroundColor = bgColorArr);
+                            }
+                          );
                           payload.formProps = {
                             data: response.payload.data,
                           };
@@ -227,6 +354,30 @@ const DemoWrapper = (props: IGridProps) => {
                           };
                           break;
                         case 'polarchart':
+                          response.payload.data.datasets.map(
+                            (element: any, index: number) => {
+                              const bgColorArr = [];
+                              for (
+                                let i = 0;
+                                i < response.payload.data.labels.length;
+                                i += 1
+                              ) {
+                                const color = themeObj.palette?.[
+                                  `systemColor${i + 1}`
+                                ]?.main
+                                  ? themeObj.palette?.[`systemColor${i + 1}`]
+                                      ?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6);
+
+                                bgColorArr.push(color);
+                              }
+                              return (element.backgroundColor = bgColorArr);
+                            }
+                          );
+
                           payload.formProps = {
                             data: response.payload.data,
                           };
