@@ -264,84 +264,104 @@ const DemoWrapper = (props: IGridProps) => {
                           payload.formProps = response.payload.data;
                           break;
                         case 'radarchart':
-                          response.payload.data.datasets.map(
-                            (element: any, index: number) => {
-                              element.borderColor =
-                                themeObj.palette?.[
-                                  `systemColor${index + 1}`
-                                ]?.main;
-                              element.borderRadius = 5;
-                              return (element.backgroundColor = themeObj
-                                .palette?.[`systemColor${index + 1}`]?.main
-                                ? themeObj.palette?.[`systemColor${index + 1}`]
-                                    ?.main
-                                : '#' +
-                                  (Math.random() * 0xfffff * 1000000)
-                                    .toString(16)
-                                    .slice(0, 6));
-                            }
-                          );
-
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
                           payload.formProps = {
                             data: response.payload.data,
                           };
                           break;
                         case 'doughnutchart':
-                          response.payload.data.datasets.map(
-                            (element: any, index: number) => {
-                              const bgColorArr = [];
-                              for (
-                                let i = 0;
-                                i < response.payload.data.labels.length;
-                                i += 1
-                              ) {
-                                const color = themeObj.palette?.[
-                                  `systemColor${i + 1}`
-                                ]?.main
-                                  ? themeObj.palette?.[`systemColor${i + 1}`]
-                                      ?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6);
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                const bgColorArr = [];
+                                for (
+                                  let i = 0;
+                                  i < response.payload.data.labels.length;
+                                  i += 1
+                                ) {
+                                  const color = themeObj.palette?.[
+                                    `systemColor${i + 1}`
+                                  ]?.main
+                                    ? themeObj.palette?.[`systemColor${i + 1}`]
+                                        ?.main
+                                    : '#' +
+                                      (Math.random() * 0xfffff * 1000000)
+                                        .toString(16)
+                                        .slice(0, 6);
 
-                                bgColorArr.push(color);
+                                  bgColorArr.push(color);
+                                }
+                                return (element.backgroundColor = bgColorArr);
                               }
-                              return (element.backgroundColor = bgColorArr);
-                            }
-                          );
-
+                            );
+                          }
                           payload.formProps = {
                             data: response.payload.data,
                           };
                           break;
                         case 'piechart':
-                          response.payload.data.datasets.map(
-                            (element: any, index: number) => {
-                              const bgColorArr = [];
-                              for (
-                                let i = 0;
-                                i < response.payload.data.labels.length;
-                                i += 1
-                              ) {
-                                const color = themeObj.palette?.[
-                                  `systemColor${i + 1}`
-                                ]?.main
-                                  ? themeObj.palette?.[`systemColor${i + 1}`]
-                                      ?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6);
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                const bgColorArr = [];
+                                for (
+                                  let i = 0;
+                                  i < response.payload.data.labels.length;
+                                  i += 1
+                                ) {
+                                  const color = themeObj.palette?.[
+                                    `systemColor${i + 1}`
+                                  ]?.main
+                                    ? themeObj.palette?.[`systemColor${i + 1}`]
+                                        ?.main
+                                    : '#' +
+                                      (Math.random() * 0xfffff * 1000000)
+                                        .toString(16)
+                                        .slice(0, 6);
 
-                                bgColorArr.push(color);
+                                  bgColorArr.push(color);
+                                }
+                                return (element.backgroundColor = bgColorArr);
                               }
-                              return (element.backgroundColor = bgColorArr);
-                            }
-                          );
-                          payload.formProps = {
-                            data: response.payload.data,
-                          };
+                            );
+                            payload.formProps = {
+                              data: response.payload.data,
+                            };
+                          }
                           break;
                         case 'scatterchart':
                           payload.formProps = {
@@ -354,29 +374,36 @@ const DemoWrapper = (props: IGridProps) => {
                           };
                           break;
                         case 'polarchart':
-                          response.payload.data.datasets.map(
-                            (element: any, index: number) => {
-                              const bgColorArr = [];
-                              for (
-                                let i = 0;
-                                i < response.payload.data.labels.length;
-                                i += 1
-                              ) {
-                                const color = themeObj.palette?.[
-                                  `systemColor${i + 1}`
-                                ]?.main
-                                  ? themeObj.palette?.[`systemColor${i + 1}`]
-                                      ?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6);
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                const bgColorArr = [];
+                                for (
+                                  let i = 0;
+                                  i < response.payload.data.labels.length;
+                                  i += 1
+                                ) {
+                                  const color = themeObj.palette?.[
+                                    `systemColor${i + 1}`
+                                  ]?.main
+                                    ? themeObj.palette?.[`systemColor${i + 1}`]
+                                        ?.main
+                                    : '#' +
+                                      (Math.random() * 0xfffff * 1000000)
+                                        .toString(16)
+                                        .slice(0, 6);
 
-                                bgColorArr.push(color);
+                                  bgColorArr.push(color);
+                                }
+                                return (element.backgroundColor = bgColorArr);
                               }
-                              return (element.backgroundColor = bgColorArr);
-                            }
-                          );
+                            );
+                          }
 
                           payload.formProps = {
                             data: response.payload.data,
