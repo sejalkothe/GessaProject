@@ -33,6 +33,7 @@ function Classic({ right = false }) {
     };
 
   useEffect(() => {
+    setSelectedPage('');
     if (params && params.menuId && childMenus.length === 0) {
       if (sortedMenus && sortedMenus.length > 0) {
         const menuIndex = sortedMenus[0].data.findIndex(
@@ -44,7 +45,6 @@ function Classic({ right = false }) {
             const pageIndex = sortedMenus[0].data[menuIndex].child.findIndex(
               (value: any) => value.name === params.subMenuId
             );
-            setSelectedPage('');
             if (pageIndex !== -1) {
               setSelectedPage(
                 sortedMenus[0].data[menuIndex].child[pageIndex].pageId
@@ -62,7 +62,7 @@ function Classic({ right = false }) {
         childMenus &&
         childMenus.findIndex((value: any) => value.name === params.subMenuId);
       // console.log(pageIndex);
-      setSelectedPage('');
+      // setSelectedPage('');
       if (pageIndex !== -1) {
         setSelectedPage(childMenus[pageIndex].pageId);
       }
@@ -102,6 +102,7 @@ function Classic({ right = false }) {
             menuList={openMenuPage}
             menuType="classic"
             openPage={(e: any) => {
+              setSelectedPage('');
               setMenuData(e);
               setOpenMenuPage(e);
             }}
