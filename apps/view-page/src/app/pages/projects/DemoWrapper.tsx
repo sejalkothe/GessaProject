@@ -199,8 +199,8 @@ const DemoWrapper = (props: IGridProps) => {
                           }
                           payload.formProps = {
                             data: response.payload.data,
-                            xLabel: data.formData.x_axis_label,
-                            yLabel: data.formData.y_axis_label,
+                            xLabel: data.formData.X_axis_label,
+                            yLabel: data.formData.Y_axis_label,
                           };
                           break;
                         case 'linechart':
@@ -236,8 +236,8 @@ const DemoWrapper = (props: IGridProps) => {
                           }
                           payload.formProps = {
                             data: response.payload.data,
-                            xLabel: data.formData.x_axis_label,
-                            yLabel: data.formData.y_axis_label,
+                            xLabel: data.formData.X_axis_label,
+                            yLabel: data.formData.Y_axis_label,
                           };
                           break;
                         case 'card':

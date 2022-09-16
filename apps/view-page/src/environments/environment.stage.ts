@@ -12,4 +12,5 @@ export const environment = {
   NX_REPORT_SERVICE: 'https://api.qa.gessa.io/schema-service/api',
   NX_SCHEMA_SERVICE: 'https://api.qa.gessa.io/schema-service/api',
   NX_THEME_BASE_URL: 'https://api.qa.gessa.io/gessa-project',
+  fileName: 'RawData',
 };

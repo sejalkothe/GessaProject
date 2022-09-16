@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { useConfigForm } from 'apps/view-page/src/context/form';
+import { environment } from 'apps/view-page/src/environments/environment';
 import themes from 'apps/view-page/src/theme';
 import generateRandomString from 'apps/view-page/src/utils/randomString';
 import { useEffect, useRef, useState } from 'react';
@@ -106,7 +107,7 @@ export default function GridCard(props: IGridCard) {
   };
 
   const donloadJSON = (data: any) => {
-    const fileName = 'RawData';
+    const fileName = environment;
     if (data && data.selectedWidget && data.selectedWidget.formData) {
       const json = JSON.stringify(data.selectedWidget.formData);
       const blob = new Blob([json], {
