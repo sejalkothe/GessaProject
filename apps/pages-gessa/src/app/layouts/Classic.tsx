@@ -130,7 +130,9 @@ function Classic({ right = false }) {
             overflowY: 'auto',
           }}
         >
-          <AppMain pageId={selectedPage || ''} />
+          {selectedPage && selectedPage.length > 0 && (
+            <AppMain pageId={selectedPage || ''} />
+          )}
         </Box>
       </Box>
     </div>
