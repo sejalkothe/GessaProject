@@ -152,7 +152,7 @@ function AppMenuItem(props: Props) {
               {...item}
               key={index}
               onClick={(e: any) => {
-                console.log(e);
+                // console.log(e);
               }}
             />
           </>
