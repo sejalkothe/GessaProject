@@ -22,6 +22,7 @@ function Classic({ right = false }) {
   const sortedMenus = selectAllSortedMenuById(rootState) || [];
   const [openMenuPage, setOpenMenuPage] = useState<any>();
   const [openSubmenu, setOpenSubmenu] = useState<any>([]);
+  const [selectedPage, setSelectedPage] = useState<string>('');
 
   const toggleDrawer =
     (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,15 +41,38 @@ function Classic({ right = false }) {
         if (menuIndex !== -1) {
           if (sortedMenus[0].data[menuIndex].child.length > 0) {
             setOpenMenuPage(sortedMenus[0].data[menuIndex].child);
+            const pageIndex = sortedMenus[0].data[menuIndex].child.findIndex(
+              (value: any) => value.name === params.subMenuId
+            );
+            setSelectedPage('');
+            if (pageIndex !== -1) {
+              setSelectedPage(
+                sortedMenus[0].data[menuIndex].child[pageIndex].pageId
+              );
+            }
           } else {
             setOpenMenuPage(sortedMenus[0].data[menuIndex].data);
+            setSelectedPage(sortedMenus[0].data[menuIndex].data.pageId);
           }
         }
       }
     } else if (childMenus && childMenus.length > 0) {
       setOpenMenuPage({});
+      const pageIndex =
+        childMenus &&
+        childMenus.findIndex((value: any) => value.name === params.subMenuId);
+      // console.log(pageIndex);
+      setSelectedPage('');
+      if (pageIndex !== -1) {
+        setSelectedPage(childMenus[pageIndex].pageId);
+      }
+      // console.log('childMenus', childMenus);
     }
   }, [params, sortedMenus]);
+
+  useEffect(() => {
+    // console.log('selectedPage', selectedPage);
+  }, [selectedPage]);
 
   return (
     <div
@@ -105,7 +129,7 @@ function Classic({ right = false }) {
             overflowY: 'auto',
           }}
         >
-          <AppMain pageId={(openMenuPage && openMenuPage.pageId) || ''} />
+          <AppMain pageId={selectedPage || ''} />
         </Box>
       </Box>
     </div>
