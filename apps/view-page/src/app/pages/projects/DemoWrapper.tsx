@@ -394,6 +394,8 @@ const DemoWrapper = (props: IGridProps) => {
                     }
                   }
                   gridLoadWidget.push(payload);
+                } else {
+                  gridLoadWidget.push(payload);
                 }
               })
             );
