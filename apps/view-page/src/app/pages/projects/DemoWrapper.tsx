@@ -427,7 +427,7 @@ const DemoWrapper = (props: IGridProps) => {
               })
             );
           } else {
-            payload.formProps = {};
+            // payload.formProps = {};
             gridLoadWidget.push(payload);
           }
         }

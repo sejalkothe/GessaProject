@@ -374,12 +374,14 @@ const makeSerializedWidget = (widgetData: IWidget[]): any => {
       const dataObj = WIDGETS_V1.filter(
         (value: any) => value.type === widgetData[i].type
       );
-      const payload = {
-        id: (i + 100).toString(),
-        type: widgetData[i].type,
-        data: JSON.parse(JSON.stringify(dataObj[0].data)),
-      };
-      serializeWidgets.push(payload);
+      if (dataObj && dataObj.length > 0 && dataObj[0].data) {
+        const payload = {
+          id: (i + 100).toString(),
+          type: widgetData[i].type,
+          data: JSON.parse(JSON.stringify(dataObj[0].data)),
+        };
+        serializeWidgets.push(payload);
+      }
     }
   }
   return serializeWidgets;
