@@ -267,7 +267,7 @@ export default function GridCard(props: IGridCard) {
         </div>
 
         <Dialog onClose={handleClose} open={open} fullWidth={true}>
-          <div style={{ height: '600px', overflow: 'hidden' }}>
+          <div style={{ maxHeight: '600px', overflow: 'hidden' }}>
             <div
               style={{
                 borderBottom: `1px solid${themeChart.palette?.text?.c100}`,
