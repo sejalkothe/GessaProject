@@ -131,7 +131,7 @@ export default function GridCard(props: IGridCard) {
   };
 
   useEffect(() => {
-    console.log('open true2');
+    // console.log('open true2');
   }, [open]);
 
   return (
