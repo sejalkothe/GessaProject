@@ -1,6 +1,7 @@
 import { useTheme } from '@mui/system';
 import ConfigFormProvider from 'apps/view-page/src/context/form';
 import { IRootState } from 'apps/view-page/src/store';
+import { selectThemeContext } from 'apps/view-page/src/store/themeContextSlice';
 import themes from 'apps/view-page/src/theme';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,6 +31,9 @@ const DemoWrapper = (props: IGridProps) => {
   const themeObj: any = themes.default;
   const dispatch = useDispatch();
   const rootState = useSelector((state: IRootState) => state);
+  const themeData = selectThemeContext(rootState);
+  const [fontData, setFontData] = useState<any>();
+
   const gridDataStore: any = selectGridData(rootState);
   const [gridData, setGridData] = useState<any>([]);
   const widgets = selectAllWidgets(rootState);
@@ -50,6 +54,20 @@ const DemoWrapper = (props: IGridProps) => {
       duration: 0,
     });
   }, []);
+
+  useEffect(() => {
+    if (themeData && themeData.length > 0 && themeData[0].font.result) {
+      let _themeData = JSON.parse(JSON.stringify(themeData));
+
+      const _fontData = {
+        families: themeData[0].font.result.families,
+        url: themeData[0].font.result.urls,
+        defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
+      };
+      setFontData(_fontData);
+      console.log(themeData, _fontData);
+    }
+  }, [themeData]);
 
   const [reportLabels, setReportLabels] = useState([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -201,6 +219,7 @@ const DemoWrapper = (props: IGridProps) => {
                             data: response.payload.data,
                             xLabel: data.formData.X_axis_label,
                             yLabel: data.formData.Y_axis_label,
+                            fontData: fontData,
                           };
                           break;
                         case 'linechart':
@@ -238,6 +257,7 @@ const DemoWrapper = (props: IGridProps) => {
                             data: response.payload.data,
                             xLabel: data.formData.X_axis_label,
                             yLabel: data.formData.Y_axis_label,
+                            fontData: fontData,
                           };
                           break;
                         case 'card':
@@ -290,6 +310,7 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
+                            fontData: fontData,
                             data: response.payload.data,
                           };
                           break;
@@ -326,6 +347,7 @@ const DemoWrapper = (props: IGridProps) => {
                           }
                           payload.formProps = {
                             data: response.payload.data,
+                            fontData: fontData,
                           };
                           break;
                         case 'piechart':
@@ -360,17 +382,20 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                             payload.formProps = {
                               data: response.payload.data,
+                              fontData: fontData,
                             };
                           }
                           break;
                         case 'scatterchart':
                           payload.formProps = {
                             data: response.payload.data,
+                            fontData: fontData,
                           };
                           break;
                         case 'heatmapchart':
                           payload.formProps = {
                             data: response.payload.data,
+                            fontData: fontData,
                           };
                           break;
                         case 'polarchart':
@@ -407,11 +432,13 @@ const DemoWrapper = (props: IGridProps) => {
 
                           payload.formProps = {
                             data: response.payload.data,
+                            fontData: fontData,
                           };
                           break;
                         case 'bubblechart':
                           payload.formProps = {
                             data: response.payload.data,
+                            fontData: fontData,
                           };
                           break;
 
@@ -428,6 +455,7 @@ const DemoWrapper = (props: IGridProps) => {
             );
           } else {
             // payload.formProps = {};
+
             gridLoadWidget.push(payload);
           }
         }

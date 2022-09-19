@@ -31,13 +31,6 @@ import {
 } from '@gessa/component-library';
 // import Datagrid from '../../../components/gridComponents/data-grid/data-grid';
 import themes from 'apps/view-page/src/theme';
-// import StatCard from '../../../components/gridComponents/StatCard/StatCard';
-// import RadarChart from '../../../components/gridComponents/radarchart/radarchart';
-// import DoughnutChart from '../../../components/gridComponents/donutchart_new/doughnutchart';
-// import PieChart from '../../../components/gridComponents/piechar/piechart';
-// import ScatterChart from '../../../components/gridComponents/scatter-chart/scatter-chart';
-// import BubbleChart from '../../../components/gridComponents/bubble-chart/bubble-chart';
-
 export interface IWidgetProps {
   rawWidget: IWidget[];
 }

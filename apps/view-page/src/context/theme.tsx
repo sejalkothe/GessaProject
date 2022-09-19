@@ -28,6 +28,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   const rootState = useSelector((state: IRootState) => state);
   const themeData = selectThemeContext(rootState);
   const themePaletteData = selectThemePaletteContext(rootState);
+  const [fontData, setFontData] = React.useState<any>();
   const newUrl = window.location.href.replace('#', '');
   var url = new URL(newUrl);
   var projectId = url.searchParams.get('projectId');
@@ -36,6 +37,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
     setTheme(createTheme(theme));
   };
   const [posts, setPosts] = React.useState({});
+
   const themeFunc = (projectId: any) => {
     const apicall = new Promise((resolve, reject) => {
       const someThunkCall = new Promise((resolve, reject) => {
