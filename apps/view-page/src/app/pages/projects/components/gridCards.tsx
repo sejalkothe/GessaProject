@@ -108,8 +108,9 @@ export default function GridCard(props: IGridCard) {
 
   const donloadJSON = (data: any) => {
     const fileName = environment.fileName;
-    if (data && data.selectedWidget && data.selectedWidget.formData) {
-      const json = JSON.stringify(data.selectedWidget.formData);
+    console.log(props);
+    if (data && data.selectedWidget && data.selectedWidget.formProps) {
+      const json = JSON.stringify(data.selectedWidget.formProps);
       const blob = new Blob([json], {
         type: 'application/json',
       });
