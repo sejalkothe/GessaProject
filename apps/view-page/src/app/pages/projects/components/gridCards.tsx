@@ -140,7 +140,7 @@ export default function GridCard(props: IGridCard) {
       const href = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = href;
-      link.download = fileName + '.json';
+      link.download = (data.formData?.formData?.Title || fileName) + '.json';
       link.click();
     }
   };
