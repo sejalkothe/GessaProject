@@ -21,6 +21,10 @@ import { useEffect, useRef, useState } from 'react';
 import IconComponent from '../../../components/gridComponents/icon-component/icon-component';
 import CustomModal, { BootstrapDialogTitle } from './customModal';
 
+export interface IMenuClicked {
+  menu: string;
+  data: any;
+}
 export interface IGridCard {
   widgets: any;
   id: string;
@@ -36,6 +40,7 @@ export interface IGridCard {
   children: any;
   editWidget: (data: any) => void;
 }
+
 const StyledIconComponent = styled(Menu)(({ theme }) => {
   return {
     '& .MuiMenu-list': {
@@ -56,6 +61,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => {
 });
 
 export default function GridCard(props: IGridCard) {
+  const menuArray = ['Preview', 'Download'];
   const { widgets } = props;
   // const classes = useStyles<any>();
   const theme = useTheme();
@@ -63,16 +69,21 @@ export default function GridCard(props: IGridCard) {
   const ref = useRef(null);
   const [_selectedWidget, _setselectedWidget] = useState<any>({});
   const [toggle, setToggle] = useState(true);
-  const [openKebab, setOpenKebab] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const [currentCompomponent, setCurrentComponent] = useState<any>(
     props.children
   );
-  const [title, setTitle] = useState(
-    props.title || 'Double click to change title'
-  );
-  const { setOpenWidgetConfigDrawer, setWidgetToBeUpdated } = useConfigForm();
+  const [open, setOpen] = useState<any>(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(Boolean(event.currentTarget));
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (props.selectedWidget) {
@@ -85,32 +96,44 @@ export default function GridCard(props: IGridCard) {
     props.actions.handleAdd(ref.current, props);
   }, [props]);
 
-  const handleToggle = (flag: any) => {
-    setToggle(flag);
-    props.actions.handleEnableMove(flag);
-  };
-  const [open, setOpen] = useState(false);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-    setOpenKebab(true);
-    // setOpen(!open);
-  };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpenKebab(false);
-  };
+  // const [open, setOpen] = useState(false);
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  //   setOpenKebab(true);
+  //   // setOpen(!open);
+  // };
+
+  // const handleClose = () => {
+  //   setOpenKebab(false);
+  // };
 
   const closePopup = () => {
-    setOpen(false);
+    // setOpen(false);
   };
 
-  const donloadJSON = (data: any) => {
+  const menuCategoryClicked = (input: IMenuClicked) => {
+    if (input) {
+      switch (input.menu.toLowerCase()) {
+        case 'download':
+          if (_selectedWidget) {
+            downloadJSON(_selectedWidget);
+          } else {
+            console.log('noen');
+          }
+          break;
+        case 'preview':
+          setOpenDialog(true);
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  const downloadJSON = (data: any) => {
     const fileName = environment.fileName;
-    console.log(props);
-    if (data && data.selectedWidget && data.selectedWidget.formProps) {
-      const json = JSON.stringify(data.selectedWidget.formProps);
+    if (data && data.formProps) {
+      const json = JSON.stringify(data.formProps);
       const blob = new Blob([json], {
         type: 'application/json',
       });
@@ -119,21 +142,13 @@ export default function GridCard(props: IGridCard) {
       link.href = href;
       link.download = fileName + '.json';
       link.click();
-      handleClose();
     }
   };
 
-  const itemClicked = (data: any) => {
-    setOpen(!open);
-  };
   const openPreview = (e?: any) => {
-    setOpen(true);
+    // setOpen(true);
     // setOpenKebab(false);
   };
-
-  useEffect(() => {
-    // console.log('open true2');
-  }, [open]);
 
   return (
     <div
@@ -198,7 +213,7 @@ export default function GridCard(props: IGridCard) {
                 onClick={(e: any) => {
                   // itemClicked(props);
                   // setOpenKebab(true);
-                  handleClose();
+                  // handleClose();
                   handleClick(e);
                 }}
               >
@@ -210,48 +225,60 @@ export default function GridCard(props: IGridCard) {
                     label: 'more_vert_black_24dp',
                   }}
                 ></IconComponent>
-                <StyledIconComponent
-                  id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
-                  sx={{ paddingTop: 0, paddingBottom: 0 }}
-                  anchorEl={anchorEl}
-                  style={{ padding: '0px !mportant' }}
-                  open={openKebab}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: themeChart.palette?.light?.c50,
-                      padding: '0px',
-                      color: themeChart?.palette?.text?.primary,
-                    }}
-                  >
-                    <MenuItem
-                      onClick={(e) => {
-                        donloadJSON(props);
-                      }}
-                    >
-                      Download
-                    </MenuItem>
-                    <MenuItem
-                      onClick={(e) => {
-                        openPreview(e);
-                      }}
-                    >
-                      Preview
-                    </MenuItem>
-                  </div>
-                </StyledIconComponent>
               </div>
             </Box>
+            <StyledIconComponent
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              sx={{ paddingTop: 0, paddingBottom: 0 }}
+              anchorEl={anchorEl}
+              style={{ padding: '0px !important' }}
+              open={open}
+              onClick={(e: any) => {
+                handleClose();
+              }}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: themeChart.palette?.light?.c50,
+                  padding: '0px',
+                  color: themeChart?.palette?.text?.primary,
+                }}
+              >
+                {menuArray &&
+                  menuArray.map((menu: string) => {
+                    return (
+                      <MenuItem
+                        onClick={(e) => {
+                          const payload: IMenuClicked = {
+                            menu,
+                            data: e,
+                          };
+                          menuCategoryClicked(payload);
+                          // downloadJSON(_selectedWidget);
+                        }}
+                      >
+                        {menu}
+                      </MenuItem>
+                    );
+                  })}
+                {/* <MenuItem
+                  onClick={() => {
+                    setOpenDialog(true);
+                  }}
+                >
+                  Preview
+                </MenuItem> */}
+              </div>
+            </StyledIconComponent>
           </div>
         </div>
 
@@ -267,7 +294,7 @@ export default function GridCard(props: IGridCard) {
           {currentCompomponent}
         </div>
 
-        <Dialog onClose={handleClose} open={open} fullWidth={true}>
+        <Dialog onClose={handleClose} open={openDialog} fullWidth={true}>
           <div style={{ maxHeight: '600px', overflow: 'hidden' }}>
             <div
               style={{
@@ -320,7 +347,7 @@ export default function GridCard(props: IGridCard) {
                       style={{ position: 'relative' }}
                       onClick={() => {
                         closePopup();
-                        setOpenKebab(false);
+                        setOpenDialog(false);
                       }}
                     >
                       <IconComponent
