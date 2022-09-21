@@ -118,7 +118,6 @@ export default function GridCard(props: IGridCard) {
           if (_selectedWidget) {
             downloadJSON(_selectedWidget);
           } else {
-            console.log('noen');
           }
           break;
         case 'preview':
