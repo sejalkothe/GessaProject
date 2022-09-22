@@ -56,7 +56,7 @@ const getResposeDataAltered = (data: any): any => {
         field: keyname,
         headerName: keyname,
         type: 'string',
-        width: 200,
+        flex: 1,
       };
       cols.push(colObj);
     });
