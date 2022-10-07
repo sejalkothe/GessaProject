@@ -120,27 +120,31 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           // <Datagrid columns={props.columns || []} rows={props.rows || []} />
-          <DataGridV1
-            columnData={props.chartData.data.columns}
-            rowData={props.chartData.data.rows}
-            columnResizable={props.chartData.data.columnResizable}
-            pagination={props.chartData.data.pagination}
+          <DatatableCardV1
+            // columnData={props.chartData.data.columns}
+            // rowData={props.chartData.data.rows}
+            // columnResizable={props.chartData.data.columnResizable}
+            // pagination={props.chartData.data.pagination}
+            // height={props.chartData.height - 100}
+            // width={props.chartData.width - 50}
+            chartData={{
+              columnData: props.chartData.data.columns,
+              rowData: props.chartData.data.rows,
+              columnResizable: props.chartData.columnResizable,
+              pagination: props.chartData.pagination,
+              height: props.chartData.height - 200,
+              width: props.chartData.width - 200,
+            }}
+            headerData={props.headerData}
             height={props.chartData.height - 100}
             width={props.chartData.width - 50}
-            // chartData={{
-            //   columnData: props.chartData.data.columns,
-            //   rowData: props.chartData.data.rows,
-            //   columnResizable: props.chartData.columnResizable,
-            //   pagination: props.chartData.pagination,
-            //   height: props.chartData.height - 20,
-            //   width: props.chartData.width,
-            // }}
-            // headerData={props.headerData}
-            // height={props.chartData.height - 65}
-            // width={props.chartData.width}
-            // actionClicked={(data: any) => {
-            //   props.actionClicked && props.actionClicked(data);
-            // }}
+            showBorder={true}
+            actionClicked={(data: any) => {
+              props.actionClicked && props.actionClicked(data);
+            }}
+            searchAction={(data: any) => {
+              props.searchAction && props.searchAction(data);
+            }}
           />
         ) : (
           // <Datagrid columns={tableData.columns} rows={tableData.rows} />

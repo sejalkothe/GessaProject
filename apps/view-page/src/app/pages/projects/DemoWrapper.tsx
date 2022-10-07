@@ -302,7 +302,35 @@ const DemoWrapper = (props: IGridProps) => {
                           payload.formProps = {
                             headerData: {
                               title: data?.formData?.Title,
-                              actions: [],
+                              searchData: {
+                                label: 'Search',
+                                placeholder:
+                                  'Search by Customer Name, SSE ID, Phone Numbe',
+                                value: '',
+                              },
+
+                              actions: [
+                                {
+                                  menu: 'Filter',
+                                  icon: {
+                                    name: 'filter_alt_black_24dp',
+                                    size: 25,
+                                    color: '#0958fa',
+                                    label: 'Filter',
+                                  },
+                                  submenu: [],
+                                },
+                                {
+                                  menu: 'Download',
+                                  icon: {
+                                    name: 'file_upload_black_24dp-1',
+                                    size: 25,
+                                    color: '#0958fa',
+                                    label: 'Download',
+                                  },
+                                  submenu: [],
+                                },
+                              ],
                             },
                             chartData: {
                               data: response.payload.data,
