@@ -11,7 +11,11 @@
   "dependencies": {
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "11.8.1",
+<<<<<<< HEAD
     "@gessa/component-library": "^0.1.1",
+=======
+    "@gessa/component-library": "^0.0.96",
+>>>>>>> cad56352ff9e8d6e9250580194b32fb350bdc954
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.4",
