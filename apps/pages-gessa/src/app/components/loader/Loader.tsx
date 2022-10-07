@@ -1,10 +1,17 @@
 import { Typography } from '@mui/material';
-import React from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import React, { useState } from 'react';
+export interface ILoaderProps {
+  status: boolean;
+  size?: number;
+}
 
-const Loader = () => {
+const Loader = (props: ILoaderProps) => {
   return (
     <div className="absolute w-full h-full flex justify-center items-center">
-      <Typography variant="body1">Loading...</Typography>
+      {props && props.status && (
+        <CircularProgress color={'primary'} size={props.size || 40} />
+      )}
     </div>
   );
 };

@@ -1,8 +1,18 @@
 import { useTheme } from '@mui/system';
 import ConfigFormProvider from 'apps/view-page/src/context/form';
+import { cardheaderData } from 'apps/view-page/src/fake-db/scatterData';
 import { IRootState } from 'apps/view-page/src/store';
 import { selectThemeContext } from 'apps/view-page/src/store/themeContextSlice';
 import themes from 'apps/view-page/src/theme';
+import {
+  constStackVerticalBarChartType,
+  constStackVerticalFullBarChartType,
+  constStackHorizontalBarChartType,
+  constStackHorizontalFullBarChart,
+  constLineChartWithTension,
+  constLineChartWithFilled,
+  constLineChartWithTensionFilled,
+} from 'apps/view-page/src/utils/constantString';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomSnackbar from '../../components/CustomSnackbar';
@@ -65,7 +75,7 @@ const DemoWrapper = (props: IGridProps) => {
         defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
       };
       setFontData(_fontData);
-      console.log(themeData, _fontData);
+      // console.log(themeData, _fontData);
     }
   }, [themeData]);
 
@@ -111,6 +121,12 @@ const DemoWrapper = (props: IGridProps) => {
             ).value,
             y: gridDataStore[0].widgets[i].layout.find(
               (o: any) => o.key === 'y'
+            ).value,
+            widgetHeight: gridDataStore[0].widgets[i].layout.find(
+              (o: any) => o.key === 'widgetHeight'
+            ).value,
+            widgetWidth: gridDataStore[0].widgets[i].layout.find(
+              (o: any) => o.key === 'widgetWidth'
             ).value,
           };
           const dataIndex = gridDataStore[0].widgets[i].layout.findIndex(
@@ -222,6 +238,7 @@ const DemoWrapper = (props: IGridProps) => {
                             fontData: fontData,
                           };
                           break;
+
                         case 'linechart':
                           if (
                             response &&
@@ -281,7 +298,20 @@ const DemoWrapper = (props: IGridProps) => {
                           payload.formProps = defaultProps;
                           break;
                         case 'grid':
-                          payload.formProps = response.payload.data;
+                          // payload.formProps = response.payload.data;
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: [],
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              columnResizable: true,
+                              pagination: true,
+                              height: payload.widgetHeight,
+                              width: payload.widgetWidth,
+                            },
+                          };
                           break;
                         case 'radarchart':
                           if (
@@ -439,6 +469,333 @@ const DemoWrapper = (props: IGridProps) => {
                           payload.formProps = {
                             data: response.payload.data,
                             fontData: fontData,
+                          };
+                          break;
+
+                        case constStackVerticalBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              stacked: true,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constStackVerticalBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              stacked: true,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constStackVerticalFullBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constStackHorizontalBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constStackHorizontalFullBarChart:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constLineChartWithTension:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.c50;
+                                // element.fill = true;
+                                element.pointRadius = 2;
+                                element.borderWidth = 1;
+                                element.tension = 0.5;
+
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constLineChartWithFilled:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.c50;
+                                // element.fill = true;
+                                element.pointRadius = 2;
+                                element.borderWidth = 1;
+                                element.tension = 0.5;
+
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constLineChartWithTensionFilled:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.c50;
+                                // element.fill = true;
+                                element.pointRadius = 2;
+                                element.borderWidth = 1;
+                                element.tension = 0.5;
+
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
                           };
                           break;
 

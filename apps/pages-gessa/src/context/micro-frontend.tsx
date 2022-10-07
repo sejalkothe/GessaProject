@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react';
+import Loader from '../app/components/loader/Loader';
 import Remotes, {
   IMicroFrontend,
   IMicroFrontends,
@@ -153,7 +154,37 @@ export const MicroFrontendProvider: FC<ReactNode> | any = ({
     routes: [],
   });
   return (
-    <React.Suspense fallback={<p className="p-4">Loading microfrontends...</p>}>
+    <React.Suspense
+      fallback={
+        <div
+          style={{
+            height: '100vh',
+            width: '100vw',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 20,
+          }}
+        >
+          <div
+            style={{
+              position: 'relative',
+              display: 'flex',
+              height: '150px',
+              width: '150px',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 20,
+            }}
+          >
+            <Loader status={true} size={50} />
+          </div>
+          {/* <h5>Loading {props.scope}</h5> */}
+        </div>
+      }
+    >
       <LoadMicroFrontends
         microFrontends={microFrontends}
         setMicroFrontends={setMicroFrontends}
