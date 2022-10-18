@@ -26,7 +26,7 @@ function AppMenu(props: Props) {
   const rootState = useSelector((state: IRootState) => state);
   const dispatch = useDispatch();
   // const childMenus = useContext(ChildMenuContext);
-  const [childMenus, setChildMenus] = useState<any>(params.menuList);
+  const [childMenus, setChildMenus] = useState<any>(props.menuList);
   const [selectedPage, setSealectedPage] = useState<any>('');
   const allMenus = selectAllMenu(rootState);
   const sortedMenus = selectAllSortedMenuById(rootState) || [];
@@ -65,7 +65,7 @@ function AppMenu(props: Props) {
     }
   }, [selectedPage]);
   useEffect(() => {
-    console.log('childMenus', childMenus);
+    // console.log('childMenus', childMenus);
   }, [childMenus]);
   useEffect(() => {
     // console.log('selectedPage', selectedPage);

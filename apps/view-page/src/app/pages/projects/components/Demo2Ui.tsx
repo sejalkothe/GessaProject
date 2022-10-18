@@ -58,7 +58,7 @@ export const Demo2Ui = (props: Demo2Props) => {
   };
 
   const parseMenuEvents = (data: any) => {
-    console.log(data);
+    // console.log(data);
     if (data && data.menu && data.widget) {
       switch (data.menu.menu.toLowerCase()) {
         case 'download':

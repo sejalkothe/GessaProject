@@ -2,12 +2,14 @@ import { IconComponent } from '@gessa/component-library';
 import { Box, Stack } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { IRootState } from 'apps/pages-gessa/src/store';
+import generateRandomString from 'apps/pages-gessa/src/utils/randomString';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import {
   selectAllSortedMenuById,
   setActiveMenuName,
+  setPageId,
 } from './store/sortedMenuSlice';
 
 export interface ISideNav {
@@ -34,6 +36,12 @@ const SideNav = (props: ISideNav) => {
     }
   }, [sortedMenus]);
 
+  // useEffect(() => {
+  //   if (params && params.menuId) {
+  //     dispatch(setActiveMenuName(params.menuId));
+  //   }
+  // }, [params]);
+
   return (
     <Box
       sx={{
@@ -58,6 +66,7 @@ const SideNav = (props: ISideNav) => {
               //   style={{ textDecoration: 'none' }}
               // >
               <div
+                key={generateRandomString()}
                 style={{
                   width: '50px',
                   height: '50px',
@@ -78,7 +87,13 @@ const SideNav = (props: ISideNav) => {
                 onClick={() => {
                   setClicked(isClicked !== index ? index : -1);
                   setSelectedMenu(item.data.name);
+
                   dispatch(setActiveMenuName(item.data.name));
+                  if (item && item.child && item.child.length > 0) {
+                    dispatch(setPageId(''));
+                  } else {
+                    dispatch(setPageId(item.data.pageId));
+                  }
                   props.setSelectedMenuName(item.data.name);
                   navigate(
                     `/project/${params.projectId}/${

@@ -91,7 +91,7 @@ function Classic({ right = false }) {
   }, [params, sortedMenus]);
 
   useEffect(() => {
-    console.log('selectedPage', subMenuList);
+    // console.log('selectedPage', subMenuList);
   }, [subMenuList]);
 
   return (

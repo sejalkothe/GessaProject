@@ -18,6 +18,7 @@ import {
 } from '../store/colorPalleteSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../store/index';
+import { getLocalStorage } from '../utils/localStorageService';
 
 export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 
@@ -39,36 +40,38 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   const [posts, setPosts] = React.useState({});
 
   const themeFunc = (projectId: any) => {
-    const apicall = new Promise((resolve, reject) => {
-      const someThunkCall = new Promise((resolve, reject) => {
-        resolve(dispatch(getTheme(projectId)));
-      }).then((res: any) => {
-        if (res && res.payload && res.payload.data) {
-          const themeObject: IRTheme = {
-            project_id: '123',
-            font: res.payload.data,
-          };
-          dispatch(setThemeContext(themeObject));
-        }
-      });
-    });
+    // const apicall = new Promise((resolve, reject) => {
+    //   const someThunkCall = new Promise((resolve, reject) => {
+    //     resolve(dispatch(getTheme(projectId)));
+    //   }).then((res: any) => {
+    const themeObject = getLocalStorage('fontData');
+    // if (res && res.payload && res.payload.data) {
+    //   const themeObject: IRTheme = {
+    //     project_id: '123',
+    //     font: res.payload.data,
+    //   };
+    dispatch(setThemeContext(themeObject));
+    // }
+    //   });
+    // });
   };
 
   const colorthemeFunc = (projectId: any) => {
-    const apicall = new Promise((resolve, reject) => {
-      const someThunkCall = new Promise((resolve, reject) => {
-        resolve(dispatch(getThemePalette(projectId)));
-      }).then((res: any) => {
-        if (res && res.payload && res.payload.data) {
-          const themeObject: IRThemePalette = {
-            project_id: '123',
-            color: res.payload.data,
-          };
+    // const apicall = new Promise((resolve, reject) => {
+    //   const someThunkCall = new Promise((resolve, reject) => {
+    //     resolve(dispatch(getThemePalette(projectId)));
+    //   }).then((res: any) => {
+    //     if (res && res.payload && res.payload.data) {
+    //       const themeObject: IRThemePalette = {
+    //         project_id: '123',
+    //         color: res.payload.data,
+    //       };
+    const themeObject = getLocalStorage('colorData');
 
-          dispatch(setThemePaletteContext(themeObject));
-        }
-      });
-    });
+    dispatch(setThemePaletteContext(themeObject));
+    //     }
+    //   });
+    // });
   };
 
   React.useEffect(() => {

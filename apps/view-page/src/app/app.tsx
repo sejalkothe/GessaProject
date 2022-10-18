@@ -24,7 +24,7 @@ export function App(props: any) {
   return (
     <MicroFrontendProvider>
       <ReduxProvider>
-        <ThemeProvider>
+        <ThemeProvider {...{ name: 'vishal' }}>
           <SettingProvider>
             <AuthProvider>
               <RouteProvider>

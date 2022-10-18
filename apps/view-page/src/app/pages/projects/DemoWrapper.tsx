@@ -856,7 +856,10 @@ const DemoWrapper = (props: IGridProps) => {
       page: 0,
       size: 500,
     };
-    dispatch(getAllWidgets(payload));
+    if (widgets && widgets.length > 0) {
+    } else {
+      dispatch(getAllWidgets(payload));
+    }
 
     if (props && props.page_id) {
       const payload2 = {
@@ -864,16 +867,22 @@ const DemoWrapper = (props: IGridProps) => {
         page: 0,
         size: 100,
       };
+      // if (gridDataStore && gridDataStore.length > 0) {
+      // } else {
       dispatch(deleteAllStore());
 
       dispatch(getPageDataByIdApi(payload2));
+      // }
     }
     const payload3 = {
       page: 0,
       size: 500,
     };
-    dispatch(getAllReportsApi(payload3));
-  }, [dispatch, props, props.page_id]);
+    if (reports && reports.length > 0) {
+    } else {
+      dispatch(getAllReportsApi(payload3));
+    }
+  }, [props, props.page_id]);
 
   const saveLayout = (data: any) => {
     const layout = [];

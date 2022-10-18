@@ -6,6 +6,7 @@ import {
   Link,
   Route,
   Routes,
+  useNavigate,
   useParams,
   useSearchParams,
 } from 'react-router-dom';
@@ -27,7 +28,10 @@ import {
 } from 'apps/pages-gessa/src/utils/localStorageService';
 import { useDispatch, useSelector } from 'react-redux';
 import SideNav from './SideNav';
-import { selectAllSortedMenuById } from './store/sortedMenuSlice';
+import {
+  selectActiveMenuName,
+  selectAllSortedMenuById,
+} from './store/sortedMenuSlice';
 import { IRootState } from 'apps/pages-gessa/src/store';
 import keycloak from 'apps/pages-gessa/src/keycloak/keycloak';
 
@@ -43,10 +47,11 @@ export function Project() {
   const [isClicked, setClicked]: any = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<string>(params.menuId || '');
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const _userInfo = getLocalStorage('userInfo');
   const [sortedData, setSortedData] = useState<any>([]);
-
+  const _selectedMenuName = selectActiveMenuName(rootState);
   useEffect(() => {
     if (sortedMenus && sortedMenus.length > 0) {
       setSortedData(sortedMenus[0].data);
@@ -90,32 +95,7 @@ export function Project() {
     };
     dispatch(getAppMenu(menuParams))
       .then((res: any) => {
-        const parents: any = {};
-        const createParent = (id: string, item: any) => {
-          parents[id] = {
-            child: [],
-            data: { ...item },
-          };
-        };
-        res?.payload.forEach((item: any) => {
-          const parentId = item?.parentId || '';
-          if (parentId === '') {
-            if (!parents[parentId]) {
-              createParent(item._id, item);
-            }
-          } else if (item.parentId) {
-            if (parents[parentId]) {
-              parents[parentId].child.push(item);
-            } else {
-              createParent(parentId, item);
-            }
-          }
-        });
-        const arrPar = [];
-        for (const key in parents) {
-          arrPar.push(parents[key]);
-        }
-        setAppMenu(arrPar);
+        // navigate(`/project/${params.projectId}/${_selectedMenuName}`);
       })
       .catch((reason: any) => {
         //  Todod :

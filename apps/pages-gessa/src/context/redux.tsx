@@ -16,7 +16,7 @@ const _store = configureStore({
   //TODO: Need to remove this comment and add serilize object in redux store
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false
+      serializableCheck: false,
     }),
   reducer: reducers,
 });
@@ -32,7 +32,7 @@ export const ReduxProvider: FC<ReactNode> | any = ({ children }: any) => {
     if (Object.keys(microFrontends.slices).length === 0) return;
     const _reducers = combineReducers({
       ...reducers,
-      // ...microFrontends.slices,
+      ...microFrontends.slices,
     });
     store.replaceReducer(_reducers);
   }, [microFrontends, store]);
