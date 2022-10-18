@@ -232,9 +232,9 @@ export function Project() {
             overflow: 'hidden',
           }}
         >
-          <ChildMenuContext.Provider value={menuName.menuChild}>
-            <AppLayout />
-          </ChildMenuContext.Provider>
+          {/* <ChildMenuContext.Provider value={menuName.menuChild}> */}
+          <AppLayout />
+          {/* </ChildMenuContext.Provider> */}
         </Box>
       </Stack>
     </Box>

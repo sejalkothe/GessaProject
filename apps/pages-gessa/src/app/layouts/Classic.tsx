@@ -9,13 +9,17 @@ import { useParams } from 'react-router-dom';
 import { selectAllMenu } from '../pages/projects/store/appMenuSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
-import { selectAllSortedMenuById } from '../pages/projects/store/sortedMenuSlice';
+import {
+  selectActiveMenuName,
+  selectActivePageId,
+  selectAllSortedMenuById,
+} from '../pages/projects/store/sortedMenuSlice';
 
 function Classic({ right = false }) {
   const theme: ITheme = useTheme();
   const rootState = useSelector((state: IRootState) => state);
   const [menuData, setMenuData] = useState<any>();
-  const childMenus: any = useContext(childMenuContext);
+  // const childMenus: any = useContext(childMenuContext);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const params: any = useParams();
   const allMenus = selectAllMenu(rootState);
@@ -23,7 +27,9 @@ function Classic({ right = false }) {
   const [openMenuPage, setOpenMenuPage] = useState<any>();
   const [openSubmenu, setOpenSubmenu] = useState<any>([]);
   const [selectedPage, setSelectedPage] = useState<string>('');
-
+  const _selectActivePageId = selectActivePageId(rootState);
+  const _selectActiveMenuName = selectActiveMenuName(rootState);
+  const [subMenuList, setSubMenuList] = useState<any>([]);
   const toggleDrawer =
     (open: boolean) => (event: React.MouseEvent<HTMLButtonElement>) => {
       if (event && event.type === 'keydown') {
@@ -33,8 +39,22 @@ function Classic({ right = false }) {
     };
 
   useEffect(() => {
+    if (_selectActiveMenuName && sortedMenus && sortedMenus.length > 0) {
+      const subMenuIndex = sortedMenus[0].data.findIndex(
+        (value: any) => value.data.name === _selectActiveMenuName
+      );
+      // console.log(subMenuIndex, _selectActiveMenuName, sortedMenus);
+      if (subMenuIndex !== -1) {
+        setSubMenuList(sortedMenus[0].data[subMenuIndex].child);
+      } else {
+        setSubMenuList([]);
+      }
+    }
+  }, [_selectActiveMenuName]);
+
+  useEffect(() => {
     setSelectedPage('');
-    if (params && params.menuId && childMenus.length === 0) {
+    if (params && params.menuId && subMenuList.length === 0) {
       if (sortedMenus && sortedMenus.length > 0) {
         const menuIndex = sortedMenus[0].data.findIndex(
           (value: any) => value.data.name === params.menuId
@@ -56,23 +76,23 @@ function Classic({ right = false }) {
           }
         }
       }
-    } else if (childMenus && childMenus.length > 0) {
+    } else if (subMenuList && subMenuList.length > 0) {
       setOpenMenuPage({});
       const pageIndex =
-        childMenus &&
-        childMenus.findIndex((value: any) => value.name === params.subMenuId);
+        subMenuList &&
+        subMenuList.findIndex((value: any) => value.name === params.subMenuId);
       // console.log(pageIndex);
       // setSelectedPage('');
       if (pageIndex !== -1) {
-        setSelectedPage(childMenus[pageIndex].pageId);
+        setSelectedPage(subMenuList[pageIndex].pageId);
       }
       // console.log('childMenus', childMenus);
     }
   }, [params, sortedMenus]);
 
   useEffect(() => {
-    // console.log('selectedPage', selectedPage);
-  }, [selectedPage]);
+    console.log('selectedPage', subMenuList);
+  }, [subMenuList]);
 
   return (
     <div
@@ -88,7 +108,7 @@ function Classic({ right = false }) {
         width: '100%',
       }}
     >
-      {childMenus && childMenus.length > 0 && (
+      {subMenuList && subMenuList.length > 0 && (
         <Box
           sx={{
             backgroundColor: theme.palette?.light?.c50,
@@ -99,7 +119,7 @@ function Classic({ right = false }) {
           }}
         >
           <AppMenu
-            menuList={openMenuPage}
+            menuList={subMenuList}
             menuType="classic"
             openPage={(e: any) => {
               setSelectedPage('');
@@ -119,7 +139,9 @@ function Classic({ right = false }) {
           color: theme.palette.text?.primary,
           height: 'calc(100vh - 8vh)',
           width:
-            childMenus && childMenus.length > 0 ? 'calc(100% - 260px)' : '100%',
+            subMenuList && subMenuList.length > 0
+              ? 'calc(100% - 260px)'
+              : '100%',
         }}
       >
         <Box
@@ -130,9 +152,10 @@ function Classic({ right = false }) {
             overflowY: 'auto',
           }}
         >
-          {selectedPage && selectedPage.length > 0 && (
-            <AppMain pageId={selectedPage || ''} />
-          )}
+          {/* openpage {selectedPage} {_selectActivePageId} */}
+          {/* {selectedPage && selectedPage.length > 0 && ( */}
+          <AppMain pageId={selectedPage || _selectActivePageId || ''} />
+          {/* )} */}
         </Box>
       </Box>
     </div>

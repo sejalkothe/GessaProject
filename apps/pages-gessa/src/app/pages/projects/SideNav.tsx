@@ -1,8 +1,14 @@
 import { IconComponent } from '@gessa/component-library';
 import { Box, Stack } from '@mui/material';
 import { useTheme } from '@mui/system';
+import { IRootState } from 'apps/pages-gessa/src/store';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import {
+  selectAllSortedMenuById,
+  setActiveMenuName,
+} from './store/sortedMenuSlice';
 
 export interface ISideNav {
   menuList: any;
@@ -13,17 +19,20 @@ const SideNav = (props: ISideNav) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
+  const rootState = useSelector((state: IRootState) => state);
   const [appMenu, setAppMenu]: any = useState<Array<any>>([]);
   const [isClicked, setClicked]: any = useState(false);
+  const sortedMenus = selectAllSortedMenuById(rootState);
   const [selectedMenu, setSelectedMenu] = useState<string>(
     params.menuId || props.selectedMenuName
   );
 
   useEffect(() => {
-    if (props && props.menuList) {
-      setAppMenu(props.menuList);
+    if (sortedMenus && sortedMenus.length > 0) {
+      setAppMenu(sortedMenus[0].data);
     }
-  }, [props.menuList]);
+  }, [sortedMenus]);
 
   return (
     <Box
@@ -69,6 +78,7 @@ const SideNav = (props: ISideNav) => {
                 onClick={() => {
                   setClicked(isClicked !== index ? index : -1);
                   setSelectedMenu(item.data.name);
+                  dispatch(setActiveMenuName(item.data.name));
                   props.setSelectedMenuName(item.data.name);
                   navigate(
                     `/project/${params.projectId}/${

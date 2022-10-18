@@ -6,10 +6,14 @@ import { appMenuItems } from './app-menu-items';
 import { Link } from 'react-router-dom';
 import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from 'apps/pages-gessa/src/store';
 import { selectAllMenu } from '../../pages/projects/store/appMenuSlice';
-import { selectAllSortedMenuById } from '../../pages/projects/store/sortedMenuSlice';
+import {
+  selectAllSortedMenuById,
+  setActiveSubMenuName,
+  setPageId,
+} from '../../pages/projects/store/sortedMenuSlice';
 
 interface Props {
   menuList?: any;
@@ -20,7 +24,7 @@ interface Props {
 function AppMenu(props: Props) {
   const params: any = useParams();
   const rootState = useSelector((state: IRootState) => state);
-
+  const dispatch = useDispatch();
   // const childMenus = useContext(ChildMenuContext);
   const [childMenus, setChildMenus] = useState<any>(params.menuList);
   const [selectedPage, setSealectedPage] = useState<any>('');
@@ -48,12 +52,12 @@ function AppMenu(props: Props) {
   }, [params, childMenus]);
 
   /** get the menu id from url params */
-  const menuDetails = useMemo(() => {
-    // const menu = params['*']?.split('/');
-    const menuId = params.menuId;
-    const subMenuId = params.subMenuId;
-    return { menuId, subMenuId };
-  }, [params]);
+  // const menuDetails = useMemo(() => {
+  //   // const menu = params['*']?.split('/');
+  //   const menuId = params.menuId;
+  //   const subMenuId = params.subMenuId;
+  //   return { menuId, subMenuId };
+  // }, [params]);
 
   useEffect(() => {
     if (selectedPage) {
@@ -61,7 +65,7 @@ function AppMenu(props: Props) {
     }
   }, [selectedPage]);
   useEffect(() => {
-    // console.log('childMenus', childMenus);
+    console.log('childMenus', childMenus);
   }, [childMenus]);
   useEffect(() => {
     // console.log('selectedPage', selectedPage);
@@ -79,7 +83,11 @@ function AppMenu(props: Props) {
                 to={`/project/${params.projectId}/${params.menuId}/${
                   item.name || params.subMenuId
                 }/`}
-                onClick={() => setSealectedPage(item)}
+                onClick={() => {
+                  dispatch(setActiveSubMenuName(item.name));
+                  dispatch(setPageId(item.pageId));
+                  setSealectedPage(item);
+                }}
               >
                 <AppMenuItem
                   label={item.name}
