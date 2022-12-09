@@ -166,7 +166,7 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           // <Barchart {...BarData} />
-          <Barchart {...props} />
+          <Barchart {...props.chartData} />
         ) : (
           <Barchart
             data={{
@@ -192,7 +192,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <RadarChart {...props} />
+          <RadarChart data={props?.chartData?.data || {}} />
         ) : (
           // <RadarChart {...RadarData} />
           <RadarChart
@@ -217,7 +217,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <DoughnutChart {...props} />
+          <DoughnutChart data={props?.chartData?.data || {}} />
         ) : (
           // <DoughnutChart {...DouhnutData} />
           <DoughnutChart
@@ -242,7 +242,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PieChart {...props} />
+          <PieChart data={props.chartData?.data} />
         ) : (
           // <PieChart {...PiechartData} />
           // <PieChart {...props} />
@@ -269,7 +269,12 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart {...props} />
+          <LineChart
+            data={props?.chartData?.data || []}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
+            fontData={props?.chartData?.fontData}
+          />
         ) : (
           // <LineChart {...LineData} />
           <LineChart
@@ -295,8 +300,10 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <ScatterChart
-            labels={props.labels || []}
-            datasets={props.datasets || []}
+            datasets={props?.chartData?.datasets}
+            labels={props?.chartData?.labels}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
           />
         ) : (
           // <ScatterChart {...ScatterData} />
@@ -360,8 +367,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <PolarChart
-            datasets={props.data.datasets || []}
-            labels={props.data.labels || []}
+            datasets={props?.chartData?.datasets || []}
+            labels={props?.chartData?.labels || []}
           />
         ) : (
           // <PolarChart {...PolarData} />
@@ -409,7 +416,9 @@ export const WIDGETS_V1: IWidgetType[] = [
           <Barchart
             data={props?.chartData?.data || []}
             stacked={true}
-            horizontal={props?.chartData?.horizontal || false}
+            horizontal={false}
+            xLabel={props.chartData.xLaabel}
+            yLabel={props.chartData.yLabel}
           />
         ) : (
           // <BarChartCard
@@ -446,7 +455,9 @@ export const WIDGETS_V1: IWidgetType[] = [
           <Barchart
             data={props?.chartData?.data || []}
             stacked={true}
-            horizontal={props?.chartData?.horizontal || true}
+            horizontal={false}
+            xLabel={props.chartData.xLaabel}
+            yLabel={props.chartData.yLabel}
           />
         ) : (
           // <BarChartCard
@@ -483,7 +494,9 @@ export const WIDGETS_V1: IWidgetType[] = [
           <Barchart
             data={props?.chartData?.data || []}
             stacked={true}
-            horizontal={props?.chartData?.horizontal || true}
+            horizontal={true}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
           />
         ) : (
           // <BarChartCard
@@ -520,7 +533,9 @@ export const WIDGETS_V1: IWidgetType[] = [
           <Barchart
             data={props?.chartData?.data || []}
             stacked={true}
-            horizontal={props?.chartData?.horizontal || true}
+            horizontal={true}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
           />
         ) : (
           // <BarChartCard
@@ -554,7 +569,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart data={props?.chartData?.data || []} />
+          <LineChart
+            data={props?.chartData?.data || []}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
+          />
         ) : (
           // <LineChartCard
           //   headerData={{
@@ -590,7 +609,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart data={props?.chartData?.data || []} />
+          <LineChart
+            data={props?.chartData?.data || []}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
+          />
         ) : (
           // <LineChartCard
           //   headerData={{
@@ -605,10 +628,9 @@ export const WIDGETS_V1: IWidgetType[] = [
           //   }}
           // />
           <LineChart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
+            data={props?.chartData?.data || []}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
           />
         );
       },
@@ -626,7 +648,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart data={props?.chartData?.data || []} />
+          <LineChart
+            data={props?.chartData?.data || []}
+            xLabel={props?.chartData?.xLabel || ''}
+            yLabel={props?.chartData?.yLabel || ''}
+          />
         ) : (
           // <LineChartCard
           //   headerData={{

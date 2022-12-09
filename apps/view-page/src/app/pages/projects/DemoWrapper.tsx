@@ -99,6 +99,7 @@ const DemoWrapper = (props: IGridProps) => {
         o[key] = value;
         return o;
       }, {});
+      console.log('im called');
 
       if (gridDataStore && gridDataStore.length) {
         const gridLoadWidget: any = [];
@@ -161,6 +162,7 @@ const DemoWrapper = (props: IGridProps) => {
             }
             promiseArray.push(
               new Promise((resolve, reject) => {
+                console.log('rerender', payload.id, data.formData.report);
                 if (
                   data.formData.label &&
                   data.formData.report &&
@@ -232,13 +234,25 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            data: response.payload.data,
-                            xLabel: data.formData.X_axis_label,
-                            yLabel: data.formData.Y_axis_label,
-                            fontData: fontData,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              stacked: false,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                              fontData: fontData,
+                            },
                           };
-                          break;
 
+                          // payload.formProps = {
+                          //   data: response.payload.data,
+                          //   xLabel: data.formData.X_axis_label,
+                          //   yLabel: data.formData.Y_axis_label,
+                          // };
+                          break;
                         case 'linechart':
                           if (
                             response &&
@@ -256,7 +270,7 @@ const DemoWrapper = (props: IGridProps) => {
                                 // element.fill = true;
                                 element.pointRadius = 2;
                                 element.borderWidth = 1;
-                                element.tension = 0.5;
+                                // element.tension = 0.5;
 
                                 return (element.backgroundColor = themeObj
                                   .palette?.[`systemColor${index + 1}`]?.main
@@ -271,11 +285,18 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            data: response.payload.data,
-                            xLabel: data.formData.X_axis_label,
-                            yLabel: data.formData.Y_axis_label,
-                            fontData: fontData,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                              fontData: fontData,
+                            },
                           };
+
                           break;
                         case 'card':
                           const defaultProps = {
@@ -368,8 +389,13 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            fontData: fontData,
-                            data: response.payload.data,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                            },
                           };
                           break;
                         case 'doughnutchart':
@@ -404,8 +430,13 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            data: response.payload.data,
-                            fontData: fontData,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                            },
                           };
                           break;
                         case 'piechart':
@@ -439,15 +470,25 @@ const DemoWrapper = (props: IGridProps) => {
                               }
                             );
                             payload.formProps = {
-                              data: response.payload.data,
-                              fontData: fontData,
+                              headerData: {
+                                title: data?.formData?.Title,
+                                actions: cardheaderData.actions,
+                              },
+                              chartData: {
+                                data: response.payload.data,
+                              },
                             };
                           }
                           break;
                         case 'scatterchart':
                           payload.formProps = {
-                            data: response.payload.data,
-                            fontData: fontData,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                            },
                           };
                           break;
                         case 'heatmapchart':
@@ -489,8 +530,13 @@ const DemoWrapper = (props: IGridProps) => {
                           }
 
                           payload.formProps = {
-                            data: response.payload.data,
-                            fontData: fontData,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                            },
                           };
                           break;
                         case 'bubblechart':
@@ -655,6 +701,7 @@ const DemoWrapper = (props: IGridProps) => {
                               data: response.payload.data,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              stacked: true,
                             },
                           };
                           break;
@@ -691,9 +738,11 @@ const DemoWrapper = (props: IGridProps) => {
                               actions: cardheaderData.actions,
                             },
                             chartData: {
+                              stacked: true,
                               data: response.payload.data,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              horizontal: true,
                             },
                           };
                           break;
@@ -754,20 +803,24 @@ const DemoWrapper = (props: IGridProps) => {
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
                                   ]?.c50;
-                                // element.fill = true;
                                 element.pointRadius = 2;
-                                element.borderWidth = 1;
-                                element.tension = 0.5;
+                                element.fill = true;
+                                element.pointStyle = 'circle';
 
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                element.borderWidth = 1;
+                                // element.tension = 0.5;
+
+                                element.backgroundColor = themeObj.palette?.[
+                                  `systemColor${index + 1}`
+                                ]?.main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
                                     ]?.main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
-                                      .slice(0, 6));
+                                      .slice(0, 6);
+                                return element;
                               }
                             );
                           }
@@ -797,7 +850,7 @@ const DemoWrapper = (props: IGridProps) => {
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
                                   ]?.c50;
-                                // element.fill = true;
+                                element.fill = true;
                                 element.pointRadius = 2;
                                 element.borderWidth = 1;
                                 element.tension = 0.5;
@@ -844,6 +897,7 @@ const DemoWrapper = (props: IGridProps) => {
             gridLoadWidget.push(payload);
           }
         }
+        console.log(promiseArray);
         Promise.all(promiseArray).then(() => {
           setGridData(gridLoadWidget);
         });
