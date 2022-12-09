@@ -300,10 +300,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <ScatterChart
-            datasets={props?.chartData?.datasets}
-            labels={props?.chartData?.labels}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
+            labels={props?.chartData?.data?.labels || []}
+            datasets={props?.chartData?.data?.datasets || []}
           />
         ) : (
           // <ScatterChart {...ScatterData} />
@@ -394,7 +392,10 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           // <BubbleChart {...BubbleData} />
-          <BubbleChart {...props} />
+          <BubbleChart
+            labels={props?.chartData?.data?.labels || []}
+            datasets={props?.chartData?.data?.datasets || []}
+          />
         ) : (
           <BubbleChart datasets={[]} labels={[]} />
         );

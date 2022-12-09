@@ -99,7 +99,6 @@ const DemoWrapper = (props: IGridProps) => {
         o[key] = value;
         return o;
       }, {});
-      console.log('im called');
 
       if (gridDataStore && gridDataStore.length) {
         const gridLoadWidget: any = [];
@@ -162,7 +161,6 @@ const DemoWrapper = (props: IGridProps) => {
             }
             promiseArray.push(
               new Promise((resolve, reject) => {
-                console.log('rerender', payload.id, data.formData.report);
                 if (
                   data.formData.label &&
                   data.formData.report &&
@@ -481,15 +479,62 @@ const DemoWrapper = (props: IGridProps) => {
                           }
                           break;
                         case 'scatterchart':
+                          let finalObj: any = {
+                            labels: [],
+                            datasets: [],
+                          };
+
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            const _rawData = JSON.parse(
+                              JSON.stringify(response.payload.data)
+                            );
+                            for (
+                              let i = 0;
+                              i < _rawData.datasets.length;
+                              i += 1
+                            ) {
+                              const newDataset = _rawData.datasets[i];
+                              const datasetDataArr = [];
+
+                              for (
+                                let j = 0;
+                                j < newDataset.data.length;
+                                j += 1
+                              ) {
+                                const obj = {
+                                  x: +newDataset.data[j],
+                                  y: +newDataset.data[j],
+                                  r: 14,
+                                };
+                                datasetDataArr.push(obj);
+                              }
+                              const datasetObj = {
+                                label: newDataset.label,
+                                data: datasetDataArr,
+                                backgroundColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
+                                pointRadius: 5,
+                              };
+                              finalObj.datasets.push(datasetObj);
+                              finalObj.labels = _rawData.labels;
+                            }
+                          }
                           payload.formProps = {
                             headerData: {
                               title: data?.formData?.Title,
                               actions: cardheaderData.actions,
                             },
                             chartData: {
-                              data: response.payload.data,
+                              data: finalObj,
                             },
                           };
+
                           break;
                         case 'heatmapchart':
                           payload.formProps = {
@@ -540,9 +585,61 @@ const DemoWrapper = (props: IGridProps) => {
                           };
                           break;
                         case 'bubblechart':
+                          let finalObjBubble: any = {
+                            labels: [],
+                            datasets: [],
+                          };
+
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            const _rawData = JSON.parse(
+                              JSON.stringify(response.payload.data)
+                            );
+                            for (
+                              let i = 0;
+                              i < _rawData.datasets.length;
+                              i += 1
+                            ) {
+                              const newDataset = _rawData.datasets[i];
+                              const datasetDataArrBubble = [];
+
+                              for (
+                                let j = 0;
+                                j < newDataset.data.length;
+                                j += 1
+                              ) {
+                                const obj = {
+                                  x: +newDataset.data[j],
+                                  y: +newDataset.data[j],
+                                  r: Math.floor(Math.random() * 20),
+                                };
+                                datasetDataArrBubble.push(obj);
+                              }
+                              const datasetObj = {
+                                label: newDataset.label,
+                                data: datasetDataArrBubble,
+                                backgroundColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
+                                pointRadius: 5,
+                              };
+                              finalObjBubble.datasets.push(datasetObj);
+                              finalObjBubble.labels = _rawData.labels;
+                            }
+                          }
                           payload.formProps = {
-                            data: response.payload.data,
-                            fontData: fontData,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: finalObjBubble,
+                              fontData: fontData,
+                            },
                           };
                           break;
 
@@ -897,7 +994,6 @@ const DemoWrapper = (props: IGridProps) => {
             gridLoadWidget.push(payload);
           }
         }
-        console.log(promiseArray);
         Promise.all(promiseArray).then(() => {
           setGridData(gridLoadWidget);
         });
