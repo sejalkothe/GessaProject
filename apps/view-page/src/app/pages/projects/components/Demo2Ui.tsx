@@ -205,7 +205,6 @@ export const Demo2Ui = (props: Demo2Props) => {
                           setOpenWidgetConfigDrawer(!openWidgetConfigDrawer);
                         }}
                       >
-                        {console.log(widget.formProps)},
                         {widget.formProps ? (
                           <Widget
                             key={generateRandomString()}

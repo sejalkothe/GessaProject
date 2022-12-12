@@ -102,9 +102,9 @@ const SideNav = (props: ISideNav) => {
                   );
                 }}
               >
-                {console.log(item)}
+                {console.log(item.data.icon)}
                 <IconComponent
-                  name={item.data.icon}
+                  name={item.data.icon || 'Menu-Info'}
                   size={25}
                   label={item.data.name}
                   color={
