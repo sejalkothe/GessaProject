@@ -365,8 +365,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <PolarChart
-            datasets={props?.chartData?.datasets || []}
-            labels={props?.chartData?.labels || []}
+            datasets={props?.chartData?.data?.datasets || []}
+            labels={props?.chartData?.data?.labels || []}
           />
         ) : (
           // <PolarChart {...PolarData} />
