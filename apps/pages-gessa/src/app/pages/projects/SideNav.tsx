@@ -104,7 +104,7 @@ const SideNav = (props: ISideNav) => {
               >
                 {console.log(item.data.icon)}
                 <IconComponent
-                  name={item.data.icon || 'Menu-Info'}
+                  name={item.data.icon.trim() || 'Menu-Info'}
                   size={25}
                   label={item.data.name}
                   color={

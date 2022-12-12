@@ -866,7 +866,7 @@ const DemoWrapper = (props: IGridProps) => {
                                   .palette?.[`systemColor${index + 1}`]?.main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.c50
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -899,7 +899,7 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.c50;
+                                  ]?.c100;
                                 element.pointRadius = 2;
                                 element.fill = true;
                                 element.pointStyle = 'circle';
@@ -912,7 +912,7 @@ const DemoWrapper = (props: IGridProps) => {
                                 ]?.main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.c50
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -946,7 +946,7 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.c50;
+                                  ]?.c100;
                                 element.fill = true;
                                 element.pointRadius = 2;
                                 element.borderWidth = 1;
@@ -956,7 +956,7 @@ const DemoWrapper = (props: IGridProps) => {
                                   .palette?.[`systemColor${index + 1}`]?.main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.c50
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
