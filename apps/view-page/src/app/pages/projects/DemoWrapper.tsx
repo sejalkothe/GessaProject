@@ -520,6 +520,9 @@ const DemoWrapper = (props: IGridProps) => {
                                   themeObj.palette?.[`systemColor${i + 1}`]
                                     ?.main,
                                 pointRadius: 5,
+                                borderColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
                               };
                               finalObj.datasets.push(datasetObj);
                               finalObj.labels = _rawData.labels;
@@ -626,6 +629,9 @@ const DemoWrapper = (props: IGridProps) => {
                                   themeObj.palette?.[`systemColor${i + 1}`]
                                     ?.main,
                                 pointRadius: 5,
+                                borderColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
                               };
                               finalObjBubble.datasets.push(datasetObj);
                               finalObjBubble.labels = _rawData.labels;
