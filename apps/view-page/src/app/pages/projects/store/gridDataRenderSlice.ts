@@ -49,6 +49,8 @@ export const getChartDataResource = createAsyncThunk(
 
 const getResposeDataAltered = (data: any): any => {
   const cols: any = [];
+  const rows1: any = [];
+  const newArr: any = [];
   if (data && data.length > 0) {
     const columnKeys = Object.keys(data[0]);
     columnKeys.map((keyname: string) => {
@@ -60,10 +62,26 @@ const getResposeDataAltered = (data: any): any => {
       };
       cols.push(colObj);
     });
+    data.map((elt: any) => {
+      const keys: any = Object.keys(elt);
+      const returnObj: any = {};
+      keys.forEach(
+        (key: any) =>
+          (returnObj[key] = {
+            text: {
+              value: elt[key],
+              variant: 'body2',
+            },
+          })
+      );
+      newArr.push(returnObj);
+    });
   }
+
+  // console.log('wsdedrere', newArr);
   const gridObj = {
     columns: cols,
-    rows: data,
+    rows: newArr,
   };
 
   return gridObj;

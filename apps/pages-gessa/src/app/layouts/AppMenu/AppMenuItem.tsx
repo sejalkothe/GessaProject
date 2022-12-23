@@ -116,7 +116,7 @@ function AppMenuItem(props: Props) {
           }}
         >
           <IconComponent
-            name={icon}
+            name={icon.trim()}
             size={25}
             label={'icon'}
             color={

@@ -1,7 +1,18 @@
 import { useTheme } from '@mui/system';
 import ConfigFormProvider from 'apps/view-page/src/context/form';
+import { cardheaderData } from 'apps/view-page/src/fake-db/scatterData';
 import { IRootState } from 'apps/view-page/src/store';
+import { selectThemeContext } from 'apps/view-page/src/store/themeContextSlice';
 import themes from 'apps/view-page/src/theme';
+import {
+  constStackVerticalBarChartType,
+  constStackVerticalFullBarChartType,
+  constStackHorizontalBarChartType,
+  constStackHorizontalFullBarChart,
+  constLineChartWithTension,
+  constLineChartWithFilled,
+  constLineChartWithTensionFilled,
+} from 'apps/view-page/src/utils/constantString';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomSnackbar from '../../components/CustomSnackbar';
@@ -30,6 +41,9 @@ const DemoWrapper = (props: IGridProps) => {
   const themeObj: any = themes.default;
   const dispatch = useDispatch();
   const rootState = useSelector((state: IRootState) => state);
+  const themeData = selectThemeContext(rootState);
+  const [fontData, setFontData] = useState<any>();
+
   const gridDataStore: any = selectGridData(rootState);
   const [gridData, setGridData] = useState<any>([]);
   const widgets = selectAllWidgets(rootState);
@@ -50,6 +64,20 @@ const DemoWrapper = (props: IGridProps) => {
       duration: 0,
     });
   }, []);
+
+  useEffect(() => {
+    if (themeData && themeData.length > 0 && themeData[0].font.result) {
+      let _themeData = JSON.parse(JSON.stringify(themeData));
+
+      const _fontData = {
+        families: themeData[0].font.result.families,
+        url: themeData[0].font.result.urls,
+        defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
+      };
+      setFontData(_fontData);
+      // console.log(themeData, _fontData);
+    }
+  }, [themeData]);
 
   const [reportLabels, setReportLabels] = useState([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,6 +121,12 @@ const DemoWrapper = (props: IGridProps) => {
             ).value,
             y: gridDataStore[0].widgets[i].layout.find(
               (o: any) => o.key === 'y'
+            ).value,
+            widgetHeight: gridDataStore[0].widgets[i].layout.find(
+              (o: any) => o.key === 'widgetHeight'
+            ).value,
+            widgetWidth: gridDataStore[0].widgets[i].layout.find(
+              (o: any) => o.key === 'widgetWidth'
             ).value,
           };
           const dataIndex = gridDataStore[0].widgets[i].layout.findIndex(
@@ -198,10 +232,24 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            data: response.payload.data,
-                            xLabel: data.formData.X_axis_label,
-                            yLabel: data.formData.Y_axis_label,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              stacked: false,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                              fontData: fontData,
+                            },
                           };
+
+                          // payload.formProps = {
+                          //   data: response.payload.data,
+                          //   xLabel: data.formData.X_axis_label,
+                          //   yLabel: data.formData.Y_axis_label,
+                          // };
                           break;
                         case 'linechart':
                           if (
@@ -220,7 +268,7 @@ const DemoWrapper = (props: IGridProps) => {
                                 // element.fill = true;
                                 element.pointRadius = 2;
                                 element.borderWidth = 1;
-                                element.tension = 0.5;
+                                // element.tension = 0.5;
 
                                 return (element.backgroundColor = themeObj
                                   .palette?.[`systemColor${index + 1}`]?.main
@@ -235,10 +283,18 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            data: response.payload.data,
-                            xLabel: data.formData.X_axis_label,
-                            yLabel: data.formData.Y_axis_label,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                              fontData: fontData,
+                            },
                           };
+
                           break;
                         case 'card':
                           const defaultProps = {
@@ -261,7 +317,48 @@ const DemoWrapper = (props: IGridProps) => {
                           payload.formProps = defaultProps;
                           break;
                         case 'grid':
-                          payload.formProps = response.payload.data;
+                          // payload.formProps = response.payload.data;
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              searchData: {
+                                label: 'Search',
+                                placeholder:
+                                  'Search by Customer Name, SSE ID, Phone Numbe',
+                                value: '',
+                              },
+
+                              actions: [
+                                {
+                                  menu: 'Filter',
+                                  icon: {
+                                    name: 'filter_alt_black_24dp',
+                                    size: 25,
+                                    color: '#0958fa',
+                                    label: 'Filter',
+                                  },
+                                  submenu: [],
+                                },
+                                {
+                                  menu: 'Download',
+                                  icon: {
+                                    name: 'file_upload_black_24dp-1',
+                                    size: 25,
+                                    color: '#0958fa',
+                                    label: 'Download',
+                                  },
+                                  submenu: [],
+                                },
+                              ],
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              columnResizable: true,
+                              pagination: true,
+                              height: payload.widgetHeight,
+                              width: payload.widgetWidth,
+                            },
+                          };
                           break;
                         case 'radarchart':
                           if (
@@ -290,7 +387,13 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            data: response.payload.data,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                            },
                           };
                           break;
                         case 'doughnutchart':
@@ -325,7 +428,13 @@ const DemoWrapper = (props: IGridProps) => {
                             );
                           }
                           payload.formProps = {
-                            data: response.payload.data,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                            },
                           };
                           break;
                         case 'piechart':
@@ -359,18 +468,81 @@ const DemoWrapper = (props: IGridProps) => {
                               }
                             );
                             payload.formProps = {
-                              data: response.payload.data,
+                              headerData: {
+                                title: data?.formData?.Title,
+                                actions: cardheaderData.actions,
+                              },
+                              chartData: {
+                                data: response.payload.data,
+                              },
                             };
                           }
                           break;
                         case 'scatterchart':
-                          payload.formProps = {
-                            data: response.payload.data,
+                          let finalObj: any = {
+                            labels: [],
+                            datasets: [],
                           };
+
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            const _rawData = JSON.parse(
+                              JSON.stringify(response.payload.data)
+                            );
+                            for (
+                              let i = 0;
+                              i < _rawData.datasets.length;
+                              i += 1
+                            ) {
+                              const newDataset = _rawData.datasets[i];
+                              const datasetDataArr = [];
+
+                              for (
+                                let j = 0;
+                                j < newDataset.data.length;
+                                j += 1
+                              ) {
+                                const obj = {
+                                  x: +newDataset.data[j],
+                                  y: +newDataset.data[j],
+                                  r: 14,
+                                };
+                                datasetDataArr.push(obj);
+                              }
+                              const datasetObj = {
+                                label: newDataset.label,
+                                data: datasetDataArr,
+                                backgroundColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
+                                pointRadius: 5,
+                                borderColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
+                              };
+                              finalObj.datasets.push(datasetObj);
+                              finalObj.labels = _rawData.labels;
+                            }
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: finalObj,
+                            },
+                          };
+
                           break;
                         case 'heatmapchart':
                           payload.formProps = {
                             data: response.payload.data,
+                            fontData: fontData,
                           };
                           break;
                         case 'polarchart':
@@ -406,12 +578,408 @@ const DemoWrapper = (props: IGridProps) => {
                           }
 
                           payload.formProps = {
-                            data: response.payload.data,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                            },
                           };
                           break;
                         case 'bubblechart':
+                          let finalObjBubble: any = {
+                            labels: [],
+                            datasets: [],
+                          };
+
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets
+                          ) {
+                            const _rawData = JSON.parse(
+                              JSON.stringify(response.payload.data)
+                            );
+                            for (
+                              let i = 0;
+                              i < _rawData.datasets.length;
+                              i += 1
+                            ) {
+                              const newDataset = _rawData.datasets[i];
+                              const datasetDataArrBubble = [];
+
+                              for (
+                                let j = 0;
+                                j < newDataset.data.length;
+                                j += 1
+                              ) {
+                                const obj = {
+                                  x: +newDataset.data[j],
+                                  y: +newDataset.data[j],
+                                  r: Math.floor(Math.random() * 20),
+                                };
+                                datasetDataArrBubble.push(obj);
+                              }
+                              const datasetObj = {
+                                label: newDataset.label,
+                                data: datasetDataArrBubble,
+                                backgroundColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
+                                pointRadius: 5,
+                                borderColor:
+                                  themeObj.palette?.[`systemColor${i + 1}`]
+                                    ?.main,
+                              };
+                              finalObjBubble.datasets.push(datasetObj);
+                              finalObjBubble.labels = _rawData.labels;
+                            }
+                          }
                           payload.formProps = {
-                            data: response.payload.data,
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: finalObjBubble,
+                              fontData: fontData,
+                            },
+                          };
+                          break;
+
+                        case constStackVerticalBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              stacked: true,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constStackVerticalBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              stacked: true,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constStackVerticalFullBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constStackHorizontalBarChartType:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                              stacked: true,
+                            },
+                          };
+                          break;
+                        case constStackHorizontalFullBarChart:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.main;
+                                element.borderRadius = 5;
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.main
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              stacked: true,
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                              horizontal: true,
+                            },
+                          };
+                          break;
+                        case constLineChartWithTension:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.c50;
+                                // element.fill = true;
+                                element.pointRadius = 2;
+                                element.borderWidth = 1;
+                                element.tension = 0.5;
+
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.c50
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constLineChartWithFilled:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.c100;
+                                element.pointRadius = 2;
+                                element.fill = true;
+                                element.pointStyle = 'circle';
+
+                                element.borderWidth = 1;
+                                // element.tension = 0.5;
+
+                                element.backgroundColor = themeObj.palette?.[
+                                  `systemColor${index + 1}`
+                                ]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.c50
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6);
+                                return element;
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
+                          };
+                          break;
+                        case constLineChartWithTensionFilled:
+                          if (
+                            response &&
+                            response.payload &&
+                            response.payload.data &&
+                            response.payload.data.datasets &&
+                            response.payload.data.datasets.length > 0
+                          ) {
+                            response.payload.data.datasets.map(
+                              (element: any, index: number) => {
+                                element.borderColor =
+                                  themeObj.palette?.[
+                                    `systemColor${index + 1}`
+                                  ]?.c100;
+                                element.fill = true;
+                                element.pointRadius = 2;
+                                element.borderWidth = 1;
+                                element.tension = 0.5;
+
+                                return (element.backgroundColor = themeObj
+                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  ? themeObj.palette?.[
+                                      `systemColor${index + 1}`
+                                    ]?.c50
+                                  : '#' +
+                                    (Math.random() * 0xfffff * 1000000)
+                                      .toString(16)
+                                      .slice(0, 6));
+                              }
+                            );
+                          }
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title,
+                              actions: cardheaderData.actions,
+                            },
+                            chartData: {
+                              data: response.payload.data,
+                              xLabel: data.formData.X_axis_label,
+                              yLabel: data.formData.Y_axis_label,
+                            },
                           };
                           break;
 
@@ -428,6 +996,7 @@ const DemoWrapper = (props: IGridProps) => {
             );
           } else {
             // payload.formProps = {};
+
             gridLoadWidget.push(payload);
           }
         }
@@ -443,7 +1012,10 @@ const DemoWrapper = (props: IGridProps) => {
       page: 0,
       size: 500,
     };
-    dispatch(getAllWidgets(payload));
+    if (widgets && widgets.length > 0) {
+    } else {
+      dispatch(getAllWidgets(payload));
+    }
 
     if (props && props.page_id) {
       const payload2 = {
@@ -451,16 +1023,22 @@ const DemoWrapper = (props: IGridProps) => {
         page: 0,
         size: 100,
       };
+      // if (gridDataStore && gridDataStore.length > 0) {
+      // } else {
       dispatch(deleteAllStore());
 
       dispatch(getPageDataByIdApi(payload2));
+      // }
     }
     const payload3 = {
       page: 0,
       size: 500,
     };
-    dispatch(getAllReportsApi(payload3));
-  }, [dispatch, props, props.page_id]);
+    if (reports && reports.length > 0) {
+    } else {
+      dispatch(getAllReportsApi(payload3));
+    }
+  }, [props, props.page_id]);
 
   const saveLayout = (data: any) => {
     const layout = [];

@@ -10,6 +10,7 @@ export type _IRSortedMenuList = EntityState<ISortedMenuList[]>;
 export interface IRSortedMenuList extends _IRSortedMenuList {
   selectedMenuNames: string;
   selectedSubMenuNames: string;
+  pageId: string;
 }
 
 export interface ISortedMenuList {
@@ -39,11 +40,17 @@ export const selectActiveSubMenuName = createSelector(
   (data) => data
 );
 
+export const selectActivePageId = createSelector(
+  (state: IRootState) => state.containerApp.sortedMenuListSlice.pageId,
+  (data) => data
+);
+
 const sortedMenuListSlice = createSlice({
   name: 'sorted-menu-store',
   initialState: sortedMenuAdapter.getInitialState({
     selectedMenuNames: null,
     selectedSubMenuNames: null,
+    pageId: null,
   }),
   reducers: {
     setSortedMenus: sortedMenuAdapter.setOne,
@@ -53,9 +60,16 @@ const sortedMenuListSlice = createSlice({
     setActiveSubMenuName: (state, action) => {
       state.selectedSubMenuNames = action.payload;
     },
+    setPageId: (state, action) => {
+      state.pageId = action.payload;
+    },
   },
 });
 
-export const { setSortedMenus, setActiveMenuName, setActiveSubMenuName } =
-  sortedMenuListSlice.actions;
+export const {
+  setSortedMenus,
+  setActiveMenuName,
+  setActiveSubMenuName,
+  setPageId,
+} = sortedMenuListSlice.actions;
 export default sortedMenuListSlice.reducer;

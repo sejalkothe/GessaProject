@@ -10,6 +10,7 @@ import { IReportLabel } from '../store/reportLabelSlice';
 import { Button, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { environment } from 'apps/view-page/src/environments/environment';
+import generateRandomString from 'apps/view-page/src/utils/randomString';
 
 export interface Demo2Props {
   data: any;
@@ -53,6 +54,20 @@ export const Demo2Ui = (props: Demo2Props) => {
         w: 4,
         h: 4,
       };
+    }
+  };
+
+  const parseMenuEvents = (data: any) => {
+    // console.log(data);
+    if (data && data.menu && data.widget) {
+      switch (data.menu.menu.toLowerCase()) {
+        case 'download':
+          console.log('download event added');
+          break;
+        case 'filter':
+          console.log('filter event added');
+          break;
+      }
     }
   };
 
@@ -190,7 +205,21 @@ export const Demo2Ui = (props: Demo2Props) => {
                           setOpenWidgetConfigDrawer(!openWidgetConfigDrawer);
                         }}
                       >
-                        {widget.formProps ? Widget(widget.formProps) : Widget()}
+                        {widget.formProps ? (
+                          <Widget
+                            key={generateRandomString()}
+                            headerData={widget.formProps.headerData}
+                            chartData={widget.formProps.chartData}
+                            actionClicked={(e: any) => {
+                              parseMenuEvents({ widget: widget, menu: e });
+                            }}
+                            searchAction={(e: any) => {
+                              console.log(e);
+                            }}
+                          />
+                        ) : (
+                          <Widget key={generateRandomString()} />
+                        )}
                       </GridCard>
                     )
                   );

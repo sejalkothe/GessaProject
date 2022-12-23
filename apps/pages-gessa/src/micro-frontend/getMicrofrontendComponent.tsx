@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import Loader from '../app/components/loader/Loader';
 
 function loadComponent(scope: any, module: any) {
   return async () => {
@@ -8,7 +9,9 @@ function loadComponent(scope: any, module: any) {
     const container = window[scope]; // or get the container somewhere else
     // @ts-ignore Initialize the container, it may provide shared modules
     await container.init(__webpack_share_scopes__.default);
+
     // @ts-ignore
+
     const factory = await window[scope].get(module);
     const Module = factory();
     return Module;
@@ -66,20 +69,135 @@ const Microfrontend = (props: {
   });
 
   if (!props) {
-    return <h5>Not props specified</h5>;
+    return (
+      <div
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 20,
+        }}
+      >
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            height: '150px',
+            width: '150px',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 20,
+          }}
+        >
+          <Loader status={true} size={50} />
+        </div>
+        <h5>Not props specified</h5>
+      </div>
+    );
   }
 
   if (!ready) {
-    return <h5>Loading dynamic script: {props.url}</h5>;
+    return (
+      <div
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 20,
+        }}
+      >
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            height: '150px',
+            width: '150px',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 20,
+          }}
+        >
+          <Loader status={true} size={50} />
+        </div>
+        <h5>Loading {props.scope}</h5>
+      </div>
+    );
   }
 
   if (failed) {
-    return <h5>Failed to load dynamic script: {props.url}</h5>;
+    return (
+      <div
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 20,
+        }}
+      >
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            height: '150px',
+            width: '150px',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 20,
+          }}
+        >
+          <Loader status={false} size={50} />
+        </div>
+        <h5>Failed to load {props.url}</h5>
+      </div>
+    );
   }
 
   const Component = React.lazy(loadComponent(props.scope, props.module));
+
   return (
-    <React.Suspense fallback="Loading Microfrontend">
+    <React.Suspense
+      fallback={
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 20,
+          }}
+        >
+          <div
+            style={{
+              position: 'relative',
+              display: 'flex',
+              height: '150px',
+              width: '150px',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 20,
+            }}
+          >
+            <Loader status={true} size={50} />
+          </div>
+          <h5>Loading {props.scope}</h5>
+        </div>
+      }
+    >
       <Component {...props.props} />
     </React.Suspense>
   );

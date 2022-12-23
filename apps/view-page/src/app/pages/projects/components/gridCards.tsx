@@ -365,8 +365,13 @@ export default function GridCard(props: IGridCard) {
             <div
               style={{
                 height: 'calc(100% - 48px)',
-                padding: 10,
+                // padding: 10,
                 backgroundColor: theme.palette?.light?.c50,
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                boxSizing: 'border-box',
               }}
             >
               {currentCompomponent}

@@ -1,8 +1,16 @@
 import { IconComponent } from '@gessa/component-library';
 import { Box, Stack } from '@mui/material';
 import { useTheme } from '@mui/system';
+import { IRootState } from 'apps/pages-gessa/src/store';
+import generateRandomString from 'apps/pages-gessa/src/utils/randomString';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import {
+  selectAllSortedMenuById,
+  setActiveMenuName,
+  setPageId,
+} from './store/sortedMenuSlice';
 
 export interface ISideNav {
   menuList: any;
@@ -13,17 +21,26 @@ const SideNav = (props: ISideNav) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
+  const rootState = useSelector((state: IRootState) => state);
   const [appMenu, setAppMenu]: any = useState<Array<any>>([]);
   const [isClicked, setClicked]: any = useState(false);
+  const sortedMenus = selectAllSortedMenuById(rootState);
   const [selectedMenu, setSelectedMenu] = useState<string>(
     params.menuId || props.selectedMenuName
   );
 
   useEffect(() => {
-    if (props && props.menuList) {
-      setAppMenu(props.menuList);
+    if (sortedMenus && sortedMenus.length > 0) {
+      setAppMenu(sortedMenus[0].data);
     }
-  }, [props.menuList]);
+  }, [sortedMenus]);
+
+  // useEffect(() => {
+  //   if (params && params.menuId) {
+  //     dispatch(setActiveMenuName(params.menuId));
+  //   }
+  // }, [params]);
 
   return (
     <Box
@@ -49,6 +66,7 @@ const SideNav = (props: ISideNav) => {
               //   style={{ textDecoration: 'none' }}
               // >
               <div
+                key={generateRandomString()}
                 style={{
                   width: '50px',
                   height: '50px',
@@ -69,6 +87,13 @@ const SideNav = (props: ISideNav) => {
                 onClick={() => {
                   setClicked(isClicked !== index ? index : -1);
                   setSelectedMenu(item.data.name);
+
+                  dispatch(setActiveMenuName(item.data.name));
+                  if (item && item.child && item.child.length > 0) {
+                    dispatch(setPageId(''));
+                  } else {
+                    dispatch(setPageId(item.data.pageId));
+                  }
                   props.setSelectedMenuName(item.data.name);
                   navigate(
                     `/project/${params.projectId}/${
@@ -77,8 +102,9 @@ const SideNav = (props: ISideNav) => {
                   );
                 }}
               >
+                {console.log(item.data.icon)}
                 <IconComponent
-                  name={item.data.icon}
+                  name={item.data.icon.trim() || 'Menu-Info'}
                   size={25}
                   label={item.data.name}
                   color={

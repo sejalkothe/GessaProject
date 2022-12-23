@@ -2,6 +2,77 @@ import { useTheme } from '@mui/system';
 import themes from '../theme';
 const theme: any = themes.default;
 
+export const lineData = {
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        borderColor: 'red',
+        pointRadius: 2,
+        pointStyle: 'circle',
+        borderWidth: 1,
+        // tension: 0.5,
+      },
+    ],
+  },
+};
+
+export const lineWithTensionData = {
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        borderColor: 'red',
+        pointRadius: 2,
+        pointStyle: 'circle',
+        borderWidth: 1,
+        tension: 0.5,
+      },
+      {
+        label: 'Dataset 2',
+        data: [70, 51, 85, 71, 46, 59, 48],
+        borderColor: 'green',
+        pointRadius: 2,
+        pointStyle: 'circle',
+        borderWidth: 1,
+        tension: 0.5,
+      },
+    ],
+  },
+};
+
+export const linechartFilled = {
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        borderColor: '#ff00ff',
+        // fill: true,
+        pointRadius: 2,
+        pointStyle: 'circle',
+        borderWidth: 1,
+        tension: 0.5,
+      },
+      {
+        label: 'Dataset 2',
+        data: [70, 51, 85, 71, 46, 59, 48],
+        borderColor: '#ffff00',
+        pointRadius: 2,
+        fill: true,
+        pointStyle: 'circle',
+        borderWidth: 1,
+        tension: 0.5,
+      },
+    ],
+  },
+};
+
 export const tableData = {
   columns: [
     { field: 'id', headerName: 'ID', width: 100 },
@@ -84,7 +155,52 @@ export const barData = {
     ],
   },
 };
-export const lineData = {
+export const cardheaderData = {
+  title: 'card header',
+  actions: [
+    {
+      menu: 'Preview',
+      icon: {
+        name: 'fullscreen_black_24dp',
+        size: 25,
+        color: '#459ff2',
+        label: 'Full Screen',
+      },
+      submenu: [],
+    },
+    {
+      menu: 'Share',
+      icon: {
+        name: 'share',
+        size: 25,
+        color: '#459ff2',
+        label: 'share',
+      },
+      submenu: [],
+    },
+    {
+      menu: 'Edit',
+      icon: {
+        name: 'edit_black_24dp',
+        size: 25,
+        color: '#459ff2',
+        label: 'edit_black_24dp',
+      },
+      submenu: [],
+    },
+    {
+      menu: 'Close',
+      icon: {
+        name: 'close_black_24dp',
+        size: 25,
+        color: '#459ff2',
+        label: 'close_black_24dp',
+      },
+      submenu: [],
+    },
+  ],
+};
+export const lineData2 = {
   data: {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
     datasets: [

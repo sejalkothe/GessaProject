@@ -15,6 +15,7 @@ import {
   setSortedMenus,
 } from './sortedMenuSlice';
 import { getLocalStorage } from 'apps/pages-gessa/src/utils/localStorageService';
+import { useNavigate } from 'react-router-dom';
 type _IRMenuList = EntityState<IMenuList>;
 export interface IRMenuList extends _IRMenuList {
   activeMenuId: string;
@@ -113,7 +114,16 @@ export const getAppMenu = createAsyncThunk(
         data: arrPar,
       };
       dispatch(setSortedMenus(payload));
-      // dispatch(setActiveMenuName(arrPar[0].data.name));
+      // console.log(payload);
+      if (
+        payload &&
+        payload.data &&
+        payload.data.length > 0 &&
+        payload.data[0].data
+      ) {
+        // console.log(payload.data[0].data.name);
+        // dispatch(setActiveMenuName('nav3' || payload.data[0].data.name));
+      }
       dispatch(setMenus(data));
     } else {
       dispatch(setMenus([]));
@@ -121,6 +131,7 @@ export const getAppMenu = createAsyncThunk(
         _id: '',
         data: [],
       };
+      dispatch(setActiveMenuName(''));
       dispatch(setSortedMenus(payload));
     }
 
