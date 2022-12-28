@@ -49,6 +49,7 @@ const DemoWrapper = (props: IGridProps) => {
   const widgets = selectAllWidgets(rootState);
   const reports = selectAllReports(rootState);
   // const reportLabels = selectAllReportsLabel(rootState);
+  const [report_label_collection, setReportLabelCollection] = useState<any>([]);
   const [snackData, setSnackData]: any = useState({
     open: false,
     msg: '',
@@ -64,6 +65,10 @@ const DemoWrapper = (props: IGridProps) => {
       duration: 0,
     });
   }, []);
+
+  useEffect(() => {
+    console.log(report_label_collection);
+  }, [report_label_collection]);
 
   useEffect(() => {
     if (themeData && themeData.length > 0 && themeData[0].font.result) {
@@ -92,6 +97,27 @@ const DemoWrapper = (props: IGridProps) => {
           gridDataStore[0].widgets[i].value,
         ]);
       }
+      const collectionReportLabel: any = [];
+
+      for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
+        const data = JSON.parse(
+          gridDataStore[0].widgets[i].layout.find(
+            (o: any) => o.key === 'formData'
+          ).value
+        );
+        console.log(data);
+        const payload = {
+          report: data.formData.report || '',
+          label: data.formData.label || '',
+          type:
+            gridDataStore[0].widgets[i].layout.find(
+              (o: any) => o.key === 'type'
+            ).value || '',
+        };
+        collectionReportLabel.push(payload);
+      }
+
+      setReportLabelCollection(collectionReportLabel);
 
       const obj = keysArray.reduce(function (o: any, currentArray: any) {
         const key = currentArray[0];
@@ -1007,6 +1033,8 @@ const DemoWrapper = (props: IGridProps) => {
     }
   }, [gridDataStore]);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     const payload = {
       page: 0,
@@ -1120,7 +1148,7 @@ const DemoWrapper = (props: IGridProps) => {
       params: {
         projections: '',
         filter: '',
-        size: 0,
+        size: 2,
         page: 0,
       },
     };

@@ -53,7 +53,7 @@ function Classic({ right = false }) {
   }, [_selectActiveMenuName]);
 
   useEffect(() => {
-    setSelectedPage('');
+    // setSelectedPage('');
     if (params && params.menuId && subMenuList.length === 0) {
       if (sortedMenus && sortedMenus.length > 0) {
         const menuIndex = sortedMenus[0].data.findIndex(
@@ -65,6 +65,7 @@ function Classic({ right = false }) {
             const pageIndex = sortedMenus[0].data[menuIndex].child.findIndex(
               (value: any) => value.name === params.subMenuId
             );
+            setSubMenuList(sortedMenus[0].data[menuIndex].child);
             if (pageIndex !== -1) {
               setSelectedPage(
                 sortedMenus[0].data[menuIndex].child[pageIndex].pageId
@@ -122,7 +123,7 @@ function Classic({ right = false }) {
             menuList={subMenuList}
             menuType="classic"
             openPage={(e: any) => {
-              setSelectedPage('');
+              // setSelectedPage('');
               setMenuData(e);
               setOpenMenuPage(e);
             }}
@@ -153,9 +154,9 @@ function Classic({ right = false }) {
           }}
         >
           {/* openpage {selectedPage} {_selectActivePageId} */}
-          {/* {selectedPage && selectedPage.length > 0 && ( */}
-          <AppMain pageId={selectedPage || _selectActivePageId || ''} />
-          {/* )} */}
+          {selectedPage && selectedPage !== '' && (
+            <AppMain pageId={selectedPage || _selectActivePageId || ''} />
+          )}
         </Box>
       </Box>
     </div>

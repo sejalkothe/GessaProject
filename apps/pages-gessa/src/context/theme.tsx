@@ -69,7 +69,6 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
               project_id: '123',
               color: res.payload.data,
             };
-
             dispatch(setThemePaletteContext(themeObject));
             setLocalStorage('colorData', themeObject);
           }

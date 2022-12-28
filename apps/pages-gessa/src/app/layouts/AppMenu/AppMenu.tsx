@@ -94,7 +94,9 @@ function AppMenu(props: Props) {
                   icon={item.icon}
                   key={index}
                   isSelected={
-                    item.name === selectedPage.name ||
+                    (item.name === selectedPage &&
+                      selectedPage.name &&
+                      selectedPage.name) ||
                     item.name === params.subMenuId
                   }
                 />

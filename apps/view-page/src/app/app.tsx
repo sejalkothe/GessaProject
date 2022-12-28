@@ -31,6 +31,7 @@ export function App(props: any) {
                 {/* <HashRouter> */}
                 <StyledEngineProvider injectFirst>
                   <CssBaseline />
+                  {/* <div>hello{JSON.parse(JSON.stringify(props)).pageId} </div> */}
                   <DemoWrapper
                     page_id={JSON.parse(JSON.stringify(props)).pageId}
                   />

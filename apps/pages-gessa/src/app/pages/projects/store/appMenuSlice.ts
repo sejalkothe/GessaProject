@@ -83,6 +83,7 @@ export const getAppMenu = createAsyncThunk(
 
     const parents: any = {};
     const userInfo = getLocalStorage('userInfo');
+    let sortedData: any = [];
 
     const createParent = (id: string, item: any) => {
       parents[id] = {
@@ -125,6 +126,7 @@ export const getAppMenu = createAsyncThunk(
         // dispatch(setActiveMenuName('nav3' || payload.data[0].data.name));
       }
       dispatch(setMenus(data));
+      sortedData = payload;
     } else {
       dispatch(setMenus([]));
       const payload: any = {
@@ -133,9 +135,10 @@ export const getAppMenu = createAsyncThunk(
       };
       dispatch(setActiveMenuName(''));
       dispatch(setSortedMenus(payload));
+      sortedData = payload;
     }
 
-    return data;
+    return sortedData;
   }
 );
 

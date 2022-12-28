@@ -36,11 +36,12 @@ const SideNav = (props: ISideNav) => {
     }
   }, [sortedMenus]);
 
-  // useEffect(() => {
-  //   if (params && params.menuId) {
-  //     dispatch(setActiveMenuName(params.menuId));
-  //   }
-  // }, [params]);
+  useEffect(() => {
+    if (params && params.menuId) {
+      setSelectedMenu(params.menuId);
+      dispatch(setActiveMenuName(params.menuId));
+    }
+  }, [params]);
 
   return (
     <Box
@@ -102,7 +103,6 @@ const SideNav = (props: ISideNav) => {
                   );
                 }}
               >
-                {console.log(item.data.icon)}
                 <IconComponent
                   name={item.data.icon.trim() || 'Menu-Info'}
                   size={25}
