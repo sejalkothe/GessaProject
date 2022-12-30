@@ -23,7 +23,7 @@
     "bson-objectid": "^2.0.3",
     "core-js": "^3.6.5",
     "gridstack": "^4.4.0",
-    "keycloak-js": "^19.0.3",
+    "keycloak-js": "^17.0.1",
     "moment": "^2.29.3",
     "mui-nested-menu": "^2.0.2",
     "node-polyfill-webpack-plugin": "^1.1.4",
