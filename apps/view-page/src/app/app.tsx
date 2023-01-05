@@ -1,4 +1,4 @@
-import { CssBaseline } from '@mui/material';
+import { CssBaseline } from '@material-ui/core';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { HashRouter } from 'react-router-dom';

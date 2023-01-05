@@ -1,4 +1,4 @@
-import { createTheme, Theme } from '@mui/material';
+import { createTheme, Theme } from '@mui/system';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
 import themes, { ITheme, ThemeContextType } from '../theme';
@@ -18,60 +18,63 @@ import {
 } from '../store/colorPalleteSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../store/index';
-import { getLocalStorage } from '../utils/localStorageService';
+import { setLocalStorage } from '../utils/localStorageService';
 
 export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   children,
 }: any) => {
-  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.default));
+  const [theme, setTheme] = React.useState<any>(createTheme(themes.default));
   const rootState = useSelector((state: IRootState) => state);
   const themeData = selectThemeContext(rootState);
   const themePaletteData = selectThemePaletteContext(rootState);
-  const [fontData, setFontData] = React.useState<any>();
   const newUrl = window.location.href.replace('#', '');
   var url = new URL(newUrl);
   var projectId = url.searchParams.get('projectId');
   const dispatch = useDispatch();
-  const changeTheme = (theme: ITheme) => {
+  const changeTheme = (theme: any) => {
     setTheme(createTheme(theme));
   };
   const [posts, setPosts] = React.useState({});
-
   const themeFunc = (projectId: any) => {
-    // const apicall = new Promise((resolve, reject) => {
-    //   const someThunkCall = new Promise((resolve, reject) => {
-    //     resolve(dispatch(getTheme(projectId)));
-    //   }).then((res: any) => {
-    const themeObject = getLocalStorage('fontData');
-    // if (res && res.payload && res.payload.data) {
-    //   const themeObject: IRTheme = {
-    //     project_id: '123',
-    //     font: res.payload.data,
-    //   };
-    dispatch(setThemeContext(themeObject));
-    // }
-    //   });
-    // });
+    if (themeData && themeData.length > 0) {
+    } else {
+      const apicall = new Promise((resolve, reject) => {
+        const someThunkCall = new Promise((resolve, reject) => {
+          resolve(dispatch(getTheme(projectId)));
+        }).then((res: any) => {
+          if (res && res.payload && res.payload.data) {
+            const themeObject: IRTheme = {
+              project_id: '123',
+              font: res.payload.data,
+            };
+            dispatch(setThemeContext(themeObject));
+            setLocalStorage('fontData', themeObject);
+          }
+        });
+      });
+    }
   };
 
   const colorthemeFunc = (projectId: any) => {
-    // const apicall = new Promise((resolve, reject) => {
-    //   const someThunkCall = new Promise((resolve, reject) => {
-    //     resolve(dispatch(getThemePalette(projectId)));
-    //   }).then((res: any) => {
-    //     if (res && res.payload && res.payload.data) {
-    //       const themeObject: IRThemePalette = {
-    //         project_id: '123',
-    //         color: res.payload.data,
-    //       };
-    const themeObject = getLocalStorage('colorData');
-
-    dispatch(setThemePaletteContext(themeObject));
-    //     }
-    //   });
-    // });
+    if (themePaletteData && themePaletteData.length > 0) {
+    } else {
+      const apicall = new Promise((resolve, reject) => {
+        const someThunkCall = new Promise((resolve, reject) => {
+          resolve(dispatch(getThemePalette(projectId)));
+        }).then((res: any) => {
+          if (res && res.payload && res.payload.data) {
+            const themeObject: IRThemePalette = {
+              project_id: '123',
+              color: res.payload.data,
+            };
+            dispatch(setThemePaletteContext(themeObject));
+            setLocalStorage('colorData', themeObject);
+          }
+        });
+      });
+    }
   };
 
   React.useEffect(() => {
@@ -97,10 +100,96 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   }, [themeData]);
 
   React.useEffect(() => {
-    setPosts(themePaletteData[0]?.color.result);
-
+    // setPosts(themePaletteData[0]?.color.result);
     themes.default.palette = {
       ...themes.default.palette,
+      // ...themePaletteData[0]?.color.result.colors,
+      primary: {
+        pri100: '#DBE4F0',
+        pri200: '#95B8E4',
+        pri300Main: '#328DF6',
+        pri400: '#2B6DBA',
+        pri500: '#2C4B72',
+        pri600: '#233247',
+      },
+      secondary: {
+        sec100: '#DCEAEF',
+        sec200: '#88C2D4',
+        sec300Main: '#21A2BF',
+        sec400: '#2D768B',
+        sec500: '#2B4F59',
+        sec600: '#22353A',
+      },
+      systemColor1: {
+        sys100: '#FADCDA',
+        sys200: '#FD948C',
+        sys300Main: '#F94948',
+        sys400: '#C73733',
+        sys500: '#733430',
+        sys600: '#4D2725',
+      },
+      systemColor2: {
+        sys100: '#F9E8A4',
+        sys200: '#F6DA6B',
+        sys300Main: '#F0C20B',
+        sys400: '#D9A808',
+        sys500: '#A67503',
+        sys600: '#654506',
+      },
+      systemColor3: {
+        sys100: '#D9E6DC',
+        sys200: '#9AC3A4',
+        sys300Main: '#439D62',
+        sys400: '#198A48',
+        sys500: '#285837',
+        sys600: '#1F3625',
+      },
+      systemColor4: {
+        sys100: '#EEDEF1',
+        sys200: '#DC97E7',
+        sys300Main: '#DA38FA',
+        sys400: '#A52FBC',
+        sys500: '#5B3163',
+        sys600: '#412945',
+      },
+      systemColor5: {
+        sys100: '#E6E4F1',
+        sys200: '#B4AAE4',
+        sys300Main: '#8962F3',
+        sys400: '#6D48CC',
+        sys500: '#483B6D',
+        sys600: '#342D48',
+      },
+      systemColor6: {
+        sys100: '#FBE3B1',
+        sys200: '#EFC45E',
+        sys300Main: '#EFB02E',
+        sys400: '#D39822',
+        sys500: '#A06B09',
+        sys600: '#614105',
+      },
+      neutral: {
+        neu100: '#E8E9EE',
+        neu200: '#BBC2CC',
+        neu300Main: '#8591A2',
+        neu400: '#69778A',
+        neu500: '#4B5A6E',
+        neu600: '#313E4F',
+      },
+      text: {
+        tex100: '#E9EAEB',
+        tex200: '#BFC2C4',
+        tex300Main: '#8C9194',
+        tex400: '#71777B',
+        tex500: '#535A5F',
+        tex600: '#363E45',
+      },
+      background: {
+        bacwhite: '#FFFFFF',
+        bacmain: '#F2F4F8',
+        bacopGrey: '#313E4F',
+        bacopWhite: '#FFFFFF',
+      },
       ...{
         chart: [
           '#ff6083',
@@ -122,88 +211,6 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
           '#c4b5fd',
         ],
       },
-
-      ...themePaletteData[0]?.color.result.colors,
-      // text: {
-      //   primary: '#101425',
-      //   secondary: '#101425',
-      //   disabled: '#636A75',
-      //   c100: '#e2E7Ef',
-      //   c50: '#101425',
-      // },
-      // primary: {
-      //   dark: '#ffffff',
-      //   main: '#131CA2',
-      //   light: '#ffffff',
-      //   c100: '#ffffff',
-      //   c50: '#ffffff',
-      // },
-      // secondary: {
-      //   dark: '#0B8BB8',
-      //   main: '#00BDFF',
-      //   light: '#94ddc4',
-      //   c100: '#b3e7d5',
-      //   c50: '#DFF7FF',
-      // },
-      // background: {
-      //   default: '#F2F4F8',
-      // },
-      // dark: {
-      //   dark: '#101425',
-      //   main: '#332C2C ',
-      //   light: '#594E4E',
-      //   c100: '#877878',
-      //   c50: '#EBE4E4',
-      // },
-      // light: {
-      //   dark: '#EBE4E4',
-      //   main: '#F0EBEB',
-      //   light: '#F5F2F2 ',
-      //   c100: '#E2E7EF',
-      //   c50: '#FFFFFF',
-      // },
-      // systemColor1: {
-      //   dark: '#CE1322',
-      //   main: '#F62D38',
-      //   light: '#FF4D4F',
-      //   c100: '#FFA39E',
-      //   c50: '#FFCCC7',
-      // },
-      // systemColor2: {
-      //   dark: '#2F6E14',
-      //   main: '#52C41A',
-      //   light: '#95DE64',
-      //   c100: '#8dda90',
-      //   c50: '#D9F7BE',
-      // },
-      // systemColor3: {
-      //   dark: '#1D39C4',
-      //   main: '#2F54EB',
-      //   light: '#597EF7',
-      //   c100: '#DADDFB',
-      //   c50: '#D6E4FF',
-      // },
-      // systemColor4: {
-      //   dark: '#AD4E00',
-      //   main: '#FA8C16',
-      //   light: '#FFA940',
-      //   c100: '#FFC069',
-      //   c50: '#FFE7BA',
-      // },
-      // systemColor5: {
-      //   dark: '#FADB14',
-      //   main: '#FA8C16 ',
-      //   light: '#FFEC3D',
-      //   c100: '#FFF566',
-      //   c50: '#FFFFB8',
-      // },
-      // systemColor6: {
-      //   dark: '#131CA2',
-      //   main: '#722ED1',
-      //   light: '#B37FEB',
-      //   c100: '#D3ADF7',
-      //   c50: '#DADDFB',
-      // },
     };
     setTheme(createTheme(themes.default));
   }, [themePaletteData]);
@@ -217,6 +224,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
 
 export const useAppTheme = () => {
   const settingContext = React.useContext(ThemeContext);
+
   return [settingContext?.theme, settingContext?.changeTheme];
 };
 

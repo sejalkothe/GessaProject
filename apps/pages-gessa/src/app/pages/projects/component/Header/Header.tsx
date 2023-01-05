@@ -4,13 +4,10 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 // import './header-component.css';
 import { Divider, Popover, Typography } from '@mui/material';
-import {
-  IconComponent,
-  IconComponentProps,
-  UserAvatar,
-} from '@gessa/component-library';
+import { IconComponent, IconComponentProps } from '@gessa/component-library';
 import SearchInput, { ISearchInputTypes } from '../SearchBox';
 import themes from 'apps/pages-gessa/src/theme';
+import UserAvatar from './UserAvatar';
 interface IAnyProps {
   [key: string]: string | number | any;
 }
@@ -163,123 +160,13 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
           }}
           onClick={(e: any) => handleClick(e)}
         >
-          <UserAvatar text={props.userData.text || ''} />
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
+          <UserAvatar
+            text={props.userData.text || ''}
+            chartProps={{
+              background_color: themes.default?.palette?.primary?.pri100,
+              text_color: themes.default?.palette?.primary?.pri500,
             }}
-            sx={{
-              background: themes.default?.palette?.background?.bacopWhite,
-              backgroundColor: themes.default?.palette?.background?.bacopWhite,
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                width: '274px',
-                height: '137px',
-                backgroundColor:
-                  themes.default?.palette?.background?.bacopWhite,
-              }}
-            >
-              {/* Inner User Content */}
-              <div
-                style={{
-                  display: 'flex',
-                  backgroundColor:
-                    themes.default?.palette?.background?.bacopWhite,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  gap: '14px',
-                  width: '205px',
-                  marginTop: '16px',
-                  marginLeft: '15px',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '47px',
-                    height: '47px',
-                    background: themes.default?.palette?.background?.bacopWhite,
-                    borderRadius: '50%',
-                  }}
-                >
-                  <CameraAltIcon />
-                </div>
-                <Stack direction={'column'} spacing={-0.5}>
-                  <Typography
-                    sx={{
-                      fontStyle: 'normal',
-                      fontWeight: '600',
-                      fontSize: '16px',
-                      color: theme.palette?.text?.tex300Main,
-                    }}
-                  >
-                    {props.userData?.text || ''}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontStyle: 'normal',
-                      fontWeight: '400',
-                      fontSize: '14px',
-                      color: theme.palette?.text?.tex300Main,
-                    }}
-                  >
-                    {props.userData?.email || ''}
-                  </Typography>
-                </Stack>
-              </div>
-              <Divider
-                sx={{
-                  width: '100%',
-                  borderWidth: '1px',
-                  marginTop: '22px',
-                  marginBottom: '16px',
-                  backgroundColor:
-                    themes.default?.palette?.background?.bacopWhite,
-                }}
-              />
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  marginLeft: '18px',
-                  alignItems: 'center',
-                }}
-                onClick={() =>
-                  props.logoutClickAction && props.logoutClickAction()
-                }
-              >
-                <IconComponent
-                  name={'logout_black_24dp'}
-                  size={30}
-                  label={' '}
-                  color={theme.palette?.text?.tex300Main}
-                />
-                <Typography
-                  variant={'caption'}
-                  sx={{
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    color: theme.palette?.text?.tex300Main,
-                  }}
-                >
-                  Log Out
-                </Typography>
-              </div>
-            </div>{' '}
-          </Popover>
+          />
         </div>
       </div>
     </div>

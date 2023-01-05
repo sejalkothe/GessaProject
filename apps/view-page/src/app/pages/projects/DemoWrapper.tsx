@@ -177,7 +177,7 @@ const DemoWrapper = (props: IGridProps) => {
                   icon: {
                     name: 'Search',
                     size: 30,
-                    color: themes.default.palette?.primary?.main,
+                    color: theme.default.palette?.primary?.pri400,
                   },
                 };
               } else {
@@ -268,6 +268,24 @@ const DemoWrapper = (props: IGridProps) => {
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
                               fontData: fontData,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
 
@@ -336,7 +354,7 @@ const DemoWrapper = (props: IGridProps) => {
                             icon: {
                               name: 'Search',
                               size: 30,
-                              color: themes.default.palette?.primary?.main,
+                              color: theme.default.palette?.primary?.pri400,
                             },
                           };
 
@@ -1214,15 +1232,16 @@ const DemoWrapper = (props: IGridProps) => {
             fetchReportLabel={fetchReportLabel}
             fetchReportLabelData={fetchReportLabelData}
           ></Demo2Ui>
+          // <>hi</>
         )}
       </div>
-      <CustomSnackbar
+      {/* <CustomSnackbar
         msg={snackData.msg}
         open={snackData.open}
         onClose={onHideSnackBar}
         duration={snackData.duration}
         severity={snackData.severity}
-      />
+      /> */}
     </ConfigFormProvider>
   );
 };

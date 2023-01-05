@@ -147,7 +147,7 @@ function Classic({ right = false }) {
       >
         <Box
           sx={{
-            backgroundColor: theme.palette.background?.bacopWhite,
+            backgroundColor: theme.palette.background?.bacmain,
             color: theme.palette.text?.tex300Main,
             width: '100%',
             overflowY: 'auto',

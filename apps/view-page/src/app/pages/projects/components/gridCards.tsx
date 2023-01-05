@@ -166,17 +166,17 @@ export default function GridCard(props: IGridCard) {
       <div
         className="grid-stack-item-content overflow-hidden"
         style={{
-          border: `1px solid ${themeChart.palette?.text?.c100}`,
+          border: `1px solid ${themeChart.palette?.neutral?.neu100}`,
           borderRadius: '4px',
           // border: `1px solid ${theme?.palette['light']['c50']} !important`,
-          backgroundColor: themeChart.palette?.light?.c50,
+          backgroundColor: themeChart.palette?.background?.bacopWhite,
           // padding: '10px',
           overflow: 'hidden',
         }}
       >
         <div
           style={{
-            borderBottom: `1px solid${themeChart.palette?.text?.c100}`,
+            borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`,
           }}
         >
           <div
@@ -196,10 +196,12 @@ export default function GridCard(props: IGridCard) {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
+                color: 'red',
               }}
               // title="Double click to change title"
               // onDoubleClick={() => handleToggle(false)}
             >
+              This is title
               {_selectedWidget &&
                 _selectedWidget.formData &&
                 _selectedWidget.formData.formData &&
@@ -247,9 +249,9 @@ export default function GridCard(props: IGridCard) {
             >
               <div
                 style={{
-                  backgroundColor: themeChart.palette?.light?.c50,
+                  backgroundColor: themeChart.palette?.background?.bacopWhite,
                   padding: '0px',
-                  color: themeChart?.palette?.text?.primary,
+                  color: themeChart?.palette?.text?.tex300Main,
                 }}
               >
                 {menuArray &&
@@ -293,11 +295,11 @@ export default function GridCard(props: IGridCard) {
           {currentCompomponent}
         </div>
 
-        <Dialog onClose={handleClose} open={openDialog} fullWidth={true}>
+        {/* <Dialog onClose={handleClose} open={openDialog} fullWidth={true}>
           <div style={{ maxHeight: '600px', overflow: 'hidden' }}>
             <div
               style={{
-                borderBottom: `1px solid${themeChart.palette?.text?.c100}`,
+                borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`,
               }}
             >
               <div
@@ -377,7 +379,7 @@ export default function GridCard(props: IGridCard) {
               {currentCompomponent}
             </div>{' '}
           </div>
-        </Dialog>
+        </Dialog> */}
       </div>
     </div>
   );

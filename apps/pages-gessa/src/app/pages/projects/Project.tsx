@@ -1,6 +1,6 @@
 import React, { useMemo, lazy, useEffect, useState, memo } from 'react';
 import { Box, Stack } from '@mui/material';
-import Header from './component/Header/Header';
+import Header, { HeaderComponent } from './component/Header/Header';
 import { IconComponent } from '@gessa/component-library';
 import {
   Link,
@@ -19,7 +19,6 @@ import {
 } from '../../pages/projects/store/appMenuSlice';
 import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
-import { HeaderComponent } from '@gessa/component-library';
 import AppLayout from '../../layouts/AppLayout';
 import {
   clearLocalStorage,
@@ -163,7 +162,7 @@ export function Project() {
       }}
     >
       {/* <div>hi hello</div> */}
-      {/* <HeaderComponent
+      <HeaderComponent
         logoImagePath={headerComponentProps.logoImagePath}
         searchData={headerComponentProps.searchData}
         notificationData={headerComponentProps.notificationData}
@@ -172,7 +171,7 @@ export function Project() {
         logoutClickAction={(e: any) => {
           logoutUser(e);
         }}
-      /> */}
+      />
       {/* <Header {...headerComponentProps} /> */}
       <Stack direction="row">
         <Box

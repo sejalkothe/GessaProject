@@ -3,6 +3,7 @@ import { InputBase, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
 import themes from 'apps/pages-gessa/src/theme';
 import { useEffect, useState } from 'react';
+import './SearchBox.css';
 
 interface IAnyProps {
   [key: string]: string | number | any;
@@ -74,7 +75,23 @@ export const SearchInput = (props: ISearchInputTypes) => {
             {/* <IconButton sx={{ p: '10px' }} aria-label="search">
             <SearchIcon style={{ color: theme?.palette?.text?.disabled }} />
           </IconButton> */}
-            <InputBase
+            {/* <input
+              style={{
+                fontWeight: '400',
+                marginLeft: 1,
+                flex: 1,
+                fontSize: '12px',
+                background:
+                  props?.chartProps?.background_color ||
+                  themes.default?.palette?.background?.bacopWhite,
+                color: theme?.palette?.text?.tex300Main,
+              }}
+              
+              placeholder={props.placeholder}
+              value={searchText}
+              name="search"
+            ></input> */}
+            {/* <InputBase
               sx={{
                 fontWeight: '400',
                 ml: 1,
@@ -100,7 +117,7 @@ export const SearchInput = (props: ISearchInputTypes) => {
                 props.onChange && props.onChange(e.target.value);
               }}
               inputProps={{ 'aria-label': 'search' }}
-            />
+            /> */}
           </div>
         </Typography>
       </div>

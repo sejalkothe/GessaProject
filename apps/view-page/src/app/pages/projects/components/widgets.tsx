@@ -5,18 +5,18 @@ import { useTheme } from '@mui/material';
 import { IWidget } from '../store/widgetsSlice';
 import { __values } from 'tslib';
 import {
-  heatmapData,
-  polarData,
-  scatterData,
+  // heatmapData,
+  // polarData,
+  // scatterData,
   barData,
   lineData,
-  doughnutData,
-  tableData,
-  piechartData,
-  radarData,
-  bubbleData,
+  // doughnutData,
+  // tableData,
+  // piechartData,
+  // radarData,
+  // bubbleData,
   linechartFilled,
-  lineWithTensionData,
+  // lineWithTensionData,
 } from 'apps/view-page/src/fake-db/scatterData';
 import {
   Barchart,
@@ -71,14 +71,16 @@ export interface IWidgetType {
   data: IComponent;
 }
 
-const ScatterData = scatterData;
+// const ScatterData = scatterData;
 const BarData: any = barData;
-const BubbleData: any = bubbleData;
-const PolarData: any = polarData;
-const DouhnutData: any = doughnutData;
-const PiechartData: any = piechartData;
-const RadarData: any = radarData;
+// const BubbleData: any = bubbleData;
+// const PolarData: any = polarData;
+// const DouhnutData: any = doughnutData;
+// const PiechartData: any = piechartData;
+// const RadarData: any = radarData;
 const LineData: any = lineData;
+
+const fakeData = true;
 
 export const WIDGETS_V1: IWidgetType[] = [
   {
@@ -86,14 +88,14 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'card',
     data: {
       component: (props: any) => {
-        const theme = useTheme();
+        const theme = themes;
         const defaultProps = {
           title: 'Number of Payments',
           stat: 600,
           icon: {
             name: 'Search',
             size: 30,
-            color: themes.default.palette?.primary?.main,
+            color: theme.default.palette?.primary?.pri400,
           },
           link: 'View All',
         };
@@ -148,7 +150,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           />
         ) : (
           // <Datagrid columns={tableData.columns} rows={tableData.rows} />
-          <Datagrid columns={tableData.columns} rows={tableData.rows} />
+          <Datagrid columns={[]} rows={[]} />
         );
       },
       props: {},
@@ -165,8 +167,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          // <Barchart {...BarData} />
-          <Barchart {...props.chartData} />
+          fakeData ? (
+            <Barchart {...BarData} />
+          ) : (
+            <Barchart {...props.chartData} />
+          )
         ) : (
           <Barchart
             data={{
@@ -269,14 +274,17 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-            fontData={props?.chartData?.fontData}
-          />
+          fakeData ? (
+            <LineChart {...linechartFilled} />
+          ) : (
+            <LineChart
+              data={props?.chartData?.data || []}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
+              fontData={props?.chartData?.fontData}
+            />
+          )
         ) : (
-          // <LineChart {...LineData} />
           <LineChart
             data={{
               labels: [],
@@ -323,12 +331,12 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <HeatMap
-            columnAxisLabel={heatmapData.columnAxisLabel || []}
-            data={heatmapData.data || []}
-            rowAxisLabel={heatmapData.rowAxisLabel || []}
-            threshold={heatmapData.threshold || []}
-            colLabel={heatmapData.colLabel || ''}
-            rowLabel={heatmapData.rowLabel || ''}
+            columnAxisLabel={[]}
+            data={[]}
+            rowAxisLabel={[]}
+            threshold={[]}
+            colLabel={''}
+            rowLabel={''}
           />
         ) : (
           // <HeatMap

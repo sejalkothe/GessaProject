@@ -227,33 +227,7 @@ export const Demo2Ui = (props: Demo2Props) => {
               }
             </Grid>
           </div>
-          {/* <Box
-            className="flex flex-col  justify-center items-end bottom-0 flex-1 p-2"
-            style={{
-              height: '60px',
-              // width: 'calc(100% - 230px)',
-              backgroundColor: theme.palette.background.default,
-            }}
-          >
-            <Button
-              sx={{ py: 0.25, px: 3 }}
-              color="primary"
-              variant="outlined"
-              onClick={() => {
-                // saveLayoutData();
-                setSaveFormStatus(true);
-              }}
-            >
-              Save Layout
-            </Button>
-          </Box> */}
         </div>
-        {/* <div
-          className="flex flex-col justify-start items-center overflow-y-auto col-span-2 mt-2 h-full"
-          style={{ height: 'calc(100vh - 60px)', overflow: 'hidden' }}
-        >
-           <Widgets rawWidget={props.rawWidgets} />
-        </div> */}
       </div>
     </div>
   );
