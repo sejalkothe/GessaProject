@@ -2,6 +2,7 @@ import { IconComponent } from '@gessa/component-library';
 import { Box, Stack } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { IRootState } from 'apps/pages-gessa/src/store';
+import themes from 'apps/pages-gessa/src/theme';
 import generateRandomString from 'apps/pages-gessa/src/utils/randomString';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +20,7 @@ export interface ISideNav {
 }
 const SideNav = (props: ISideNav) => {
   const theme = useTheme();
+  const themesChart = themes.default;
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -50,8 +52,8 @@ const SideNav = (props: ISideNav) => {
         height: '92vh',
         justifyContent: 'center',
         display: 'flex',
-        background: theme.palette?.light?.c50,
-        borderRight: `1px solid ${theme.palette?.text?.c100}`,
+        background: themesChart?.palette?.background?.bacopWhite,
+        borderRight: `1px solid ${themesChart?.palette?.neutral?.neu100}`,
       }}
     >
       <Stack direction="column">
@@ -78,8 +80,8 @@ const SideNav = (props: ISideNav) => {
                   borderRadius: '4px',
                   background:
                     selectedMenu === item.data.name
-                      ? theme?.palette?.background?.default
-                      : theme?.palette?.light?.c50,
+                      ? themesChart?.palette?.primary?.pri300Main
+                      : themesChart?.palette?.background?.bacopWhite,
                   color:
                     selectedMenu === item.data.name
                       ? theme?.palette?.primary?.main
@@ -109,8 +111,8 @@ const SideNav = (props: ISideNav) => {
                   label={item.data.name}
                   color={
                     selectedMenu === item.data.name
-                      ? theme?.palette?.primary?.main
-                      : theme?.palette?.text?.main
+                      ? themesChart?.palette?.background?.bacopWhite
+                      : themesChart?.palette?.text?.tex300Main
                   }
                 />
               </div>

@@ -99,23 +99,23 @@ const DemoWrapper = (props: IGridProps) => {
       }
       const collectionReportLabel: any = [];
 
-      for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
-        const data = JSON.parse(
-          gridDataStore[0].widgets[i].layout.find(
-            (o: any) => o.key === 'formData'
-          ).value
-        );
-        console.log(data);
-        const payload = {
-          report: data.formData.report || '',
-          label: data.formData.label || '',
-          type:
-            gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'type'
-            ).value || '',
-        };
-        collectionReportLabel.push(payload);
-      }
+      // for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
+      //   const data = JSON.parse(
+      //     gridDataStore[0].widgets[i].layout.find(
+      //       (o: any) => o.key === 'formData'
+      //     ).value || ''
+      //   );
+      //   console.log(data);
+      //   const payload = {
+      //     report: data.formData.report || '',
+      //     label: data.formData.label || '',
+      //     type:
+      //       gridDataStore[0].widgets[i].layout.find(
+      //         (o: any) => o.key === 'type'
+      //       ).value || '',
+      //   };
+      //   collectionReportLabel.push(payload);
+      // }
 
       setReportLabelCollection(collectionReportLabel);
 

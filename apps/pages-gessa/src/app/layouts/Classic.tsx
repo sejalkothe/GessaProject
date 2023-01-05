@@ -2,7 +2,7 @@ import { Box, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import AppMain from './AppMain/AppMain';
 import AppMenu from './AppMenu/AppMenu';
-import { ITheme } from '../../theme/index';
+import themes, { ITheme } from '../../theme/index';
 // import './Classic.css';
 import childMenuContext from '../pages/projects/component/ChildMenusContext';
 import { useParams } from 'react-router-dom';
@@ -16,7 +16,7 @@ import {
 } from '../pages/projects/store/sortedMenuSlice';
 
 function Classic({ right = false }) {
-  const theme: ITheme = useTheme();
+  const theme = themes.default;
   const rootState = useSelector((state: IRootState) => state);
   const [menuData, setMenuData] = useState<any>();
   // const childMenus: any = useContext(childMenuContext);
@@ -112,9 +112,9 @@ function Classic({ right = false }) {
       {subMenuList && subMenuList.length > 0 && (
         <Box
           sx={{
-            backgroundColor: theme.palette?.light?.c50,
-            color: theme.palette.text?.primary,
-            borderRight: `1px solid ${theme.palette?.text?.c100}`,
+            backgroundColor: theme.palette?.background?.bacopWhite,
+            color: theme.palette.text?.tex300Main,
+            borderRight: `1px solid ${theme.palette?.neutral?.neu100}`,
             height: 'calc(100vh - 8vh)',
             width: '260px',
           }}
@@ -136,8 +136,8 @@ function Classic({ right = false }) {
           flexDirection: 'row',
           justifyContent: 'flex-end',
 
-          backgroundColor: theme.palette.background?.default,
-          color: theme.palette.text?.primary,
+          backgroundColor: theme.palette.background?.bacopWhite,
+          color: theme.palette.text?.tex300Main,
           height: 'calc(100vh - 8vh)',
           width:
             subMenuList && subMenuList.length > 0
@@ -147,8 +147,8 @@ function Classic({ right = false }) {
       >
         <Box
           sx={{
-            backgroundColor: theme.palette.background?.default,
-            color: theme.palette.text?.primary,
+            backgroundColor: theme.palette.background?.bacopWhite,
+            color: theme.palette.text?.tex300Main,
             width: '100%',
             overflowY: 'auto',
           }}

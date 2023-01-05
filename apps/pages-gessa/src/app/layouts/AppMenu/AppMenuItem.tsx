@@ -11,10 +11,10 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AppMenuItemComponent from './AppMenuItemComponent';
 import ChildMenuContext from '../../pages/projects/component/ChildMenusContext';
-import { ITheme } from 'apps/pages-gessa/src/theme';
+import themes, { ITheme } from 'apps/pages-gessa/src/theme';
 
 export function getIcon(label: string) {
-  const theme: ITheme = useTheme();
+  const theme = themes.default;
   switch (label) {
     case 'Dashboard':
       return (
@@ -22,7 +22,7 @@ export function getIcon(label: string) {
           name={'view_quilt_black_24dp'}
           size={25}
           label={'Quilt'}
-          color={theme?.palette?.text?.['primary']}
+          color={theme?.palette?.primary?.pri200}
         />
       );
     case 'Orders':
@@ -31,7 +31,7 @@ export function getIcon(label: string) {
           name={'view_quilt_black_24dp'}
           size={25}
           label={'Quilt'}
-          color={theme?.palette?.text?.['primary']}
+          color={theme?.palette?.primary?.pri200}
         />
       );
     case 'Customers':
@@ -40,7 +40,7 @@ export function getIcon(label: string) {
           name={'view_quilt_black_24dp'}
           size={25}
           label={'Quilt'}
-          color={theme?.palette?.text?.['primary']}
+          color={theme?.palette?.primary?.pri200}
         />
       );
     case 'Reports':
@@ -49,7 +49,7 @@ export function getIcon(label: string) {
           name={'view_quilt_black_24dp'}
           size={25}
           label={'Quilt'}
-          color={theme?.palette?.text?.['primary']}
+          color={theme?.palette?.primary?.pri200}
         />
       );
     case 'Nested Pages':
@@ -58,7 +58,7 @@ export function getIcon(label: string) {
           name={'view_quilt_black_24dp'}
           size={25}
           label={'Quilt'}
-          color={theme?.palette?.text?.['primary']}
+          color={theme?.palette?.primary?.pri200}
         />
       );
     default:
@@ -67,7 +67,7 @@ export function getIcon(label: string) {
           name={'analytics_black_24dp'}
           size={25}
           label={'Quilt'}
-          color={theme?.palette?.text?.['primary']}
+          color={theme?.palette?.primary?.pri200}
         />
       );
   }
@@ -85,7 +85,7 @@ function AppMenuItem(props: Props) {
   const { label, icon, link, items = [] } = props;
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
-  const theme: ITheme = useTheme();
+  const theme = themes.default;
 
   function handleClick() {
     setOpen(!open);
@@ -96,49 +96,51 @@ function AppMenuItem(props: Props) {
   const MenuItemRoot = (
     <div
       style={{
+        height: '48px',
+        paddingLeft: '10px',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: '4px',
         background: props.isSelected
-          ? theme?.palette?.background?.default
-          : theme?.palette?.light?.c50,
+          ? theme?.palette?.primary?.pri300Main
+          : theme?.palette?.background?.bacopWhite,
       }}
     >
-      <AppMenuItemComponent link={link} onClick={handleClick}>
-        {/* Display an icon if any */}
-        <div
-          style={{
-            color: props.isSelected
-              ? theme?.palette?.primary?.main
-              : theme?.palette?.text?.primary,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '300px',
-            fontWeight: props.isSelected ? 600 : 400,
+      {/* <AppMenuItemComponent link={link} onClick={handleClick}> */}
+      <div
+        style={{
+          color: props.isSelected
+            ? theme?.palette?.background?.bacopWhite
+            : theme?.palette?.text?.tex600,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '300px',
+          fontWeight: props.isSelected ? 600 : 400,
+        }}
+      >
+        <IconComponent
+          name={icon.trim()}
+          size={25}
+          label={'icon'}
+          color={
+            props.isSelected
+              ? theme?.palette?.background?.bacopWhite
+              : theme?.palette?.text?.tex300Main
+          }
+        />
+        <ListItemText
+          sx={{
+            textTransform: 'capitalize',
           }}
+          className="text-red"
+          inset={!Icon}
         >
-          <IconComponent
-            name={icon.trim()}
-            size={25}
-            label={'icon'}
-            color={
-              props.isSelected
-                ? theme?.palette?.primary?.main
-                : theme?.palette?.text?.primary
-            }
-          />
-          <ListItemText
-            sx={{
-              textTransform: 'capitalize',
-            }}
-            className="text-red"
-            inset={!Icon}
-          >
-            <Typography variant={'body1'}>{label}</Typography>
-          </ListItemText>
-        </div>
-        {/* Display the expand menu if the item has children */}
-        {isExpandable && !open && <ExpandMoreIcon />}
-        {isExpandable && open && <ExpandLessIcon />}
-      </AppMenuItemComponent>
+          <Typography variant={'body1'}>{label}</Typography>
+        </ListItemText>
+      </div>
+      {/* </AppMenuItemComponent> */}
     </div>
   );
 
@@ -146,6 +148,7 @@ function AppMenuItem(props: Props) {
     <Collapse in={open} timeout="auto" unmountOnExit>
       <Divider />
       <List component="div" disablePadding>
+        {' '}
         {items.map((item: any, index: number) => (
           <>
             <AppMenuItem
@@ -164,7 +167,7 @@ function AppMenuItem(props: Props) {
   return (
     <>
       {MenuItemRoot}
-      {MenuItemChildren}
+      {/* {MenuItemChildren} */}
     </>
   );
 }

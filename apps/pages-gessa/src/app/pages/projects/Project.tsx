@@ -1,5 +1,5 @@
 import React, { useMemo, lazy, useEffect, useState, memo } from 'react';
-import { Box, Stack, useTheme } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import Header from './component/Header/Header';
 import { IconComponent } from '@gessa/component-library';
 import {
@@ -10,7 +10,7 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import { ITheme } from '../../../theme/index';
+// import { ITheme } from '../../../theme/index';
 // import Logo from '../../../assets/logo.svg';
 import ChildMenuContext from './component/ChildMenusContext';
 import {
@@ -34,10 +34,11 @@ import {
 } from './store/sortedMenuSlice';
 import { IRootState } from 'apps/pages-gessa/src/store';
 import keycloak from 'apps/pages-gessa/src/keycloak/keycloak';
+import themes from 'apps/pages-gessa/src/theme';
 
 export function Project() {
   const params: any = useParams();
-  const theme: ITheme = useTheme();
+  const theme = themes.default;
   const rootState = useSelector((state: IRootState) => state);
 
   const [widgetData, setWidgetData] = useState([]);
@@ -76,11 +77,17 @@ export function Project() {
       placeholder: 'Search',
       value: '',
     },
+    headerBackgroundColor: themes.default.palette?.background?.bacopWhite,
 
     notificationData: {
       name: 'Notification_24dp',
       size: 25,
+      color: themes.default.palette?.neutral?.neu400,
       label: 'notification',
+    },
+    chartProps: {
+      background_color: themes.default.palette?.background?.bacopWhite,
+      border_color: themes.default.palette?.neutral?.neu100,
     },
 
     userData: {
@@ -151,19 +158,21 @@ export function Project() {
   return (
     <Box
       sx={{
-        background: theme.palette?.light?.c50,
+        background: theme.palette?.background?.bacopWhite,
         overflow: 'hidden !important',
       }}
     >
-      <HeaderComponent
+      {/* <div>hi hello</div> */}
+      {/* <HeaderComponent
         logoImagePath={headerComponentProps.logoImagePath}
         searchData={headerComponentProps.searchData}
         notificationData={headerComponentProps.notificationData}
         userData={headerComponentProps.userData}
+        chartProps={headerComponentProps.chartProps}
         logoutClickAction={(e: any) => {
           logoutUser(e);
         }}
-      />
+      /> */}
       {/* <Header {...headerComponentProps} /> */}
       <Stack direction="row">
         <Box
@@ -172,8 +181,8 @@ export function Project() {
             height: '92vh',
             justifyContent: 'center',
             display: 'flex',
-            background: theme.palette?.light?.c50,
-            borderRight: `1px solid ${theme.palette?.text?.c100}`,
+            background: theme.palette?.background?.bacopWhite,
+            borderRight: `1px solid ${theme.palette?.neutral?.neu100}`,
           }}
         >
           <Stack direction="column">
@@ -184,47 +193,6 @@ export function Project() {
                 setSelectedMenu(data);
               }}
             />
-            {/* {appMenu?.map((item: any, index: any) => {
-              return (
-                <Link
-                  key={index}
-                  to={`/project/${params.projectId}/${
-                    item.data.name || params.menuId
-                  }`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Box
-                    sx={{
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginTop: '10px',
-                      background:
-                        selectedMenu === item.data.name
-                          ? theme?.palette?.background?.default
-                          : theme?.palette?.light?.c50,
-                    }}
-                    onClick={() => {
-                      setClicked(isClicked !== index ? index : -1);
-                      setSelectedMenu(item.data.name);
-                    }}
-                  >
-                    <IconComponent
-                      name={item.data.icon}
-                      size={25}
-                      label={item.data.icon}
-                      color={
-                        selectedMenu === item.data.name
-                          ? theme?.palette?.primary?.main
-                          : theme?.palette?.text?.primary
-                      }
-                    />
-                  </Box>
-                </Link>
-              );
-            })} */}
           </Stack>
         </Box>
         <Box
@@ -233,9 +201,7 @@ export function Project() {
             overflow: 'hidden',
           }}
         >
-          {/* <ChildMenuContext.Provider value={menuName.menuChild}> */}
           <AppLayout />
-          {/* </ChildMenuContext.Provider> */}
         </Box>
       </Stack>
     </Box>
