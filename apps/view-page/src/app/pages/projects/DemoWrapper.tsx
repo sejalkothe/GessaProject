@@ -243,13 +243,14 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.main;
+                                  ]?.sys300Main;
                                 element.borderRadius = 5;
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
