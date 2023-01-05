@@ -48,6 +48,9 @@ import {
   constLineChartWithFilled,
   constLineChartWithTensionFilled,
 } from 'apps/view-page/src/utils/constantString';
+import { selectThemeContext } from 'apps/view-page/src/store/themeContextSlice';
+import { useSelector } from 'react-redux';
+import { IRootState } from 'apps/view-page/src/store';
 export interface IWidgetProps {
   rawWidget: IWidget[];
 }
@@ -80,7 +83,7 @@ const PiechartData: any = piechartData;
 const RadarData: any = radarData;
 const LineData: any = lineData;
 
-const fakeData = false;
+const fakeData = true;
 
 export const WIDGETS_V1: IWidgetType[] = [
   {
@@ -231,9 +234,19 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'doughnutchart',
     data: {
       component: (props: any) => {
+        const rootState = useSelector((state: IRootState) => state);
+
+        const themeData = selectThemeContext(rootState);
+
+        const fontData = {
+          families: themeData[0].font.result.families,
+          url: themeData[0].font.result.urls,
+          defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
+        };
+
         return props ? (
           fakeData ? (
-            <DoughnutChart {...DouhnutData} />
+            <DoughnutChart {...{ ...DouhnutData, fontData }} />
           ) : (
             <DoughnutChart
               data={props?.chartData?.data || {}}
@@ -263,9 +276,19 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'piechart',
     data: {
       component: (props: any) => {
+        const rootState = useSelector((state: IRootState) => state);
+
+        const themeData = selectThemeContext(rootState);
+
+        const fontData = {
+          families: themeData[0].font.result.families,
+          url: themeData[0].font.result.urls,
+          defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
+        };
+
         return props ? (
           fakeData ? (
-            <PieChart {...PiechartData} />
+            <PieChart {...{ ...PiechartData, fontData }} />
           ) : (
             <PieChart
               data={props.chartData?.data}
@@ -512,7 +535,7 @@ export const WIDGETS_V1: IWidgetType[] = [
               data={props?.chartData?.data || []}
               stacked={true}
               horizontal={false}
-              xLabel={props.chartData.xLaabel}
+              xLabel={props.chartData.xLabel}
               yLabel={props.chartData.yLabel}
               chartProps={props.chartData?.chartProps}
             />

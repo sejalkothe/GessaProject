@@ -196,12 +196,15 @@ export default function GridCard(props: IGridCard) {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                color: 'red',
+                fontSize: '14px',
+                fontWeight: 700,
+                lineHeight: '20px',
+
+                color: themes?.default?.palette?.text?.tex600,
               }}
               // title="Double click to change title"
               // onDoubleClick={() => handleToggle(false)}
             >
-              This is title
               {_selectedWidget &&
                 _selectedWidget.formData &&
                 _selectedWidget.formData.formData &&

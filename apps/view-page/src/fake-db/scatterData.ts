@@ -16,7 +16,6 @@ export const lineData = {
         pointRadius: 2,
         pointStyle: 'circle',
         borderWidth: 1,
-        tension: 0.5,
       },
       {
         label: 'Dataset 2',
@@ -26,10 +25,10 @@ export const lineData = {
         backgroundColor: themes.default?.palette?.systemColor3?.sys100,
         pointStyle: 'circle',
         borderWidth: 1,
-        tension: 0.5,
       },
     ],
   },
+
   chartProps: {
     chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
     chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
@@ -197,6 +196,8 @@ export const barData = {
   },
   stacked: true,
   horizontal: true,
+  xLabel: 'x',
+  yLabel: 'y',
   chartProps: {
     chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
     chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
@@ -610,7 +611,7 @@ export const doughnutData = {
   legend: 'right',
   chartProps: {
     doughnut_cutout: '80%',
-    doughnut_radius: '70%',
+    doughnut_radius: '100%',
     background_color: themes.default?.palette?.background?.bacopWhite,
     legend_text_color: themes.default?.palette?.text?.tex400,
   },

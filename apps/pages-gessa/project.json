@@ -21,9 +21,7 @@
           "apps/pages-gessa/src/favicon.ico",
           "apps/pages-gessa/src/assets"
         ],
-        "styles": [
-          "node_modules/@gessa/component-library/libs/dsl/src/static/assets/assets/icons/icomoon/style.css"
-        ],
+        "styles": [],
         "scripts": [],
         "webpackConfigOld": "@nrwl/react/plugins/webpack",
         "webpackConfig": "apps/pages-gessa/webpack.config.js"
