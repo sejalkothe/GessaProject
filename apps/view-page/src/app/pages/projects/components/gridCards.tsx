@@ -218,7 +218,7 @@ export default function GridCard(props: IGridCard) {
                   // itemClicked(props);
                   // setOpenKebab(true);
                   // handleClose();
-                  handleClick(e);
+                  // handleClick(e);
                 }}
               >
                 <IconComponent
@@ -226,7 +226,7 @@ export default function GridCard(props: IGridCard) {
                     name: 'more_vert_black_24dp',
                     color: theme.palette?.text?.primary,
                     size: 25,
-                    label: 'more_vert_black_24dp',
+                    label: 'More',
                   }}
                 ></IconComponent>
               </div>
