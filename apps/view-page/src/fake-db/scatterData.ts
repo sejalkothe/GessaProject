@@ -578,86 +578,107 @@ export const cardheaderData = {
 //   ],
 // };
 
-// export const doughnutData = {
-//   data: {
-//     labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
-//     datasets: [
-//       {
-//         label: '# of Votes',
-//         data: [12, 19, 3, 5, 2],
-//         backgroundColor: [
-//           themes.default?.palette?.systemColor1?.main,
-//           themes.default?.palette?.systemColor2?.main,
-//           themes.default?.palette?.systemColor3?.main,
-//           themes.default?.palette?.systemColor4?.main,
-//           themes.default?.palette?.systemColor5?.c50,
-//         ],
-//         cutout: '80%',
-//         borderWidth: 1,
-//       },
-//     ],
-//   },
-// };
+export const doughnutData = {
+  data: {
+    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: [
+          themes.default?.palette?.systemColor1?.sys300Main,
+          themes.default?.palette?.systemColor2?.sys300Main,
+          themes.default?.palette?.systemColor3?.sys300Main,
+          themes.default?.palette?.systemColor4?.sys300Main,
+          themes.default?.palette?.systemColor5?.sys300Main,
+        ],
 
-// export const piechartData = {
-//   data: {
-//     labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
-//     datasets: [
-//       {
-//         label: '# of Votes',
-//         data: [12, 19, 3, 5, 2],
-//         backgroundColor: [
-//           themes.default?.palette?.systemColor1?.main,
-//           themes.default?.palette?.systemColor2?.main,
-//           themes.default?.palette?.systemColor3?.main,
-//           themes.default?.palette?.systemColor4?.main,
-//           themes.default?.palette?.systemColor5?.c100,
-//         ],
-//         borderWidth: 1,
-//       },
-//       // {
-//       //   label: '# of ',
-//       //   data: [null, null, null, null, null],
-//       //   backgroundColor: [
-//       //     themes.default?.palette?.systemColor1?.main,
-//       //     themes.default?.palette?.systemColor2?.main,
-//       //     themes.default?.palette?.systemColor3?.main,
-//       //     themes.default?.palette?.systemColor4?.main,
-//       //     themes.default?.palette?.systemColor5?.main,
-//       //   ],
+        borderWidth: 1,
+      },
+    ],
+  },
 
-//       //   borderWidth: 1,
-//       // },
-//     ],
-//   },
-// };
+  fontData: {
+    families: ['poppins', 'Indie Flower', 'Raleway'],
+    url: [
+      'https://fonts.googleapis.com/css?family=Poppins',
+      'https://fonts.googleapis.com/css?family=Indie+Flower',
+      'https://fonts.googleapis.com/css?family=Raleway',
+    ],
+    defaultFont: 'poppins',
+  },
+};
 
-// export const radarData = {
-//   data: {
-//     labels: [
-//       'Eating',
-//       'Drinking',
-//       'Sleeping',
-//       'Designing',
-//       'Coding',
-//       'Cycling',
-//     ],
-//     datasets: [
-//       {
-//         label: '1st Dataset',
-//         data: [65, 59, 90, 81, 56, 55],
-//         fill: true,
-//         backgroundColor: themes.default?.palette?.systemColor2?.main,
-//         borderColor: themes.default?.palette?.systemColor2?.light,
-//         borderWidth: 1,
-//       },
-//       // {
-//       //   label: '2nd Dataset',
-//       //   data: [28, 48, 40, 19, 96, 27],
-//       //   backgroundColor: themes.default?.palette?.systemColor1?.main,
-//       //   borderColor: themes.default?.palette?.systemColor1?.light,
-//       //   borderWidth: 1,
-//       // },
-//     ],
-//   },
-// };
+export const piechartData = {
+  height: 400,
+  width: 600,
+  legend: 'right',
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
+  },
+
+  data: {
+    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: [
+          themes.default?.palette?.systemColor1?.sys200,
+          themes.default?.palette?.systemColor2?.sys200,
+          themes.default?.palette?.systemColor3?.sys200,
+          themes.default?.palette?.systemColor4?.sys200,
+          themes.default?.palette?.systemColor5?.sys200,
+        ],
+
+        borderWidth: 1,
+      },
+    ],
+  },
+};
+
+export const radarData = {
+  data: {
+    labels: [
+      'Eating',
+      'Drinking',
+      'Sleeping',
+      'Designing',
+      'Coding',
+      'Cycling',
+    ],
+    datasets: [
+      {
+        label: '1st Dataset',
+        data: [2, 9, 3, 5, 2, 3],
+        backgroundColor: themes.default?.palette?.systemColor4?.sys300Main,
+        borderColor: themes.default?.palette?.systemColor1?.sys300Main,
+        borderWidth: 1,
+      },
+      {
+        label: '2nd Dataset',
+        data: [9, 2, 7, 8, 1, 5],
+        backgroundColor: themes.default?.palette?.systemColor5?.sys300Main,
+        borderColor: themes.default?.palette?.systemColor3?.sys300Main,
+        borderWidth: 1,
+      },
+    ],
+  },
+  fontData: {
+    families: ['poppins', 'Indie Flower', 'Raleway'],
+    url: [
+      'https://fonts.googleapis.com/css?family=Poppins',
+      'https://fonts.googleapis.com/css?family=Indie+Flower',
+      'https://fonts.googleapis.com/css?family=Raleway',
+    ],
+    defaultFont: 'poppins',
+  },
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
+  },
+};

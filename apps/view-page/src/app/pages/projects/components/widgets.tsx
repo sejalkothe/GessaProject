@@ -10,10 +10,10 @@ import {
   // scatterData,
   barData,
   lineData,
-  // doughnutData,
+  doughnutData,
   // tableData,
-  // piechartData,
-  // radarData,
+  piechartData,
+  radarData,
   // bubbleData,
   linechartFilled,
   // lineWithTensionData,
@@ -75,9 +75,9 @@ export interface IWidgetType {
 const BarData: any = barData;
 // const BubbleData: any = bubbleData;
 // const PolarData: any = polarData;
-// const DouhnutData: any = doughnutData;
-// const PiechartData: any = piechartData;
-// const RadarData: any = radarData;
+const DouhnutData: any = doughnutData;
+const PiechartData: any = piechartData;
+const RadarData: any = radarData;
 const LineData: any = lineData;
 
 const fakeData = true;
@@ -197,7 +197,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <RadarChart data={props?.chartData?.data || {}} />
+          fakeData ? (
+            <RadarChart {...RadarData} />
+          ) : (
+            <RadarChart data={props?.chartData?.data || {}} />
+          )
         ) : (
           // <RadarChart {...RadarData} />
           <RadarChart
@@ -222,7 +226,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <DoughnutChart data={props?.chartData?.data || {}} />
+          fakeData ? (
+            <DoughnutChart {...DouhnutData} />
+          ) : (
+            <DoughnutChart data={props?.chartData?.data || {}} />
+          )
         ) : (
           // <DoughnutChart {...DouhnutData} />
           <DoughnutChart
@@ -247,7 +255,11 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PieChart data={props.chartData?.data} />
+          fakeData ? (
+            <PieChart {...PiechartData} />
+          ) : (
+            <PieChart data={props.chartData?.data} />
+          )
         ) : (
           // <PieChart {...PiechartData} />
           // <PieChart {...props} />
