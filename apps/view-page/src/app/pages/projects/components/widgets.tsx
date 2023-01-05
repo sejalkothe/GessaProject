@@ -6,8 +6,8 @@ import { IWidget } from '../store/widgetsSlice';
 import { __values } from 'tslib';
 import {
   // heatmapData,
-  // polarData,
-  // scatterData,
+  polarData,
+  scatterData,
   barData,
   lineData,
   doughnutData,
@@ -15,7 +15,7 @@ import {
   piechartData,
   radarData,
   // bubbleData,
-  linechartFilled,
+  linechartFilled
   // lineWithTensionData,
 } from 'apps/view-page/src/fake-db/scatterData';
 import {
@@ -33,7 +33,7 @@ import {
   PolarChart,
   RadarChart,
   ScatterChart,
-  StatCard,
+  StatCard
 } from '@gessa/component-library';
 // import Datagrid from '../../../components/gridComponents/data-grid/data-grid';
 import themes from 'apps/view-page/src/theme';
@@ -46,7 +46,7 @@ import {
   constLineChartWithTension,
   constLineChartLabel,
   constLineChartWithFilled,
-  constLineChartWithTensionFilled,
+  constLineChartWithTensionFilled
 } from 'apps/view-page/src/utils/constantString';
 export interface IWidgetProps {
   rawWidget: IWidget[];
@@ -71,10 +71,10 @@ export interface IWidgetType {
   data: IComponent;
 }
 
-// const ScatterData = scatterData;
+const ScatterData = scatterData;
 const BarData: any = barData;
 // const BubbleData: any = bubbleData;
-// const PolarData: any = polarData;
+const PolarData: any = polarData;
 const DouhnutData: any = doughnutData;
 const PiechartData: any = piechartData;
 const RadarData: any = radarData;
@@ -95,9 +95,9 @@ export const WIDGETS_V1: IWidgetType[] = [
           icon: {
             name: 'Search',
             size: 30,
-            color: theme.default.palette?.primary?.pri400,
+            color: theme.default.palette?.primary?.pri400
           },
-          link: 'View All',
+          link: 'View All'
         };
         const formProps = { ...props };
         return props ? (
@@ -112,8 +112,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       w: 4,
       h: 2,
       x: 4,
-      y: 10,
-    },
+      y: 10
+    }
   },
   {
     id: '1',
@@ -135,7 +135,7 @@ export const WIDGETS_V1: IWidgetType[] = [
               columnResizable: props.chartData.columnResizable,
               pagination: props.chartData.pagination,
               height: props.chartData.height - 200,
-              width: props.chartData.width - 200,
+              width: props.chartData.width - 200
             }}
             headerData={props.headerData}
             height={props.chartData.height - 100}
@@ -158,8 +158,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       w: 6,
       h: 4,
       x: 4,
-      y: 10,
-    },
+      y: 10
+    }
   },
   {
     id: '2',
@@ -176,7 +176,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <Barchart
             data={{
               labels: [],
-              datasets: [],
+              datasets: []
             }}
             stacked={false}
             horizontal={true}
@@ -188,8 +188,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '3',
@@ -207,7 +207,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <RadarChart
             data={{
               labels: [],
-              datasets: [],
+              datasets: []
             }}
           />
         );
@@ -217,8 +217,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 3,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '4',
@@ -236,7 +236,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <DoughnutChart
             data={{
               labels: [],
-              datasets: [],
+              datasets: []
             }}
           />
         );
@@ -246,8 +246,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 3,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '5',
@@ -266,7 +266,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <PieChart
             data={{
               labels: [],
-              datasets: [],
+              datasets: []
             }}
           />
         );
@@ -276,8 +276,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 3,
-      h: 4,
-    },
+      h: 4
+    }
   },
 
   {
@@ -300,7 +300,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <LineChart
             data={{
               labels: [],
-              datasets: [],
+              datasets: []
             }}
           />
         );
@@ -310,8 +310,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '7',
@@ -319,10 +319,14 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <ScatterChart
-            labels={props?.chartData?.data?.labels || []}
-            datasets={props?.chartData?.data?.datasets || []}
-          />
+          fakeData ? (
+            <ScatterChart {...ScatterData} />
+          ) : (
+            <ScatterChart
+              labels={props?.chartData?.data?.labels || []}
+              datasets={props?.chartData?.data?.datasets || []}
+            />
+          )
         ) : (
           // <ScatterChart {...ScatterData} />
           <ScatterChart labels={[]} datasets={[]} />
@@ -333,8 +337,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 7,
-    },
+      h: 7
+    }
   },
   {
     id: '8',
@@ -375,8 +379,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 10,
-      h: 5,
-    },
+      h: 5
+    }
   },
   {
     id: '9',
@@ -384,10 +388,14 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <PolarChart
-            datasets={props?.chartData?.data?.datasets || []}
-            labels={props?.chartData?.data?.labels || []}
-          />
+          fakeData ? (
+            <PolarChart {...PolarData} />
+          ) : (
+            <PolarChart
+              datasets={props?.chartData?.data?.datasets || []}
+              labels={props?.chartData?.data?.labels || []}
+            />
+          )
         ) : (
           // <PolarChart {...PolarData} />
           // <PolarChart
@@ -402,8 +410,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 8,
-    },
+      h: 8
+    }
   },
   {
     id: '9',
@@ -425,8 +433,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 7,
-    },
+      h: 7
+    }
   },
   {
     id: '12',
@@ -464,8 +472,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '13',
@@ -503,8 +511,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '14',
@@ -542,8 +550,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '15',
@@ -581,8 +589,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '16',
@@ -611,7 +619,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <LineChart
             data={{
               labels: [],
-              datasets: [],
+              datasets: []
             }}
           />
         );
@@ -621,8 +629,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '17',
@@ -660,8 +668,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
+      h: 4
+    }
   },
   {
     id: '18',
@@ -690,7 +698,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <LineChart
             data={{
               labels: [],
-              datasets: [],
+              datasets: []
             }}
           />
         );
@@ -700,9 +708,9 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4,
-    },
-  },
+      h: 4
+    }
+  }
 ];
 
 const makeSerializedWidget = (widgetData: IWidget[]): any => {
@@ -717,7 +725,7 @@ const makeSerializedWidget = (widgetData: IWidget[]): any => {
         const payload = {
           id: (i + 100).toString(),
           type: widgetData[i].type,
-          data: JSON.parse(JSON.stringify(dataObj[0].data)),
+          data: JSON.parse(JSON.stringify(dataObj[0].data))
         };
         serializeWidgets.push(payload);
       }
