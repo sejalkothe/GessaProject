@@ -309,7 +309,7 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.c50;
+                                  ]?.sys300Main;
                                 // element.fill = true;
                                 element.pointRadius = 2;
                                 element.borderWidth = 1;
@@ -319,7 +319,7 @@ const DemoWrapper = (props: IGridProps) => {
                                   .palette?.[`systemColor${index + 1}`]?.main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -337,25 +337,58 @@ const DemoWrapper = (props: IGridProps) => {
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
                               fontData: fontData,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
 
                           break;
                         case 'card':
                           const defaultProps = {
-                            // title: 'This si title',
-                            // stat: 'asdfg',
-                            // iconName: 'Search',
-                            link: 'View All',
-                            title:
-                              data?.formData?.Title ||
-                              payload.formData.Title ||
-                              '',
-                            stat: 600,
-                            icon: {
-                              name: 'Search',
-                              size: 30,
-                              color: theme.default.palette?.primary?.pri400,
+                            data: {
+                              // title: 'This si title',
+                              // stat: 'asdfg',
+                              // iconName: 'Search',
+                              link: 'View All',
+                              title:
+                                data?.formData?.Title ||
+                                payload.formData.Title ||
+                                '',
+                              stat: 600,
+                              icon: {
+                                name: 'Search',
+                                size: 30,
+                                color: theme.default.palette?.primary?.pri400,
+                              },
+                            },
+                            chartProps: {
+                              chartProps: {
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                icon_bgcolor:
+                                  themes.default?.palette?.background?.bacmain,
+                                subtitle_color:
+                                  themes.default?.palette?.primary?.pri400,
+                                link_color:
+                                  themes.default?.palette?.systemColor2?.sys400,
+                              },
                             },
                           };
 
@@ -417,13 +450,13 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.main;
+                                  ]?.sys300Main;
                                 element.borderRadius = 5;
                                 return (element.backgroundColor = themeObj
                                   .palette?.[`systemColor${index + 1}`]?.main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -438,6 +471,16 @@ const DemoWrapper = (props: IGridProps) => {
                             },
                             chartData: {
                               data: response.payload.data,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -458,9 +501,9 @@ const DemoWrapper = (props: IGridProps) => {
                                 ) {
                                   const color = themeObj.palette?.[
                                     `systemColor${i + 1}`
-                                  ]?.main
+                                  ]?.sys300Main
                                     ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.main
+                                        ?.sys300Main
                                     : '#' +
                                       (Math.random() * 0xfffff * 1000000)
                                         .toString(16)
@@ -479,6 +522,15 @@ const DemoWrapper = (props: IGridProps) => {
                             },
                             chartData: {
                               data: response.payload.data,
+                              chartProps: {
+                                doughnut_cutout: '80%',
+                                doughnut_radius: '70%',
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex400,
+                              },
                             },
                           };
                           break;
@@ -499,9 +551,9 @@ const DemoWrapper = (props: IGridProps) => {
                                 ) {
                                   const color = themeObj.palette?.[
                                     `systemColor${i + 1}`
-                                  ]?.main
+                                  ]?.sys300Main
                                     ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.main
+                                        ?.sys300Main
                                     : '#' +
                                       (Math.random() * 0xfffff * 1000000)
                                         .toString(16)
@@ -519,6 +571,18 @@ const DemoWrapper = (props: IGridProps) => {
                               },
                               chartData: {
                                 data: response.payload.data,
+                                chartProps: {
+                                  chartjs_default_color:
+                                    themes.default?.palette?.background
+                                      ?.bacopWhite,
+                                  chartjs_grid_color:
+                                    themes.default?.palette?.neutral?.neu100,
+                                  background_color:
+                                    themes.default?.palette?.background
+                                      ?.bacopWhite,
+                                  legend_text_color:
+                                    themes.default?.palette?.text?.tex600,
+                                },
                               },
                             };
                           }
@@ -563,11 +627,11 @@ const DemoWrapper = (props: IGridProps) => {
                                 data: datasetDataArr,
                                 backgroundColor:
                                   themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
+                                    ?.sys300Main,
                                 pointRadius: 5,
                                 borderColor:
                                   themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
+                                    ?.sys300Main,
                               };
                               finalObj.datasets.push(datasetObj);
                               finalObj.labels = _rawData.labels;
@@ -580,6 +644,23 @@ const DemoWrapper = (props: IGridProps) => {
                             },
                             chartData: {
                               data: finalObj,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
 
@@ -607,9 +688,9 @@ const DemoWrapper = (props: IGridProps) => {
                                 ) {
                                   const color = themeObj.palette?.[
                                     `systemColor${i + 1}`
-                                  ]?.main
+                                  ]?.sys300Main
                                     ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.main
+                                        ?.sys300Main
                                     : '#' +
                                       (Math.random() * 0xfffff * 1000000)
                                         .toString(16)
@@ -629,6 +710,13 @@ const DemoWrapper = (props: IGridProps) => {
                             },
                             chartData: {
                               data: response.payload.data,
+                              chartProps: {
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex400,
+                              },
                             },
                           };
                           break;
@@ -672,11 +760,11 @@ const DemoWrapper = (props: IGridProps) => {
                                 data: datasetDataArrBubble,
                                 backgroundColor:
                                   themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
+                                    ?.sys300Main,
                                 pointRadius: 5,
                                 borderColor:
                                   themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
+                                    ?.sys300Main,
                               };
                               finalObjBubble.datasets.push(datasetObj);
                               finalObjBubble.labels = _rawData.labels;
@@ -690,6 +778,24 @@ const DemoWrapper = (props: IGridProps) => {
                             chartData: {
                               data: finalObjBubble,
                               fontData: fontData,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -707,13 +813,14 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.main;
+                                  ]?.sys300Main;
                                 element.borderRadius = 5;
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -731,6 +838,24 @@ const DemoWrapper = (props: IGridProps) => {
                               stacked: true,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -747,13 +872,14 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.main;
+                                  ]?.sys300Main;
                                 element.borderRadius = 5;
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -771,6 +897,24 @@ const DemoWrapper = (props: IGridProps) => {
                               stacked: true,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -787,13 +931,14 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.main;
+                                  ]?.sys300Main;
                                 element.borderRadius = 5;
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -810,6 +955,24 @@ const DemoWrapper = (props: IGridProps) => {
                               data: response.payload.data,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -826,13 +989,14 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.main;
+                                  ]?.sys300Main;
                                 element.borderRadius = 5;
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -850,6 +1014,24 @@ const DemoWrapper = (props: IGridProps) => {
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
                               stacked: true,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -866,13 +1048,14 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.main;
+                                  ]?.sys300Main;
                                 element.borderRadius = 5;
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.main
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -891,6 +1074,24 @@ const DemoWrapper = (props: IGridProps) => {
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
                               horizontal: true,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -907,17 +1108,18 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.c50;
+                                  ]?.sys300Main;
                                 // element.fill = true;
                                 element.pointRadius = 2;
                                 element.borderWidth = 1;
                                 element.tension = 0.5;
 
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.c50
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -934,6 +1136,24 @@ const DemoWrapper = (props: IGridProps) => {
                               data: response.payload.data,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -950,20 +1170,19 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.c100;
+                                  ]?.sys300Main;
                                 element.pointRadius = 2;
                                 element.fill = true;
                                 element.pointStyle = 'circle';
-
                                 element.borderWidth = 1;
                                 // element.tension = 0.5;
 
                                 element.backgroundColor = themeObj.palette?.[
                                   `systemColor${index + 1}`
-                                ]?.main
+                                ]?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.c50
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -981,6 +1200,24 @@ const DemoWrapper = (props: IGridProps) => {
                               data: response.payload.data,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              chartProps: {
+                                chartjs_default_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                chartjs_grid_color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                bar_thickness: 25,
+                                axis_border_Color:
+                                  themes.default?.palette?.neutral?.neu100,
+                                display_grid: { x: true, y: false },
+                                axis_ticks_color:
+                                  themes.default?.palette?.text?.tex400,
+                                background_color:
+                                  themes.default?.palette?.background
+                                    ?.bacopWhite,
+                                legend_text_color:
+                                  themes.default?.palette?.text?.tex600,
+                              },
                             },
                           };
                           break;
@@ -997,17 +1234,18 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderColor =
                                   themeObj.palette?.[
                                     `systemColor${index + 1}`
-                                  ]?.c100;
+                                  ]?.sys300Main;
                                 element.fill = true;
                                 element.pointRadius = 2;
                                 element.borderWidth = 1;
                                 element.tension = 0.5;
 
                                 return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                  .palette?.[`systemColor${index + 1}`]
+                                  ?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
-                                    ]?.c50
+                                    ]?.sys300Main
                                   : '#' +
                                     (Math.random() * 0xfffff * 1000000)
                                       .toString(16)
@@ -1024,6 +1262,29 @@ const DemoWrapper = (props: IGridProps) => {
                               data: response.payload.data,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
+                              chartData: {
+                                data: response.payload.data,
+                                xLabel: data.formData.X_axis_label,
+                                yLabel: data.formData.Y_axis_label,
+                                chartProps: {
+                                  chartjs_default_color:
+                                    themes.default?.palette?.background
+                                      ?.bacopWhite,
+                                  chartjs_grid_color:
+                                    themes.default?.palette?.neutral?.neu100,
+                                  bar_thickness: 25,
+                                  axis_border_Color:
+                                    themes.default?.palette?.neutral?.neu100,
+                                  display_grid: { x: true, y: false },
+                                  axis_ticks_color:
+                                    themes.default?.palette?.text?.tex400,
+                                  background_color:
+                                    themes.default?.palette?.background
+                                      ?.bacopWhite,
+                                  legend_text_color:
+                                    themes.default?.palette?.text?.tex600,
+                                },
+                              },
                             },
                           };
                           break;

@@ -401,90 +401,90 @@ export const cardheaderData = {
 //   ],
 // };
 
-// export const bubbleData = {
-//   labels: ['a', 'b', 'c'],
-//   datasets: [
-//     {
-//       label: 'Red dataset',
-//       data: [
-//         {
-//           x: 48,
-//           y: 34,
-//           r: 1,
-//         },
-//         {
-//           x: 22,
-//           y: 40,
-//           r: 10,
-//         },
-//         {
-//           x: 48,
-//           y: 30,
-//           r: 9,
-//         },
-//         {
-//           x: 11,
-//           y: 12,
-//           r: 7,
-//         },
-//         {
-//           x: 29,
-//           y: 39,
-//           r: 6,
-//         },
-//         {
-//           x: 22,
-//           y: 22,
-//           r: 8,
-//         },
-//       ],
-//       backgroundColor: themes.default?.palette?.systemColor1?.main,
-//       borderColor: themes.default?.palette?.systemColor1?.main,
-//     },
-//     {
-//       label: 'Blue dataset',
-//       data: [
-//         {
-//           x: 28,
-//           y: 23,
-//           r: 5,
-//         },
-//         {
-//           x: 33,
-//           y: 49,
-//           r: 7,
-//         },
-//         {
-//           x: 31,
-//           y: 13,
-//           r: 10,
-//         },
-//         {
-//           x: 50,
-//           y: 35,
-//           r: 2,
-//         },
-//         {
-//           x: 35,
-//           y: 17,
-//           r: 3,
-//         },
-//         {
-//           x: 22,
-//           y: 45,
-//           r: 5,
-//         },
-//         {
-//           x: 33,
-//           y: 37,
-//           r: 8,
-//         },
-//       ],
-//       backgroundColor: themes.default?.palette?.systemColor2?.main,
-//       borderColor: themes.default?.palette?.systemColor2?.main,
-//     },
-//   ],
-// };
+export const bubbleData = {
+  labels: ['a', 'b', 'c'],
+  datasets: [
+    {
+      label: 'Red dataset',
+      data: [
+        {
+          x: 48,
+          y: 34,
+          r: 1,
+        },
+        {
+          x: 22,
+          y: 40,
+          r: 10,
+        },
+        {
+          x: 48,
+          y: 30,
+          r: 9,
+        },
+        {
+          x: 11,
+          y: 12,
+          r: 7,
+        },
+        {
+          x: 29,
+          y: 39,
+          r: 6,
+        },
+        {
+          x: 22,
+          y: 22,
+          r: 8,
+        },
+      ],
+      backgroundColor: themes.default?.palette?.systemColor1?.sys100,
+      borderColor: themes.default?.palette?.systemColor1?.sys300Main,
+    },
+    {
+      label: 'Blue dataset',
+      data: [
+        {
+          x: 28,
+          y: 23,
+          r: 5,
+        },
+        {
+          x: 33,
+          y: 49,
+          r: 7,
+        },
+        {
+          x: 31,
+          y: 13,
+          r: 10,
+        },
+        {
+          x: 50,
+          y: 35,
+          r: 2,
+        },
+        {
+          x: 35,
+          y: 17,
+          r: 3,
+        },
+        {
+          x: 22,
+          y: 45,
+          r: 5,
+        },
+        {
+          x: 33,
+          y: 37,
+          r: 8,
+        },
+      ],
+      backgroundColor: themes.default?.palette?.systemColor2?.sys100,
+      borderColor: themes.default?.palette?.systemColor2?.sys300Main,
+    },
+  ],
+};
 // export const polarData = {
 //   labels: [
 //     'name-a',
@@ -597,7 +597,7 @@ export const doughnutData = {
       },
     ],
   },
-  
+
   fontData: {
     families: ['poppins', 'Indie Flower', 'Raleway'],
     url: [
@@ -607,10 +607,10 @@ export const doughnutData = {
     ],
     defaultFont: 'poppins',
   },
-   legend: 'bottom',
+  legend: 'right',
   chartProps: {
     doughnut_cutout: '80%',
-    doughnut_radius:'70%',
+    doughnut_radius: '70%',
     background_color: themes.default?.palette?.background?.bacopWhite,
     legend_text_color: themes.default?.palette?.text?.tex400,
   },
@@ -690,8 +690,8 @@ export const radarData = {
   },
 };
 
-export const scatterData={
-   labels: ['a', 'b', 'c'],
+export const scatterData = {
+  labels: ['a', 'b', 'c'],
   datasets: [
     {
       label: 'Red dataset',
@@ -727,9 +727,9 @@ export const scatterData={
     background_color: themes.default?.palette?.background?.bacopWhite,
     legend_text_color: themes.default?.palette?.text?.tex600,
   },
-}
-export const polarData={
-   fontData: {
+};
+export const polarData = {
+  fontData: {
     families: ['poppins', 'Indie Flower', 'Raleway'],
     url: [
       'https://fonts.googleapis.com/css?family=Poppins',
@@ -792,8 +792,8 @@ export const polarData={
     //   backgroundColor: ['rgba(53, 162, 235, 0.5)'],
     // },
   ],
- chartProps: {
+  chartProps: {
     background_color: themes.default?.palette?.background?.bacopWhite,
     legend_text_color: themes.default?.palette?.text?.tex400,
   },
-}
+};

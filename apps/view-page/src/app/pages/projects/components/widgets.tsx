@@ -14,8 +14,8 @@ import {
   // tableData,
   piechartData,
   radarData,
-  // bubbleData,
-  linechartFilled
+  bubbleData,
+  linechartFilled,
   // lineWithTensionData,
 } from 'apps/view-page/src/fake-db/scatterData';
 import {
@@ -33,7 +33,7 @@ import {
   PolarChart,
   RadarChart,
   ScatterChart,
-  StatCard
+  StatCard,
 } from '@gessa/component-library';
 // import Datagrid from '../../../components/gridComponents/data-grid/data-grid';
 import themes from 'apps/view-page/src/theme';
@@ -46,7 +46,7 @@ import {
   constLineChartWithTension,
   constLineChartLabel,
   constLineChartWithFilled,
-  constLineChartWithTensionFilled
+  constLineChartWithTensionFilled,
 } from 'apps/view-page/src/utils/constantString';
 export interface IWidgetProps {
   rawWidget: IWidget[];
@@ -73,14 +73,14 @@ export interface IWidgetType {
 
 const ScatterData = scatterData;
 const BarData: any = barData;
-// const BubbleData: any = bubbleData;
+const BubbleData: any = bubbleData;
 const PolarData: any = polarData;
 const DouhnutData: any = doughnutData;
 const PiechartData: any = piechartData;
 const RadarData: any = radarData;
 const LineData: any = lineData;
 
-const fakeData = true;
+const fakeData = false;
 
 export const WIDGETS_V1: IWidgetType[] = [
   {
@@ -95,14 +95,17 @@ export const WIDGETS_V1: IWidgetType[] = [
           icon: {
             name: 'Search',
             size: 30,
-            color: theme.default.palette?.primary?.pri400
+            color: theme.default.palette?.primary?.pri400,
           },
-          link: 'View All'
+          link: 'View All',
         };
         const formProps = { ...props };
         return props ? (
-          // <StatCard data={defaultProps} />
-          <StatCard data={props} />
+          fakeData ? (
+            <StatCard data={defaultProps} />
+          ) : (
+            <StatCard data={props.data} chartProps={props.chartProps} />
+          )
         ) : (
           <StatCard data={defaultProps} />
         );
@@ -112,8 +115,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       w: 4,
       h: 2,
       x: 4,
-      y: 10
-    }
+      y: 10,
+    },
   },
   {
     id: '1',
@@ -135,7 +138,7 @@ export const WIDGETS_V1: IWidgetType[] = [
               columnResizable: props.chartData.columnResizable,
               pagination: props.chartData.pagination,
               height: props.chartData.height - 200,
-              width: props.chartData.width - 200
+              width: props.chartData.width - 200,
             }}
             headerData={props.headerData}
             height={props.chartData.height - 100}
@@ -158,8 +161,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       w: 6,
       h: 4,
       x: 4,
-      y: 10
-    }
+      y: 10,
+    },
   },
   {
     id: '2',
@@ -176,7 +179,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <Barchart
             data={{
               labels: [],
-              datasets: []
+              datasets: [],
             }}
             stacked={false}
             horizontal={true}
@@ -188,8 +191,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '3',
@@ -200,14 +203,17 @@ export const WIDGETS_V1: IWidgetType[] = [
           fakeData ? (
             <RadarChart {...RadarData} />
           ) : (
-            <RadarChart data={props?.chartData?.data || {}} />
+            <RadarChart
+              data={props?.chartData?.data || {}}
+              chartProps={props.chartData?.chartProps}
+            />
           )
         ) : (
           // <RadarChart {...RadarData} />
           <RadarChart
             data={{
               labels: [],
-              datasets: []
+              datasets: [],
             }}
           />
         );
@@ -217,8 +223,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 3,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '4',
@@ -229,14 +235,17 @@ export const WIDGETS_V1: IWidgetType[] = [
           fakeData ? (
             <DoughnutChart {...DouhnutData} />
           ) : (
-            <DoughnutChart data={props?.chartData?.data || {}} />
+            <DoughnutChart
+              data={props?.chartData?.data || {}}
+              chartProps={props.chartData?.chartProps}
+            />
           )
         ) : (
           // <DoughnutChart {...DouhnutData} />
           <DoughnutChart
             data={{
               labels: [],
-              datasets: []
+              datasets: [],
             }}
           />
         );
@@ -246,8 +255,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 3,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '5',
@@ -258,7 +267,10 @@ export const WIDGETS_V1: IWidgetType[] = [
           fakeData ? (
             <PieChart {...PiechartData} />
           ) : (
-            <PieChart data={props.chartData?.data} />
+            <PieChart
+              data={props.chartData?.data}
+              chartProps={props.chartData?.chartProps}
+            />
           )
         ) : (
           // <PieChart {...PiechartData} />
@@ -266,7 +278,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <PieChart
             data={{
               labels: [],
-              datasets: []
+              datasets: [],
             }}
           />
         );
@@ -276,8 +288,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 3,
-      h: 4
-    }
+      h: 4,
+    },
   },
 
   {
@@ -294,13 +306,14 @@ export const WIDGETS_V1: IWidgetType[] = [
               xLabel={props?.chartData?.xLabel || ''}
               yLabel={props?.chartData?.yLabel || ''}
               fontData={props?.chartData?.fontData}
+              chartProps={props.chartData?.chartProps}
             />
           )
         ) : (
           <LineChart
             data={{
               labels: [],
-              datasets: []
+              datasets: [],
             }}
           />
         );
@@ -310,8 +323,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '7',
@@ -325,6 +338,7 @@ export const WIDGETS_V1: IWidgetType[] = [
             <ScatterChart
               labels={props?.chartData?.data?.labels || []}
               datasets={props?.chartData?.data?.datasets || []}
+              chartProps={props.chartData?.chartProps}
             />
           )
         ) : (
@@ -337,8 +351,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 7
-    }
+      h: 7,
+    },
   },
   {
     id: '8',
@@ -379,8 +393,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 10,
-      h: 5
-    }
+      h: 5,
+    },
   },
   {
     id: '9',
@@ -394,6 +408,7 @@ export const WIDGETS_V1: IWidgetType[] = [
             <PolarChart
               datasets={props?.chartData?.data?.datasets || []}
               labels={props?.chartData?.data?.labels || []}
+              chartProps={props.chartData?.chartProps}
             />
           )
         ) : (
@@ -410,8 +425,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 8
-    }
+      h: 8,
+    },
   },
   {
     id: '9',
@@ -419,11 +434,15 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          // <BubbleChart {...BubbleData} />
-          <BubbleChart
-            labels={props?.chartData?.data?.labels || []}
-            datasets={props?.chartData?.data?.datasets || []}
-          />
+          fakeData ? (
+            <BubbleChart {...BubbleData} />
+          ) : (
+            <BubbleChart
+              labels={props?.chartData?.data?.labels || []}
+              datasets={props?.chartData?.data?.datasets || []}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           <BubbleChart datasets={[]} labels={[]} />
         );
@@ -433,8 +452,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 7
-    }
+      h: 7,
+    },
   },
   {
     id: '12',
@@ -442,13 +461,18 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={false}
-            xLabel={props.chartData.xLaabel}
-            yLabel={props.chartData.yLabel}
-          />
+          fakeData ? (
+            <Barchart data={barData.data} stacked={false} horizontal={false} />
+          ) : (
+            <Barchart
+              data={props?.chartData?.data || []}
+              stacked={true}
+              horizontal={false}
+              xLabel={props.chartData.xLaabel}
+              yLabel={props.chartData.yLabel}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           // <BarChartCard
           //   headerData={{
@@ -472,8 +496,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '13',
@@ -481,13 +505,18 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={false}
-            xLabel={props.chartData.xLaabel}
-            yLabel={props.chartData.yLabel}
-          />
+          fakeData ? (
+            <Barchart data={barData.data} stacked={false} horizontal={false} />
+          ) : (
+            <Barchart
+              data={props?.chartData?.data || []}
+              stacked={true}
+              horizontal={false}
+              xLabel={props.chartData.xLaabel}
+              yLabel={props.chartData.yLabel}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           // <BarChartCard
           //   headerData={{
@@ -511,8 +540,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '14',
@@ -520,13 +549,18 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={true}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
+          fakeData ? (
+            <Barchart data={barData.data} stacked={false} horizontal={false} />
+          ) : (
+            <Barchart
+              data={props?.chartData?.data || []}
+              stacked={true}
+              horizontal={true}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           // <BarChartCard
           //   headerData={{
@@ -550,8 +584,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '15',
@@ -559,13 +593,18 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={true}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
+          fakeData ? (
+            <Barchart data={barData.data} stacked={false} horizontal={false} />
+          ) : (
+            <Barchart
+              data={props?.chartData?.data || []}
+              stacked={true}
+              horizontal={true}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           // <BarChartCard
           //   headerData={{
@@ -589,8 +628,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '16',
@@ -598,11 +637,16 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
+          fakeData ? (
+            <LineChart {...linechartFilled} />
+          ) : (
+            <LineChart
+              data={props?.chartData?.data || []}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           // <LineChartCard
           //   headerData={{
@@ -619,7 +663,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <LineChart
             data={{
               labels: [],
-              datasets: []
+              datasets: [],
             }}
           />
         );
@@ -629,8 +673,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '17',
@@ -638,11 +682,16 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
+          fakeData ? (
+            <LineChart {...linechartFilled} />
+          ) : (
+            <LineChart
+              data={props?.chartData?.data || []}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           // <LineChartCard
           //   headerData={{
@@ -660,6 +709,7 @@ export const WIDGETS_V1: IWidgetType[] = [
             data={props?.chartData?.data || []}
             xLabel={props?.chartData?.xLabel || ''}
             yLabel={props?.chartData?.yLabel || ''}
+            chartProps={props.chartData?.chartProps}
           />
         );
       },
@@ -668,8 +718,8 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
+      h: 4,
+    },
   },
   {
     id: '18',
@@ -677,11 +727,16 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
+          fakeData ? (
+            <LineChart {...linechartFilled} />
+          ) : (
+            <LineChart
+              data={props?.chartData?.data || []}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
+              chartProps={props.chartData?.chartProps}
+            />
+          )
         ) : (
           // <LineChartCard
           //   headerData={{
@@ -698,7 +753,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           <LineChart
             data={{
               labels: [],
-              datasets: []
+              datasets: [],
             }}
           />
         );
@@ -708,9 +763,9 @@ export const WIDGETS_V1: IWidgetType[] = [
       x: 0,
       y: 5,
       w: 6,
-      h: 4
-    }
-  }
+      h: 4,
+    },
+  },
 ];
 
 const makeSerializedWidget = (widgetData: IWidget[]): any => {
@@ -725,7 +780,7 @@ const makeSerializedWidget = (widgetData: IWidget[]): any => {
         const payload = {
           id: (i + 100).toString(),
           type: widgetData[i].type,
-          data: JSON.parse(JSON.stringify(dataObj[0].data))
+          data: JSON.parse(JSON.stringify(dataObj[0].data)),
         };
         serializeWidgets.push(payload);
       }
