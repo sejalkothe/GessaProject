@@ -5,10 +5,13 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  ListSubheader,
   makeStyles,
   Menu,
   MenuItem,
+  Modal,
   Popover,
+  Select,
   styled,
   Typography,
 } from '@mui/material';
@@ -148,6 +151,9 @@ export default function GridCard(props: IGridCard) {
     // setOpen(true);
     // setOpenKebab(false);
   };
+  function toggleModal() {
+    setOpen(!open);
+  }
 
   return (
     <div
@@ -211,7 +217,51 @@ export default function GridCard(props: IGridCard) {
                 _selectedWidget.formData.formData.Title}
             </Typography>
 
-            <Box sx={{ ml: 'auto' }}>
+            <Box
+              sx={{
+                ml: 'auto',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+            >
+              <div
+                style={{ position: 'relative' }}
+                onClick={(e: any) => {
+                  // itemClicked(props);
+                  // setOpenKebab(true);
+                  // handleClose();
+                  // handleClick(e);
+                }}
+              >
+                <IconComponent
+                  {...{
+                    name: 'fullscreen_black_24dp',
+                    color: theme.palette?.text?.primary,
+                    size: 25,
+                    label: 'Full Screen',
+                  }}
+                ></IconComponent>
+              </div>
+              <div
+                style={{ position: 'relative' }}
+                onClick={(e: any) => {
+                  // itemClicked(props);
+                  // setOpenKebab(true);
+                  // handleClose();
+                  // handleClick(e);
+                }}
+              >
+                <IconComponent
+                  {...{
+                    name: 'share',
+                    color: theme.palette?.text?.primary,
+                    size: 22,
+                    label: 'Share',
+                  }}
+                ></IconComponent>
+              </div>
               <div
                 style={{ position: 'relative' }}
                 onClick={(e: any) => {
@@ -225,67 +275,14 @@ export default function GridCard(props: IGridCard) {
                   {...{
                     name: 'more_vert_black_24dp',
                     color: theme.palette?.text?.primary,
-                    size: 25,
+                    size: 27,
                     label: 'More',
                   }}
                 ></IconComponent>
               </div>
             </Box>
-            <StyledIconComponent
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              sx={{ paddingTop: 0, paddingBottom: 0 }}
-              anchorEl={anchorEl}
-              style={{ padding: '0px !important' }}
-              open={open}
-              onClick={(e: any) => {
-                handleClose();
-              }}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: themeChart.palette?.background?.bacopWhite,
-                  padding: '0px',
-                  color: themeChart?.palette?.text?.tex300Main,
-                }}
-              >
-                {menuArray &&
-                  menuArray.map((menu: string) => {
-                    return (
-                      <MenuItem
-                        onClick={(e) => {
-                          const payload: IMenuClicked = {
-                            menu,
-                            data: e,
-                          };
-                          menuCategoryClicked(payload);
-                          // downloadJSON(_selectedWidget);
-                        }}
-                      >
-                        {menu}
-                      </MenuItem>
-                    );
-                  })}
-                {/* <MenuItem
-                  onClick={() => {
-                    setOpenDialog(true);
-                  }}
-                >
-                  Preview
-                </MenuItem> */}
-              </div>
-            </StyledIconComponent>
           </div>
         </div>
-
         <div
           style={{
             top: '10px',
@@ -297,7 +294,6 @@ export default function GridCard(props: IGridCard) {
         >
           {currentCompomponent}
         </div>
-
         {/* <Dialog onClose={handleClose} open={openDialog} fullWidth={true}>
           <div style={{ maxHeight: '600px', overflow: 'hidden' }}>
             <div
@@ -383,6 +379,14 @@ export default function GridCard(props: IGridCard) {
             </div>{' '}
           </div>
         </Dialog> */}
+        {/* <Modal
+          isOpen={open}
+          onRequestClose={toggleModal}
+          contentLabel="My dialog"
+        >
+          <div>My modal dialog.</div>
+          <button onClick={toggleModal}>Close modal</button>
+        </Modal>{' '} */}
       </div>
     </div>
   );

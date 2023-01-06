@@ -11,7 +11,7 @@ import {
   barData,
   lineData,
   doughnutData,
-  // tableData,
+  tableData,
   piechartData,
   radarData,
   bubbleData,
@@ -34,6 +34,7 @@ import {
   RadarChart,
   ScatterChart,
   StatCard,
+  StatChartCard,
 } from '@gessa/component-library';
 // import Datagrid from '../../../components/gridComponents/data-grid/data-grid';
 import themes from 'apps/view-page/src/theme';
@@ -83,7 +84,7 @@ const PiechartData: any = piechartData;
 const RadarData: any = radarData;
 const LineData: any = lineData;
 
-const fakeData = true;
+const fakeData = false;
 
 export const WIDGETS_V1: IWidgetType[] = [
   {
@@ -92,6 +93,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         const theme = themes;
+        console.log('card props', props);
         const defaultProps = {
           title: 'Number of Payments',
           stat: 600,
@@ -107,7 +109,15 @@ export const WIDGETS_V1: IWidgetType[] = [
           fakeData ? (
             <StatCard data={defaultProps} />
           ) : (
-            <StatCard data={props.data} chartProps={props.chartProps} />
+            // <StatChartCard
+            //   headerData={props?.headerData}
+            //   chartData={props?.chartData}
+            // />
+
+            <StatCard
+              data={props?.chartData?.data}
+              chartProps={props?.chartData?.chartProps}
+            />
           )
         ) : (
           <StatCard data={defaultProps} />
@@ -127,35 +137,64 @@ export const WIDGETS_V1: IWidgetType[] = [
     data: {
       component: (props: any) => {
         return props ? (
-          // <Datagrid columns={props.columns || []} rows={props.rows || []} />
-          <DatatableCardV1
-            // columnData={props.chartData.data.columns}
-            // rowData={props.chartData.data.rows}
-            // columnResizable={props.chartData.data.columnResizable}
-            // pagination={props.chartData.data.pagination}
-            // height={props.chartData.height - 100}
-            // width={props.chartData.width - 50}
-            chartData={{
-              columnData: props.chartData.data.columns,
-              rowData: props.chartData.data.rows,
-              columnResizable: props.chartData.columnResizable,
-              pagination: props.chartData.pagination,
-              height: props.chartData.height - 200,
-              width: props.chartData.width - 200,
-            }}
-            headerData={props.headerData}
-            height={props.chartData.height - 100}
-            width={props.chartData.width - 50}
-            showBorder={true}
-            actionClicked={(data: any) => {
-              props.actionClicked && props.actionClicked(data);
-            }}
-            searchAction={(data: any) => {
-              props.searchAction && props.searchAction(data);
-            }}
-          />
+          fakeData ? (
+            <DatatableCardV1
+              // columnData={props.chartData.data.columns}
+              // rowData={props.chartData.data.rows}
+              // columnResizable={props.chartData.data.columnResizable}
+              // pagination={props.chartData.data.pagination}
+              // height={props.chartData.height - 100}
+              // width={props.chartData.width - 50}
+              chartData={{
+                columnData: [] || tableData.columns,
+                rowData: [] || tableData.rows,
+                columnResizable: true,
+                pagination: true,
+                height: 400,
+                width: 600,
+              }}
+              headerData={props.headerData}
+              height={400}
+              width={600}
+              showBorder={true}
+              actionClicked={(data: any) => {
+                props.actionClicked && props.actionClicked(data);
+              }}
+              searchAction={(data: any) => {
+                props.searchAction && props.searchAction(data);
+              }}
+            />
+          ) : (
+            // <Datagrid columns={tableData.columns} rows={tableData.rows} />
+            // <Datagrid columns={props.columns || []} rows={props.rows || []} />
+            <DatatableCardV1
+              // columnData={props.chartData.data.columns}
+              // rowData={props.chartData.data.rows}
+              // columnResizable={props.chartData.data.columnResizable}
+              // pagination={props.chartData.data.pagination}
+              // height={props.chartData.height - 100}
+              // width={props.chartData.width - 50}
+              chartData={{
+                columnData: props?.chartData?.data?.columns || [],
+                rowData: props?.chartData?.data?.rows || [],
+                columnResizable: props?.chartData?.columnResizable,
+                pagination: props?.chartData?.pagination,
+                height: (props?.chartData?.height || 400) - 200,
+                width: (props?.chartData?.width || 500) - 200,
+              }}
+              headerData={props.headerData}
+              height={props?.chartData?.height - 100}
+              width={props?.chartData?.width - 50}
+              showBorder={true}
+              actionClicked={(data: any) => {
+                props.actionClicked && props.actionClicked(data);
+              }}
+              searchAction={(data: any) => {
+                props.searchAction && props.searchAction(data);
+              }}
+            />
+          )
         ) : (
-          // <Datagrid columns={tableData.columns} rows={tableData.rows} />
           <Datagrid columns={[]} rows={[]} />
         );
       },
@@ -250,6 +289,7 @@ export const WIDGETS_V1: IWidgetType[] = [
           ) : (
             <DoughnutChart
               data={props?.chartData?.data || {}}
+              legend={'right'}
               chartProps={props.chartData?.chartProps}
             />
           )
@@ -491,8 +531,8 @@ export const WIDGETS_V1: IWidgetType[] = [
               data={props?.chartData?.data || []}
               stacked={true}
               horizontal={false}
-              xLabel={props.chartData.xLaabel}
-              yLabel={props.chartData.yLabel}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
               chartProps={props.chartData?.chartProps}
             />
           )
@@ -535,8 +575,8 @@ export const WIDGETS_V1: IWidgetType[] = [
               data={props?.chartData?.data || []}
               stacked={true}
               horizontal={false}
-              xLabel={props.chartData.xLabel}
-              yLabel={props.chartData.yLabel}
+              xLabel={props?.chartData?.xLabel || ''}
+              yLabel={props?.chartData?.yLabel || ''}
               chartProps={props.chartData?.chartProps}
             />
           )

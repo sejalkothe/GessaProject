@@ -177,7 +177,7 @@ const DemoWrapper = (props: IGridProps) => {
                   icon: {
                     name: 'Search',
                     size: 30,
-                    color: theme.default.palette?.primary?.pri400,
+                    color: theme?.default?.palette?.primary?.pri400,
                   },
                 };
               } else {
@@ -224,7 +224,49 @@ const DemoWrapper = (props: IGridProps) => {
                   resolve(obj);
                 }
               }).then((_response: any) => {
-                const response = JSON.parse(JSON.stringify(_response));
+                const dataPl = {
+                  payload: {
+                    // data: {
+
+                    // datasets: [
+                    //   {
+                    //     data: [22556, 5234, 16741, 692, 3],
+                    //     label: 'count',
+                    //   },
+                    //   {
+                    //     data: [24556, 2034, 18741, 4000, 4000],
+                    //     label: 'count2',
+                    //   },
+                    // ],
+                    // labels: ['4', '3', '5', '2', '1'],
+                    // },
+                    data: [
+                      {
+                        impact: '4',
+                        count: 22556,
+                      },
+                      {
+                        impact: '5',
+                        count: 16741,
+                      },
+                      {
+                        impact: '3',
+                        count: 5234,
+                      },
+                      {
+                        impact: '2',
+                        count: 692,
+                      },
+                      {
+                        impact: '1',
+                        count: 3,
+                      },
+                    ],
+                  },
+                };
+
+                const response = JSON.parse(JSON.stringify(dataPl));
+                // const response = JSON.parse(JSON.stringify(_response));
 
                 if (response && response.payload && response.payload.data) {
                   if (payload.type) {
@@ -265,6 +307,7 @@ const DemoWrapper = (props: IGridProps) => {
                             },
                             chartData: {
                               data: response.payload.data,
+
                               stacked: false,
                               xLabel: data.formData.X_axis_label,
                               yLabel: data.formData.Y_axis_label,
@@ -315,8 +358,9 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderWidth = 1;
                                 // element.tension = 0.5;
 
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                return (element.bgColor = themeObj.palette?.[
+                                  `systemColor${index + 1}`
+                                ]?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
                                     ]?.sys300Main
@@ -374,25 +418,58 @@ const DemoWrapper = (props: IGridProps) => {
                               icon: {
                                 name: 'Search',
                                 size: 30,
-                                color: theme.default.palette?.primary?.pri400,
+                                color: theme?.default?.palette?.primary?.pri400,
                               },
                             },
                             chartProps: {
-                              chartProps: {
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                icon_bgcolor:
-                                  themes.default?.palette?.background?.bacmain,
-                                subtitle_color:
-                                  themes.default?.palette?.primary?.pri400,
-                                link_color:
-                                  themes.default?.palette?.systemColor2?.sys400,
-                              },
+                              background_color:
+                                themes.default?.palette?.background?.bacopWhite,
+                              icon_bgcolor:
+                                themes.default?.palette?.background?.bacmain,
+                              subtitle_color:
+                                themes.default?.palette?.primary?.pri400,
+                              link_color:
+                                themes.default?.palette?.systemColor2?.sys400,
                             },
                           };
+                          payload.formProps = {
+                            headerData: {
+                              title: data?.formData?.Title || 'no title',
+                              searchData: {
+                                label: 'Search',
+                                placeholder:
+                                  'Search by Customer Name, SSE ID, Phone Numbe',
+                                value: '',
+                              },
 
-                          payload.formProps = defaultProps;
+                              actions: [
+                                {
+                                  menu: 'Filter',
+                                  icon: {
+                                    name: 'filter_alt_black_24dp',
+                                    size: 25,
+                                    color: '#0958fa',
+                                    label: 'Filter',
+                                  },
+                                  submenu: [],
+                                },
+                                {
+                                  menu: 'Download',
+                                  icon: {
+                                    name: 'file_upload_black_24dp-1',
+                                    size: 25,
+                                    color: '#0958fa',
+                                    label: 'Download',
+                                  },
+                                  submenu: [],
+                                },
+                              ],
+                            },
+                            chartData: defaultProps,
+                          };
+                          console.log('card props1', payload.formProps);
+
+                          // payload.formProps = defaultProps;
                           break;
                         case 'grid':
                           // payload.formProps = response.payload.data;
@@ -452,8 +529,9 @@ const DemoWrapper = (props: IGridProps) => {
                                     `systemColor${index + 1}`
                                   ]?.sys300Main;
                                 element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
+                                return (element.bgColor = themeObj.palette?.[
+                                  `systemColor${index + 1}`
+                                ]?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
                                     ]?.sys300Main
@@ -522,6 +600,8 @@ const DemoWrapper = (props: IGridProps) => {
                             },
                             chartData: {
                               data: response.payload.data,
+                              legend: 'right',
+
                               chartProps: {
                                 doughnut_cutout: '80%',
                                 doughnut_radius: '70%',
@@ -627,11 +707,11 @@ const DemoWrapper = (props: IGridProps) => {
                                 data: datasetDataArr,
                                 backgroundColor:
                                   themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.sys300Main,
+                                    ?.sys200,
                                 pointRadius: 5,
                                 borderColor:
                                   themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.sys300Main,
+                                    ?.sys200,
                               };
                               finalObj.datasets.push(datasetObj);
                               finalObj.labels = _rawData.labels;
@@ -758,7 +838,7 @@ const DemoWrapper = (props: IGridProps) => {
                               const datasetObj = {
                                 label: newDataset.label,
                                 data: datasetDataArrBubble,
-                                backgroundColor:
+                                bgColor:
                                   themeObj.palette?.[`systemColor${i + 1}`]
                                     ?.sys300Main,
                                 pointRadius: 5,
@@ -1114,9 +1194,9 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderWidth = 1;
                                 element.tension = 0.5;
 
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
+                                return (element.bgColor = themeObj.palette?.[
+                                  `systemColor${index + 1}`
+                                ]?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
                                     ]?.sys300Main
@@ -1177,7 +1257,7 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderWidth = 1;
                                 // element.tension = 0.5;
 
-                                element.backgroundColor = themeObj.palette?.[
+                                element.bgColor = themeObj.palette?.[
                                   `systemColor${index + 1}`
                                 ]?.sys300Main
                                   ? themeObj.palette?.[
@@ -1240,9 +1320,9 @@ const DemoWrapper = (props: IGridProps) => {
                                 element.borderWidth = 1;
                                 element.tension = 0.5;
 
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
+                                return (element.bgColor = themeObj.palette?.[
+                                  `systemColor${index + 1}`
+                                ]?.sys300Main
                                   ? themeObj.palette?.[
                                       `systemColor${index + 1}`
                                     ]?.sys300Main
