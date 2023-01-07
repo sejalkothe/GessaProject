@@ -91,6 +91,7 @@ export function Project() {
 
     userData: {
       text: _userInfo.userName,
+      email: _userInfo.email || '',
     },
   };
 
