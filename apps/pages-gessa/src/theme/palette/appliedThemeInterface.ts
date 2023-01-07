@@ -5,6 +5,7 @@ export interface IThemePaletteATPrimary {
   pri400: string;
   pri500: string;
   pri600: string;
+  main: string;
 }
 export interface IThemePaletteATSecondary {
   sec100: string;
@@ -13,6 +14,7 @@ export interface IThemePaletteATSecondary {
   sec400: string;
   sec500: string;
   sec600: string;
+  main: string;
 }
 export interface IThemePaletteATText {
   tex100: string;
@@ -21,6 +23,7 @@ export interface IThemePaletteATText {
   tex400: string;
   tex500: string;
   tex600: string;
+  main: string;
 }
 
 export interface IThemePaletteATBackground {
@@ -28,6 +31,7 @@ export interface IThemePaletteATBackground {
   bacmain: string;
   bacopGrey: string;
   bacopWhite: string;
+  main: string;
 }
 
 export interface IThemePaletteATSystemColor {
@@ -37,6 +41,7 @@ export interface IThemePaletteATSystemColor {
   sys400: string;
   sys500: string;
   sys600: string;
+  main: string;
 }
 
 export interface IThemePaletteATNeutral {
@@ -46,4 +51,5 @@ export interface IThemePaletteATNeutral {
   neu400: string;
   neu500: string;
   neu600: string;
+  main: string;
 }

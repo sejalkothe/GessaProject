@@ -1,4 +1,6 @@
 import { IThemePaletteAT } from '.';
+import spearMint from '../colors/spearMint';
+import white from '../colors/white';
 
 const chartColor = {
   chart: [
@@ -39,7 +41,7 @@ const chartColor = {
   },
 };
 
-const appliedTheme: IThemePaletteAT = {
+const appliedTheme: any = {
   mode: 'dark',
   primary: {
     pri100: '#DBE4F0',
@@ -48,6 +50,7 @@ const appliedTheme: IThemePaletteAT = {
     pri400: '#2B6DBA',
     pri500: '#2C4B72',
     pri600: '#233247',
+    main: '#328DF6',
   },
   secondary: {
     sec100: '#DCEAEF',
@@ -56,7 +59,11 @@ const appliedTheme: IThemePaletteAT = {
     sec400: '#2D768B',
     sec500: '#2B4F59',
     sec600: '#22353A',
+    main: '#21A2BF',
   },
+  // primary: white,
+  // secondary: spearMint,
+
   systemColor1: {
     sys100: '#FADCDA',
     sys200: '#FD948C',

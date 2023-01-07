@@ -1,4 +1,4 @@
-import { createTheme, Theme } from '@mui/system';
+import { createTheme, Theme } from '@mui/material';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
 import themes, { ITheme, ThemeContextType } from '../theme';
@@ -25,7 +25,7 @@ export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 export const ThemeProvider: React.FC<React.ReactNode> | any = ({
   children,
 }: any) => {
-  const [theme, setTheme] = React.useState<any>(createTheme(themes.default));
+  const [theme, setTheme] = React.useState<Theme>(createTheme(themes.default));
   const rootState = useSelector((state: IRootState) => state);
   const themeData = selectThemeContext(rootState);
   const themePaletteData = selectThemePaletteContext(rootState);
@@ -111,6 +111,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
         pri400: '#2B6DBA',
         pri500: '#2C4B72',
         pri600: '#233247',
+        main: '#328DF6',
       },
       secondary: {
         sec100: '#DCEAEF',
@@ -119,6 +120,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
         sec400: '#2D768B',
         sec500: '#2B4F59',
         sec600: '#22353A',
+        main: '#21A2BF',
       },
       systemColor1: {
         sys100: '#FADCDA',

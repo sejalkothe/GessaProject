@@ -224,49 +224,7 @@ const DemoWrapper = (props: IGridProps) => {
                   resolve(obj);
                 }
               }).then((_response: any) => {
-                const dataPl = {
-                  payload: {
-                    // data: {
-
-                    // datasets: [
-                    //   {
-                    //     data: [22556, 5234, 16741, 692, 3],
-                    //     label: 'count',
-                    //   },
-                    //   {
-                    //     data: [24556, 2034, 18741, 4000, 4000],
-                    //     label: 'count2',
-                    //   },
-                    // ],
-                    // labels: ['4', '3', '5', '2', '1'],
-                    // },
-                    data: [
-                      {
-                        impact: '4',
-                        count: 22556,
-                      },
-                      {
-                        impact: '5',
-                        count: 16741,
-                      },
-                      {
-                        impact: '3',
-                        count: 5234,
-                      },
-                      {
-                        impact: '2',
-                        count: 692,
-                      },
-                      {
-                        impact: '1',
-                        count: 3,
-                      },
-                    ],
-                  },
-                };
-
-                const response = JSON.parse(JSON.stringify(dataPl));
-                // const response = JSON.parse(JSON.stringify(_response));
+                const response = JSON.parse(JSON.stringify(_response));
 
                 if (response && response.payload && response.payload.data) {
                   if (payload.type) {
@@ -448,7 +406,8 @@ const DemoWrapper = (props: IGridProps) => {
                                   icon: {
                                     name: 'filter_alt_black_24dp',
                                     size: 25,
-                                    color: '#0958fa',
+                                    color:
+                                      themes?.default?.palette?.neutral?.neu400,
                                     label: 'Filter',
                                   },
                                   submenu: [],
@@ -458,7 +417,8 @@ const DemoWrapper = (props: IGridProps) => {
                                   icon: {
                                     name: 'file_upload_black_24dp-1',
                                     size: 25,
-                                    color: '#0958fa',
+                                    color:
+                                      themes?.default?.palette?.neutral?.neu400,
                                     label: 'Download',
                                   },
                                   submenu: [],
@@ -489,7 +449,8 @@ const DemoWrapper = (props: IGridProps) => {
                                   icon: {
                                     name: 'filter_alt_black_24dp',
                                     size: 25,
-                                    color: '#0958fa',
+                                    color:
+                                      themes?.default?.palette?.neutral?.neu400,
                                     label: 'Filter',
                                   },
                                   submenu: [],
@@ -499,7 +460,8 @@ const DemoWrapper = (props: IGridProps) => {
                                   icon: {
                                     name: 'file_upload_black_24dp-1',
                                     size: 25,
-                                    color: '#0958fa',
+                                    color:
+                                      themes?.default?.palette?.neutral?.neu400,
                                     label: 'Download',
                                   },
                                   submenu: [],
@@ -512,6 +474,11 @@ const DemoWrapper = (props: IGridProps) => {
                               pagination: true,
                               height: payload.widgetHeight,
                               width: payload.widgetWidth,
+                            },
+                            showBorder: true,
+                            chartProps: {
+                              border_color:
+                                themes?.default?.palette?.neutral?.neu100,
                             },
                           };
                           break;

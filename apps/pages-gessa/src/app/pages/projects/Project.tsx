@@ -1,7 +1,7 @@
 import React, { useMemo, lazy, useEffect, useState, memo } from 'react';
 import { Box, Stack } from '@mui/material';
-import Header, { HeaderComponent } from './component/Header/Header';
-import { IconComponent } from '@gessa/component-library';
+// import Header, { HeaderComponent } from './component/Header/Header';
+import { HeaderComponent, IconComponent } from '@gessa/component-library';
 import {
   Link,
   Route,

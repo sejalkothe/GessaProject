@@ -82,6 +82,7 @@ export default function GridCard(props: IGridCard) {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setOpen(Boolean(event.currentTarget));
+    console.log('i got you');
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -233,12 +234,16 @@ export default function GridCard(props: IGridCard) {
                   // setOpenKebab(true);
                   // handleClose();
                   // handleClick(e);
+                  const payload: any = {
+                    menu: 'preview',
+                  };
+                  menuCategoryClicked(payload);
                 }}
               >
                 <IconComponent
                   {...{
                     name: 'fullscreen_black_24dp',
-                    color: theme.palette?.text?.primary,
+                    color: themes?.default?.palette?.text?.tex600,
                     size: 25,
                     label: 'Full Screen',
                   }}
@@ -251,12 +256,16 @@ export default function GridCard(props: IGridCard) {
                   // setOpenKebab(true);
                   // handleClose();
                   // handleClick(e);
+                  const payload: any = {
+                    menu: 'download',
+                  };
+                  menuCategoryClicked(payload);
                 }}
               >
                 <IconComponent
                   {...{
                     name: 'share',
-                    color: theme.palette?.text?.primary,
+                    color: themes?.default?.palette?.text?.tex600,
                     size: 22,
                     label: 'Share',
                   }}
@@ -268,19 +277,71 @@ export default function GridCard(props: IGridCard) {
                   // itemClicked(props);
                   // setOpenKebab(true);
                   // handleClose();
-                  // handleClick(e);
+                  handleClick(e);
                 }}
               >
                 <IconComponent
                   {...{
                     name: 'more_vert_black_24dp',
-                    color: theme.palette?.text?.primary,
+                    color: themes?.default?.palette?.text?.tex600,
                     size: 27,
                     label: 'More',
                   }}
                 ></IconComponent>
               </div>
             </Box>
+            <StyledIconComponent
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              sx={{ paddingTop: 0, paddingBottom: 0 }}
+              anchorEl={anchorEl}
+              style={{ padding: '0px !important' }}
+              open={open}
+              onClick={(e: any) => {
+                handleClose();
+              }}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <div
+                style={{
+                  padding: '0px',
+                  backgroundColor: themeChart.palette?.background?.bacopWhite,
+                  color: themes?.default?.palette?.text?.tex600,
+                }}
+              >
+                {menuArray &&
+                  menuArray.map((menu: string) => {
+                    return (
+                      <MenuItem
+                        onClick={(e) => {
+                          const payload: IMenuClicked = {
+                            menu,
+                            data: e,
+                          };
+                          menuCategoryClicked(payload);
+                          // downloadJSON(_selectedWidget);
+                        }}
+                      >
+                        {menu}
+                      </MenuItem>
+                    );
+                  })}
+                {/* <MenuItem
+                  onClick={() => {
+                    setOpenDialog(true);
+                  }}
+                >
+                  Preview
+                </MenuItem> */}
+              </div>
+            </StyledIconComponent>
           </div>
         </div>
         <div
@@ -294,8 +355,23 @@ export default function GridCard(props: IGridCard) {
         >
           {currentCompomponent}
         </div>
-        {/* <Dialog onClose={handleClose} open={openDialog} fullWidth={true}>
-          <div style={{ maxHeight: '600px', overflow: 'hidden' }}>
+        <Dialog
+          onClose={handleClose}
+          open={openDialog}
+          fullWidth={true}
+          sx={{
+            backgroundColor: themeChart.palette?.background?.bacopWhite,
+            color: themes?.default?.palette?.text?.tex600,
+          }}
+        >
+          <div
+            style={{
+              maxHeight: '600px',
+              overflow: 'hidden',
+              backgroundColor: themeChart.palette?.background?.bacopWhite,
+              color: themes?.default?.palette?.text?.tex600,
+            }}
+          >
             <div
               style={{
                 borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`,
@@ -353,9 +429,9 @@ export default function GridCard(props: IGridCard) {
                       <IconComponent
                         {...{
                           name: 'close_black_24dp',
-                          color: theme.palette?.text?.primary,
+                          color: themes?.default?.palette?.text?.tex600,
                           size: 25,
-                          label: 'close_black_24dp',
+                          label: 'Close',
                         }}
                       ></IconComponent>
                     </div>
@@ -378,15 +454,7 @@ export default function GridCard(props: IGridCard) {
               {currentCompomponent}
             </div>{' '}
           </div>
-        </Dialog> */}
-        {/* <Modal
-          isOpen={open}
-          onRequestClose={toggleModal}
-          contentLabel="My dialog"
-        >
-          <div>My modal dialog.</div>
-          <button onClick={toggleModal}>Close modal</button>
-        </Modal>{' '} */}
+        </Dialog>
       </div>
     </div>
   );

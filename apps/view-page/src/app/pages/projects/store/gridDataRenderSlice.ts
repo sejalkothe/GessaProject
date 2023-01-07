@@ -42,6 +42,31 @@ export const getChartDataResource = createAsyncThunk(
         widgetid: params.widget_id,
       };
       dispatch(setGridDataRender(payload));
+    } else {
+      // const myData: any = {
+      //   data: {
+      //     datasets: [
+      //       {
+      //         data: [22556, 5234, 16741, 692, 3],
+      //         label: 'count',
+      //       },
+      //       {
+      //         data: [24556, 2034, 18741, 4000, 4000],
+      //         label: 'count2',
+      //       },
+      //     ],
+      //     labels: ['4', '3', '5', '2', '1'],
+      //   },
+      // };
+      // const data: IWidgetDataRender = myData.data;
+      // const payload: IWidgetDataRender = {
+      //   data: data,
+      //   label: params.label,
+      //   report: params.report,
+      //   widgetid: params.widget_id,
+      // };
+      // dispatch(setGridDataRender(payload));
+      // return myData;
     }
     return response;
   }
@@ -115,6 +140,42 @@ export const getGridDataResource = createAsyncThunk(
       };
       dispatch(setGridDataRender(payload));
       return responseNew;
+    } else {
+      // console.log('inside else');
+      // const myData = [
+      //   {
+      //     impact: '4',
+      //     count: 22556,
+      //   },
+      //   {
+      //     impact: '5',
+      //     count: 16741,
+      //   },
+      //   {
+      //     impact: '3',
+      //     count: 5234,
+      //   },
+      //   {
+      //     impact: '2',
+      //     count: 692,
+      //   },
+      //   {
+      //     impact: '1',
+      //     count: 3,
+      //   },
+      // ];
+      // const alteredObject = getResposeDataAltered(myData);
+      // const payload: IWidgetDataRender = {
+      //   data: alteredObject,
+      //   label: params.label || '',
+      //   report: params.report,
+      //   widgetid: params.widget_id,
+      // };
+      // const responseNew = {
+      //   data: alteredObject,
+      // };
+      // dispatch(setGridDataRender(payload));
+      // return responseNew;
     }
     return response;
   }

@@ -32,7 +32,7 @@ interface IThemePaletteBackground {
 
 export interface IThemePalette {
   mode: 'dark' | 'light';
-  // common?: IThemePaletteCommon;
+  common?: IThemePaletteCommon;
   primary?: IThemeColor;
   secondary?: IThemeColor;
   systemColor1?: IThemeColor;
@@ -50,6 +50,7 @@ export interface IThemePalette {
 }
 export interface IThemePaletteAT {
   mode: 'dark' | 'light';
+  common?: IThemePaletteCommon;
   primary?: IThemePaletteATPrimary;
   secondary?: IThemePaletteATSecondary;
   text?: IThemePaletteATText;

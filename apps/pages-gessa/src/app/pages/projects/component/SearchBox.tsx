@@ -91,7 +91,7 @@ export const SearchInput = (props: ISearchInputTypes) => {
               value={searchText}
               name="search"
             ></input> */}
-            {/* <InputBase
+            <InputBase
               sx={{
                 fontWeight: '400',
                 ml: 1,
@@ -117,7 +117,7 @@ export const SearchInput = (props: ISearchInputTypes) => {
                 props.onChange && props.onChange(e.target.value);
               }}
               inputProps={{ 'aria-label': 'search' }}
-            /> */}
+            />
           </div>
         </Typography>
       </div>

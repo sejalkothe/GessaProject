@@ -136,6 +136,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'grid',
     data: {
       component: (props: any) => {
+        console.log(props);
         return props ? (
           fakeData ? (
             <DatatableCardV1
@@ -181,6 +182,9 @@ export const WIDGETS_V1: IWidgetType[] = [
                 pagination: props?.chartData?.pagination,
                 height: (props?.chartData?.height || 400) - 200,
                 width: (props?.chartData?.width || 500) - 200,
+              }}
+              chartProps={{
+                border_color: themes?.default?.palette?.neutral?.neu100,
               }}
               headerData={props.headerData}
               height={props?.chartData?.height - 100}
