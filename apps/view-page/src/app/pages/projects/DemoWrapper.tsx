@@ -2,7 +2,6 @@ import { useTheme } from '@mui/system';
 import ConfigFormProvider from 'apps/view-page/src/context/form';
 import { cardheaderData } from 'apps/view-page/src/fake-db/scatterData';
 import { IRootState } from 'apps/view-page/src/store';
-import { selectThemeContext } from 'apps/view-page/src/store/themeContextSlice';
 import themes from 'apps/view-page/src/theme';
 import {
   constStackVerticalBarChartType,
@@ -17,13 +16,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomSnackbar from '../../components/CustomSnackbar';
 import Demo2Ui from './components/Demo2Ui';
+import { SimpleBarChartDataMapping } from './data-mapper/bar-chart';
+import { SimpleLineChartDataMapping } from './data-mapper/line-chart';
+import { getPageDataByIdApi } from './newStore/pageDetail';
+import { selectPageWidgetDataById } from './newStore/pageWidgetData';
+import { selectThemeContext } from './newStore/themeContextSlice';
 import {
   getChartDataResource,
   getGridDataResource,
 } from './store/gridDataRenderSlice';
 import {
   deleteAllStore,
-  getPageDataByIdApi,
   savePageConfigurationApi,
   selectGridData,
   setGridDatatore,
@@ -44,7 +47,10 @@ const DemoWrapper = (props: IGridProps) => {
   const themeData = selectThemeContext(rootState);
   const [fontData, setFontData] = useState<any>();
 
-  const gridDataStore: any = selectGridData(rootState);
+  const gridDataStore = selectPageWidgetDataById(
+    rootState,
+    props.page_id || ''
+  );
   const [gridData, setGridData] = useState<any>([]);
   const widgets = selectAllWidgets(rootState);
   const reports = selectAllReports(rootState);
@@ -90,18 +96,18 @@ const DemoWrapper = (props: IGridProps) => {
     const keysArray: any = [];
     const promiseArray: any = [];
     setGridData([]);
-    if (gridDataStore && gridDataStore.length && gridDataStore[0].widgets) {
-      for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
+    if (gridDataStore && gridDataStore && gridDataStore.widgets) {
+      for (let i = 0; i < gridDataStore.widgets.length; i += 1) {
         keysArray.push([
-          gridDataStore[0].widgets[i].key,
-          gridDataStore[0].widgets[i].value,
+          gridDataStore.widgets[i].key,
+          gridDataStore.widgets[i].value,
         ]);
       }
       const collectionReportLabel: any = [];
 
-      // for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
+      // for (let i = 0; i < gridDataStore.widgets.length; i += 1) {
       //   const data = JSON.parse(
-      //     gridDataStore[0].widgets[i].layout.find(
+      //     gridDataStore.widgets[i].layout.find(
       //       (o: any) => o.key === 'formData'
       //     ).value || ''
       //   );
@@ -110,7 +116,7 @@ const DemoWrapper = (props: IGridProps) => {
       //     report: data.formData.report || '',
       //     label: data.formData.label || '',
       //     type:
-      //       gridDataStore[0].widgets[i].layout.find(
+      //       gridDataStore.widgets[i].layout.find(
       //         (o: any) => o.key === 'type'
       //       ).value || '',
       //   };
@@ -126,42 +132,37 @@ const DemoWrapper = (props: IGridProps) => {
         return o;
       }, {});
 
-      if (gridDataStore && gridDataStore.length) {
+      if (gridDataStore && gridDataStore.widgets.length) {
         const gridLoadWidget: any = [];
-        for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
+        for (let i = 0; i < gridDataStore.widgets.length; i += 1) {
           const payload: any = {
-            id: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'id'
-            ).value,
-            type: gridDataStore[0].widgets[i].layout.find(
+            id: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'id')
+              .value,
+            type: gridDataStore.widgets[i].layout.find(
               (o: any) => o.key === 'type'
             ).value,
-            w: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'w'
-            ).value,
-            h: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'h'
-            ).value,
-            x: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'x'
-            ).value,
-            y: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'y'
-            ).value,
-            widgetHeight: gridDataStore[0].widgets[i].layout.find(
+            w: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'w')
+              .value,
+            h: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'h')
+              .value,
+            x: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'x')
+              .value,
+            y: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'y')
+              .value,
+            widgetHeight: gridDataStore.widgets[i].layout.find(
               (o: any) => o.key === 'widgetHeight'
             ).value,
-            widgetWidth: gridDataStore[0].widgets[i].layout.find(
+            widgetWidth: gridDataStore.widgets[i].layout.find(
               (o: any) => o.key === 'widgetWidth'
             ).value,
           };
-          const dataIndex = gridDataStore[0].widgets[i].layout.findIndex(
+          const dataIndex = gridDataStore.widgets[i].layout.findIndex(
             (value: any) => value.key === 'formData'
           );
 
           if (dataIndex !== -1) {
             const data = JSON.parse(
-              gridDataStore[0].widgets[i].layout.find(
+              gridDataStore.widgets[i].layout.find(
                 (o: any) => o.key === 'formData'
               ).value
             );
@@ -181,1172 +182,1082 @@ const DemoWrapper = (props: IGridProps) => {
                   },
                 };
               } else {
-                payload.formProps = {};
+                // payload.formProps = {};
               }
-              gridLoadWidget.push(payload);
+              // payload.formProps = {
+              //   headerData: {
+              //     title: data?.formData?.Title,
+              //     actions: cardheaderData.actions,
+              //   },
+              //   chartData: {
+              //     data: {},
+              //     xLabel: data.formData.X_axis_label,
+              //     yLabel: data.formData.Y_axis_label,
+              //     chartProps: {
+              //       chartjs_default_color:
+              //         themes.default?.palette?.background?.bacopWhite,
+              //       chartjs_grid_color:
+              //         themes.default?.palette?.neutral?.neu100,
+              //       bar_thickness: 25,
+              //       axis_border_Color: themes.default?.palette?.neutral?.neu100,
+              //       display_grid: { x: true, y: false },
+              //       axis_ticks_color: themes.default?.palette?.text?.tex400,
+              //       background_color:
+              //         themes.default?.palette?.background?.bacopWhite,
+              //       legend_text_color: themes.default?.palette?.text?.tex600,
+              //     },
+              //   },
+              // };
             }
-            promiseArray.push(
-              new Promise((resolve, reject) => {
-                if (
-                  data.formData.label &&
-                  data.formData.report &&
-                  payload.type.toLowerCase() !== 'grid'
-                ) {
-                  resolve(
-                    dispatch(
-                      getChartDataResource({
-                        label: data.formData.label,
-                        report: data.formData.report,
-                        widget_id: payload.id,
-                      })
-                    )
-                  );
-                } else if (payload.type.toLowerCase() === 'grid') {
-                  resolve(
-                    dispatch(
-                      getGridDataResource({
-                        label: '',
-                        report: data.formData.report,
-                        widget_id: payload.id,
-                        projections: '',
-                        filter: '',
-                        size: '10',
-                        page: '0',
-                      })
-                    )
-                  );
-                } else {
-                  const obj = {
-                    payload: {
-                      data: [],
-                    },
-                  };
-                  resolve(obj);
-                }
-              }).then((_response: any) => {
-                const response = JSON.parse(JSON.stringify(_response));
+            gridLoadWidget.push(payload);
 
-                if (response && response.payload && response.payload.data) {
-                  if (payload.type) {
-                    if (response.payload.data) {
-                      switch (payload.type.toLowerCase()) {
-                        case 'barchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
+            // promiseArray.push(
+            //   new Promise((resolve, reject) => {
+            //     if (
+            //       data.formData.label &&
+            //       data.formData.report &&
+            //       payload.type.toLowerCase() !== 'grid'
+            //     ) {
+            //       resolve(
+            //         dispatch(
+            //           getChartDataResource({
+            //             label: data.formData.label,
+            //             report: data.formData.report,
+            //             widget_id: payload.id,
+            //           })
+            //         )
+            //       );
+            //     } else if (payload.type.toLowerCase() === 'grid') {
+            //       resolve(
+            //         dispatch(
+            //           getGridDataResource({
+            //             label: '',
+            //             report: data.formData.report,
+            //             widget_id: payload.id,
+            //             projections: '',
+            //             filter: '',
+            //             size: '10',
+            //             page: '0',
+            //           })
+            //         )
+            //       );
+            //     } else {
+            //       const obj = {
+            //         payload: {
+            //           data: [],
+            //         },
+            //       };
+            //       resolve(obj);
+            //     }
+            //   }).then((_response: any) => {
+            //     const response = JSON.parse(JSON.stringify(_response));
 
-                              stacked: false,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              fontData: fontData,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
+            //     if (response && response.payload && response.payload.data) {
+            //       if (payload.type) {
+            //         if (response.payload.data) {
+            //           const payload2: any = {
+            //             data,
+            //             fontData,
+            //           };
 
-                          // payload.formProps = {
-                          //   data: response.payload.data,
-                          //   xLabel: data.formData.X_axis_label,
-                          //   yLabel: data.formData.Y_axis_label,
-                          // };
-                          break;
-                        case 'linechart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                // element.fill = true;
-                                element.pointRadius = 2;
-                                element.borderWidth = 1;
-                                // element.tension = 0.5;
+            //           switch (payload.type.toLowerCase()) {
+            //             case 'barchart':
+            //               let SimpleBarChartMappedData: any =
+            //                 SimpleBarChartDataMapping(response, payload2);
+            //               payload.formProps = SimpleBarChartMappedData;
+            //               break;
+            //             case 'linechart':
+            //               let SimpleLineChartMappedData: any =
+            //                 SimpleLineChartDataMapping(response, payload2);
+            //               payload.formProps = SimpleLineChartMappedData;
+            //               break;
+            //             case 'card':
+            //               const defaultProps = {
+            //                 data: {
+            //                   // title: 'This si title',
+            //                   // stat: 'asdfg',
+            //                   // iconName: 'Search',
+            //                   link: 'View All',
+            //                   title:
+            //                     data?.formData?.Title ||
+            //                     payload.formData.Title ||
+            //                     '',
+            //                   stat: 600,
+            //                   icon: {
+            //                     name: 'Search',
+            //                     size: 30,
+            //                     color: theme?.default?.palette?.primary?.pri400,
+            //                   },
+            //                 },
+            //                 chartProps: {
+            //                   background_color:
+            //                     themes.default?.palette?.background?.bacopWhite,
+            //                   icon_bgcolor:
+            //                     themes.default?.palette?.background?.bacmain,
+            //                   subtitle_color:
+            //                     themes.default?.palette?.primary?.pri400,
+            //                   link_color:
+            //                     themes.default?.palette?.systemColor2?.sys400,
+            //                 },
+            //               };
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title || 'no title',
+            //                   searchData: {
+            //                     label: 'Search',
+            //                     placeholder:
+            //                       'Search by Customer Name, SSE ID, Phone Numbe',
+            //                     value: '',
+            //                   },
 
-                                return (element.bgColor = themeObj.palette?.[
-                                  `systemColor${index + 1}`
-                                ]?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              fontData: fontData,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
+            //                   actions: [
+            //                     {
+            //                       menu: 'Filter',
+            //                       icon: {
+            //                         name: 'filter_alt_black_24dp',
+            //                         size: 25,
+            //                         color:
+            //                           themes?.default?.palette?.neutral?.neu400,
+            //                         label: 'Filter',
+            //                       },
+            //                       submenu: [],
+            //                     },
+            //                     {
+            //                       menu: 'Download',
+            //                       icon: {
+            //                         name: 'file_upload_black_24dp-1',
+            //                         size: 25,
+            //                         color:
+            //                           themes?.default?.palette?.neutral?.neu400,
+            //                         label: 'Download',
+            //                       },
+            //                       submenu: [],
+            //                     },
+            //                   ],
+            //                 },
+            //                 chartData: defaultProps,
+            //               };
+            //               console.log('card props1', payload.formProps);
 
-                          break;
-                        case 'card':
-                          const defaultProps = {
-                            data: {
-                              // title: 'This si title',
-                              // stat: 'asdfg',
-                              // iconName: 'Search',
-                              link: 'View All',
-                              title:
-                                data?.formData?.Title ||
-                                payload.formData.Title ||
-                                '',
-                              stat: 600,
-                              icon: {
-                                name: 'Search',
-                                size: 30,
-                                color: theme?.default?.palette?.primary?.pri400,
-                              },
-                            },
-                            chartProps: {
-                              background_color:
-                                themes.default?.palette?.background?.bacopWhite,
-                              icon_bgcolor:
-                                themes.default?.palette?.background?.bacmain,
-                              subtitle_color:
-                                themes.default?.palette?.primary?.pri400,
-                              link_color:
-                                themes.default?.palette?.systemColor2?.sys400,
-                            },
-                          };
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title || 'no title',
-                              searchData: {
-                                label: 'Search',
-                                placeholder:
-                                  'Search by Customer Name, SSE ID, Phone Numbe',
-                                value: '',
-                              },
+            //               // payload.formProps = defaultProps;
+            //               break;
+            //             case 'grid':
+            //               // payload.formProps = response.payload.data;
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   searchData: {
+            //                     label: 'Search',
+            //                     placeholder:
+            //                       'Search by Customer Name, SSE ID, Phone Numbe',
+            //                     value: '',
+            //                   },
 
-                              actions: [
-                                {
-                                  menu: 'Filter',
-                                  icon: {
-                                    name: 'filter_alt_black_24dp',
-                                    size: 25,
-                                    color:
-                                      themes?.default?.palette?.neutral?.neu400,
-                                    label: 'Filter',
-                                  },
-                                  submenu: [],
-                                },
-                                {
-                                  menu: 'Download',
-                                  icon: {
-                                    name: 'file_upload_black_24dp-1',
-                                    size: 25,
-                                    color:
-                                      themes?.default?.palette?.neutral?.neu400,
-                                    label: 'Download',
-                                  },
-                                  submenu: [],
-                                },
-                              ],
-                            },
-                            chartData: defaultProps,
-                          };
-                          console.log('card props1', payload.formProps);
+            //                   actions: [
+            //                     {
+            //                       menu: 'Filter',
+            //                       icon: {
+            //                         name: 'filter_alt_black_24dp',
+            //                         size: 25,
+            //                         color:
+            //                           themes?.default?.palette?.neutral?.neu400,
+            //                         label: 'Filter',
+            //                       },
+            //                       submenu: [],
+            //                     },
+            //                     {
+            //                       menu: 'Download',
+            //                       icon: {
+            //                         name: 'file_upload_black_24dp-1',
+            //                         size: 25,
+            //                         color:
+            //                           themes?.default?.palette?.neutral?.neu400,
+            //                         label: 'Download',
+            //                       },
+            //                       submenu: [],
+            //                     },
+            //                   ],
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   columnResizable: true,
+            //                   pagination: true,
+            //                   height: payload.widgetHeight,
+            //                   width: payload.widgetWidth,
+            //                 },
+            //                 showBorder: true,
+            //                 chartProps: {
+            //                   border_color:
+            //                     themes?.default?.palette?.neutral?.neu100,
+            //                 },
+            //               };
+            //               break;
+            //             case 'radarchart':
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.borderRadius = 5;
+            //                     return (element.bgColor = themeObj.palette?.[
+            //                       `systemColor${index + 1}`
+            //                     ]?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case 'doughnutchart':
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     const bgColorArr = [];
+            //                     for (
+            //                       let i = 0;
+            //                       i < response.payload.data.labels.length;
+            //                       i += 1
+            //                     ) {
+            //                       const color = themeObj.palette?.[
+            //                         `systemColor${i + 1}`
+            //                       ]?.sys300Main
+            //                         ? themeObj.palette?.[`systemColor${i + 1}`]
+            //                             ?.sys300Main
+            //                         : '#' +
+            //                           (Math.random() * 0xfffff * 1000000)
+            //                             .toString(16)
+            //                             .slice(0, 6);
 
-                          // payload.formProps = defaultProps;
-                          break;
-                        case 'grid':
-                          // payload.formProps = response.payload.data;
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              searchData: {
-                                label: 'Search',
-                                placeholder:
-                                  'Search by Customer Name, SSE ID, Phone Numbe',
-                                value: '',
-                              },
+            //                       bgColorArr.push(color);
+            //                     }
+            //                     return (element.backgroundColor = bgColorArr);
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   legend: 'right',
 
-                              actions: [
-                                {
-                                  menu: 'Filter',
-                                  icon: {
-                                    name: 'filter_alt_black_24dp',
-                                    size: 25,
-                                    color:
-                                      themes?.default?.palette?.neutral?.neu400,
-                                    label: 'Filter',
-                                  },
-                                  submenu: [],
-                                },
-                                {
-                                  menu: 'Download',
-                                  icon: {
-                                    name: 'file_upload_black_24dp-1',
-                                    size: 25,
-                                    color:
-                                      themes?.default?.palette?.neutral?.neu400,
-                                    label: 'Download',
-                                  },
-                                  submenu: [],
-                                },
-                              ],
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              columnResizable: true,
-                              pagination: true,
-                              height: payload.widgetHeight,
-                              width: payload.widgetWidth,
-                            },
-                            showBorder: true,
-                            chartProps: {
-                              border_color:
-                                themes?.default?.palette?.neutral?.neu100,
-                            },
-                          };
-                          break;
-                        case 'radarchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.borderRadius = 5;
-                                return (element.bgColor = themeObj.palette?.[
-                                  `systemColor${index + 1}`
-                                ]?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case 'doughnutchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                const bgColorArr = [];
-                                for (
-                                  let i = 0;
-                                  i < response.payload.data.labels.length;
-                                  i += 1
-                                ) {
-                                  const color = themeObj.palette?.[
-                                    `systemColor${i + 1}`
-                                  ]?.sys300Main
-                                    ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.sys300Main
-                                    : '#' +
-                                      (Math.random() * 0xfffff * 1000000)
-                                        .toString(16)
-                                        .slice(0, 6);
+            //                   chartProps: {
+            //                     doughnut_cutout: '80%',
+            //                     doughnut_radius: '70%',
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case 'piechart':
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     const bgColorArr = [];
+            //                     for (
+            //                       let i = 0;
+            //                       i < response.payload.data.labels.length;
+            //                       i += 1
+            //                     ) {
+            //                       const color = themeObj.palette?.[
+            //                         `systemColor${i + 1}`
+            //                       ]?.sys300Main
+            //                         ? themeObj.palette?.[`systemColor${i + 1}`]
+            //                             ?.sys300Main
+            //                         : '#' +
+            //                           (Math.random() * 0xfffff * 1000000)
+            //                             .toString(16)
+            //                             .slice(0, 6);
 
-                                  bgColorArr.push(color);
-                                }
-                                return (element.backgroundColor = bgColorArr);
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              legend: 'right',
+            //                       bgColorArr.push(color);
+            //                     }
+            //                     return (element.backgroundColor = bgColorArr);
+            //                   }
+            //                 );
+            //                 payload.formProps = {
+            //                   headerData: {
+            //                     title: data?.formData?.Title,
+            //                     actions: cardheaderData.actions,
+            //                   },
+            //                   chartData: {
+            //                     data: response.payload.data,
+            //                     chartProps: {
+            //                       chartjs_default_color:
+            //                         themes.default?.palette?.background
+            //                           ?.bacopWhite,
+            //                       chartjs_grid_color:
+            //                         themes.default?.palette?.neutral?.neu100,
+            //                       background_color:
+            //                         themes.default?.palette?.background
+            //                           ?.bacopWhite,
+            //                       legend_text_color:
+            //                         themes.default?.palette?.text?.tex600,
+            //                     },
+            //                   },
+            //                 };
+            //               }
+            //               break;
+            //             case 'scatterchart':
+            //               let finalObj: any = {
+            //                 labels: [],
+            //                 datasets: [],
+            //               };
 
-                              chartProps: {
-                                doughnut_cutout: '80%',
-                                doughnut_radius: '70%',
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex400,
-                              },
-                            },
-                          };
-                          break;
-                        case 'piechart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                const bgColorArr = [];
-                                for (
-                                  let i = 0;
-                                  i < response.payload.data.labels.length;
-                                  i += 1
-                                ) {
-                                  const color = themeObj.palette?.[
-                                    `systemColor${i + 1}`
-                                  ]?.sys300Main
-                                    ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.sys300Main
-                                    : '#' +
-                                      (Math.random() * 0xfffff * 1000000)
-                                        .toString(16)
-                                        .slice(0, 6);
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets
+            //               ) {
+            //                 const _rawData = JSON.parse(
+            //                   JSON.stringify(response.payload.data)
+            //                 );
+            //                 for (
+            //                   let i = 0;
+            //                   i < _rawData.datasets.length;
+            //                   i += 1
+            //                 ) {
+            //                   const newDataset = _rawData.datasets[i];
+            //                   const datasetDataArr = [];
 
-                                  bgColorArr.push(color);
-                                }
-                                return (element.backgroundColor = bgColorArr);
-                              }
-                            );
-                            payload.formProps = {
-                              headerData: {
-                                title: data?.formData?.Title,
-                                actions: cardheaderData.actions,
-                              },
-                              chartData: {
-                                data: response.payload.data,
-                                chartProps: {
-                                  chartjs_default_color:
-                                    themes.default?.palette?.background
-                                      ?.bacopWhite,
-                                  chartjs_grid_color:
-                                    themes.default?.palette?.neutral?.neu100,
-                                  background_color:
-                                    themes.default?.palette?.background
-                                      ?.bacopWhite,
-                                  legend_text_color:
-                                    themes.default?.palette?.text?.tex600,
-                                },
-                              },
-                            };
-                          }
-                          break;
-                        case 'scatterchart':
-                          let finalObj: any = {
-                            labels: [],
-                            datasets: [],
-                          };
+            //                   for (
+            //                     let j = 0;
+            //                     j < newDataset.data.length;
+            //                     j += 1
+            //                   ) {
+            //                     const obj = {
+            //                       x: +newDataset.data[j],
+            //                       y: +newDataset.data[j],
+            //                       r: 14,
+            //                     };
+            //                     datasetDataArr.push(obj);
+            //                   }
+            //                   const datasetObj = {
+            //                     label: newDataset.label,
+            //                     data: datasetDataArr,
+            //                     backgroundColor:
+            //                       themeObj.palette?.[`systemColor${i + 1}`]
+            //                         ?.sys200,
+            //                     pointRadius: 5,
+            //                     borderColor:
+            //                       themeObj.palette?.[`systemColor${i + 1}`]
+            //                         ?.sys200,
+            //                   };
+            //                   finalObj.datasets.push(datasetObj);
+            //                   finalObj.labels = _rawData.labels;
+            //                 }
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: finalObj,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
 
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            const _rawData = JSON.parse(
-                              JSON.stringify(response.payload.data)
-                            );
-                            for (
-                              let i = 0;
-                              i < _rawData.datasets.length;
-                              i += 1
-                            ) {
-                              const newDataset = _rawData.datasets[i];
-                              const datasetDataArr = [];
+            //               break;
+            //             case 'heatmapchart':
+            //               payload.formProps = {
+            //                 data: response.payload.data,
+            //                 fontData: fontData,
+            //               };
+            //               break;
+            //             case 'polarchart':
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     const bgColorArr = [];
+            //                     for (
+            //                       let i = 0;
+            //                       i < response.payload.data.labels.length;
+            //                       i += 1
+            //                     ) {
+            //                       const color = themeObj.palette?.[
+            //                         `systemColor${i + 1}`
+            //                       ]?.sys300Main
+            //                         ? themeObj.palette?.[`systemColor${i + 1}`]
+            //                             ?.sys300Main
+            //                         : '#' +
+            //                           (Math.random() * 0xfffff * 1000000)
+            //                             .toString(16)
+            //                             .slice(0, 6);
 
-                              for (
-                                let j = 0;
-                                j < newDataset.data.length;
-                                j += 1
-                              ) {
-                                const obj = {
-                                  x: +newDataset.data[j],
-                                  y: +newDataset.data[j],
-                                  r: 14,
-                                };
-                                datasetDataArr.push(obj);
-                              }
-                              const datasetObj = {
-                                label: newDataset.label,
-                                data: datasetDataArr,
-                                backgroundColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.sys200,
-                                pointRadius: 5,
-                                borderColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.sys200,
-                              };
-                              finalObj.datasets.push(datasetObj);
-                              finalObj.labels = _rawData.labels;
-                            }
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: finalObj,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
+            //                       bgColorArr.push(color);
+            //                     }
+            //                     return (element.backgroundColor = bgColorArr);
+            //                   }
+            //                 );
+            //               }
 
-                          break;
-                        case 'heatmapchart':
-                          payload.formProps = {
-                            data: response.payload.data,
-                            fontData: fontData,
-                          };
-                          break;
-                        case 'polarchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                const bgColorArr = [];
-                                for (
-                                  let i = 0;
-                                  i < response.payload.data.labels.length;
-                                  i += 1
-                                ) {
-                                  const color = themeObj.palette?.[
-                                    `systemColor${i + 1}`
-                                  ]?.sys300Main
-                                    ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.sys300Main
-                                    : '#' +
-                                      (Math.random() * 0xfffff * 1000000)
-                                        .toString(16)
-                                        .slice(0, 6);
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   chartProps: {
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case 'bubblechart':
+            //               let finalObjBubble: any = {
+            //                 labels: [],
+            //                 datasets: [],
+            //               };
 
-                                  bgColorArr.push(color);
-                                }
-                                return (element.backgroundColor = bgColorArr);
-                              }
-                            );
-                          }
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets
+            //               ) {
+            //                 const _rawData = JSON.parse(
+            //                   JSON.stringify(response.payload.data)
+            //                 );
+            //                 for (
+            //                   let i = 0;
+            //                   i < _rawData.datasets.length;
+            //                   i += 1
+            //                 ) {
+            //                   const newDataset = _rawData.datasets[i];
+            //                   const datasetDataArrBubble = [];
 
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              chartProps: {
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex400,
-                              },
-                            },
-                          };
-                          break;
-                        case 'bubblechart':
-                          let finalObjBubble: any = {
-                            labels: [],
-                            datasets: [],
-                          };
+            //                   for (
+            //                     let j = 0;
+            //                     j < newDataset.data.length;
+            //                     j += 1
+            //                   ) {
+            //                     const obj = {
+            //                       x: +newDataset.data[j],
+            //                       y: +newDataset.data[j],
+            //                       r: Math.floor(Math.random() * 20),
+            //                     };
+            //                     datasetDataArrBubble.push(obj);
+            //                   }
+            //                   const datasetObj = {
+            //                     label: newDataset.label,
+            //                     data: datasetDataArrBubble,
+            //                     bgColor:
+            //                       themeObj.palette?.[`systemColor${i + 1}`]
+            //                         ?.sys300Main,
+            //                     pointRadius: 5,
+            //                     borderColor:
+            //                       themeObj.palette?.[`systemColor${i + 1}`]
+            //                         ?.sys300Main,
+            //                   };
+            //                   finalObjBubble.datasets.push(datasetObj);
+            //                   finalObjBubble.labels = _rawData.labels;
+            //                 }
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: finalObjBubble,
+            //                   fontData: fontData,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
 
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            const _rawData = JSON.parse(
-                              JSON.stringify(response.payload.data)
-                            );
-                            for (
-                              let i = 0;
-                              i < _rawData.datasets.length;
-                              i += 1
-                            ) {
-                              const newDataset = _rawData.datasets[i];
-                              const datasetDataArrBubble = [];
+            //             case constStackVerticalBarChartType:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.borderRadius = 5;
+            //                     return (element.backgroundColor = themeObj
+            //                       .palette?.[`systemColor${index + 1}`]
+            //                       ?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   stacked: true,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case constStackVerticalBarChartType:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.borderRadius = 5;
+            //                     return (element.backgroundColor = themeObj
+            //                       .palette?.[`systemColor${index + 1}`]
+            //                       ?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   stacked: true,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case constStackVerticalFullBarChartType:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.borderRadius = 5;
+            //                     return (element.backgroundColor = themeObj
+            //                       .palette?.[`systemColor${index + 1}`]
+            //                       ?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case constStackHorizontalBarChartType:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.borderRadius = 5;
+            //                     return (element.backgroundColor = themeObj
+            //                       .palette?.[`systemColor${index + 1}`]
+            //                       ?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   stacked: true,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case constStackHorizontalFullBarChart:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.borderRadius = 5;
+            //                     return (element.backgroundColor = themeObj
+            //                       .palette?.[`systemColor${index + 1}`]
+            //                       ?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   stacked: true,
+            //                   data: response.payload.data,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   horizontal: true,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case constLineChartWithTension:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     // element.fill = true;
+            //                     element.pointRadius = 2;
+            //                     element.borderWidth = 1;
+            //                     element.tension = 0.5;
 
-                              for (
-                                let j = 0;
-                                j < newDataset.data.length;
-                                j += 1
-                              ) {
-                                const obj = {
-                                  x: +newDataset.data[j],
-                                  y: +newDataset.data[j],
-                                  r: Math.floor(Math.random() * 20),
-                                };
-                                datasetDataArrBubble.push(obj);
-                              }
-                              const datasetObj = {
-                                label: newDataset.label,
-                                data: datasetDataArrBubble,
-                                bgColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.sys300Main,
-                                pointRadius: 5,
-                                borderColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.sys300Main,
-                              };
-                              finalObjBubble.datasets.push(datasetObj);
-                              finalObjBubble.labels = _rawData.labels;
-                            }
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: finalObjBubble,
-                              fontData: fontData,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
+            //                     return (element.bgColor = themeObj.palette?.[
+            //                       `systemColor${index + 1}`
+            //                     ]?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case constLineChartWithFilled:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.pointRadius = 2;
+            //                     element.fill = true;
+            //                     element.pointStyle = 'circle';
+            //                     element.borderWidth = 1;
+            //                     // element.tension = 0.5;
 
-                        case constStackVerticalBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              stacked: true,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case constStackVerticalBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              stacked: true,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case constStackVerticalFullBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case constStackHorizontalBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              stacked: true,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case constStackHorizontalFullBarChart:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]
-                                  ?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              stacked: true,
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              horizontal: true,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case constLineChartWithTension:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                // element.fill = true;
-                                element.pointRadius = 2;
-                                element.borderWidth = 1;
-                                element.tension = 0.5;
+            //                     element.bgColor = themeObj.palette?.[
+            //                       `systemColor${index + 1}`
+            //                     ]?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6);
+            //                     return element;
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   chartProps: {
+            //                     chartjs_default_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     chartjs_grid_color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     bar_thickness: 25,
+            //                     axis_border_Color:
+            //                       themes.default?.palette?.neutral?.neu100,
+            //                     display_grid: { x: true, y: false },
+            //                     axis_ticks_color:
+            //                       themes.default?.palette?.text?.tex400,
+            //                     background_color:
+            //                       themes.default?.palette?.background
+            //                         ?.bacopWhite,
+            //                     legend_text_color:
+            //                       themes.default?.palette?.text?.tex600,
+            //                   },
+            //                 },
+            //               };
+            //               break;
+            //             case constLineChartWithTensionFilled:
+            //               if (
+            //                 response &&
+            //                 response.payload &&
+            //                 response.payload.data &&
+            //                 response.payload.data.datasets &&
+            //                 response.payload.data.datasets.length > 0
+            //               ) {
+            //                 response.payload.data.datasets.map(
+            //                   (element: any, index: number) => {
+            //                     element.borderColor =
+            //                       themeObj.palette?.[
+            //                         `systemColor${index + 1}`
+            //                       ]?.sys300Main;
+            //                     element.fill = true;
+            //                     element.pointRadius = 2;
+            //                     element.borderWidth = 1;
+            //                     element.tension = 0.5;
 
-                                return (element.bgColor = themeObj.palette?.[
-                                  `systemColor${index + 1}`
-                                ]?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case constLineChartWithFilled:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.pointRadius = 2;
-                                element.fill = true;
-                                element.pointStyle = 'circle';
-                                element.borderWidth = 1;
-                                // element.tension = 0.5;
+            //                     return (element.bgColor = themeObj.palette?.[
+            //                       `systemColor${index + 1}`
+            //                     ]?.sys300Main
+            //                       ? themeObj.palette?.[
+            //                           `systemColor${index + 1}`
+            //                         ]?.sys300Main
+            //                       : '#' +
+            //                         (Math.random() * 0xfffff * 1000000)
+            //                           .toString(16)
+            //                           .slice(0, 6));
+            //                   }
+            //                 );
+            //               }
+            //               payload.formProps = {
+            //                 headerData: {
+            //                   title: data?.formData?.Title,
+            //                   actions: cardheaderData.actions,
+            //                 },
+            //                 chartData: {
+            //                   data: response.payload.data,
+            //                   xLabel: data.formData.X_axis_label,
+            //                   yLabel: data.formData.Y_axis_label,
+            //                   chartData: {
+            //                     data: response.payload.data,
+            //                     xLabel: data.formData.X_axis_label,
+            //                     yLabel: data.formData.Y_axis_label,
+            //                     chartProps: {
+            //                       chartjs_default_color:
+            //                         themes.default?.palette?.background
+            //                           ?.bacopWhite,
+            //                       chartjs_grid_color:
+            //                         themes.default?.palette?.neutral?.neu100,
+            //                       bar_thickness: 25,
+            //                       axis_border_Color:
+            //                         themes.default?.palette?.neutral?.neu100,
+            //                       display_grid: { x: true, y: false },
+            //                       axis_ticks_color:
+            //                         themes.default?.palette?.text?.tex400,
+            //                       background_color:
+            //                         themes.default?.palette?.background
+            //                           ?.bacopWhite,
+            //                       legend_text_color:
+            //                         themes.default?.palette?.text?.tex600,
+            //                     },
+            //                   },
+            //                 },
+            //               };
+            //               break;
 
-                                element.bgColor = themeObj.palette?.[
-                                  `systemColor${index + 1}`
-                                ]?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6);
-                                return element;
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              chartProps: {
-                                chartjs_default_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                chartjs_grid_color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                bar_thickness: 25,
-                                axis_border_Color:
-                                  themes.default?.palette?.neutral?.neu100,
-                                display_grid: { x: true, y: false },
-                                axis_ticks_color:
-                                  themes.default?.palette?.text?.tex400,
-                                background_color:
-                                  themes.default?.palette?.background
-                                    ?.bacopWhite,
-                                legend_text_color:
-                                  themes.default?.palette?.text?.tex600,
-                              },
-                            },
-                          };
-                          break;
-                        case constLineChartWithTensionFilled:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.sys300Main;
-                                element.fill = true;
-                                element.pointRadius = 2;
-                                element.borderWidth = 1;
-                                element.tension = 0.5;
-
-                                return (element.bgColor = themeObj.palette?.[
-                                  `systemColor${index + 1}`
-                                ]?.sys300Main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.sys300Main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              chartData: {
-                                data: response.payload.data,
-                                xLabel: data.formData.X_axis_label,
-                                yLabel: data.formData.Y_axis_label,
-                                chartProps: {
-                                  chartjs_default_color:
-                                    themes.default?.palette?.background
-                                      ?.bacopWhite,
-                                  chartjs_grid_color:
-                                    themes.default?.palette?.neutral?.neu100,
-                                  bar_thickness: 25,
-                                  axis_border_Color:
-                                    themes.default?.palette?.neutral?.neu100,
-                                  display_grid: { x: true, y: false },
-                                  axis_ticks_color:
-                                    themes.default?.palette?.text?.tex400,
-                                  background_color:
-                                    themes.default?.palette?.background
-                                      ?.bacopWhite,
-                                  legend_text_color:
-                                    themes.default?.palette?.text?.tex600,
-                                },
-                              },
-                            },
-                          };
-                          break;
-
-                        default:
-                          payload.formProps = {};
-                      }
-                    }
-                  }
-                  gridLoadWidget.push(payload);
-                } else {
-                  gridLoadWidget.push(payload);
-                }
-              })
-            );
+            //             default:
+            //               payload.formProps = {};
+            //           }
+            //         }
+            //       }
+            //       gridLoadWidget.push(payload);
+            //     } else {
+            //       gridLoadWidget.push(payload);
+            //     }
+            //   })
+            // );
+            gridLoadWidget.push(payload);
           } else {
             // payload.formProps = {};
 
@@ -1378,8 +1289,6 @@ const DemoWrapper = (props: IGridProps) => {
         page: 0,
         size: 100,
       };
-      // if (gridDataStore && gridDataStore.length > 0) {
-      // } else {
       dispatch(deleteAllStore());
 
       dispatch(getPageDataByIdApi(payload2));
@@ -1541,7 +1450,6 @@ const DemoWrapper = (props: IGridProps) => {
             fetchReportLabel={fetchReportLabel}
             fetchReportLabelData={fetchReportLabelData}
           ></Demo2Ui>
-          // <>hi</>
         )}
       </div>
       {/* <CustomSnackbar

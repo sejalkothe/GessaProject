@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Grid from './grid';
 import GridCard from './gridCards';
 import Widgets, { IComponent, IWidgetType, WIDGETS_V1 } from './widgets';
@@ -11,6 +11,10 @@ import { Button, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { environment } from 'apps/view-page/src/environments/environment';
 import generateRandomString from 'apps/view-page/src/utils/randomString';
+import LoadingData from './LoadingData';
+import LoadWidgets from './LoadWidgets';
+import { getBarChartData } from '../Services/BarChart';
+import themes from 'apps/view-page/src/theme';
 
 export interface Demo2Props {
   data: any;
@@ -39,6 +43,7 @@ export const Demo2Ui = (props: Demo2Props) => {
   // All the dragable widgets
   const [widgets, setWidgets] = useState<any>([]);
   const [selectedWidget, setSelectedWidget] = useState<any>({});
+  const [daat, setDT] = useState<any>();
 
   const getData = (widgetData: any): IComponent => {
     const index = WIDGETS_V1.findIndex(
@@ -183,42 +188,56 @@ export const Demo2Ui = (props: Demo2Props) => {
             >
               {(actions: any) =>
                 widgets.map((widget: any) => {
+                  let _widget = JSON.parse(JSON.stringify(widget));
                   const { component: Widget, label } = getData(widget);
+
                   return (
                     Widget && (
                       <GridCard
                         widgets={widgets}
-                        key={widget.id}
-                        x={widget.x}
-                        y={widget.y}
-                        w={widget.w}
-                        h={widget.h}
-                        id={widget.id}
-                        type={widget.type}
-                        title={label || widget.data?.label || ''}
-                        selectedWidget={widget}
-                        data={widget.data}
+                        key={_widget.id}
+                        x={_widget.x}
+                        y={_widget.y}
+                        w={_widget.w}
+                        h={_widget.h}
+                        id={_widget.id}
+                        type={_widget.type}
+                        title={label || _widget.data?.label || ''}
+                        selectedWidget={_widget}
+                        data={_widget.data}
                         actions={actions}
-                        {...widget.data}
+                        {..._widget.data}
                         editWidget={(data: any) => {
                           setSelectedWidget(data);
                           setOpenWidgetConfigDrawer(!openWidgetConfigDrawer);
                         }}
                       >
-                        {widget.formProps ? (
+                        {_widget.formProps && (
                           <Widget
                             key={generateRandomString()}
-                            headerData={widget.formProps.headerData}
-                            chartData={widget.formProps.chartData}
+                            headerData={_widget?.formProps?.headerData || {}}
+                            chartData={{}}
                             actionClicked={(e: any) => {
-                              parseMenuEvents({ widget: widget, menu: e });
+                              parseMenuEvents({ widget: _widget, menu: e });
                             }}
                             searchAction={(e: any) => {
                               console.log(e);
                             }}
                           />
-                        ) : (
-                          <Widget key={generateRandomString()} />
+                        )}
+                        {!widget.formProps && (
+                          <Widget
+                            key={generateRandomString()}
+                            rawData={_widget}
+                            headerData={_widget?.formProps?.headerData || {}}
+                            chartData={{}}
+                            actionClicked={(e: any) => {
+                              parseMenuEvents({ widget: _widget, menu: e });
+                            }}
+                            searchAction={(e: any) => {
+                              console.log(e);
+                            }}
+                          />
                         )}
                       </GridCard>
                     )

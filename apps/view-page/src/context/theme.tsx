@@ -9,13 +9,13 @@ import {
   selectThemeContext,
   IRTheme,
   setThemeContext,
-} from '../store/themeContextSlice';
+} from '../app/pages/projects/newStore/themeContextSlice';
 import {
   getThemePalette,
   IRThemePalette,
   selectThemePaletteContext,
   setThemePaletteContext,
-} from '../store/colorPalleteSlice';
+} from '../app/pages/projects/newStore/colorPalleteSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../store/index';
 import { setLocalStorage } from '../utils/localStorageService';

@@ -5,8 +5,8 @@ import { IRwidgetSlice } from '../app/pages/projects/store/widgetsSlice';
 import { IRReportSlice } from '../app/pages/projects/store/reportSlice';
 import { IRReportLabelSlice } from '../app/pages/projects/store/reportLabelSlice';
 import { IRGridDataRenderSlice } from '../app/pages/projects/store/gridDataRenderSlice';
-import { IRThemeContext } from './themeContextSlice';
-import { IRThemePaletteContext } from './colorPalleteSlice';
+import { IRThemeContext } from '../app/pages/projects/newStore/themeContextSlice';
+import { IRThemePaletteContext } from '../app/pages/projects/newStore/colorPalleteSlice';
 
 export { default as grid } from '../app/pages/projects/store';
 
@@ -19,6 +19,8 @@ export interface IRootState {
     gridDataRenderSlice: IRGridDataRenderSlice;
     themeContextSlice: IRThemeContext;
     themePaletteSlice: IRThemePaletteContext;
+    pageDetailSlice: any;
+    pageWidgetData: any;
   };
 }
 

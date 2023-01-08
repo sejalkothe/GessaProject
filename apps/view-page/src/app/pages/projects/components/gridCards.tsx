@@ -66,7 +66,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => {
 export default function GridCard(props: IGridCard) {
   const menuArray = ['Preview', 'Download'];
   const { widgets } = props;
-  // const classes = useStyles<any>();
   const theme = useTheme();
   const themeChart = themes.default;
   const ref = useRef(null);
@@ -78,6 +77,7 @@ export default function GridCard(props: IGridCard) {
   const [currentCompomponent, setCurrentComponent] = useState<any>(
     props.children
   );
+
   const [open, setOpen] = useState<any>(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -99,17 +99,6 @@ export default function GridCard(props: IGridCard) {
     props.actions.handleRemove(ref.current, false);
     props.actions.handleAdd(ref.current, props);
   }, [props]);
-
-  // const [open, setOpen] = useState(false);
-  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  //   setOpenKebab(true);
-  //   // setOpen(!open);
-  // };
-
-  // const handleClose = () => {
-  //   setOpenKebab(false);
-  // };
 
   const closePopup = () => {
     // setOpen(false);
@@ -209,8 +198,6 @@ export default function GridCard(props: IGridCard) {
 
                 color: themes?.default?.palette?.text?.tex600,
               }}
-              // title="Double click to change title"
-              // onDoubleClick={() => handleToggle(false)}
             >
               {_selectedWidget &&
                 _selectedWidget.formData &&
@@ -230,10 +217,6 @@ export default function GridCard(props: IGridCard) {
               <div
                 style={{ position: 'relative' }}
                 onClick={(e: any) => {
-                  // itemClicked(props);
-                  // setOpenKebab(true);
-                  // handleClose();
-                  // handleClick(e);
                   const payload: any = {
                     menu: 'preview',
                   };
@@ -252,10 +235,6 @@ export default function GridCard(props: IGridCard) {
               <div
                 style={{ position: 'relative' }}
                 onClick={(e: any) => {
-                  // itemClicked(props);
-                  // setOpenKebab(true);
-                  // handleClose();
-                  // handleClick(e);
                   const payload: any = {
                     menu: 'download',
                   };
@@ -274,9 +253,6 @@ export default function GridCard(props: IGridCard) {
               <div
                 style={{ position: 'relative' }}
                 onClick={(e: any) => {
-                  // itemClicked(props);
-                  // setOpenKebab(true);
-                  // handleClose();
                   handleClick(e);
                 }}
               >
@@ -326,27 +302,19 @@ export default function GridCard(props: IGridCard) {
                             data: e,
                           };
                           menuCategoryClicked(payload);
-                          // downloadJSON(_selectedWidget);
                         }}
                       >
                         {menu}
                       </MenuItem>
                     );
                   })}
-                {/* <MenuItem
-                  onClick={() => {
-                    setOpenDialog(true);
-                  }}
-                >
-                  Preview
-                </MenuItem> */}
               </div>
             </StyledIconComponent>
           </div>
         </div>
         <div
           style={{
-            top: '10px',
+            // top: '10px',
             padding: '20px',
             height: 'calc(100% - 10px)',
             position: 'relative',
