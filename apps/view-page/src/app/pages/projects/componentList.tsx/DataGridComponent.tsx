@@ -62,6 +62,11 @@ export const DataGridComponent = (props: any) => {
           pagination: tableData?.chartData?.pagination,
           height: (tableData?.chartData?.height || 400) - 200,
           width: (tableData?.chartData?.width || 500) - 200,
+          chartProps: {
+            title_color: themes.default.palette.text.tex600,
+            bottom_border_color: themes.default.palette.neutral.neu100,
+            background_color: themes.default.palette.background.bacopWhite,
+          },
         }}
         chartProps={{
           border_color: themes?.default?.palette?.neutral?.neu100,

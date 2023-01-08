@@ -168,6 +168,7 @@ export function Project() {
         searchData={headerComponentProps.searchData}
         notificationData={headerComponentProps.notificationData}
         userData={headerComponentProps.userData}
+        headerBackgroundColor={headerComponentProps.headerBackgroundColor}
         chartProps={headerComponentProps.chartProps}
         logoutClickAction={(e: any) => {
           logoutUser(e);

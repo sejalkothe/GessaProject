@@ -11,10 +11,6 @@ import { Button, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { environment } from 'apps/view-page/src/environments/environment';
 import generateRandomString from 'apps/view-page/src/utils/randomString';
-import LoadingData from './LoadingData';
-import LoadWidgets from './LoadWidgets';
-import { getBarChartData } from '../Services/BarChart';
-import themes from 'apps/view-page/src/theme';
 
 export interface Demo2Props {
   data: any;
@@ -212,33 +208,18 @@ export const Demo2Ui = (props: Demo2Props) => {
                           setOpenWidgetConfigDrawer(!openWidgetConfigDrawer);
                         }}
                       >
-                        {_widget.formProps && (
-                          <Widget
-                            key={generateRandomString()}
-                            headerData={_widget?.formProps?.headerData || {}}
-                            chartData={{}}
-                            actionClicked={(e: any) => {
-                              parseMenuEvents({ widget: _widget, menu: e });
-                            }}
-                            searchAction={(e: any) => {
-                              console.log(e);
-                            }}
-                          />
-                        )}
-                        {!widget.formProps && (
-                          <Widget
-                            key={generateRandomString()}
-                            rawData={_widget}
-                            headerData={_widget?.formProps?.headerData || {}}
-                            chartData={{}}
-                            actionClicked={(e: any) => {
-                              parseMenuEvents({ widget: _widget, menu: e });
-                            }}
-                            searchAction={(e: any) => {
-                              console.log(e);
-                            }}
-                          />
-                        )}
+                        <Widget
+                          key={generateRandomString()}
+                          rawData={_widget}
+                          headerData={_widget?.formProps?.headerData || {}}
+                          chartData={{}}
+                          actionClicked={(e: any) => {
+                            parseMenuEvents({ widget: _widget, menu: e });
+                          }}
+                          searchAction={(e: any) => {
+                            console.log(e);
+                          }}
+                        />
                       </GridCard>
                     )
                   );

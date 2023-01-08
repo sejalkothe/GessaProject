@@ -1,13 +1,31 @@
 import { BubbleChart } from '@gessa/component-library';
+import { IRootState } from 'apps/view-page/src/store';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingData from '../components/LoadingData';
 import { BubbleChartDataMapping } from '../data-mapper/bubble-chart';
+import { selectThemeContext } from '../newStore/themeContextSlice';
 import { getChartDataResource } from '../store/gridDataRenderSlice';
 
 export const BubbleChartComponent = (props: any) => {
   const [chartData, setChartData] = useState<any>();
   const dispatch = useDispatch();
+  const [fontData, setFontData] = useState<any>();
+  const rootState = useSelector((state: IRootState) => state);
+  const themeData = selectThemeContext(rootState);
+  useEffect(() => {
+    if (themeData && themeData.length > 0 && themeData[0].font.result) {
+      let _themeData = JSON.parse(JSON.stringify(themeData));
+
+      const _fontData = {
+        families: themeData[0].font.result.families,
+        url: themeData[0].font.result.urls,
+        defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
+      };
+      setFontData(_fontData);
+      // console.log(themeData, _fontData);
+    }
+  }, [themeData]);
   useEffect(() => {
     new Promise((resolve, reject) => {
       resolve(
@@ -21,9 +39,14 @@ export const BubbleChartComponent = (props: any) => {
       );
     })
       .then((response: any) => {
+        const _fontData = {
+          families: themeData[0].font.result.families,
+          url: themeData[0].font.result.urls,
+          defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
+        };
         const mapperPayload: any = {
           data: props.rawData,
-          fontData: {},
+          fontData: _fontData,
         };
         const obj = BubbleChartDataMapping(response, mapperPayload);
         console.log(obj);
@@ -43,6 +66,7 @@ export const BubbleChartComponent = (props: any) => {
         datasets={chartData?.data?.datasets || []}
         labels={chartData?.data?.labels}
         chartProps={chartData.chartProps}
+        fontData={fontData}
       />
     ) : (
       <LoadingData />

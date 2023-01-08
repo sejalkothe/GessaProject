@@ -49,6 +49,11 @@ export const DataGridDataMapping = (
         placeholder: 'Search by Customer Name, SSE ID, Phone Numbe',
         value: '',
       },
+      chartProps: {
+        background_color: themes.default.palette?.background?.bacopWhite,
+        border_color: themes.default.palette?.neutral?.neu100,
+      },
+
       actions: [
         {
           menu: 'Filter',
@@ -75,6 +80,7 @@ export const DataGridDataMapping = (
         title_color: themes.default.palette.text.tex600,
         bottom_border_color: themes.default.palette.neutral.neu100,
         background_color: themes.default.palette.background.bacopWhite,
+        backgroundColor: themes.default?.palette?.background?.bacopWhite,
       },
     },
     chartData: {
@@ -93,6 +99,7 @@ export const DataGridDataMapping = (
         axis_ticks_color: themes.default?.palette?.text?.tex400,
         background_color: themes.default?.palette?.background?.bacopWhite,
         legend_text_color: themes.default?.palette?.text?.tex600,
+        backgroundColor: themes.default?.palette?.background?.bacopWhite,
       },
     },
     cardProps: {},

@@ -21,7 +21,12 @@ import { environment } from 'apps/view-page/src/environments/environment';
 import themes from 'apps/view-page/src/theme';
 import generateRandomString from 'apps/view-page/src/utils/randomString';
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import IconComponent from '../../../components/gridComponents/icon-component/icon-component';
+import {
+  getChartDataResource,
+  getGridDataResource,
+} from '../store/gridDataRenderSlice';
 import CustomModal, { BootstrapDialogTitle } from './customModal';
 
 export interface IMenuClicked {
@@ -67,6 +72,7 @@ export default function GridCard(props: IGridCard) {
   const menuArray = ['Preview', 'Download'];
   const { widgets } = props;
   const theme = useTheme();
+  const dispatch = useDispatch();
   const themeChart = themes.default;
   const ref = useRef(null);
   const [_selectedWidget, _setselectedWidget] = useState<any>({});
@@ -108,12 +114,14 @@ export default function GridCard(props: IGridCard) {
     if (input) {
       switch (input.menu.toLowerCase()) {
         case 'download':
+          console.log('download', _selectedWidget);
           if (_selectedWidget) {
             downloadJSON(_selectedWidget);
           } else {
           }
           break;
         case 'preview':
+          console.log('download');
           setOpenDialog(true);
           break;
         default:
@@ -124,6 +132,50 @@ export default function GridCard(props: IGridCard) {
 
   const downloadJSON = (data: any) => {
     const fileName = environment.fileName;
+    new Promise((resolve, reject) => {
+      if (data && data.type === 'grid') {
+        resolve(
+          dispatch(
+            getGridDataResource({
+              label: '',
+              report: data.report,
+              widget_id: data.id,
+              projections: '',
+              filter: '',
+              size: '10',
+              page: '0',
+            })
+          )
+        );
+      } else {
+        resolve(
+          dispatch(
+            getChartDataResource({
+              label: data.label || '',
+              report: data.report || '',
+              widget_id: data.id,
+            })
+          )
+        );
+      }
+    })
+      .then((response: any) => {
+        const json = JSON.stringify(response.payload.data);
+        const blob = new Blob([json], {
+          type: 'application/json',
+        });
+        const href = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = href;
+        link.download = (data.formData?.formData?.Title || fileName) + '.json';
+        link.click();
+      })
+      .catch((err: any) => {
+        console.log(err);
+        return err;
+      });
+
+    // }
     if (data && data.formProps) {
       const json = JSON.stringify(data.formProps);
       const blob = new Blob([json], {
@@ -327,10 +379,10 @@ export default function GridCard(props: IGridCard) {
           onClose={handleClose}
           open={openDialog}
           fullWidth={true}
-          sx={{
-            backgroundColor: themeChart.palette?.background?.bacopWhite,
-            color: themes?.default?.palette?.text?.tex600,
-          }}
+          // sx={{
+          //   backgroundColor: themeChart.palette?.background?.bacopWhite,
+          //   color: themes?.default?.palette?.text?.tex600,
+          // }}
         >
           <div
             style={{
