@@ -49,9 +49,13 @@ export const ScatterChartDataMapping = (
       const datasetObj = {
         label: newDataset.label,
         data: datasetDataArr,
-        backgroundColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys200,
+        backgroundColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys200
+          ? themeObj.palette?.[`systemColor${i + 1}`]?.sys200
+          : '#' + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6),
         pointRadius: 5,
-        borderColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys200,
+        borderColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys200
+          ? themeObj.palette?.[`systemColor${i + 1}`]?.sys200
+          : '#dadce0',
       };
       finalObj.datasets.push(datasetObj);
       finalObj.labels = _rawData.labels;

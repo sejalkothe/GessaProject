@@ -79,7 +79,7 @@ export const getChartDataResource = createAsyncThunk(
         widgetid: params.widget_id,
       };
       // dispatch(setGridDataRender(payload));
-      // return myData;
+      return myData;
     }
     return response;
   }

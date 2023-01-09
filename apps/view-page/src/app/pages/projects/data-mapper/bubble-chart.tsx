@@ -49,9 +49,13 @@ export const BubbleChartDataMapping = (
       const datasetObj = {
         label: newDataset.label,
         data: datasetDataArrBubble,
-        bgColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main,
+        bgColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main
+          ? themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main
+          : '#' + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6),
         pointRadius: 5,
-        borderColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main,
+        borderColor: themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main
+          ? themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main
+          : '#dadce0',
       };
       finalObj.datasets.push(datasetObj);
       finalObj.labels = _rawData.labels;
