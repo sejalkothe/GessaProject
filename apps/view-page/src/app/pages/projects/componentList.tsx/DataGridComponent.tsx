@@ -19,7 +19,6 @@ export const DataGridComponent = (props: any) => {
   const [tableData, setTableData] = useState<any>();
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(props);
     new Promise((resolve, reject) => {
       resolve(
         dispatch(
@@ -41,10 +40,7 @@ export const DataGridComponent = (props: any) => {
           fontData: {},
         };
         const obj = DataGridDataMapping(response, mapperPayload);
-        console.log(obj);
-        setTimeout(() => {
           setTableData(obj);
-        }, Math.random() * 5000);
       })
       .catch((err: any) => {
         console.log(err);

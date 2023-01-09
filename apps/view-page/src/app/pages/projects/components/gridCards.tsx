@@ -88,7 +88,6 @@ export default function GridCard(props: IGridCard) {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setOpen(Boolean(event.currentTarget));
-    console.log('i got you');
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -114,14 +113,12 @@ export default function GridCard(props: IGridCard) {
     if (input) {
       switch (input.menu.toLowerCase()) {
         case 'download':
-          console.log('download', _selectedWidget);
           if (_selectedWidget) {
             downloadJSON(_selectedWidget);
           } else {
           }
           break;
         case 'preview':
-          console.log('download');
           setOpenDialog(true);
           break;
         default:

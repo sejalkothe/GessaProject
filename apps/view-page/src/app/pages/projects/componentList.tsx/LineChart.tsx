@@ -50,10 +50,7 @@ export const LineChartComponent = (props: any) => {
           fontData: _fontData,
         };
         const obj = SimpleLineChartDataMapping(response, mapperPayload);
-        console.log(obj);
-        setTimeout(() => {
           setChartData(obj);
-        }, Math.random() * 5000);
       })
       .catch((err: any) => {
         console.log(err);

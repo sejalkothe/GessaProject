@@ -104,6 +104,5 @@ export const DataGridDataMapping = (
     },
     cardProps: {},
   };
-  console.log('hi guys', dataResponse.chartData, inputData);
   return dataResponse;
 };

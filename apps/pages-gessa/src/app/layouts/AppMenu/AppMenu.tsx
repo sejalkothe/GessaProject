@@ -75,7 +75,6 @@ function AppMenu(props: Props) {
     <div>
       {props.menuType === 'classic' ? (
         <List component="div" disablePadding>
-          {console.log('im here1')}
 
           {childMenus && childMenus.length !== 0 ? (
             childMenus?.map((item: any, index: number) => (
@@ -120,7 +119,6 @@ function AppMenu(props: Props) {
         </List>
       ) : (
         <>
-          {console.log('im her2')}
           <NavMenuItem appMenuItems={appMenuItems} />
         </>
       )}

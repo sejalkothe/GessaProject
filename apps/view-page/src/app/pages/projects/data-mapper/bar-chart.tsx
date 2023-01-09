@@ -66,6 +66,5 @@ export const SimpleBarChartDataMapping = (
     },
     cardProps: {},
   };
-  console.log('hi guys', dataResponse.chartData, inputData);
   return dataResponse.chartData;
 };

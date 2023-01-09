@@ -15,10 +15,7 @@ export const CardComponent = (props: any) => {
       fontData: {},
     };
     const obj = SimpleCardDataMapping(props.rawData, mapperPayload);
-    console.log(obj);
-    setTimeout(() => {
-      setChartData(obj);
-    }, Math.random() * 5000);
+    setChartData(obj);
   }, []);
 
   return props ? (

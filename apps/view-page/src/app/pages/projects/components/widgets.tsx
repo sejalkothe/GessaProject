@@ -121,7 +121,6 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'grid',
     data: {
       component: (props: any) => {
-        console.log(props);
         return <DataGridComponent {...props} />;
       },
       props: {},

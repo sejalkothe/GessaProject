@@ -101,21 +101,20 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
 
   React.useEffect(() => {
     // setPosts(themePaletteData[0]?.color.result);
-    console.log('byunhu', themePaletteData[0]?.color.result.colors);
     themes.default.palette = {
       ...themes.default.palette,
-      ...themePaletteData[0]?.color.result.colors,
+      ...themePaletteData[0]?.color?.result?.colors[0],
       primary: {
-        ...themePaletteData[0]?.color.result.colors.primary,
+        ...themePaletteData[0]?.color?.result?.colors[0]?.primary,
         main:
-          themePaletteData[0]?.color?.result?.colors?.primary?.pri300Main ||
+          themePaletteData[0]?.color?.result?.colors[0]?.primary?.pri300Main ||
           '#328DF6',
       },
       secondary: {
-        ...themePaletteData[0]?.color.result.colors.secondary,
+        ...themePaletteData[0]?.color?.result?.colors[0]?.secondary,
         main:
-          themePaletteData[0]?.color.result?.colors?.secondary?.sec300Main ||
-          '#F94948',
+          themePaletteData[0]?.color?.result?.colors[0]?.secondary
+            ?.sec300Main || '#F94948',
       },
 
       // systemColor1: {
@@ -210,7 +209,6 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
         ],
       },
     };
-    console.log('byunhuafter', themes.default);
 
     setTheme(createTheme(themes.default));
   }, [themePaletteData]);

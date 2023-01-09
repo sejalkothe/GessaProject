@@ -52,10 +52,7 @@ export const StackHorizontalFullBarChart = (props: any) => {
           response,
           mapperPayload
         );
-        console.log(obj);
-        setTimeout(() => {
           setChartData(obj);
-        }, Math.random() * 5000);
       })
       .catch((err: any) => {
         console.log(err);

@@ -154,7 +154,6 @@ export const getGridDataResource = createAsyncThunk(
       // dispatch(setGridDataRender(payload));
       return responseNew;
     } else {
-      console.log('inside else');
       const myData = [
         {
           impact: '4',

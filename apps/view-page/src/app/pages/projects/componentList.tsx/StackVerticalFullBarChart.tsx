@@ -53,10 +53,7 @@ export const StackVerticalFullBarChart = (props: any) => {
           response,
           mapperPayload
         );
-        console.log(obj);
-        setTimeout(() => {
-          setChartData(obj);
-        }, Math.random() * 5000);
+        setChartData(obj);
       })
       .catch((err: any) => {
         console.log(err);

@@ -57,7 +57,7 @@ const DemoWrapper = (props: IGridProps) => {
   }, []);
 
   useEffect(() => {
-    console.log(report_label_collection);
+    // console.log(report_label_collection);
   }, [report_label_collection]);
 
   useEffect(() => {

@@ -53,10 +53,7 @@ export const BarChartComponent = (props: any) => {
           fontData: _fontData,
         };
         const obj = SimpleBarChartDataMapping(response, mapperPayload);
-        console.log(obj);
-        setTimeout(() => {
           setChartData(obj);
-        }, Math.random() * 5000);
       })
       .catch((err: any) => {
         console.log(err);
