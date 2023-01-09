@@ -103,17 +103,17 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
     // setPosts(themePaletteData[0]?.color.result);
     themes.default.palette = {
       ...themes.default.palette,
-      ...themePaletteData[0]?.color?.result?.colors[0],
+      ...themePaletteData[0]?.color?.result?.colors,
       primary: {
-        ...themePaletteData[0]?.color?.result?.colors[0]?.primary,
+        ...themePaletteData[0]?.color?.result?.colors?.primary,
         main:
-          themePaletteData[0]?.color?.result?.colors[0]?.primary?.pri300Main ||
+          themePaletteData[0]?.color?.result?.colors?.primary?.pri300Main ||
           '#328DF6',
       },
       secondary: {
-        ...themePaletteData[0]?.color?.result?.colors[0]?.secondary,
+        ...themePaletteData[0]?.color?.result?.colors?.secondary,
         main:
-          themePaletteData[0]?.color.result?.colors[0]?.secondary?.sec300Main ||
+          themePaletteData[0]?.color.result?.colors?.secondary?.sec300Main ||
           '#F94948',
       },
 
