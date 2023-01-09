@@ -49,10 +49,7 @@ export const BubbleChartComponent = (props: any) => {
           fontData: _fontData,
         };
         const obj = BubbleChartDataMapping(response, mapperPayload);
-        console.log(obj);
-        setTimeout(() => {
-          setChartData(obj);
-        }, Math.random() * 5000);
+        setChartData(obj);
       })
       .catch((err: any) => {
         console.log(err);
