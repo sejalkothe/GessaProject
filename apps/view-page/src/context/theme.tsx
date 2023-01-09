@@ -101,97 +101,111 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
 
   React.useEffect(() => {
     // setPosts(themePaletteData[0]?.color.result);
+    console.log(themePaletteData[0]?.color.result.colors);
     themes.default.palette = {
       ...themes.default.palette,
-      // ...themePaletteData[0]?.color.result.colors,
+      ...themePaletteData[0]?.color.result.colors,
       primary: {
-        pri100: '#DBE4F0',
-        pri200: '#95B8E4',
-        pri300Main: '#328DF6',
-        pri400: '#2B6DBA',
-        pri500: '#2C4B72',
-        pri600: '#233247',
-        main: '#328DF6',
+        ...themePaletteData[0]?.color.result.colors.primary,
+        main:
+          themePaletteData[0]?.color?.result?.colors?.primary?.pri300Main ||
+          '#328DF6',
       },
       secondary: {
-        sec100: '#DCEAEF',
-        sec200: '#88C2D4',
-        sec300Main: '#21A2BF',
-        sec400: '#2D768B',
-        sec500: '#2B4F59',
-        sec600: '#22353A',
-        main: '#21A2BF',
+        ...themePaletteData[0]?.color.result.colors.secondary,
+        main:
+          themePaletteData[0]?.color.result?.colors?.secondary?.sec300Main ||
+          '#F94948',
       },
-      systemColor1: {
-        sys100: '#FADCDA',
-        sys200: '#FD948C',
-        sys300Main: '#F94948',
-        sys400: '#C73733',
-        sys500: '#733430',
-        sys600: '#4D2725',
-      },
-      systemColor2: {
-        sys100: '#F9E8A4',
-        sys200: '#F6DA6B',
-        sys300Main: '#F0C20B',
-        sys400: '#D9A808',
-        sys500: '#A67503',
-        sys600: '#654506',
-      },
-      systemColor3: {
-        sys100: '#D9E6DC',
-        sys200: '#9AC3A4',
-        sys300Main: '#439D62',
-        sys400: '#198A48',
-        sys500: '#285837',
-        sys600: '#1F3625',
-      },
-      systemColor4: {
-        sys100: '#EEDEF1',
-        sys200: '#DC97E7',
-        sys300Main: '#DA38FA',
-        sys400: '#A52FBC',
-        sys500: '#5B3163',
-        sys600: '#412945',
-      },
-      systemColor5: {
-        sys100: '#E6E4F1',
-        sys200: '#B4AAE4',
-        sys300Main: '#8962F3',
-        sys400: '#6D48CC',
-        sys500: '#483B6D',
-        sys600: '#342D48',
-      },
-      systemColor6: {
-        sys100: '#FBE3B1',
-        sys200: '#EFC45E',
-        sys300Main: '#EFB02E',
-        sys400: '#D39822',
-        sys500: '#A06B09',
-        sys600: '#614105',
-      },
-      neutral: {
-        neu100: '#E8E9EE',
-        neu200: '#BBC2CC',
-        neu300Main: '#8591A2',
-        neu400: '#69778A',
-        neu500: '#4B5A6E',
-        neu600: '#313E4F',
-      },
-      text: {
-        tex100: '#E9EAEB',
-        tex200: '#BFC2C4',
-        tex300Main: '#8C9194',
-        tex400: '#71777B',
-        tex500: '#535A5F',
-        tex600: '#363E45',
-      },
-      background: {
-        bacwhite: '#FFFFFF',
-        bacmain: '#F2F4F8',
-        bacopGrey: '#313E4F',
-        bacopWhite: '#FFFFFF',
-      },
+
+      // primary: {
+      //   pri100: '#DBE4F0',
+      //   pri200: '#95B8E4',
+      //   pri300Main: '#328DF6',
+      //   pri400: '#2B6DBA',
+      //   pri500: '#2C4B72',
+      //   pri600: '#233247',
+      //   main: '#328DF6',
+      // },
+      // secondary: {
+      //   sec100: '#DCEAEF',
+      //   sec200: '#88C2D4',
+      //   sec300Main: '#21A2BF',
+      //   sec400: '#2D768B',
+      //   sec500: '#2B4F59',
+      //   sec600: '#22353A',
+      //   main: '#21A2BF',
+      // },
+      // systemColor1: {
+      //   sys100: '#FADCDA',
+      //   sys200: '#FD948C',
+      //   sys300Main: '#F94948',
+      //   sys400: '#C73733',
+      //   sys500: '#733430',
+      //   sys600: '#4D2725',
+      // },
+      // systemColor2: {
+      //   sys100: '#F9E8A4',
+      //   sys200: '#F6DA6B',
+      //   sys300Main: '#F0C20B',
+      //   sys400: '#D9A808',
+      //   sys500: '#A67503',
+      //   sys600: '#654506',
+      // },
+      // systemColor3: {
+      //   sys100: '#D9E6DC',
+      //   sys200: '#9AC3A4',
+      //   sys300Main: '#439D62',
+      //   sys400: '#198A48',
+      //   sys500: '#285837',
+      //   sys600: '#1F3625',
+      // },
+      // systemColor4: {
+      //   sys100: '#EEDEF1',
+      //   sys200: '#DC97E7',
+      //   sys300Main: '#DA38FA',
+      //   sys400: '#A52FBC',
+      //   sys500: '#5B3163',
+      //   sys600: '#412945',
+      // },
+      // systemColor5: {
+      //   sys100: '#E6E4F1',
+      //   sys200: '#B4AAE4',
+      //   sys300Main: '#8962F3',
+      //   sys400: '#6D48CC',
+      //   sys500: '#483B6D',
+      //   sys600: '#342D48',
+      // },
+      // systemColor6: {
+      //   sys100: '#FBE3B1',
+      //   sys200: '#EFC45E',
+      //   sys300Main: '#EFB02E',
+      //   sys400: '#D39822',
+      //   sys500: '#A06B09',
+      //   sys600: '#614105',
+      // },
+      // neutral: {
+      //   neu100: '#E8E9EE',
+      //   neu200: '#BBC2CC',
+      //   neu300Main: '#8591A2',
+      //   neu400: '#69778A',
+      //   neu500: '#4B5A6E',
+      //   neu600: '#313E4F',
+      // },
+      // text: {
+      //   tex100: '#E9EAEB',
+      //   tex200: '#BFC2C4',
+      //   tex300Main: '#8C9194',
+      //   tex400: '#71777B',
+      //   tex500: '#535A5F',
+      //   tex600: '#363E45',
+      // },
+      // background: {
+      //   bacwhite: '#FFFFFF',
+      //   bacmain: '#F2F4F8',
+      //   bacopGrey: '#313E4F',
+      //   bacopWhite: '#FFFFFF',
+      // },
       ...{
         chart: [
           '#ff6083',
@@ -214,6 +228,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
         ],
       },
     };
+    console.log(themes.default);
     setTheme(createTheme(themes.default));
   }, [themePaletteData]);
 

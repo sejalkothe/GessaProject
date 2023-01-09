@@ -29,6 +29,7 @@ export interface IDataResourseParams {
 export const getChartDataResource = createAsyncThunk(
   'get chart resource',
   async (params: IDataResourseParams, { dispatch }) => {
+    // const response: any = {};
     const response: any = await axios.get(
       environment.NX_SCHEMA_SERVICE +
         `/chart-data/report/${params.report}/label/${params.label}`
@@ -78,7 +79,7 @@ export const getChartDataResource = createAsyncThunk(
         widgetid: params.widget_id,
       };
       // dispatch(setGridDataRender(payload));
-      return myData;
+      // return myData;
     }
     return response;
   }
@@ -187,7 +188,7 @@ export const getGridDataResource = createAsyncThunk(
         data: alteredObject,
       };
       // dispatch(setGridDataRender(payload));
-      return responseNew;
+      // return responseNew;
     }
     return response;
   }
