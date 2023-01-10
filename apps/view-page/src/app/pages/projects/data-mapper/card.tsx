@@ -37,6 +37,8 @@ export const SimpleCardDataMapping = (
       },
     },
     chartProps: {
+      backgroundColor: themes.default?.palette?.background?.bacopWhite,
+
       background_color: themes.default?.palette?.background?.bacopWhite,
       icon_bgcolor: themes.default?.palette?.background?.bacmain,
       subtitle_color: themes.default?.palette?.primary?.pri400,
@@ -77,8 +79,10 @@ export const SimpleCardDataMapping = (
     },
     chartData: defaultProps,
 
-    cardProps: {},
+    cardProps: {
+      background_color: themes.default?.palette?.background?.bacopWhite,
+      backgroundColor: themes.default?.palette?.background?.bacopWhite,
+    },
   };
-  console.log('hi guys', dataResponse.chartData, inputData);
   return dataResponse.chartData;
 };

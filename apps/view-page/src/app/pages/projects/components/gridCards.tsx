@@ -280,12 +280,22 @@ export default function GridCard(props: IGridCard) {
                 onClick={(e: any) => {}}
               >
                 {_selectedWidget && _selectedWidget.type === 'grid' && (
-                  <div style={{ width: '100%' }}>
+                  <div
+                    style={{
+                      width: '100%',
+                      backgroundColor:
+                        themes.default?.palette?.background?.bacopWhite,
+                    }}
+                  >
                     <SearchInput
                       label={'Search'}
                       placeholder={'Search'}
                       value={''}
-                      chartProps={{}}
+                      chartProps={{
+                        background_color:
+                          themes.default.palette?.background?.bacopWhite,
+                        border_color: themes.default.palette?.neutral?.neu100,
+                      }}
                       onChange={(e: any) => {}}
                     />
                   </div>
@@ -304,8 +314,8 @@ export default function GridCard(props: IGridCard) {
                 <IconComponent
                   {...{
                     name: 'fullscreen_black_24dp',
-                    color: themes?.default?.palette?.text?.tex600,
-                    size: 25,
+                    color: themes?.default?.palette?.neutral?.neu400,
+                    size: 27,
                     label: 'Full Screen',
                   }}
                 ></IconComponent>
@@ -322,8 +332,8 @@ export default function GridCard(props: IGridCard) {
                 <IconComponent
                   {...{
                     name: 'file_download_black_24dp-1-1',
-                    color: themes?.default?.palette?.text?.tex600,
-                    size: 22,
+                    color: themes?.default?.palette?.neutral?.neu400,
+                    size: 26,
                     label: 'Download',
                   }}
                 ></IconComponent>
@@ -337,7 +347,7 @@ export default function GridCard(props: IGridCard) {
                 <IconComponent
                   {...{
                     name: 'more_vert_black_24dp',
-                    color: themes?.default?.palette?.text?.tex600,
+                    color: themes?.default?.palette?.neutral?.neu400,
                     size: 27,
                     label: 'More',
                   }}
