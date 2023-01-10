@@ -72,10 +72,9 @@ function AppMenu(props: Props) {
   }, [selectedPage]);
 
   return (
-    <div>
+    <div style={{ position: 'relative', top: '15px', overflowY: 'auto' }}>
       {props.menuType === 'classic' ? (
         <List component="div" disablePadding>
-
           {childMenus && childMenus.length !== 0 ? (
             childMenus?.map((item: any, index: number) => (
               <Link

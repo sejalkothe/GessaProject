@@ -97,6 +97,7 @@ function AppMenuItem(props: Props) {
     <div
       style={{
         height: '48px',
+        marginBottom: '10px',
         paddingLeft: '10px',
         display: 'flex',
         flexDirection: 'row',

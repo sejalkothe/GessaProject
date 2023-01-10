@@ -127,6 +127,7 @@ const getResposeDataAltered = (data: any): any => {
 export const getGridDataResource = createAsyncThunk(
   'get chart resource',
   async (params: any, { dispatch }) => {
+    // const response: any = {};
     const response: any = await axios.post(
       environment.NX_SCHEMA_SERVICE + `/queryReport/${params.report}`,
       {

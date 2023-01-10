@@ -1,10 +1,12 @@
 import {
   Datagrid,
+  DataGridV1,
   DatatableCardV1,
   DoughnutChart,
   PieChart,
 } from '@gessa/component-library';
 import themes from 'apps/view-page/src/theme';
+import generateRandomString from 'apps/view-page/src/utils/randomString';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import LoadingData from '../components/LoadingData';
@@ -40,7 +42,7 @@ export const DataGridComponent = (props: any) => {
           fontData: {},
         };
         const obj = DataGridDataMapping(response, mapperPayload);
-          setTableData(obj);
+        setTableData(obj);
       })
       .catch((err: any) => {
         console.log(err);
@@ -50,35 +52,68 @@ export const DataGridComponent = (props: any) => {
 
   return props ? (
     tableData && tableData?.chartData ? (
-      <DatatableCardV1
-        chartData={{
-          columnData: tableData?.chartData?.data?.columns || [],
-          rowData: tableData?.chartData?.data?.rows || [],
-          columnResizable: tableData?.chartData?.columnResizable,
-          pagination: tableData?.chartData?.pagination,
-          height: (tableData?.chartData?.height || 400) - 200,
-          width: (tableData?.chartData?.width || 500) - 200,
-          chartProps: {
-            title_color: themes.default.palette.text.tex600,
-            bottom_border_color: themes.default.palette.neutral.neu100,
-            background_color: themes.default.palette.background.bacopWhite,
-          },
+      <div
+        key={generateRandomString()}
+        style={{
+          height: 'calc(100% - 0px)',
+          width: 'calc(100% - 0px)',
+          display: 'flex',
+          flexDirection: 'row',
+          flex: 100,
         }}
-        chartProps={{
-          border_color: themes?.default?.palette?.neutral?.neu100,
-        }}
-        headerData={tableData?.headerData}
-        height={tableData?.chartData?.height - 100}
-        width={tableData?.chartData?.width - 50}
-        showBorder={true}
-        actionClicked={(data: any) => {
-          props.actionClicked && props.actionClicked(data);
-        }}
-        searchAction={(data: any) => {
-          props.searchAction && props.searchAction(data);
-        }}
-      />
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flex: 100,
+            overflowX: 'auto',
+          }}
+        >
+          {console.log(tableData)}
+          <DataGridV1
+            key={generateRandomString()}
+            columnData={tableData?.chartData?.data?.columns || []}
+            rowData={tableData?.chartData?.data?.rows || []}
+            columnResizable={false}
+            pagination={tableData?.chartData?.pagination || false}
+            height={tableData.height || 300}
+            width={tableData.width || 500}
+            chartProps={tableData?.chartData?.chartProps}
+            menuClicked={tableData?.chartData?.menuClicked}
+            onSearchInput={tableData?.chartData?.onSearchInput}
+          />
+        </div>
+      </div>
     ) : (
+      // <DatatableCardV1
+      //   chartData={{
+      //     columnData: tableData?.chartData?.data?.columns || [],
+      //     rowData: tableData?.chartData?.data?.rows || [],
+      //     columnResizable: tableData?.chartData?.columnResizable,
+      //     pagination: tableData?.chartData?.pagination,
+      //     height: (tableData?.chartData?.height || 400) - 200,
+      //     width: (tableData?.chartData?.width || 500) - 200,
+      //     chartProps: {
+      //       title_color: themes.default.palette.text.tex600,
+      //       bottom_border_color: themes.default.palette.neutral.neu100,
+      //       background_color: themes.default.palette.background.bacopWhite,
+      //     },
+      //   }}
+      //   chartProps={{
+      //     border_color: themes?.default?.palette?.neutral?.neu100,
+      //   }}
+      //   headerData={tableData?.headerData}
+      //   height={tableData?.chartData?.height - 100}
+      //   width={tableData?.chartData?.width - 50}
+      //   showBorder={true}
+      //   actionClicked={(data: any) => {
+      //     props.actionClicked && props.actionClicked(data);
+      //   }}
+      //   searchAction={(data: any) => {
+      //     props.searchAction && props.searchAction(data);
+      //   }}
+      // />
       <LoadingData />
     )
   ) : (

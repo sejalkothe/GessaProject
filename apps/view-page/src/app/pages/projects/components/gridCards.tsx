@@ -1,3 +1,4 @@
+import { SearchInput } from '@gessa/component-library';
 import {
   Box,
   Button,
@@ -69,7 +70,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => {
 });
 
 export default function GridCard(props: IGridCard) {
-  const menuArray = ['Preview', 'Download'];
+  const menuArray = ['Preview', 'Share', 'Download'];
   const { widgets } = props;
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -120,6 +121,12 @@ export default function GridCard(props: IGridCard) {
           break;
         case 'preview':
           setOpenDialog(true);
+          break;
+        case 'share':
+          if (_selectedWidget) {
+            downloadJSON(_selectedWidget);
+          } else {
+          }
           break;
         default:
           break;
@@ -226,7 +233,7 @@ export default function GridCard(props: IGridCard) {
         >
           <div
             style={{
-              height: '40px',
+              height: '48px',
               padding: '10px',
               overflow: 'hidden',
               display: 'flex',
@@ -264,6 +271,28 @@ export default function GridCard(props: IGridCard) {
               }}
             >
               <div
+                style={{
+                  position: 'relative',
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  marginRight: '5px',
+                }}
+                onClick={(e: any) => {}}
+              >
+                {_selectedWidget && _selectedWidget.type === 'grid' && (
+                  <div style={{ width: '100%' }}>
+                    <SearchInput
+                      label={'Search'}
+                      placeholder={'Search'}
+                      value={''}
+                      chartProps={{}}
+                      onChange={(e: any) => {}}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div
                 style={{ position: 'relative' }}
                 onClick={(e: any) => {
                   const payload: any = {
@@ -292,10 +321,10 @@ export default function GridCard(props: IGridCard) {
               >
                 <IconComponent
                   {...{
-                    name: 'share',
+                    name: 'file_download_black_24dp-1-1',
                     color: themes?.default?.palette?.text?.tex600,
                     size: 22,
-                    label: 'Share',
+                    label: 'Download',
                   }}
                 ></IconComponent>
               </div>
@@ -364,7 +393,7 @@ export default function GridCard(props: IGridCard) {
         <div
           style={{
             // top: '10px',
-            padding: '20px',
+            padding: '5px',
             height: 'calc(100% - 10px)',
             position: 'relative',
             overflow: 'hidden',
@@ -375,18 +404,21 @@ export default function GridCard(props: IGridCard) {
         <Dialog
           onClose={handleClose}
           open={openDialog}
-          fullWidth={true}
-          // sx={{
-          //   backgroundColor: themeChart.palette?.background?.bacopWhite,
-          //   color: themes?.default?.palette?.text?.tex600,
-          // }}
+          maxWidth={'xl'}
+          PaperProps={{
+            sx: {
+              width: 'calc(100% - 100px)',
+              height: 'calc(100% - 100px)',
+            },
+          }}
         >
           <div
             style={{
-              maxHeight: '600px',
               overflow: 'hidden',
               backgroundColor: themeChart.palette?.background?.bacopWhite,
               color: themes?.default?.palette?.text?.tex600,
+              height: '100%',
+              width: '100%',
             }}
           >
             <div
@@ -409,7 +441,7 @@ export default function GridCard(props: IGridCard) {
               >
                 <header
                   style={{
-                    height: '40px',
+                    height: '48px',
                     width: '100%',
                     padding: '10px',
                     overflow: 'hidden',
@@ -425,9 +457,12 @@ export default function GridCard(props: IGridCard) {
                       flexDirection: 'row',
                       justifyContent: 'center',
                       alignItems: 'center',
+                      fontSize: '14px',
+                      fontWeight: 700,
+                      lineHeight: '20px',
+
+                      color: themes?.default?.palette?.text?.tex600,
                     }}
-                    // title="Double click to change title"
-                    // onDoubleClick={() => handleToggle(false)}
                   >
                     {_selectedWidget &&
                       _selectedWidget.formData &&

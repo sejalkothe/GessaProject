@@ -52,6 +52,7 @@ const SideNav = (props: ISideNav) => {
         height: '92vh',
         justifyContent: 'center',
         display: 'flex',
+        overflowY: 'auto',
         background: themesChart?.palette?.background?.bacopWhite,
         borderRight: `1px solid ${themesChart?.palette?.neutral?.neu100}`,
       }}
@@ -61,16 +62,12 @@ const SideNav = (props: ISideNav) => {
           appMenu.length > 0 &&
           appMenu.map((item: any, index: any) => {
             return (
-              // <Link
-              //   key={index}
-              //   to={`/project/${params.projectId}/${
-              //     item.data.name || params.menuId
-              //   }`}
-              //   style={{ textDecoration: 'none' }}
-              // >
               <div
                 key={generateRandomString()}
                 style={{
+                  minWidth: '50px',
+                  minHeight: '50px',
+
                   width: '50px',
                   height: '50px',
                   display: 'flex',
@@ -107,7 +104,7 @@ const SideNav = (props: ISideNav) => {
               >
                 <IconComponent
                   name={item.data.icon.trim() || 'Menu-Info'}
-                  size={25}
+                  size={30}
                   label={item.data.name}
                   color={
                     selectedMenu === item.data.name

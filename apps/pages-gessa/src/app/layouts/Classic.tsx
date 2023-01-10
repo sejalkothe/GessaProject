@@ -117,6 +117,7 @@ function Classic({ right = false }) {
             borderRight: `1px solid ${theme.palette?.neutral?.neu100}`,
             height: 'calc(100vh - 8vh)',
             width: '260px',
+            overflowY: 'auto',
           }}
         >
           <AppMenu
