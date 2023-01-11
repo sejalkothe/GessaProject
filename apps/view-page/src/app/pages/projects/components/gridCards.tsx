@@ -417,8 +417,8 @@ export default function GridCard(props: IGridCard) {
           maxWidth={'xl'}
           PaperProps={{
             sx: {
-              width: 'calc(100% - 100px)',
-              height: 'calc(100% - 100px)',
+              width: '95%',
+              height: '95%',
             },
           }}
         >

@@ -72,7 +72,15 @@ function AppMenu(props: Props) {
   }, [selectedPage]);
 
   return (
-    <div style={{ position: 'relative', top: '15px', overflowY: 'auto' }}>
+    <div
+      style={{
+        position: 'relative',
+        top: '15px',
+        overflowY: 'auto',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+      }}
+    >
       {props.menuType === 'classic' ? (
         <List component="div" disablePadding>
           {childMenus && childMenus.length !== 0 ? (

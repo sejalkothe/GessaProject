@@ -77,7 +77,7 @@ const Grid = ({
     gridRef.current = GridStack.init({
       // cellHeight: 120,
       minRow: 20, // don't collapse when empty
-      margin: 7,
+      margin: 4,
       acceptWidgets: true,
       disableDrag: true,
       disableResize: true,
@@ -339,7 +339,7 @@ const Grid = ({
         backgroundSize: '100px 70px, 8.33%',
         // backgroundSize: '50px 50px, 4%', // for smaller and presentable grids on background
         // backgroundPosition: '0px -4px, -4px 0px',
-        margin: '7px',
+        margin: '4px',
       }}
       className="h-full"
     >
