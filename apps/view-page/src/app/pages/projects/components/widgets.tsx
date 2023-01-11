@@ -45,6 +45,7 @@ import {
   constLineChartWithFilled,
   constLineChartWithTensionFilled,
   constBarChartType,
+  constHorizontalBarChartType,
 } from 'apps/view-page/src/utils/constantString';
 import { selectThemeContext } from 'apps/view-page/src/app/pages/projects/newStore/themeContextSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -66,6 +67,7 @@ import { BubbleChartComponent } from '../componentList.tsx/BubbleChartComponent'
 import { PolarChartComponent } from '../componentList.tsx/PolarComponent';
 import { DataGridComponent } from '../componentList.tsx/DataGridComponent';
 import { CardComponent } from '../componentList.tsx/CardComponent';
+import { HorizontalBarChartComponent } from '../componentList.tsx/HorizontalBarChartComponent';
 export interface IWidgetProps {
   rawWidget: IWidget[];
 }
@@ -393,6 +395,21 @@ export const WIDGETS_V1: IWidgetType[] = [
       },
       props: {},
       label: constLineChartLabel,
+      x: 0,
+      y: 5,
+      w: 6,
+      h: 4,
+    },
+  },
+  {
+    id: '19',
+    type: constHorizontalBarChartType,
+    data: {
+      component: (props: any) => {
+        return <HorizontalBarChartComponent {...props} />;
+      },
+      props: {},
+      label: constHorizontalBarChartType,
       x: 0,
       y: 5,
       w: 6,

@@ -12,7 +12,7 @@ interface chartData {
   fontData: any;
 }
 
-export const PieChartDataMapping = (
+export const HorizontalBarChartDataMapping = (
   response: any,
   inputData: chartData
 ): any => {
@@ -27,37 +27,40 @@ export const PieChartDataMapping = (
     response &&
     response.payload &&
     response.payload.data &&
-    response.payload.data.datasets
+    response.payload.data.datasets &&
+    response.payload.data.datasets.length > 0
   ) {
     response.payload.data.datasets.map((element: any, index: number) => {
-      const bgColorArr = [];
-      for (let i = 0; i < response.payload.data.labels.length; i += 1) {
-        const color = themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main
-          ? themeObj.palette?.[`systemColor${i + 1}`]?.sys300Main
-          : '#' + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6);
-
-        bgColorArr.push(color);
-      }
-      return (element.backgroundColor = bgColorArr);
+      element.borderColor =
+        themeObj.palette?.[`systemColor${index + 1}`]?.sys300Main;
+      element.borderRadius = 5;
+      return (element.backgroundColor = themeObj.palette?.[
+        `systemColor${index + 1}`
+      ]?.sys300Main
+        ? themeObj.palette?.[`systemColor${index + 1}`]?.sys300Main
+        : '#' + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6));
     });
   }
-
   dataResponse = {
     headerData: {
-      title: inputData.data?.formData?.Title,
+      title: inputData.data?.formData?.Title || inputData.data?.type,
       actions: cardheaderData.actions,
     },
     chartData: {
       data: response.payload.data,
+      horizontal: true,
 
       stacked: false,
-      xLabel: inputData?.data?.formData?.properties?.X_axis_label,
-      yLabel: inputData?.data?.formData?.properties?.Y_axis_label,
+      xLabel: inputData?.data?.formData?.properties?.X_axis_label || '',
+      yLabel: inputData?.data?.formData?.properties?.Y_axis_label || '',
       fontData: inputData.fontData,
       chartProps: {
-        pie_radius: '70%',
         chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
         chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
+        bar_thickness: 25,
+        axis_border_Color: themes.default?.palette?.neutral?.neu100,
+        display_grid: { x: true, y: false },
+        axis_ticks_color: themes.default?.palette?.text?.tex400,
         background_color: themes.default?.palette?.background?.bacopWhite,
         legend_text_color: themes.default?.palette?.text?.tex600,
       },

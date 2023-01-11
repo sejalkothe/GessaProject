@@ -14,7 +14,8 @@ interface chartData {
 
 export const SimpleCardDataMapping = (
   response: any,
-  inputData: chartData
+  inputData: chartData,
+  respObj: any
 ): any => {
   const theme = themes;
   let dataResponse: IDataResponse = {
@@ -22,17 +23,17 @@ export const SimpleCardDataMapping = (
     headerData: {},
     cardProps: {},
   };
-  const defaultProps = {
+  let defaultProps = {
     data: {
       // title: 'This si title',
       // stat: 'asdfg',
       // iconName: 'Search',
       link: 'View All',
-      title: inputData?.data?.formData?.Title || '',
-      stat: Math.floor(Math.random() * 1000),
+      title: inputData?.data?.formData?.formData?.Title || '',
+      stat: 'NA',
       icon: {
-        name: 'Search',
-        size: 30,
+        name: inputData?.data?.formData?.properties?.Icon || 'Menu-Info',
+        size: inputData?.data?.formData?.properties?.IconSize || 30,
         color: theme?.default?.palette?.primary?.pri400,
       },
     },
@@ -45,9 +46,21 @@ export const SimpleCardDataMapping = (
       link_color: themes.default?.palette?.systemColor2?.sys400,
     },
   };
+
+  if (
+    respObj &&
+    respObj.payload &&
+    respObj.payload.data &&
+    respObj.payload.data.datasets &&
+    respObj.payload.data.datasets.length > 0
+  ) {
+    // console.log(respObj);
+    defaultProps.data.stat = respObj?.payload?.data?.datasets[0]?.data[0];
+  }
+  console.log(inputData);
   dataResponse = {
     headerData: {
-      title: inputData?.data?.formData?.Title || 'no title',
+      title: inputData?.data?.formData?.formData?.Title || 'no title',
       searchData: {
         label: 'Search',
         placeholder: 'Search by Customer Name, SSE ID, Phone Numbe',
@@ -84,5 +97,6 @@ export const SimpleCardDataMapping = (
       backgroundColor: themes.default?.palette?.background?.bacopWhite,
     },
   };
+  console.log(dataResponse);
   return dataResponse.chartData;
 };

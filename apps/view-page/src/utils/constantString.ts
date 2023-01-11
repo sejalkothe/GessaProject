@@ -52,6 +52,7 @@ export const constScatterChartLabel = 'Scatter Chart';
 export const constHeatMapLabel = 'Heat Map Chart';
 export const constPolarChartLabel = 'Polar Chart';
 export const constBubbleChartLabel = 'Bubble Chart';
+export const constHorizontalBarChartType = 'horizontalbarchart';
 /**
  * grid.tsx
  */

@@ -9,13 +9,50 @@ import { getChartDataResource } from '../store/gridDataRenderSlice';
 export const CardComponent = (props: any) => {
   const [chartData, setChartData] = useState<any>();
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   const mapperPayload: any = {
+  //     data: props.rawData,
+  //     fontData: {},
+  //   };
+  //   const obj = SimpleCardDataMapping(props.rawData, mapperPayload);
+  //   setChartData(obj);
+  // }, []);
+
   useEffect(() => {
-    const mapperPayload: any = {
-      data: props.rawData,
-      fontData: {},
-    };
-    const obj = SimpleCardDataMapping(props.rawData, mapperPayload);
-    setChartData(obj);
+    new Promise((resolve, reject) => {
+      resolve(
+        dispatch(
+          getChartDataResource({
+            label: props?.rawData?.label || '',
+            report: props?.rawData?.report || '',
+            widget_id: props?.rawData?.id,
+          })
+        )
+      );
+    })
+      .then((response: any) => {
+        // let _themeData = JSON.parse(JSON.stringify(themeData));
+
+        // const _fontData = {
+        //   families: themeData[0].font.result.families,
+        //   url: themeData[0].font.result.urls,
+        //   defaultFont: themeData[0].font.result.fonts.h1.fontFamily,
+        // };
+        const mapperPayload: any = {
+          data: props.rawData,
+          fontData: {},
+        };
+        const obj = SimpleCardDataMapping(
+          props.rawData,
+          mapperPayload,
+          response
+        );
+        setChartData(obj);
+      })
+      .catch((err: any) => {
+        console.log(err);
+        return err;
+      });
   }, []);
 
   return props ? (

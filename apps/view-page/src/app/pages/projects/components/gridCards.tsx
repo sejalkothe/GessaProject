@@ -231,174 +231,179 @@ export default function GridCard(props: IGridCard) {
             borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`,
           }}
         >
-          <div
-            style={{
-              height: '48px',
-              padding: '10px',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
-            <Typography
-              variant={'body2'}
+          {_selectedWidget && _selectedWidget.type != 'card' && (
+            <div
               style={{
+                height: '48px',
+                padding: '10px',
+                overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                fontSize: '14px',
-                fontWeight: 700,
-                lineHeight: '20px',
-
-                color: themes?.default?.palette?.text?.tex600,
-              }}
-            >
-              {_selectedWidget &&
-                _selectedWidget.formData &&
-                _selectedWidget.formData.formData &&
-                _selectedWidget.formData.formData.Title}
-            </Typography>
-
-            <Box
-              sx={{
-                ml: 'auto',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
                 alignItems: 'center',
               }}
             >
-              <div
+              <Typography
+                variant={'body2'}
                 style={{
-                  position: 'relative',
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  marginRight: '5px',
-                }}
-                onClick={(e: any) => {}}
-              >
-                {_selectedWidget && _selectedWidget.type === 'grid' && (
-                  <div
-                    style={{
-                      width: '100%',
-                      backgroundColor:
-                        themes.default?.palette?.background?.bacopWhite,
-                    }}
-                  >
-                    <SearchInput
-                      label={'Search'}
-                      placeholder={'Search'}
-                      value={''}
-                      chartProps={{
-                        background_color:
-                          themes.default.palette?.background?.bacopWhite,
-                        border_color: themes.default.palette?.neutral?.neu100,
-                      }}
-                      onChange={(e: any) => {}}
-                    />
-                  </div>
-                )}
-              </div>
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '14px',
+                  fontWeight: 700,
+                  lineHeight: '20px',
 
-              <div
-                style={{ position: 'relative' }}
-                onClick={(e: any) => {
-                  const payload: any = {
-                    menu: 'preview',
-                  };
-                  menuCategoryClicked(payload);
-                }}
-              >
-                <IconComponent
-                  {...{
-                    name: 'fullscreen_black_24dp',
-                    color: themes?.default?.palette?.neutral?.neu400,
-                    size: 27,
-                    label: 'Full Screen',
-                  }}
-                ></IconComponent>
-              </div>
-              <div
-                style={{ position: 'relative' }}
-                onClick={(e: any) => {
-                  const payload: any = {
-                    menu: 'download',
-                  };
-                  menuCategoryClicked(payload);
-                }}
-              >
-                <IconComponent
-                  {...{
-                    name: 'file_download_black_24dp-1-1',
-                    color: themes?.default?.palette?.neutral?.neu400,
-                    size: 26,
-                    label: 'Download',
-                  }}
-                ></IconComponent>
-              </div>
-              <div
-                style={{ position: 'relative' }}
-                onClick={(e: any) => {
-                  handleClick(e);
-                }}
-              >
-                <IconComponent
-                  {...{
-                    name: 'more_vert_black_24dp',
-                    color: themes?.default?.palette?.neutral?.neu400,
-                    size: 27,
-                    label: 'More',
-                  }}
-                ></IconComponent>
-              </div>
-            </Box>
-            <StyledIconComponent
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              sx={{ paddingTop: 0, paddingBottom: 0 }}
-              anchorEl={anchorEl}
-              style={{ padding: '0px !important' }}
-              open={open}
-              onClick={(e: any) => {
-                handleClose();
-              }}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-            >
-              <div
-                style={{
-                  padding: '0px',
-                  backgroundColor: themeChart.palette?.background?.bacopWhite,
                   color: themes?.default?.palette?.text?.tex600,
                 }}
               >
-                {menuArray &&
-                  menuArray.map((menu: string) => {
-                    return (
-                      <MenuItem
-                        onClick={(e) => {
-                          const payload: IMenuClicked = {
-                            menu,
-                            data: e,
-                          };
-                          menuCategoryClicked(payload);
+                {console.log('_selectedWidget', _selectedWidget)}
+                {_selectedWidget &&
+                _selectedWidget.formData &&
+                _selectedWidget.formData.formData &&
+                _selectedWidget.formData.formData.Title
+                  ? _selectedWidget.formData.formData.Title
+                  : _selectedWidget.type}
+              </Typography>
+
+              <Box
+                sx={{
+                  ml: 'auto',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'relative',
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    marginRight: '5px',
+                  }}
+                  onClick={(e: any) => {}}
+                >
+                  {_selectedWidget && _selectedWidget.type === 'grid' && (
+                    <div
+                      style={{
+                        width: '100%',
+                        backgroundColor:
+                          themes.default?.palette?.background?.bacopWhite,
+                      }}
+                    >
+                      <SearchInput
+                        label={'Search'}
+                        placeholder={'Search'}
+                        value={''}
+                        chartProps={{
+                          background_color:
+                            themes.default.palette?.background?.bacopWhite,
+                          border_color: themes.default.palette?.neutral?.neu100,
                         }}
-                      >
-                        {menu}
-                      </MenuItem>
-                    );
-                  })}
-              </div>
-            </StyledIconComponent>
-          </div>
+                        onChange={(e: any) => {}}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div
+                  style={{ position: 'relative' }}
+                  onClick={(e: any) => {
+                    const payload: any = {
+                      menu: 'preview',
+                    };
+                    menuCategoryClicked(payload);
+                  }}
+                >
+                  <IconComponent
+                    {...{
+                      name: 'fullscreen_black_24dp',
+                      color: themes?.default?.palette?.neutral?.neu400,
+                      size: 27,
+                      label: 'Full Screen',
+                    }}
+                  ></IconComponent>
+                </div>
+                <div
+                  style={{ position: 'relative' }}
+                  onClick={(e: any) => {
+                    const payload: any = {
+                      menu: 'download',
+                    };
+                    menuCategoryClicked(payload);
+                  }}
+                >
+                  <IconComponent
+                    {...{
+                      name: 'file_download_black_24dp-1-1',
+                      color: themes?.default?.palette?.neutral?.neu400,
+                      size: 26,
+                      label: 'Download',
+                    }}
+                  ></IconComponent>
+                </div>
+                <div
+                  style={{ position: 'relative' }}
+                  onClick={(e: any) => {
+                    handleClick(e);
+                  }}
+                >
+                  <IconComponent
+                    {...{
+                      name: 'more_vert_black_24dp',
+                      color: themes?.default?.palette?.neutral?.neu400,
+                      size: 27,
+                      label: 'More',
+                    }}
+                  ></IconComponent>
+                </div>
+              </Box>
+              <StyledIconComponent
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                sx={{ paddingTop: 0, paddingBottom: 0 }}
+                anchorEl={anchorEl}
+                style={{ padding: '0px !important' }}
+                open={open}
+                onClick={(e: any) => {
+                  handleClose();
+                }}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+              >
+                <div
+                  style={{
+                    padding: '0px',
+                    backgroundColor: themeChart.palette?.background?.bacopWhite,
+                    color: themes?.default?.palette?.text?.tex600,
+                  }}
+                >
+                  {menuArray &&
+                    menuArray.map((menu: string) => {
+                      return (
+                        <MenuItem
+                          onClick={(e) => {
+                            const payload: IMenuClicked = {
+                              menu,
+                              data: e,
+                            };
+                            menuCategoryClicked(payload);
+                          }}
+                        >
+                          {menu}
+                        </MenuItem>
+                      );
+                    })}
+                </div>
+              </StyledIconComponent>
+            </div>
+          )}
         </div>
         <div
           style={{
