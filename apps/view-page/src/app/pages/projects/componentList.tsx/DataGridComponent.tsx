@@ -70,7 +70,6 @@ export const DataGridComponent = (props: any) => {
             overflowX: 'auto',
           }}
         >
-          {console.log(tableData)}
           <DataGridV1
             key={generateRandomString()}
             columnData={tableData?.chartData?.data?.columns || []}

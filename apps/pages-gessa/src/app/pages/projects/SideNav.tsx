@@ -48,8 +48,8 @@ const SideNav = (props: ISideNav) => {
   return (
     <Box
       sx={{
-        width: '62px',
-        height: '92vh',
+        width: '84px',
+        height: '93vh',
         justifyContent: 'center',
         display: 'flex',
         overflowY: 'auto',

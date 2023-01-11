@@ -123,7 +123,7 @@ function AppMenuItem(props: Props) {
       >
         <IconComponent
           name={icon.trim()}
-          size={25}
+          size={30}
           label={'icon'}
           color={
             props.isSelected
@@ -138,7 +138,18 @@ function AppMenuItem(props: Props) {
           className="text-red"
           inset={!Icon}
         >
-          <Typography variant={'body1'}>{label}</Typography>
+          <Typography
+            variant={'body1'}
+            sx={{
+              width: '118px',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            }}
+            title={label}
+          >
+            {label}
+          </Typography>
         </ListItemText>
       </div>
       {/* </AppMenuItemComponent> */}

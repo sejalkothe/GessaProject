@@ -74,6 +74,7 @@ function AppMenu(props: Props) {
   return (
     <div
       style={{
+        width: '100%',
         position: 'relative',
         top: '15px',
         overflowY: 'auto',

@@ -29,7 +29,8 @@ export const SimpleCardDataMapping = (
       // stat: 'asdfg',
       // iconName: 'Search',
       link: 'View All',
-      title: inputData?.data?.formData?.formData?.Title || '',
+      title:
+        inputData?.data?.formData?.formData?.Title || inputData?.data?.type,
       stat: 'NA',
       icon: {
         name: inputData?.data?.formData?.properties?.Icon || 'Menu-Info',
@@ -54,13 +55,14 @@ export const SimpleCardDataMapping = (
     respObj.payload.data.datasets &&
     respObj.payload.data.datasets.length > 0
   ) {
-    // console.log(respObj);
     defaultProps.data.stat = respObj?.payload?.data?.datasets[0]?.data[0];
   }
-  console.log(inputData);
   dataResponse = {
     headerData: {
-      title: inputData?.data?.formData?.formData?.Title || 'no title',
+      title:
+        inputData?.data?.formData?.formData?.Title ||
+        inputData?.data?.type ||
+        'no title',
       searchData: {
         label: 'Search',
         placeholder: 'Search by Customer Name, SSE ID, Phone Numbe',
@@ -97,6 +99,5 @@ export const SimpleCardDataMapping = (
       backgroundColor: themes.default?.palette?.background?.bacopWhite,
     },
   };
-  console.log(dataResponse);
   return dataResponse.chartData;
 };

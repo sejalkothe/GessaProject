@@ -178,8 +178,8 @@ export function Project() {
       <Stack direction="row">
         <Box
           sx={{
-            width: '62px',
-            height: '92vh',
+            width: '84px',
+            height: '93vh',
             justifyContent: 'center',
             display: 'flex',
             background: theme.palette?.background?.bacopWhite,

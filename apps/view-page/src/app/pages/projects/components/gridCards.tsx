@@ -256,7 +256,6 @@ export default function GridCard(props: IGridCard) {
                   color: themes?.default?.palette?.text?.tex600,
                 }}
               >
-                {console.log('_selectedWidget', _selectedWidget)}
                 {_selectedWidget &&
                 _selectedWidget.formData &&
                 _selectedWidget.formData.formData &&
@@ -480,9 +479,11 @@ export default function GridCard(props: IGridCard) {
                     }}
                   >
                     {_selectedWidget &&
-                      _selectedWidget.formData &&
-                      _selectedWidget.formData.formData &&
-                      _selectedWidget.formData.formData.Title}
+                    _selectedWidget.formData &&
+                    _selectedWidget.formData.formData &&
+                    _selectedWidget.formData.formData.Title
+                      ? _selectedWidget.formData.formData.Title
+                      : _selectedWidget?.type}
                   </Typography>
 
                   <Box sx={{ ml: 'auto' }}>

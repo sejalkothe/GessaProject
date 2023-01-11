@@ -103,7 +103,7 @@ function Classic({ right = false }) {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        height: 'calc(100vh - 8vh)',
+        height: 'calc(100vh - 7vh)',
         overflowX: 'hidden',
         overflowY: 'hidden',
         width: '100%',
@@ -115,8 +115,8 @@ function Classic({ right = false }) {
             backgroundColor: theme.palette?.background?.bacopWhite,
             color: theme.palette.text?.tex300Main,
             borderRight: `1px solid ${theme.palette?.neutral?.neu100}`,
-            height: 'calc(100vh - 8vh)',
-            width: '260px',
+            height: 'calc(100vh - 7vh)',
+            width: '216px',
             overflowY: 'auto',
           }}
         >
@@ -139,10 +139,10 @@ function Classic({ right = false }) {
 
           backgroundColor: theme.palette.background?.bacopWhite,
           color: theme.palette.text?.tex300Main,
-          height: 'calc(100vh - 8vh)',
+          height: 'calc(100vh - 7vh)',
           width:
             subMenuList && subMenuList.length > 0
-              ? 'calc(100% - 260px)'
+              ? 'calc(100% - 216px)'
               : '100%',
         }}
       >
