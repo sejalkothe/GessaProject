@@ -165,7 +165,7 @@ export default function GridCard(props: IGridCard) {
               widget_id: data.id,
               projections: '',
               filter: '',
-              size: '10',
+              size: '1000',
               page: '0',
             })
           )
