@@ -124,22 +124,24 @@ export default function GridCard(props: IGridCard) {
           break;
         case 'share':
           if (_selectedWidget) {
-            const abc: any = document.getElementById(
-              '63bf83f7587d852d98add9f0'
-            );
-            html2canvas(abc).then((canvas: any) => {
-              canvas.toBlob(
-                (blob: any) => {
-                  let img = document.createElement('img');
-                  let url = URL.createObjectURL(blob);
-
-                  img.src = url;
-                  document.body.appendChild(img);
-                },
-                'image/jpeg',
-                0.9
-              );
-            });
+            const abc: any = document.getElementById(input?.ref?.current?.id);
+            html2canvas(abc, {
+              allowTaint: true,
+              useCORS: true,
+            })
+              .then(function (canvas) {
+                // It will return a canvas element
+                let image = canvas.toDataURL('image/png', 0.5);
+                const href = image;
+                const link = document.createElement('a');
+                link.href = href;
+                link.download = 'data.png';
+                link.click();
+              })
+              .catch((e) => {
+                // Handle errors
+                console.log(e);
+              });
           } else {
           }
           break;
@@ -147,25 +149,6 @@ export default function GridCard(props: IGridCard) {
           break;
       }
     }
-  };
-
-  const convertToCSV = (objArray: any) => {
-    console.log(objArray);
-    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-    let str = '';
-
-    for (let i = 0; i < array.length; i++) {
-      let line = '';
-      for (const index in array[i]) {
-        if (line != '') line += ',';
-
-        line += array[i][index];
-      }
-
-      str += line + '\r\n';
-    }
-
-    return str;
   };
 
   const downloadJSON = (data: any) => {
