@@ -23,6 +23,17 @@ export const StackHorizontalFullBarChartDataMapping = (
     cardProps: {},
   };
 
+  const getSumofNumbers = (index: any, dataset: any) => {
+    let sum = 0;
+    // console.log('gettingsum', dataset);
+    for (let i = 0; i < dataset.length; i += 1) {
+      sum += +dataset[i].data[index];
+    }
+    // console.log(sum);
+
+    return sum;
+  };
+
   if (
     response &&
     response.payload &&
@@ -30,7 +41,14 @@ export const StackHorizontalFullBarChartDataMapping = (
     response.payload.data.datasets &&
     response.payload.data.datasets.length > 0
   ) {
+    const datasets = JSON.parse(JSON.stringify(response.payload.data.datasets));
     response.payload.data.datasets.map((element: any, index: number) => {
+      const abc = element.data.map((elt: any, index: number) => {
+        const newData = (elt / getSumofNumbers(index, datasets)) * 100;
+        return newData;
+      });
+      element.data = abc;
+
       element.borderColor =
         themeObj.palette?.[`systemColor${index + 1}`]?.sys300Main;
       element.borderRadius = 5;

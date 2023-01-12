@@ -29,11 +29,11 @@ export interface IDataResourseParams {
 export const getChartDataResource = createAsyncThunk(
   'get chart resource',
   async (params: IDataResourseParams, { dispatch }) => {
-    // const response: any = {};
-    const response: any = await axios.get(
-      environment.NX_SCHEMA_SERVICE +
-        `/chart-data/report/${params.report}/label/${params.label}`
-    );
+    const response: any = {};
+    // const response: any = await axios.get(
+    //   environment.NX_SCHEMA_SERVICE +
+    //     `/chart-data/report/${params.report}/label/${params.label}`
+    // );
     if (response && response.data) {
       const data: IWidgetDataRender = response.data;
       const payload: IWidgetDataRender = {
@@ -49,23 +49,33 @@ export const getChartDataResource = createAsyncThunk(
           datasets: [
             {
               data: [
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
               ],
               label: 'count',
             },
             {
               data: [
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
-                Math.floor(Math.random() * 30000),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
               ],
               label: 'count2',
+            },
+            {
+              data: [
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+              ],
+              label: 'count3',
             },
           ],
           labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
@@ -79,7 +89,7 @@ export const getChartDataResource = createAsyncThunk(
         widgetid: params.widget_id,
       };
       // dispatch(setGridDataRender(payload));
-      // return myData;
+      return myData;
     }
     return response;
   }

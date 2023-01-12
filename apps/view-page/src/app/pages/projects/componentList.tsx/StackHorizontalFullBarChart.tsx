@@ -28,29 +28,29 @@ export const StackHorizontalFullBarChart = (props: any) => {
   }, [themeData]);
   useEffect(() => {
     new Promise((resolve, reject) => {
-      if (
-        props &&
-        props.rawData &&
-        props.rawData.report &&
-        props.rawData.label
-      ) {
-        resolve(
-          dispatch(
-            getChartDataResource({
-              label: props.rawData.label || '',
-              report: props.rawData.report || '',
-              widget_id: props.rawData.id,
-            })
-          )
-        );
-      } else {
-        const obj = {
-          payload: {
-            data: [],
-          },
-        };
-        resolve(obj);
-      }
+      // if (
+      //   props &&
+      //   props.rawData &&
+      //   props.rawData.report &&
+      //   props.rawData.label
+      // ) {
+      resolve(
+        dispatch(
+          getChartDataResource({
+            label: props.rawData.label || '',
+            report: props.rawData.report || '',
+            widget_id: props.rawData.id,
+          })
+        )
+      );
+      // } else {
+      //   const obj = {
+      //     payload: {
+      //       data: [],
+      //     },
+      //   };
+      //   resolve(obj);
+      // }
     })
       .then((response: any) => {
         const _fontData = {
@@ -66,7 +66,7 @@ export const StackHorizontalFullBarChart = (props: any) => {
           response,
           mapperPayload
         );
-          setChartData(obj);
+        setChartData(obj);
       })
       .catch((err: any) => {
         console.log(err);
