@@ -184,15 +184,15 @@ export default function GridCard(props: IGridCard) {
     })
       .then((response: any) => {
         const json = JSON.stringify(response.payload.data);
-        var csv = convertToCSV(json);
+        // var csv = convertToCSV(json);
 
-        const blob = new Blob([csv], {
-          type: 'application/csv',
+        const blob = new Blob([json], {
+          type: 'application/json',
         });
         const href = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = href;
-        link.download = (data.formData?.formData?.Title || fileName) + '.csv';
+        link.download = (data.formData?.formData?.Title || fileName) + '.json';
         link.click();
       })
       .catch((err: any) => {
