@@ -22,19 +22,28 @@ export const DataGridComponent = (props: any) => {
   const dispatch = useDispatch();
   useEffect(() => {
     new Promise((resolve, reject) => {
-      resolve(
-        dispatch(
-          getGridDataResource({
-            label: '',
-            report: props.rawData.report,
-            widget_id: props.rawData.id,
-            projections: '',
-            filter: '',
-            size: '10',
-            page: '0',
-          })
-        )
-      );
+      if (props && props.rawData && props.rawData.report) {
+        resolve(
+          dispatch(
+            getGridDataResource({
+              label: '',
+              report: props.rawData.report,
+              widget_id: props.rawData.id,
+              projections: '',
+              filter: '',
+              size: '1000',
+              page: '0',
+            })
+          )
+        );
+      } else {
+        const obj = {
+          payload: {
+            data: [],
+          },
+        };
+        resolve(obj);
+      }
     })
       .then((response: any) => {
         const mapperPayload: any = {

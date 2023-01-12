@@ -29,15 +29,29 @@ export const LineChartFilledComponent = (props: any) => {
 
   useEffect(() => {
     new Promise((resolve, reject) => {
-      resolve(
-        dispatch(
-          getChartDataResource({
-            label: props.rawData.label || '',
-            report: props.rawData.report || '',
-            widget_id: props.rawData.id,
-          })
-        )
-      );
+      if (
+        props &&
+        props.rawData &&
+        props.rawData.report &&
+        props.rawData.label
+      ) {
+        resolve(
+          dispatch(
+            getChartDataResource({
+              label: props.rawData.label || '',
+              report: props.rawData.report || '',
+              widget_id: props.rawData.id,
+            })
+          )
+        );
+      } else {
+        const obj = {
+          payload: {
+            data: [],
+          },
+        };
+        resolve(obj);
+      }
     })
       .then((response: any) => {
         const _fontData = {

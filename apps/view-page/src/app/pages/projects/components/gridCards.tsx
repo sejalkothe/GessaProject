@@ -134,6 +134,25 @@ export default function GridCard(props: IGridCard) {
     }
   };
 
+  const convertToCSV = (objArray: any) => {
+    console.log(objArray);
+    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    let str = '';
+
+    for (let i = 0; i < array.length; i++) {
+      let line = '';
+      for (const index in array[i]) {
+        if (line != '') line += ',';
+
+        line += array[i][index];
+      }
+
+      str += line + '\r\n';
+    }
+
+    return str;
+  };
+
   const downloadJSON = (data: any) => {
     const fileName = environment.fileName;
     new Promise((resolve, reject) => {
@@ -165,13 +184,15 @@ export default function GridCard(props: IGridCard) {
     })
       .then((response: any) => {
         const json = JSON.stringify(response.payload.data);
-        const blob = new Blob([json], {
-          type: 'application/json',
+        var csv = convertToCSV(json);
+
+        const blob = new Blob([csv], {
+          type: 'application/csv',
         });
         const href = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = href;
-        link.download = (data.formData?.formData?.Title || fileName) + '.json';
+        link.download = (data.formData?.formData?.Title || fileName) + '.csv';
         link.click();
       })
       .catch((err: any) => {

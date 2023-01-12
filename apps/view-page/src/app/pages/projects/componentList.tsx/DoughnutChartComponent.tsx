@@ -28,15 +28,29 @@ export const DoughnutChartComponent = (props: any) => {
   }, [themeData]);
   useEffect(() => {
     new Promise((resolve, reject) => {
-      resolve(
-        dispatch(
-          getChartDataResource({
-            label: props.rawData.label || '',
-            report: props.rawData.report || '',
-            widget_id: props.rawData.id,
-          })
-        )
-      );
+      if (
+        props &&
+        props.rawData &&
+        props.rawData.report &&
+        props.rawData.label
+      ) {
+        resolve(
+          dispatch(
+            getChartDataResource({
+              label: props.rawData.label || '',
+              report: props.rawData.report || '',
+              widget_id: props.rawData.id,
+            })
+          )
+        );
+      } else {
+        const obj = {
+          payload: {
+            data: [],
+          },
+        };
+        resolve(obj);
+      }
     })
       .then((response: any) => {
         const _fontData = {
@@ -49,7 +63,7 @@ export const DoughnutChartComponent = (props: any) => {
           fontData: _fontData,
         };
         const obj = DoughnutChartDataMapping(response, mapperPayload);
-          setChartData(obj);
+        setChartData(obj);
       })
       .catch((err: any) => {
         console.log(err);
