@@ -29,7 +29,7 @@ import {
   getGridDataResource,
 } from '../store/gridDataRenderSlice';
 import CustomModal, { BootstrapDialogTitle } from './customModal';
-
+import html2canvas from 'html2canvas';
 export interface IMenuClicked {
   menu: string;
   data: any;
@@ -110,7 +110,7 @@ export default function GridCard(props: IGridCard) {
     // setOpen(false);
   };
 
-  const menuCategoryClicked = (input: IMenuClicked) => {
+  const menuCategoryClicked = (input: any) => {
     if (input) {
       switch (input.menu.toLowerCase()) {
         case 'download':
@@ -124,7 +124,22 @@ export default function GridCard(props: IGridCard) {
           break;
         case 'share':
           if (_selectedWidget) {
-            downloadJSON(_selectedWidget);
+            const abc: any = document.getElementById(
+              '63bf83f7587d852d98add9f0'
+            );
+            html2canvas(abc).then((canvas: any) => {
+              canvas.toBlob(
+                (blob: any) => {
+                  let img = document.createElement('img');
+                  let url = URL.createObjectURL(blob);
+
+                  img.src = url;
+                  document.body.appendChild(img);
+                },
+                'image/jpeg',
+                0.9
+              );
+            });
           } else {
           }
           break;
@@ -409,9 +424,10 @@ export default function GridCard(props: IGridCard) {
                       return (
                         <MenuItem
                           onClick={(e) => {
-                            const payload: IMenuClicked = {
+                            const payload: any = {
                               menu,
                               data: e,
+                              ref: ref,
                             };
                             menuCategoryClicked(payload);
                           }}
