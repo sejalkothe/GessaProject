@@ -135,7 +135,7 @@ export default function GridCard(props: IGridCard) {
                 const href = image;
                 const link = document.createElement('a');
                 link.href = href;
-                link.download = data.formData?.formData?.Title + '.png';
+                link.download = input?.ref?.current?.innerText + '.png';
                 link.click();
               })
               .catch((e) => {
