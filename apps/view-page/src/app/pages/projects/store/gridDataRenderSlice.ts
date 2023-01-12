@@ -29,11 +29,11 @@ export interface IDataResourseParams {
 export const getChartDataResource = createAsyncThunk(
   'get chart resource',
   async (params: IDataResourseParams, { dispatch }) => {
-    // const response: any = {};
-    const response: any = await axios.get(
-      environment.NX_SCHEMA_SERVICE +
-        `/chart-data/report/${params.report}/label/${params.label}`
-    );
+    const response: any = {};
+    // const response: any = await axios.get(
+    //   environment.NX_SCHEMA_SERVICE +
+    //     `/chart-data/report/${params.report}/label/${params.label}`
+    // );
     if (response && response.data) {
       const data: IWidgetDataRender = response.data;
       const payload: IWidgetDataRender = {
@@ -68,7 +68,7 @@ export const getChartDataResource = createAsyncThunk(
               label: 'count2',
             },
           ],
-          labels: ['4', '3', '5', '2', '1'],
+          labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
         },
       };
       const data: IWidgetDataRender = myData.data;

@@ -411,6 +411,9 @@ export default function GridCard(props: IGridCard) {
             height: 'calc(100% - 10px)',
             position: 'relative',
             overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
         >
           {currentCompomponent}
