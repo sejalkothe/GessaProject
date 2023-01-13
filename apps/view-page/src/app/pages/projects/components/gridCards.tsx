@@ -21,7 +21,7 @@ import { useConfigForm } from 'apps/view-page/src/context/form';
 import { environment } from 'apps/view-page/src/environments/environment';
 import themes from 'apps/view-page/src/theme';
 import generateRandomString from 'apps/view-page/src/utils/randomString';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import IconComponent from '../../../components/gridComponents/icon-component/icon-component';
 import {
@@ -30,6 +30,10 @@ import {
 } from '../store/gridDataRenderSlice';
 import CustomModal, { BootstrapDialogTitle } from './customModal';
 import html2canvas from 'html2canvas';
+import { tabeldata } from 'apps/view-page/src/fake-db/table';
+import CustomSnackbar from '../../../components/CustomSnackbar';
+import ShareTray from './ShareTray';
+import { uploadImageApi } from '../store/widgetsSlice';
 export interface IMenuClicked {
   menu: string;
   data: any;
@@ -79,8 +83,24 @@ export default function GridCard(props: IGridCard) {
   const [_selectedWidget, _setselectedWidget] = useState<any>({});
   const [toggle, setToggle] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openShareTray, setOpenShareTray] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [snackData, setSnackData]: any = useState({
+    open: false,
+    msg: '',
+    duration: 3000,
+    severity: '',
+  });
+  const [rawData, setRawData] = useState<any>({});
 
+  const onHideSnackBar = useCallback(() => {
+    setSnackData({
+      msg: '',
+      open: false,
+      severity: '',
+      duration: 0,
+    });
+  }, []);
   const [currentCompomponent, setCurrentComponent] = useState<any>(
     props.children
   );
@@ -110,12 +130,48 @@ export default function GridCard(props: IGridCard) {
     // setOpen(false);
   };
 
+  const shareAsPngJpeg = (input: any) => {
+    const abc: any = document.getElementById(input?.ref?.current?.id);
+    html2canvas(abc, {
+      allowTaint: true,
+      useCORS: true,
+    })
+      .then(function (canvas) {
+        // It will return a canvas element
+        let image = canvas.toDataURL('image/png', 0.5);
+        const href = image;
+        const link = document.createElement('a');
+        link.href = href;
+        const newFileName = input?.ref?.current?.innerText + '.png';
+        link.download = newFileName;
+        setSnackData({
+          msg: newFileName + ' downloaded successfully',
+          open: true,
+          severity: 'success',
+          duration: 3000,
+        });
+
+        link.click();
+        const formData = new FormData();
+        formData.append('files', image);
+        const Payload1 = { data: formData };
+
+        // dispatch(uploadImageApi(Payload1));
+        setRawData(image);
+        setOpenShareTray(true);
+      })
+      .catch((e) => {
+        // Handle errors
+        console.log(e);
+      });
+  };
+
   const menuCategoryClicked = (input: any) => {
     if (input) {
       switch (input.menu.toLowerCase()) {
         case 'download':
           if (_selectedWidget) {
-            downloadJSON(_selectedWidget);
+            downloadJSON(_selectedWidget, input?.input);
           } else {
           }
           break;
@@ -124,24 +180,7 @@ export default function GridCard(props: IGridCard) {
           break;
         case 'share':
           if (_selectedWidget) {
-            const abc: any = document.getElementById(input?.ref?.current?.id);
-            html2canvas(abc, {
-              allowTaint: true,
-              useCORS: true,
-            })
-              .then(function (canvas) {
-                // It will return a canvas element
-                let image = canvas.toDataURL('image/png', 0.5);
-                const href = image;
-                const link = document.createElement('a');
-                link.href = href;
-                link.download = input?.ref?.current?.innerText + '.png';
-                link.click();
-              })
-              .catch((e) => {
-                // Handle errors
-                console.log(e);
-              });
+            shareAsPngJpeg(input);
           } else {
           }
           break;
@@ -151,7 +190,27 @@ export default function GridCard(props: IGridCard) {
     }
   };
 
-  const downloadJSON = (data: any) => {
+  const convertToCSV = (json: any): any => {
+    if (json && json.length > 0) {
+      var fields = Object.keys(json[0]);
+      var replacer = function (key: any, value: any) {
+        return value === null ? '' : value;
+      };
+      var csv = json.map(function (row: any) {
+        return fields
+          .map(function (fieldName) {
+            return JSON.stringify(row[fieldName], replacer);
+          })
+          .join(',');
+      });
+      csv.unshift(fields.join(',')); // add header column
+      csv = csv.join('\r\n');
+      return csv;
+    } else {
+      return [];
+    }
+  };
+  const downloadJSON = (data: any, input: any) => {
     const fileName = environment.fileName;
     new Promise((resolve, reject) => {
       if (data && data.type === 'grid') {
@@ -181,20 +240,38 @@ export default function GridCard(props: IGridCard) {
       }
     })
       .then((response: any) => {
-        const json = JSON.stringify(response.payload.data);
-        // var csv = convertToCSV(json);
+        const json = JSON.parse(JSON.stringify(response?.payload?.data || []));
+        var csv = convertToCSV(json);
 
-        const blob = new Blob([json], {
-          type: 'application/json',
+        const blob = new Blob([csv], {
+          type: 'application/csv',
         });
         const href = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = href;
-        link.download = (data.formData?.formData?.Title || fileName) + '.json';
+        const newFileName =
+          (data.formData?.formData?.Title ||
+            input?.current?.innerText ||
+            fileName) + '.csv';
+
+        link.download = newFileName;
+        setSnackData({
+          msg: newFileName + ' downloaded successfully',
+          open: true,
+          severity: 'success',
+          duration: 3000,
+        });
         link.click();
       })
       .catch((err: any) => {
         console.log(err);
+        setSnackData({
+          msg: 'Error while downloading file.',
+          open: true,
+          severity: 'error',
+          duration: 3000,
+        });
+
         return err;
       });
 
@@ -347,6 +424,7 @@ export default function GridCard(props: IGridCard) {
                   onClick={(e: any) => {
                     const payload: any = {
                       menu: 'download',
+                      input: ref,
                     };
                     menuCategoryClicked(payload);
                   }}
@@ -546,6 +624,28 @@ export default function GridCard(props: IGridCard) {
             </div>{' '}
           </div>
         </Dialog>
+        <Dialog
+          onClose={(data: any) => {
+            setOpenShareTray(!openShareTray);
+          }}
+          open={openShareTray}
+          maxWidth={'sm'}
+          fullWidth={true}
+        >
+          <ShareTray
+            data={rawData}
+            onClose={(data: any) => {
+              setOpenShareTray(!openShareTray);
+            }}
+          />
+        </Dialog>
+        <CustomSnackbar
+          msg={snackData.msg}
+          open={snackData.open}
+          onClose={onHideSnackBar}
+          duration={snackData.duration}
+          severity={snackData.severity}
+        />
       </div>
     </div>
   );
