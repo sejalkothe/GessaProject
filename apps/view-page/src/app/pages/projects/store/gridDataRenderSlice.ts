@@ -8,6 +8,7 @@ import {
 import { environment } from 'apps/view-page/src/environments/environment';
 import axios from '../../../../utils/NetworkLayer';
 import { IRootState } from '../../../../store';
+import { tempDataJan16 } from 'apps/view-page/src/fake-db/tableD';
 type _IRGridDataRenderSlice = EntityState<IWidgetDataRender>;
 export interface IRGridDataRenderSlice extends _IRGridDataRenderSlice {
   activeWidgetId: string;
@@ -187,7 +188,7 @@ export const getGridDataResource = createAsyncThunk(
           count: 3,
         },
       ];
-      const alteredObject = getResposeDataAltered(myData);
+      const alteredObject = getResposeDataAltered(tempDataJan16);
       const payload: IWidgetDataRender = {
         data: alteredObject,
         label: params.label || '',
