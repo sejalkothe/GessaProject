@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Grid from './grid';
 import GridCard from './gridCards';
 import Widgets, { IComponent, IWidgetType, WIDGETS_V1 } from './widgets';
@@ -39,6 +39,7 @@ export const Demo2Ui = (props: Demo2Props) => {
   // All the dragable widgets
   const [widgets, setWidgets] = useState<any>([]);
   const [selectedWidget, setSelectedWidget] = useState<any>({});
+  const [daat, setDT] = useState<any>();
 
   const getData = (widgetData: any): IComponent => {
     const index = WIDGETS_V1.findIndex(
@@ -183,43 +184,42 @@ export const Demo2Ui = (props: Demo2Props) => {
             >
               {(actions: any) =>
                 widgets.map((widget: any) => {
+                  let _widget = JSON.parse(JSON.stringify(widget));
                   const { component: Widget, label } = getData(widget);
+
                   return (
                     Widget && (
                       <GridCard
                         widgets={widgets}
-                        key={widget.id}
-                        x={widget.x}
-                        y={widget.y}
-                        w={widget.w}
-                        h={widget.h}
-                        id={widget.id}
-                        type={widget.type}
-                        title={label || widget.data?.label || ''}
-                        selectedWidget={widget}
-                        data={widget.data}
+                        key={_widget.id}
+                        x={_widget.x}
+                        y={_widget.y}
+                        w={_widget.w}
+                        h={_widget.h}
+                        id={_widget.id}
+                        type={_widget.type}
+                        title={label || _widget.data?.label || ''}
+                        selectedWidget={_widget}
+                        data={_widget.data}
                         actions={actions}
-                        {...widget.data}
+                        {..._widget.data}
                         editWidget={(data: any) => {
                           setSelectedWidget(data);
                           setOpenWidgetConfigDrawer(!openWidgetConfigDrawer);
                         }}
                       >
-                        {widget.formProps ? (
-                          <Widget
-                            key={generateRandomString()}
-                            headerData={widget.formProps.headerData}
-                            chartData={widget.formProps.chartData}
-                            actionClicked={(e: any) => {
-                              parseMenuEvents({ widget: widget, menu: e });
-                            }}
-                            searchAction={(e: any) => {
-                              console.log(e);
-                            }}
-                          />
-                        ) : (
-                          <Widget key={generateRandomString()} />
-                        )}
+                        <Widget
+                          key={generateRandomString()}
+                          rawData={_widget}
+                          headerData={_widget?.formProps?.headerData || {}}
+                          chartData={{}}
+                          actionClicked={(e: any) => {
+                            parseMenuEvents({ widget: _widget, menu: e });
+                          }}
+                          searchAction={(e: any) => {
+                            console.log(e);
+                          }}
+                        />
                       </GridCard>
                     )
                   );
@@ -227,33 +227,7 @@ export const Demo2Ui = (props: Demo2Props) => {
               }
             </Grid>
           </div>
-          {/* <Box
-            className="flex flex-col  justify-center items-end bottom-0 flex-1 p-2"
-            style={{
-              height: '60px',
-              // width: 'calc(100% - 230px)',
-              backgroundColor: theme.palette.background.default,
-            }}
-          >
-            <Button
-              sx={{ py: 0.25, px: 3 }}
-              color="primary"
-              variant="outlined"
-              onClick={() => {
-                // saveLayoutData();
-                setSaveFormStatus(true);
-              }}
-            >
-              Save Layout
-            </Button>
-          </Box> */}
         </div>
-        {/* <div
-          className="flex flex-col justify-start items-center overflow-y-auto col-span-2 mt-2 h-full"
-          style={{ height: 'calc(100vh - 60px)', overflow: 'hidden' }}
-        >
-           <Widgets rawWidget={props.rawWidgets} />
-        </div> */}
       </div>
     </div>
   );

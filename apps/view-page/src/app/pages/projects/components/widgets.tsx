@@ -1,11 +1,11 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material';
 import { IWidget } from '../store/widgetsSlice';
 import { __values } from 'tslib';
 import {
-  heatmapData,
+  // heatmapData,
   polarData,
   scatterData,
   barData,
@@ -16,11 +16,9 @@ import {
   radarData,
   bubbleData,
   linechartFilled,
-  lineWithTensionData,
+  // lineWithTensionData,
 } from 'apps/view-page/src/fake-db/scatterData';
 import {
-  Barchart,
-  BarChartCard,
   BubbleChart,
   Datagrid,
   DataGridV1,
@@ -28,7 +26,6 @@ import {
   DoughnutChart,
   HeatMap,
   LineChart,
-  LineChartCard,
   PieChart,
   PolarChart,
   RadarChart,
@@ -47,7 +44,30 @@ import {
   constLineChartLabel,
   constLineChartWithFilled,
   constLineChartWithTensionFilled,
+  constBarChartType,
+  constHorizontalBarChartType,
 } from 'apps/view-page/src/utils/constantString';
+import { selectThemeContext } from 'apps/view-page/src/app/pages/projects/newStore/themeContextSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootState } from 'apps/view-page/src/store';
+import { BarChartComponent } from '../componentList.tsx/BarChartComponent';
+import { StackVerticalBarChart } from '../componentList.tsx/StackVerticalBarChart';
+import { StackVerticalFullBarChart } from '../componentList.tsx/StackVerticalFullBarChart';
+import { StackHorizontalBarChart } from '../componentList.tsx/StackHorizontalBarChart';
+import { StackHorizontalFullBarChart } from '../componentList.tsx/StackHorizontalFullBarChart';
+import { LineChartComponent } from '../componentList.tsx/LineChart';
+import { LineChartWithTensionComponent } from '../componentList.tsx/LineChartWithTension';
+import { LineChartFilledComponent } from '../componentList.tsx/LineChartFilled';
+import { LineChartTensionFilledComponent } from '../componentList.tsx/LineChartTensionFilled';
+import { PieChartComponent } from '../componentList.tsx/PieChartComponent';
+import { DoughnutChartComponent } from '../componentList.tsx/DoughnutChartComponent';
+import { RadarChartComponent } from '../componentList.tsx/RadarComponent';
+import { ScatterChartComponent } from '../componentList.tsx/ScatterChartComponent';
+import { BubbleChartComponent } from '../componentList.tsx/BubbleChartComponent';
+import { PolarChartComponent } from '../componentList.tsx/PolarComponent';
+import { DataGridComponent } from '../componentList.tsx/DataGridComponent';
+import { CardComponent } from '../componentList.tsx/CardComponent';
+import { HorizontalBarChartComponent } from '../componentList.tsx/HorizontalBarChartComponent';
 export interface IWidgetProps {
   rawWidget: IWidget[];
 }
@@ -80,30 +100,15 @@ const PiechartData: any = piechartData;
 const RadarData: any = radarData;
 const LineData: any = lineData;
 
+const fakeData = false;
+
 export const WIDGETS_V1: IWidgetType[] = [
   {
     id: '0',
     type: 'card',
     data: {
       component: (props: any) => {
-        const theme = useTheme();
-        const defaultProps = {
-          title: 'Number of Payments',
-          stat: 600,
-          icon: {
-            name: 'Search',
-            size: 30,
-            color: themes.default.palette?.primary?.main,
-          },
-          link: 'View All',
-        };
-        const formProps = { ...props };
-        return props ? (
-          // <StatCard data={defaultProps} />
-          <StatCard data={props} />
-        ) : (
-          <StatCard data={defaultProps} />
-        );
+        return <CardComponent {...props} />;
       },
       props: {},
       label: 'Card',
@@ -118,38 +123,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'grid',
     data: {
       component: (props: any) => {
-        return props ? (
-          // <Datagrid columns={props.columns || []} rows={props.rows || []} />
-          <DatatableCardV1
-            // columnData={props.chartData.data.columns}
-            // rowData={props.chartData.data.rows}
-            // columnResizable={props.chartData.data.columnResizable}
-            // pagination={props.chartData.data.pagination}
-            // height={props.chartData.height - 100}
-            // width={props.chartData.width - 50}
-            chartData={{
-              columnData: props.chartData.data.columns,
-              rowData: props.chartData.data.rows,
-              columnResizable: props.chartData.columnResizable,
-              pagination: props.chartData.pagination,
-              height: props.chartData.height - 200,
-              width: props.chartData.width - 200,
-            }}
-            headerData={props.headerData}
-            height={props.chartData.height - 100}
-            width={props.chartData.width - 50}
-            showBorder={true}
-            actionClicked={(data: any) => {
-              props.actionClicked && props.actionClicked(data);
-            }}
-            searchAction={(data: any) => {
-              props.searchAction && props.searchAction(data);
-            }}
-          />
-        ) : (
-          // <Datagrid columns={tableData.columns} rows={tableData.rows} />
-          <Datagrid columns={tableData.columns} rows={tableData.rows} />
-        );
+        return <DataGridComponent {...props} />;
       },
       props: {},
       label: 'Grid',
@@ -161,22 +135,10 @@ export const WIDGETS_V1: IWidgetType[] = [
   },
   {
     id: '2',
-    type: 'barchart',
+    type: constBarChartType,
     data: {
       component: (props: any) => {
-        return props ? (
-          // <Barchart {...BarData} />
-          <Barchart {...props.chartData} />
-        ) : (
-          <Barchart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
-            stacked={false}
-            horizontal={true}
-          />
-        );
+        return <BarChartComponent {...props} />;
       },
       props: {},
       label: 'Bar Chart',
@@ -191,17 +153,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'radarchart',
     data: {
       component: (props: any) => {
-        return props ? (
-          <RadarChart data={props?.chartData?.data || {}} />
-        ) : (
-          // <RadarChart {...RadarData} />
-          <RadarChart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
-          />
-        );
+        return <RadarChartComponent {...props} />;
       },
       props: {},
       label: 'Radar Chart',
@@ -216,17 +168,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'doughnutchart',
     data: {
       component: (props: any) => {
-        return props ? (
-          <DoughnutChart data={props?.chartData?.data || {}} />
-        ) : (
-          // <DoughnutChart {...DouhnutData} />
-          <DoughnutChart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
-          />
-        );
+        return <DoughnutChartComponent {...props} />;
       },
       props: {},
       label: 'Doughnut Chart',
@@ -241,18 +183,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'piechart',
     data: {
       component: (props: any) => {
-        return props ? (
-          <PieChart data={props.chartData?.data} />
-        ) : (
-          // <PieChart {...PiechartData} />
-          // <PieChart {...props} />
-          <PieChart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
-          />
-        );
+        return <PieChartComponent {...props} />;
       },
       props: {},
       label: 'Pie Chart',
@@ -268,22 +199,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'linechart',
     data: {
       component: (props: any) => {
-        return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-            fontData={props?.chartData?.fontData}
-          />
-        ) : (
-          // <LineChart {...LineData} />
-          <LineChart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
-          />
-        );
+        return <LineChartComponent {...props} />;
       },
       props: {},
       label: 'Line Chart',
@@ -298,15 +214,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'scatterchart',
     data: {
       component: (props: any) => {
-        return props ? (
-          <ScatterChart
-            labels={props?.chartData?.data?.labels || []}
-            datasets={props?.chartData?.data?.datasets || []}
-          />
-        ) : (
-          // <ScatterChart {...ScatterData} />
-          <ScatterChart labels={[]} datasets={[]} />
-        );
+        return <ScatterChartComponent {...props} />;
       },
       props: {},
       label: 'Scatter Chart',
@@ -323,12 +231,12 @@ export const WIDGETS_V1: IWidgetType[] = [
       component: (props: any) => {
         return props ? (
           <HeatMap
-            columnAxisLabel={heatmapData.columnAxisLabel || []}
-            data={heatmapData.data || []}
-            rowAxisLabel={heatmapData.rowAxisLabel || []}
-            threshold={heatmapData.threshold || []}
-            colLabel={heatmapData.colLabel || ''}
-            rowLabel={heatmapData.rowLabel || ''}
+            columnAxisLabel={[]}
+            data={[]}
+            rowAxisLabel={[]}
+            threshold={[]}
+            colLabel={''}
+            rowLabel={''}
           />
         ) : (
           // <HeatMap
@@ -363,19 +271,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'polarchart',
     data: {
       component: (props: any) => {
-        return props ? (
-          <PolarChart
-            datasets={props?.chartData?.data?.datasets || []}
-            labels={props?.chartData?.data?.labels || []}
-          />
-        ) : (
-          // <PolarChart {...PolarData} />
-          // <PolarChart
-          //   datasets={props.data.datasets || []}
-          //   labels={props.data.labels || []}
-          // />
-          <PolarChart datasets={[]} labels={[]} />
-        );
+        return <PolarChartComponent {...props} />;
       },
       props: {},
       label: 'Polar Chart',
@@ -390,15 +286,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: 'bubblechart',
     data: {
       component: (props: any) => {
-        return props ? (
-          // <BubbleChart {...BubbleData} />
-          <BubbleChart
-            labels={props?.chartData?.data?.labels || []}
-            datasets={props?.chartData?.data?.datasets || []}
-          />
-        ) : (
-          <BubbleChart datasets={[]} labels={[]} />
-        );
+        return <BubbleChartComponent {...props} />;
       },
       props: {},
       label: 'Bubble Chart',
@@ -413,31 +301,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: constStackVerticalBarChartType,
     data: {
       component: (props: any) => {
-        return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={false}
-            xLabel={props.chartData.xLaabel}
-            yLabel={props.chartData.yLabel}
-          />
-        ) : (
-          // <BarChartCard
-          //   headerData={{
-          //     title: props?.headerData?.title || '',
-          //     actions: props?.headerData?.actions || [],
-          //   }}
-          //   chartData={{
-          //     data: props?.chartData?.data || {},
-          //     stacked: props?.chartData?.stacked || false,
-          //     horizontal: props?.chartData?.horizontal || false,
-          //   }}
-          //   actionClicked={(data: any) => {
-          //     props.actionClicked && props.actionClicked(data);
-          //   }}
-          // />
-          <Barchart data={barData.data} stacked={false} horizontal={false} />
-        );
+        return <StackVerticalBarChart {...props} />;
       },
       props: {},
       label: constBarchartLabel,
@@ -452,31 +316,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: constStackVerticalFullBarChartType,
     data: {
       component: (props: any) => {
-        return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={false}
-            xLabel={props.chartData.xLaabel}
-            yLabel={props.chartData.yLabel}
-          />
-        ) : (
-          // <BarChartCard
-          //   headerData={{
-          //     title: props?.headerData?.title || '',
-          //     actions: props?.headerData?.actions || [],
-          //   }}
-          //   chartData={{
-          //     data: props?.chartData?.data || {},
-          //     stacked: props?.chartData?.stacked || false,
-          //     horizontal: props?.chartData?.horizontal || false,
-          //   }}
-          //   actionClicked={(data: any) => {
-          //     props.actionClicked && props.actionClicked(data);
-          //   }}
-          // />
-          <Barchart data={barData.data} stacked={false} horizontal={false} />
-        );
+        return <StackVerticalFullBarChart {...props} />;
       },
       props: {},
       label: constBarchartLabel,
@@ -491,31 +331,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: constStackHorizontalBarChartType,
     data: {
       component: (props: any) => {
-        return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={true}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
-        ) : (
-          // <BarChartCard
-          //   headerData={{
-          //     title: props?.headerData?.title || '',
-          //     actions: props?.headerData?.actions || [],
-          //   }}
-          //   chartData={{
-          //     data: props?.chartData?.data || {},
-          //     stacked: true,
-          //     horizontal: true,
-          //   }}
-          //   actionClicked={(data: any) => {
-          //     props.actionClicked && props.actionClicked(data);
-          //   }}
-          // />
-          <Barchart data={barData.data} stacked={false} horizontal={false} />
-        );
+        return <StackHorizontalBarChart {...props} />;
       },
       props: {},
       label: constBarchartLabel,
@@ -530,31 +346,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: constStackHorizontalFullBarChart,
     data: {
       component: (props: any) => {
-        return props ? (
-          <Barchart
-            data={props?.chartData?.data || []}
-            stacked={true}
-            horizontal={true}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
-        ) : (
-          // <BarChartCard
-          //   headerData={{
-          //     title: props?.headerData?.title || '',
-          //     actions: props?.headerData?.actions || [],
-          //   }}
-          //   chartData={{
-          //     data: props?.chartData?.data || {},
-          //     stacked: props?.chartData?.stacked || false,
-          //     horizontal: props?.chartData?.horizontal || true,
-          //   }}
-          //   actionClicked={(data: any) => {
-          //     props.actionClicked && props.actionClicked(data);
-          //   }}
-          // />
-          <Barchart data={barData.data} stacked={false} horizontal={false} />
-        );
+        return <StackHorizontalFullBarChart {...props} />;
       },
       props: {},
       label: constBarchartLabel,
@@ -569,32 +361,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: constLineChartWithTension,
     data: {
       component: (props: any) => {
-        return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
-        ) : (
-          // <LineChartCard
-          //   headerData={{
-          //     title: props?.headerData?.title || '',
-          //     actions: props?.headerData?.actions || [],
-          //   }}
-          //   chartData={{
-          //     data: props?.chartData?.data || {},
-          //   }}
-          //   actionClicked={(data: any) => {
-          //     props.actionClicked && props.actionClicked(data);
-          //   }}
-          // />
-          <LineChart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
-          />
-        );
+        return <LineChartWithTensionComponent {...props} />;
       },
       props: {},
       label: constLineChartLabel,
@@ -609,31 +376,7 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: constLineChartWithFilled,
     data: {
       component: (props: any) => {
-        return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
-        ) : (
-          // <LineChartCard
-          //   headerData={{
-          //     title: props?.headerData?.title || '',
-          //     actions: props?.headerData?.actions || [],
-          //   }}
-          //   chartData={{
-          //     data: props?.chartData?.data || {},
-          //   }}
-          //   actionClicked={(data: any) => {
-          //     props.actionClicked && props.actionClicked(data);
-          //   }}
-          // />
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
-        );
+        return <LineChartFilledComponent {...props} />;
       },
       props: {},
       label: constLineChartLabel,
@@ -648,35 +391,25 @@ export const WIDGETS_V1: IWidgetType[] = [
     type: constLineChartWithTensionFilled,
     data: {
       component: (props: any) => {
-        return props ? (
-          <LineChart
-            data={props?.chartData?.data || []}
-            xLabel={props?.chartData?.xLabel || ''}
-            yLabel={props?.chartData?.yLabel || ''}
-          />
-        ) : (
-          // <LineChartCard
-          //   headerData={{
-          //     title: props?.headerData?.title || '',
-          //     actions: props?.headerData?.actions || [],
-          //   }}
-          //   chartData={{
-          //     data: props?.chartData?.data || {},
-          //   }}
-          //   actionClicked={(data: any) => {
-          //     props.actionClicked && props.actionClicked(data);
-          //   }}
-          // />
-          <LineChart
-            data={{
-              labels: [],
-              datasets: [],
-            }}
-          />
-        );
+        return <LineChartTensionFilledComponent {...props} />;
       },
       props: {},
       label: constLineChartLabel,
+      x: 0,
+      y: 5,
+      w: 6,
+      h: 4,
+    },
+  },
+  {
+    id: '19',
+    type: constHorizontalBarChartType,
+    data: {
+      component: (props: any) => {
+        return <HorizontalBarChartComponent {...props} />;
+      },
+      props: {},
+      label: constHorizontalBarChartType,
       x: 0,
       y: 5,
       w: 6,

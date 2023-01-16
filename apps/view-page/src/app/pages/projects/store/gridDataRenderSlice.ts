@@ -8,6 +8,7 @@ import {
 import { environment } from 'apps/view-page/src/environments/environment';
 import axios from '../../../../utils/NetworkLayer';
 import { IRootState } from '../../../../store';
+import { tempDataJan16 } from 'apps/view-page/src/fake-db/tableD';
 type _IRGridDataRenderSlice = EntityState<IWidgetDataRender>;
 export interface IRGridDataRenderSlice extends _IRGridDataRenderSlice {
   activeWidgetId: string;
@@ -29,6 +30,7 @@ export interface IDataResourseParams {
 export const getChartDataResource = createAsyncThunk(
   'get chart resource',
   async (params: IDataResourseParams, { dispatch }) => {
+    // const response: any = {};
     const response: any = await axios.get(
       environment.NX_SCHEMA_SERVICE +
         `/chart-data/report/${params.report}/label/${params.label}`
@@ -41,7 +43,54 @@ export const getChartDataResource = createAsyncThunk(
         report: params.report,
         widgetid: params.widget_id,
       };
-      dispatch(setGridDataRender(payload));
+      // dispatch(setGridDataRender(payload));
+    } else {
+      const myData: any = {
+        data: {
+          datasets: [
+            {
+              data: [
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+              ],
+              label: 'count',
+            },
+            {
+              data: [
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+              ],
+              label: 'count2',
+            },
+            {
+              data: [
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+                Math.floor(Math.random() * 100),
+              ],
+              label: 'count3',
+            },
+          ],
+          labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
+        },
+      };
+      const data: IWidgetDataRender = myData.data;
+      const payload: IWidgetDataRender = {
+        data: data,
+        label: params.label,
+        report: params.report,
+        widgetid: params.widget_id,
+      };
+      // dispatch(setGridDataRender(payload));
+      // return myData;
     }
     return response;
   }
@@ -89,13 +138,14 @@ const getResposeDataAltered = (data: any): any => {
 export const getGridDataResource = createAsyncThunk(
   'get chart resource',
   async (params: any, { dispatch }) => {
+    // const response: any = {};
     const response: any = await axios.post(
       environment.NX_SCHEMA_SERVICE + `/queryReport/${params.report}`,
       {
         params: {
           projections: '',
           filter: '',
-          size: '100',
+          size: '1000',
           page: '0',
         },
       }
@@ -113,8 +163,43 @@ export const getGridDataResource = createAsyncThunk(
       const responseNew = {
         data: alteredObject,
       };
-      dispatch(setGridDataRender(payload));
+      // dispatch(setGridDataRender(payload));
       return responseNew;
+    } else {
+      const myData = [
+        {
+          impact: '4',
+          count: 22556,
+        },
+        {
+          impact: '5',
+          count: 16741,
+        },
+        {
+          impact: '3',
+          count: 5234,
+        },
+        {
+          impact: '2',
+          count: 692,
+        },
+        {
+          impact: '1',
+          count: 3,
+        },
+      ];
+      const alteredObject = getResposeDataAltered(tempDataJan16);
+      const payload: IWidgetDataRender = {
+        data: alteredObject,
+        label: params.label || '',
+        report: params.report,
+        widgetid: params.widget_id,
+      };
+      const responseNew = {
+        data: alteredObject,
+      };
+      // dispatch(setGridDataRender(payload));
+      // return responseNew;
     }
     return response;
   }

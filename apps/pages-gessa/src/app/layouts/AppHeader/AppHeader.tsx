@@ -60,7 +60,7 @@ const AppHeader = ({ toggleDrawer }: Props) => {
       case 'light':
         return themes.light;
       case 'dark':
-        return themes.dark;
+        return themes.default;
       case 'solarized':
         return themes.solarized;
       default:
@@ -70,7 +70,7 @@ const AppHeader = ({ toggleDrawer }: Props) => {
 
   const [theme, changeTheme] = useAppTheme();
   const setTheme = (theme: string) => (event: any) => {
-    const selectedTheme: ITheme = getTheme(theme);
+    const selectedTheme: any = getTheme(theme);
     // @ts-ignore
     changeTheme(selectedTheme);
   };

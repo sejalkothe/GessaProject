@@ -2,7 +2,7 @@ import { Box, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import AppMain from './AppMain/AppMain';
 import AppMenu from './AppMenu/AppMenu';
-import { ITheme } from '../../theme/index';
+import themes, { ITheme } from '../../theme/index';
 // import './Classic.css';
 import childMenuContext from '../pages/projects/component/ChildMenusContext';
 import { useParams } from 'react-router-dom';
@@ -16,7 +16,7 @@ import {
 } from '../pages/projects/store/sortedMenuSlice';
 
 function Classic({ right = false }) {
-  const theme: ITheme = useTheme();
+  const theme = themes.default;
   const rootState = useSelector((state: IRootState) => state);
   const [menuData, setMenuData] = useState<any>();
   // const childMenus: any = useContext(childMenuContext);
@@ -53,7 +53,7 @@ function Classic({ right = false }) {
   }, [_selectActiveMenuName]);
 
   useEffect(() => {
-    setSelectedPage('');
+    // setSelectedPage('');
     if (params && params.menuId && subMenuList.length === 0) {
       if (sortedMenus && sortedMenus.length > 0) {
         const menuIndex = sortedMenus[0].data.findIndex(
@@ -65,6 +65,7 @@ function Classic({ right = false }) {
             const pageIndex = sortedMenus[0].data[menuIndex].child.findIndex(
               (value: any) => value.name === params.subMenuId
             );
+            setSubMenuList(sortedMenus[0].data[menuIndex].child);
             if (pageIndex !== -1) {
               setSelectedPage(
                 sortedMenus[0].data[menuIndex].child[pageIndex].pageId
@@ -102,7 +103,7 @@ function Classic({ right = false }) {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        height: 'calc(100vh - 8vh)',
+        height: 'calc(100vh - 7vh)',
         overflowX: 'hidden',
         overflowY: 'hidden',
         width: '100%',
@@ -111,18 +112,19 @@ function Classic({ right = false }) {
       {subMenuList && subMenuList.length > 0 && (
         <Box
           sx={{
-            backgroundColor: theme.palette?.light?.c50,
-            color: theme.palette.text?.primary,
-            borderRight: `1px solid ${theme.palette?.text?.c100}`,
-            height: 'calc(100vh - 8vh)',
-            width: '260px',
+            backgroundColor: theme.palette?.background?.bacopWhite,
+            color: theme.palette.text?.tex300Main,
+            borderRight: `1px solid ${theme.palette?.neutral?.neu100}`,
+            height: 'calc(100vh - 7vh)',
+            width: '216px',
+            overflowY: 'auto',
           }}
         >
           <AppMenu
             menuList={subMenuList}
             menuType="classic"
             openPage={(e: any) => {
-              setSelectedPage('');
+              // setSelectedPage('');
               setMenuData(e);
               setOpenMenuPage(e);
             }}
@@ -135,27 +137,27 @@ function Classic({ right = false }) {
           flexDirection: 'row',
           justifyContent: 'flex-end',
 
-          backgroundColor: theme.palette.background?.default,
-          color: theme.palette.text?.primary,
-          height: 'calc(100vh - 8vh)',
+          backgroundColor: theme.palette.background?.bacopWhite,
+          color: theme.palette.text?.tex300Main,
+          height: 'calc(100vh - 7vh)',
           width:
             subMenuList && subMenuList.length > 0
-              ? 'calc(100% - 260px)'
+              ? 'calc(100% - 216px)'
               : '100%',
         }}
       >
         <Box
           sx={{
-            backgroundColor: theme.palette.background?.default,
-            color: theme.palette.text?.primary,
+            backgroundColor: theme.palette.background?.bacmain,
+            color: theme.palette.text?.tex300Main,
             width: '100%',
             overflowY: 'auto',
           }}
         >
           {/* openpage {selectedPage} {_selectActivePageId} */}
-          {/* {selectedPage && selectedPage.length > 0 && ( */}
-          <AppMain pageId={selectedPage || _selectActivePageId || ''} />
-          {/* )} */}
+          {selectedPage && selectedPage !== '' && (
+            <AppMain pageId={selectedPage || _selectActivePageId || ''} />
+          )}
         </Box>
       </Box>
     </div>

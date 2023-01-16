@@ -4,10 +4,10 @@ import {
   createAsyncThunk,
   EntityState,
 } from '@reduxjs/toolkit';
-import { IRootState } from './index';
+import { IRootState } from '../../../../store/index';
 // import axios from 'axios';
-import axios from '../utils/NetworkLayer';
-import { environment } from '../environments/environment';
+import axios from '../../../../utils/NetworkLayer';
+import { environment } from '../../../../environments/environment';
 
 type _IRThemePalette = EntityState<IRThemePalette>;
 export interface IRThemePaletteContext extends _IRThemePalette {

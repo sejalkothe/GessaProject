@@ -2,6 +2,7 @@ import { IconComponent } from '@gessa/component-library';
 import { Box, Stack } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { IRootState } from 'apps/pages-gessa/src/store';
+import themes from 'apps/pages-gessa/src/theme';
 import generateRandomString from 'apps/pages-gessa/src/utils/randomString';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +20,7 @@ export interface ISideNav {
 }
 const SideNav = (props: ISideNav) => {
   const theme = useTheme();
+  const themesChart = themes.default;
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -36,21 +38,23 @@ const SideNav = (props: ISideNav) => {
     }
   }, [sortedMenus]);
 
-  // useEffect(() => {
-  //   if (params && params.menuId) {
-  //     dispatch(setActiveMenuName(params.menuId));
-  //   }
-  // }, [params]);
+  useEffect(() => {
+    if (params && params.menuId) {
+      setSelectedMenu(params.menuId);
+      dispatch(setActiveMenuName(params.menuId));
+    }
+  }, [params]);
 
   return (
     <Box
       sx={{
-        width: '62px',
-        height: '92vh',
+        width: '84px',
+        height: '93vh',
         justifyContent: 'center',
         display: 'flex',
-        background: theme.palette?.light?.c50,
-        borderRight: `1px solid ${theme.palette?.text?.c100}`,
+        overflowY: 'auto',
+        background: themesChart?.palette?.background?.bacopWhite,
+        borderRight: `1px solid ${themesChart?.palette?.neutral?.neu100}`,
       }}
     >
       <Stack direction="column">
@@ -58,16 +62,12 @@ const SideNav = (props: ISideNav) => {
           appMenu.length > 0 &&
           appMenu.map((item: any, index: any) => {
             return (
-              // <Link
-              //   key={index}
-              //   to={`/project/${params.projectId}/${
-              //     item.data.name || params.menuId
-              //   }`}
-              //   style={{ textDecoration: 'none' }}
-              // >
               <div
                 key={generateRandomString()}
                 style={{
+                  minWidth: '50px',
+                  minHeight: '50px',
+
                   width: '50px',
                   height: '50px',
                   display: 'flex',
@@ -77,8 +77,8 @@ const SideNav = (props: ISideNav) => {
                   borderRadius: '4px',
                   background:
                     selectedMenu === item.data.name
-                      ? theme?.palette?.background?.default
-                      : theme?.palette?.light?.c50,
+                      ? themesChart?.palette?.primary?.pri300Main
+                      : themesChart?.palette?.background?.bacopWhite,
                   color:
                     selectedMenu === item.data.name
                       ? theme?.palette?.primary?.main
@@ -102,15 +102,14 @@ const SideNav = (props: ISideNav) => {
                   );
                 }}
               >
-                {console.log(item.data.icon)}
                 <IconComponent
                   name={item.data.icon.trim() || 'Menu-Info'}
-                  size={25}
+                  size={30}
                   label={item.data.name}
                   color={
                     selectedMenu === item.data.name
-                      ? theme?.palette?.primary?.main
-                      : theme?.palette?.text?.main
+                      ? themesChart?.palette?.background?.bacopWhite
+                      : themesChart?.palette?.text?.tex300Main
                   }
                 />
               </div>

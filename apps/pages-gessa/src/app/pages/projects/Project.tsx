@@ -1,7 +1,7 @@
 import React, { useMemo, lazy, useEffect, useState, memo } from 'react';
-import { Box, Stack, useTheme } from '@mui/material';
-import Header from './component/Header/Header';
-import { IconComponent } from '@gessa/component-library';
+import { Box, Stack } from '@mui/material';
+// import Header, { HeaderComponent } from './component/Header/Header';
+import { HeaderComponent, IconComponent } from '@gessa/component-library';
 import {
   Link,
   Route,
@@ -10,7 +10,7 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import { ITheme } from '../../../theme/index';
+// import { ITheme } from '../../../theme/index';
 // import Logo from '../../../assets/logo.svg';
 import ChildMenuContext from './component/ChildMenusContext';
 import {
@@ -19,7 +19,6 @@ import {
 } from '../../pages/projects/store/appMenuSlice';
 import { useAppDispatch } from '../../../context/redux';
 import { useLocation } from 'react-router-dom';
-import { HeaderComponent } from '@gessa/component-library';
 import AppLayout from '../../layouts/AppLayout';
 import {
   clearLocalStorage,
@@ -34,10 +33,11 @@ import {
 } from './store/sortedMenuSlice';
 import { IRootState } from 'apps/pages-gessa/src/store';
 import keycloak from 'apps/pages-gessa/src/keycloak/keycloak';
+import themes from 'apps/pages-gessa/src/theme';
 
 export function Project() {
   const params: any = useParams();
-  const theme: ITheme = useTheme();
+  const theme = themes.default;
   const rootState = useSelector((state: IRootState) => state);
 
   const [widgetData, setWidgetData] = useState([]);
@@ -76,30 +76,58 @@ export function Project() {
       placeholder: 'Search',
       value: '',
     },
+    headerBackgroundColor: themes.default.palette?.background?.bacopWhite,
 
     notificationData: {
       name: 'Notification_24dp',
       size: 25,
+      color: themes.default.palette?.neutral?.neu400,
       label: 'notification',
+    },
+    chartProps: {
+      background_color: themes.default.palette?.background?.bacopWhite,
+      border_color: themes.default.palette?.neutral?.neu100,
     },
 
     userData: {
       text: _userInfo.userName,
+      email: _userInfo.email || '',
     },
   };
 
   useEffect(() => {
-    const menuParams = {
-      page: 0,
-      size: 100,
-    };
-    dispatch(getAppMenu(menuParams))
-      .then((res: any) => {
-        // navigate(`/project/${params.projectId}/${_selectedMenuName}`);
-      })
-      .catch((reason: any) => {
-        //  Todod :
-      });
+    if (sortedMenus && sortedMenus.length > 0) {
+    } else {
+      const menuParams = {
+        page: 0,
+        size: 100,
+      };
+      dispatch(getAppMenu(menuParams))
+        .then((res: any) => {
+          if (res && res.payload && res.payload.data) {
+            const sortedArr = JSON.parse(JSON.stringify(res.payload.data));
+            if (sortedArr && sortedArr[0].data) {
+              if (sortedArr[0].child && sortedArr[0].child.length > 0) {
+                navigate(
+                  `/project/${params.projectId}/${
+                    params.menuId || sortedArr[0].data.name
+                  }/${params.subMenuId || sortedArr[0].child[0].name}`
+                );
+              } else {
+                navigate(
+                  `/project/${params.projectId}/${
+                    params.menuId || sortedArr[0].data.name
+                  }`
+                );
+              }
+            }
+          }
+          // setSelectedMenu('page2');
+        })
+        .catch((reason: any) => {
+          //  Todod :
+        });
+    }
   }, []);
 
   const urlParams = useParams();
@@ -130,15 +158,18 @@ export function Project() {
   return (
     <Box
       sx={{
-        background: theme.palette?.light?.c50,
+        background: theme.palette?.background?.bacopWhite,
         overflow: 'hidden !important',
       }}
     >
+      {/* <div>hi hello</div> */}
       <HeaderComponent
         logoImagePath={headerComponentProps.logoImagePath}
         searchData={headerComponentProps.searchData}
         notificationData={headerComponentProps.notificationData}
         userData={headerComponentProps.userData}
+        headerBackgroundColor={headerComponentProps.headerBackgroundColor}
+        chartProps={headerComponentProps.chartProps}
         logoutClickAction={(e: any) => {
           logoutUser(e);
         }}
@@ -147,12 +178,12 @@ export function Project() {
       <Stack direction="row">
         <Box
           sx={{
-            width: '62px',
-            height: '92vh',
+            width: '84px',
+            height: '93vh',
             justifyContent: 'center',
             display: 'flex',
-            background: theme.palette?.light?.c50,
-            borderRight: `1px solid ${theme.palette?.text?.c100}`,
+            background: theme.palette?.background?.bacopWhite,
+            borderRight: `1px solid ${theme.palette?.neutral?.neu100}`,
           }}
         >
           <Stack direction="column">
@@ -163,47 +194,6 @@ export function Project() {
                 setSelectedMenu(data);
               }}
             />
-            {/* {appMenu?.map((item: any, index: any) => {
-              return (
-                <Link
-                  key={index}
-                  to={`/project/${params.projectId}/${
-                    item.data.name || params.menuId
-                  }`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Box
-                    sx={{
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginTop: '10px',
-                      background:
-                        selectedMenu === item.data.name
-                          ? theme?.palette?.background?.default
-                          : theme?.palette?.light?.c50,
-                    }}
-                    onClick={() => {
-                      setClicked(isClicked !== index ? index : -1);
-                      setSelectedMenu(item.data.name);
-                    }}
-                  >
-                    <IconComponent
-                      name={item.data.icon}
-                      size={25}
-                      label={item.data.icon}
-                      color={
-                        selectedMenu === item.data.name
-                          ? theme?.palette?.primary?.main
-                          : theme?.palette?.text?.primary
-                      }
-                    />
-                  </Box>
-                </Link>
-              );
-            })} */}
           </Stack>
         </Box>
         <Box
@@ -212,9 +202,7 @@ export function Project() {
             overflow: 'hidden',
           }}
         >
-          {/* <ChildMenuContext.Provider value={menuName.menuChild}> */}
           <AppLayout />
-          {/* </ChildMenuContext.Provider> */}
         </Box>
       </Stack>
     </Box>

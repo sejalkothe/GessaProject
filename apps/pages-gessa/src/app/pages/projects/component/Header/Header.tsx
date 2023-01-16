@@ -1,38 +1,61 @@
-import {
-  IconComponent,
-  IconComponentProps,
-  UserAvatar,
-} from '@gessa/component-library';
-import { useTheme } from '@mui/system';
+import { Stack, useTheme } from '@mui/system';
 import React, { useEffect, useState } from 'react';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+
+// import './header-component.css';
+import { Divider, Popover, Typography } from '@mui/material';
+import { IconComponent, IconComponentProps } from '@gessa/component-library';
 import SearchInput, { ISearchInputTypes } from '../SearchBox';
+import themes from 'apps/pages-gessa/src/theme';
+import UserAvatar from './UserAvatar';
+interface IAnyProps {
+  [key: string]: string | number | any;
+}
 export interface IHeaderComponentProps {
   logoImagePath?: string;
   searchData: ISearchInputTypes;
+  headerBackgroundColor?: string;
   userData: any;
   notificationData: IconComponentProps;
+  chartProps?: IAnyProps;
   searchdivEvent?: (data?: any) => any;
   notificationClickEvent?: (data?: any) => any;
   headerLogoClickEvent?: (data?: any) => any;
+  logoutClickAction?: (data?: any) => any;
 }
 
 export const HeaderComponent = (props: IHeaderComponentProps) => {
   const [inputText, setInputText] = useState('');
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+  const [open, setOpen] = useState<any>(false);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const id = open ? 'simple-popover' : undefined;
 
   const inputHandler = (e: any) => {
-    const lowerCase = e.target.value.toLowerCase();
-    setInputText(lowerCase);
+    // const lowerCase = e.target.value.toLowerCase();
+    // setInputText(lowerCase);
   };
 
   const notificationClicked = () => {
-    props && props.notificationClickEvent && props.notificationClickEvent();
+    props.notificationClickEvent && props.notificationClickEvent();
   };
 
   useEffect(() => {
     // console.log(props);
   }, [props]);
 
-  const theme: any = useTheme();
+  const theme = themes.default;
 
   return (
     <div
@@ -44,8 +67,10 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        background: theme.palette?.light?.c50,
-        borderBottom: `1px solid ${theme.palette?.text?.c100}`,
+        background:
+          props.headerBackgroundColor ||
+          themes.default?.palette?.background?.bacopWhite,
+        borderBottom: `1px solid ${theme.palette?.neutral?.neu100}`,
       }}
     >
       <div
@@ -58,7 +83,7 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
       >
         <div
           style={{
-            background: theme.palette?.light?.c50,
+            background: themes.default?.palette?.background?.bacopWhite,
             height: '22px',
             paddingLeft: '10px',
             display: 'flex',
@@ -67,7 +92,8 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
             alignItems: 'center',
           }}
           onClick={() => {
-            props && props.headerLogoClickEvent && props.headerLogoClickEvent();
+            console.log('headerlogoClickEvent');
+            props.headerLogoClickEvent && props.headerLogoClickEvent();
           }}
         >
           {props.logoImagePath && <img src={props.logoImagePath} />}
@@ -81,7 +107,7 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
           justifyContent: 'center',
           display: 'flex',
           alignItems: 'center',
-          background: theme.palette?.light?.c50,
+          backgroundColor: themes.default?.palette?.background?.bacopWhite,
         }}
       >
         {props && props.searchData && (
@@ -89,6 +115,7 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
             label={props.searchData.label || 'Search'}
             placeholder={props.searchData.placeholder || 'Search'}
             value={props.searchData.value || ''}
+            chartProps={props.chartProps}
             onChange={(e: any) => inputHandler(e)}
           />
         )}
@@ -111,6 +138,7 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
             justifyContent: 'flex-start',
           }}
           onClick={() => {
+            console.log('notificationClickEvent');
             notificationClicked();
           }}
         >
@@ -130,8 +158,15 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
             alignItems: 'center',
             justifyContent: 'flex-start',
           }}
+          onClick={(e: any) => handleClick(e)}
         >
-          <UserAvatar text={props.userData.text || ''} />
+          <UserAvatar
+            text={props.userData.text || ''}
+            chartProps={{
+              background_color: themes.default?.palette?.primary?.pri100,
+              text_color: themes.default?.palette?.primary?.pri500,
+            }}
+          />
         </div>
       </div>
     </div>

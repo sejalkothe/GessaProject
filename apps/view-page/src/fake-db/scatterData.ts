@@ -1,6 +1,7 @@
-import { useTheme } from '@mui/system';
+// import { useTheme } from '@mui/system';
+// const theme: any = themes.default;
+
 import themes from '../theme';
-const theme: any = themes.default;
 
 export const lineData = {
   data: {
@@ -9,41 +10,62 @@ export const lineData = {
       {
         label: 'Dataset 1',
         data: [65, 59, 80, 81, 56, 55, 40],
-        borderColor: 'red',
+        borderColor: themes.default?.palette?.systemColor4?.sys300Main,
+        // backgroundColor: `linear-gradient(180deg, rgba(${themes.default.palette.systemColor3.sys300Main},0.28), 5.1%, rgba(${themes.default.palette.systemColor3.sys300Main}, 0) 113.73%);`,
+        backgroundColor: themes.default?.palette?.systemColor4?.sys100,
         pointRadius: 2,
         pointStyle: 'circle',
         borderWidth: 1,
-        // tension: 0.5,
-      },
-    ],
-  },
-};
-
-export const lineWithTensionData = {
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        borderColor: 'red',
-        pointRadius: 2,
-        pointStyle: 'circle',
-        borderWidth: 1,
-        tension: 0.5,
       },
       {
         label: 'Dataset 2',
         data: [70, 51, 85, 71, 46, 59, 48],
-        borderColor: 'green',
+        borderColor: themes.default?.palette?.systemColor3?.sys300Main,
         pointRadius: 2,
+        backgroundColor: themes.default?.palette?.systemColor3?.sys100,
         pointStyle: 'circle',
         borderWidth: 1,
-        tension: 0.5,
       },
     ],
   },
+
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
+    bar_thickness: 25,
+    axis_border_Color: themes.default?.palette?.neutral?.neu100,
+    display_grid: { x: true, y: false },
+    axis_ticks_color: themes.default?.palette?.text?.tex400,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
+  },
 };
+
+// export const lineWithTensionData = {
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
+//     datasets: [
+//       {
+//         label: 'Dataset 1',
+//         data: [65, 59, 80, 81, 56, 55, 40],
+//         borderColor: 'red',
+//         pointRadius: 2,
+//         pointStyle: 'circle',
+//         borderWidth: 1,
+//         tension: 0.5,
+//       },
+//       {
+//         label: 'Dataset 2',
+//         data: [70, 51, 85, 71, 46, 59, 48],
+//         borderColor: 'green',
+//         pointRadius: 2,
+//         pointStyle: 'circle',
+//         borderWidth: 1,
+//         tension: 0.5,
+//       },
+//     ],
+//   },
+// };
 
 export const linechartFilled = {
   data: {
@@ -52,8 +74,10 @@ export const linechartFilled = {
       {
         label: 'Dataset 1',
         data: [65, 59, 80, 81, 56, 55, 40],
-        borderColor: '#ff00ff',
-        // fill: true,
+        borderColor: themes.default?.palette?.systemColor4?.sys300Main,
+        fill: true,
+        // backgroundColor: `linear-gradient(180deg, rgba(${themes.default.palette.systemColor3.sys300Main},0.28), 5.1%, rgba(${themes.default.palette.systemColor3.sys300Main}, 0) 113.73%);`,
+        backgroundColor: themes.default?.palette?.systemColor4?.sys100,
         pointRadius: 2,
         pointStyle: 'circle',
         borderWidth: 1,
@@ -62,14 +86,25 @@ export const linechartFilled = {
       {
         label: 'Dataset 2',
         data: [70, 51, 85, 71, 46, 59, 48],
-        borderColor: '#ffff00',
+        borderColor: themes.default?.palette?.systemColor3?.sys300Main,
         pointRadius: 2,
         fill: true,
+        backgroundColor: themes.default?.palette?.systemColor3?.sys100,
         pointStyle: 'circle',
         borderWidth: 1,
         tension: 0.5,
       },
     ],
+  },
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
+    bar_thickness: 25,
+    axis_border_Color: themes.default?.palette?.neutral?.neu100,
+    display_grid: { x: true, y: false },
+    axis_ticks_color: themes.default?.palette?.text?.tex400,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
   },
 };
 
@@ -131,28 +166,47 @@ export const tableData = {
 };
 export const barData = {
   data: {
-    labels: [
-      'value1',
-      'value2',
-      'value3',
-      'value4',
-      'value5',
-      'value6',
-      'value7',
-      'value8',
-    ],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
       {
-        label: 'My First Dataset',
-        data: [250, 275, 500, 124, 200, 130, 250, 70],
-        // backgroundColor:'#'+(Math.random() * 0xfffff * 1000000).toString(16).slice(0,6),
-        backgroundColor:
-          theme.palette?.systemColor1?.main ||
-          '#' + (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6),
+        label: 'Dataset 1',
+        data: [500, 200, 100, 700, 300, 550, 230],
+        backgroundColor: themes.default?.palette?.systemColor1?.sys300Main,
         borderRadius: 5,
-        borderColor: '#ff00ff',
+      },
+      {
+        label: 'Dataset 2',
+        data: [200, 900, 350, 520, 1000, 330, 440],
+        backgroundColor: themes.default?.palette?.systemColor2?.sys300Main,
+        borderRadius: 5,
+      },
+      {
+        label: 'Dataset 3',
+        data: [200, 900, 350, 520, 1000, 330, 440],
+        backgroundColor: themes.default?.palette?.systemColor3?.sys300Main,
+        borderRadius: 5,
+      },
+      {
+        label: 'Dataset 3',
+        data: [200, 900, 350, 520, 1000, 330, 440],
+        backgroundColor: themes.default?.palette?.systemColor4?.sys300Main,
+        borderRadius: 5,
       },
     ],
+  },
+  stacked: true,
+  horizontal: true,
+  xLabel: 'x',
+  yLabel: 'y',
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
+    bar_thickness: 25,
+    axis_border_Color: themes.default?.palette?.neutral?.neu100,
+    display_grid: { x: true, y: false },
+    axis_ticks_color: themes.default?.palette?.text?.tex400,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
   },
 };
 export const cardheaderData = {
@@ -200,153 +254,153 @@ export const cardheaderData = {
     },
   ],
 };
-export const lineData2 = {
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        borderColor: themes.default.palette?.systemColor1?.main,
-        fill: true,
-        pointRadius: 2,
-        borderWidth: 1,
-        tension: 0.5,
-      },
-      {
-        label: 'Dataset 2',
-        data: [70, 51, 85, 71, 46, 59, 48],
-        borderColor: themes.default.palette?.systemColor2?.main,
-        pointRadius: 2,
-        // fill: true,
-        borderWidth: 1,
-        tension: 0.5,
-      },
-    ],
-  },
-};
-export const scatterData = {
-  labels: ['a', 'b', 'c'],
-  datasets: [
-    {
-      label: 'Red dataset',
-      data: [
-        {
-          x: 21,
-          y: 47,
-          r: 12,
-        },
-        {
-          x: 43,
-          y: 26,
-          r: 17,
-        },
-        {
-          x: 21,
-          y: 18,
-          r: 17,
-        },
-        {
-          x: 49,
-          y: 36,
-          r: 11,
-        },
-        {
-          x: 27,
-          y: 21,
-          r: 16,
-        },
-        {
-          x: 41,
-          y: 38,
-          r: 14,
-        },
-        {
-          x: 15,
-          y: 21,
-          r: 14,
-        },
-        {
-          x: 30,
-          y: 36,
-          r: 12,
-        },
-        {
-          x: 22,
-          y: 42,
-          r: 12,
-        },
-        {
-          x: 21,
-          y: 35,
-          r: 13,
-        },
-        {
-          x: 37,
-          y: 23,
-          r: 10,
-        },
-        {
-          x: 14,
-          y: 28,
-          r: 11,
-        },
-        {
-          x: 16,
-          y: 23,
-          r: 11,
-        },
-        {
-          x: 14,
-          y: 25,
-          r: 12,
-        },
-        {
-          x: 28,
-          y: 13,
-          r: 11,
-        },
-        {
-          x: 10,
-          y: 29,
-          r: 12,
-        },
-      ],
-      backgroundColor: themes.default?.palette?.systemColor1?.main,
-      pointRadius: 2,
-      borderColor: themes.default?.palette?.systemColor1?.main,
-    },
-    {
-      label: 'Blue dataset',
-      data: [
-        {
-          x: 28,
-          y: 23,
-          r: 14,
-        },
+// export const lineData2 = {
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black'],
+//     datasets: [
+//       {
+//         label: 'Dataset 1',
+//         data: [65, 59, 80, 81, 56, 55, 40],
+//         borderColor: themes.default.palette?.systemColor1?.main,
+//         fill: true,
+//         pointRadius: 2,
+//         borderWidth: 1,
+//         tension: 0.5,
+//       },
+//       {
+//         label: 'Dataset 2',
+//         data: [70, 51, 85, 71, 46, 59, 48],
+//         borderColor: themes.default.palette?.systemColor2?.main,
+//         pointRadius: 2,
+//         // fill: true,
+//         borderWidth: 1,
+//         tension: 0.5,
+//       },
+//     ],
+//   },
+// };
+// export const scatterData = {
+//   labels: ['a', 'b', 'c'],
+//   datasets: [
+//     {
+//       label: 'Red dataset',
+//       data: [
+//         {
+//           x: 21,
+//           y: 47,
+//           r: 12,
+//         },
+//         {
+//           x: 43,
+//           y: 26,
+//           r: 17,
+//         },
+//         {
+//           x: 21,
+//           y: 18,
+//           r: 17,
+//         },
+//         {
+//           x: 49,
+//           y: 36,
+//           r: 11,
+//         },
+//         {
+//           x: 27,
+//           y: 21,
+//           r: 16,
+//         },
+//         {
+//           x: 41,
+//           y: 38,
+//           r: 14,
+//         },
+//         {
+//           x: 15,
+//           y: 21,
+//           r: 14,
+//         },
+//         {
+//           x: 30,
+//           y: 36,
+//           r: 12,
+//         },
+//         {
+//           x: 22,
+//           y: 42,
+//           r: 12,
+//         },
+//         {
+//           x: 21,
+//           y: 35,
+//           r: 13,
+//         },
+//         {
+//           x: 37,
+//           y: 23,
+//           r: 10,
+//         },
+//         {
+//           x: 14,
+//           y: 28,
+//           r: 11,
+//         },
+//         {
+//           x: 16,
+//           y: 23,
+//           r: 11,
+//         },
+//         {
+//           x: 14,
+//           y: 25,
+//           r: 12,
+//         },
+//         {
+//           x: 28,
+//           y: 13,
+//           r: 11,
+//         },
+//         {
+//           x: 10,
+//           y: 29,
+//           r: 12,
+//         },
+//       ],
+//       backgroundColor: themes.default?.palette?.systemColor1?.main,
+//       pointRadius: 2,
+//       borderColor: themes.default?.palette?.systemColor1?.main,
+//     },
+//     {
+//       label: 'Blue dataset',
+//       data: [
+//         {
+//           x: 28,
+//           y: 23,
+//           r: 14,
+//         },
 
-        {
-          x: 10,
-          y: 44,
-          r: 13,
-        },
-        {
-          x: 43,
-          y: 25,
-          r: 17,
-        },
-        {
-          x: 15,
-          y: 38,
-          r: 11,
-        },
-      ],
-      backgroundColor: themes.default?.palette?.systemColor2?.main,
-      pointRadius: 2,
-      borderColor: themes.default?.palette?.systemColor2?.main,
-    },
-  ],
-};
+//         {
+//           x: 10,
+//           y: 44,
+//           r: 13,
+//         },
+//         {
+//           x: 43,
+//           y: 25,
+//           r: 17,
+//         },
+//         {
+//           x: 15,
+//           y: 38,
+//           r: 11,
+//         },
+//       ],
+//       backgroundColor: themes.default?.palette?.systemColor2?.main,
+//       pointRadius: 2,
+//       borderColor: themes.default?.palette?.systemColor2?.main,
+//     },
+//   ],
+// };
 
 export const bubbleData = {
   labels: ['a', 'b', 'c'],
@@ -385,8 +439,8 @@ export const bubbleData = {
           r: 8,
         },
       ],
-      backgroundColor: themes.default?.palette?.systemColor1?.main,
-      borderColor: themes.default?.palette?.systemColor1?.main,
+      backgroundColor: themes.default?.palette?.systemColor1?.sys100,
+      borderColor: themes.default?.palette?.systemColor1?.sys300Main,
     },
     {
       label: 'Blue dataset',
@@ -427,12 +481,265 @@ export const bubbleData = {
           r: 8,
         },
       ],
-      backgroundColor: themes.default?.palette?.systemColor2?.main,
-      borderColor: themes.default?.palette?.systemColor2?.main,
+      backgroundColor: themes.default?.palette?.systemColor2?.sys100,
+      borderColor: themes.default?.palette?.systemColor2?.sys300Main,
     },
   ],
 };
+// export const polarData = {
+//   labels: [
+//     'name-a',
+//     'name-b',
+//     'name-c',
+//     'name-d',
+//     'name-e',
+//     'name-f',
+//     'name-g',
+//     'name-h',
+//     'name-i',
+//     'name-j',
+//     'name-k',
+//     'name-l',
+//     'name-m',
+//     'name-n',
+//     'name-o',
+//     'name-p',
+//     'name-q',
+//   ],
+//   datasets: [
+//     {
+//       label: 'Red dataset',
+//       data: [
+//         17, 33, 41, 13, 44, 22, 37, 22, 12, 11, 28, 10, 26, 50, 42, 50, 36,
+//       ],
+//       backgroundColor: [
+//         themes.default?.palette?.systemColor1?.main,
+//         themes.default?.palette?.systemColor2?.main,
+//         themes.default?.palette?.systemColor3?.main,
+//         themes.default?.palette?.systemColor4?.main,
+//         themes.default?.palette?.systemColor5?.main,
+//         themes.default?.palette?.systemColor1?.c100,
+//         themes.default?.palette?.systemColor2?.c100,
+//         themes.default?.palette?.systemColor3?.c100,
+//         themes.default?.palette?.systemColor4?.c100,
+//         themes.default?.palette?.systemColor5?.c100,
+//         themes.default?.palette?.systemColor1?.c50,
+//         themes.default?.palette?.systemColor2?.c50,
+//         themes.default?.palette?.systemColor3?.c50,
+//         themes.default?.palette?.systemColor4?.c50,
+//         themes.default?.palette?.systemColor5?.c50,
+//         themes.default?.palette?.systemColor1?.light,
+//         themes.default?.palette?.systemColor2?.light,
+//       ],
+//     },
+//     // {
+//     //   label: 'Blue dataset',
+//     //   data: [
+//     //     21, 49, 43, 28, 22, 22, 27, 31, 50, 21, 32, 20, 37, 45, 24, 49, 27,
+//     //   ],
+//     //   backgroundColor: ['rgba(53, 162, 235, 0.5)'],
+//     // },
+//   ],
+// };
+
+// export const heatmapData: any = {
+//   // rows: 4,
+//   // columns: 24,
+//   colLabel: '',
+//   rowLabel: '',
+//   columnAxisLabel: ['11', '22', '33', '44', '55', '66'],
+//   rowAxisLabel: [['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']],
+//   data: [
+//     [40, 42, 68, 15, 23, 84, 90, 18, 85, 38],
+//     [75, 44, 39, 30, 87, 50, 73, 90, 3, 43],
+//     [12, 45, 10, 34, 67, 18, 36, 7, 89, 38],
+//     [61, 88, 81, 74, 0, 87, 89, 1, 70, 35],
+//     [61, 88, 81, 74, 0, 87, 89, 1, 70, 35],
+//     // [61, 88, 81, 74, 0, 87, 89, 1, 70, 35],
+//   ],
+//   threshold: [
+//     {
+//       name: 'low',
+//       value_min: 90,
+//       value_max: 100,
+//       color: themes.default.palette?.systemColor1?.main,
+//     },
+//     {
+//       name: 'medium',
+//       value_min: 75,
+//       value_max: 90,
+//       color: themes.default.palette?.systemColor2?.main,
+//     },
+//     {
+//       name: 'high',
+//       value_min: 0,
+//       value_max: 75,
+//       color: themes.default.palette?.systemColor3?.main,
+//     },
+//   ],
+// };
+
+export const doughnutData = {
+  data: {
+    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: [
+          themes.default?.palette?.systemColor1?.sys300Main,
+          themes.default?.palette?.systemColor2?.sys300Main,
+          themes.default?.palette?.systemColor3?.sys300Main,
+          themes.default?.palette?.systemColor4?.sys300Main,
+          themes.default?.palette?.systemColor5?.sys300Main,
+        ],
+
+        borderWidth: 1,
+      },
+    ],
+  },
+
+  fontData: {
+    families: ['poppins', 'Indie Flower', 'Raleway'],
+    url: [
+      'https://fonts.googleapis.com/css?family=Poppins',
+      'https://fonts.googleapis.com/css?family=Indie+Flower',
+      'https://fonts.googleapis.com/css?family=Raleway',
+    ],
+    defaultFont: 'poppins',
+  },
+  legend: 'right',
+  chartProps: {
+    doughnut_cutout: '80%',
+    doughnut_radius: '100%',
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex400,
+  },
+};
+
+export const piechartData = {
+  height: 400,
+  width: 600,
+  legend: 'right',
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
+  },
+
+  data: {
+    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: [
+          themes.default?.palette?.systemColor1?.sys200,
+          themes.default?.palette?.systemColor2?.sys200,
+          themes.default?.palette?.systemColor3?.sys200,
+          themes.default?.palette?.systemColor4?.sys200,
+          themes.default?.palette?.systemColor5?.sys200,
+        ],
+
+        borderWidth: 1,
+      },
+    ],
+  },
+};
+
+export const radarData = {
+  data: {
+    labels: [
+      'Eating',
+      'Drinking',
+      'Sleeping',
+      'Designing',
+      'Coding',
+      'Cycling',
+    ],
+    datasets: [
+      {
+        label: '1st Dataset',
+        data: [2, 9, 3, 5, 2, 3],
+        backgroundColor: themes.default?.palette?.systemColor4?.sys300Main,
+        borderColor: themes.default?.palette?.systemColor1?.sys300Main,
+        borderWidth: 1,
+      },
+      {
+        label: '2nd Dataset',
+        data: [9, 2, 7, 8, 1, 5],
+        backgroundColor: themes.default?.palette?.systemColor5?.sys300Main,
+        borderColor: themes.default?.palette?.systemColor3?.sys300Main,
+        borderWidth: 1,
+      },
+    ],
+  },
+  fontData: {
+    families: ['poppins', 'Indie Flower', 'Raleway'],
+    url: [
+      'https://fonts.googleapis.com/css?family=Poppins',
+      'https://fonts.googleapis.com/css?family=Indie+Flower',
+      'https://fonts.googleapis.com/css?family=Raleway',
+    ],
+    defaultFont: 'poppins',
+  },
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
+  },
+};
+
+export const scatterData = {
+  labels: ['a', 'b', 'c'],
+  datasets: [
+    {
+      label: 'Red dataset',
+      data: [
+        {
+          x: 40,
+          y: 34,
+          r: 17,
+        },
+      ],
+      backgroundColor: themes.default?.palette?.systemColor1?.sys300Main,
+      pointRadius: 5,
+    },
+    {
+      label: 'Blue dataset',
+      data: [
+        {
+          x: 38,
+          y: 23,
+          r: 14,
+        },
+      ],
+      backgroundColor: themes.default?.palette?.systemColor2?.sys300Main,
+      pointRadius: 5,
+    },
+  ],
+  chartProps: {
+    chartjs_default_color: themes.default?.palette?.background?.bacopWhite,
+    chartjs_grid_color: themes.default?.palette?.neutral?.neu100,
+    axis_border_Color: themes.default?.palette?.neutral?.neu100,
+    display_grid: { x: true, y: false },
+    axis_ticks_color: themes.default?.palette?.text?.tex400,
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex600,
+  },
+};
 export const polarData = {
+  fontData: {
+    families: ['poppins', 'Indie Flower', 'Raleway'],
+    url: [
+      'https://fonts.googleapis.com/css?family=Poppins',
+      'https://fonts.googleapis.com/css?family=Indie+Flower',
+      'https://fonts.googleapis.com/css?family=Raleway',
+    ],
+    defaultFont: 'Raleway',
+  },
+
   labels: [
     'name-a',
     'name-b',
@@ -459,23 +766,23 @@ export const polarData = {
         17, 33, 41, 13, 44, 22, 37, 22, 12, 11, 28, 10, 26, 50, 42, 50, 36,
       ],
       backgroundColor: [
-        themes.default?.palette?.systemColor1?.main,
-        themes.default?.palette?.systemColor2?.main,
-        themes.default?.palette?.systemColor3?.main,
-        themes.default?.palette?.systemColor4?.main,
-        themes.default?.palette?.systemColor5?.main,
-        themes.default?.palette?.systemColor1?.c100,
-        themes.default?.palette?.systemColor2?.c100,
-        themes.default?.palette?.systemColor3?.c100,
-        themes.default?.palette?.systemColor4?.c100,
-        themes.default?.palette?.systemColor5?.c100,
-        themes.default?.palette?.systemColor1?.c50,
-        themes.default?.palette?.systemColor2?.c50,
-        themes.default?.palette?.systemColor3?.c50,
-        themes.default?.palette?.systemColor4?.c50,
-        themes.default?.palette?.systemColor5?.c50,
-        themes.default?.palette?.systemColor1?.light,
-        themes.default?.palette?.systemColor2?.light,
+        themes.default?.palette?.systemColor1?.sys300Main,
+        themes.default?.palette?.systemColor2?.sys300Main,
+        themes.default?.palette?.systemColor3?.sys300Main,
+        themes.default?.palette?.systemColor4?.sys300Main,
+        themes.default?.palette?.systemColor5?.sys300Main,
+        themes.default?.palette?.systemColor1?.sys100,
+        themes.default?.palette?.systemColor2?.sys100,
+        themes.default?.palette?.systemColor3?.sys100,
+        themes.default?.palette?.systemColor4?.sys100,
+        themes.default?.palette?.systemColor5?.sys100,
+        themes.default?.palette?.systemColor1?.sys400,
+        themes.default?.palette?.systemColor2?.sys400,
+        themes.default?.palette?.systemColor3?.sys400,
+        themes.default?.palette?.systemColor4?.sys400,
+        themes.default?.palette?.systemColor5?.sys400,
+        themes.default?.palette?.systemColor1?.sys600,
+        themes.default?.palette?.systemColor2?.sys600,
       ],
     },
     // {
@@ -486,125 +793,8 @@ export const polarData = {
     //   backgroundColor: ['rgba(53, 162, 235, 0.5)'],
     // },
   ],
-};
-
-export const heatmapData: any = {
-  // rows: 4,
-  // columns: 24,
-  colLabel: '',
-  rowLabel: '',
-  columnAxisLabel: ['11', '22', '33', '44', '55', '66'],
-  rowAxisLabel: [['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']],
-  data: [
-    [40, 42, 68, 15, 23, 84, 90, 18, 85, 38],
-    [75, 44, 39, 30, 87, 50, 73, 90, 3, 43],
-    [12, 45, 10, 34, 67, 18, 36, 7, 89, 38],
-    [61, 88, 81, 74, 0, 87, 89, 1, 70, 35],
-    [61, 88, 81, 74, 0, 87, 89, 1, 70, 35],
-    // [61, 88, 81, 74, 0, 87, 89, 1, 70, 35],
-  ],
-  threshold: [
-    {
-      name: 'low',
-      value_min: 90,
-      value_max: 100,
-      color: themes.default.palette?.systemColor1?.main,
-    },
-    {
-      name: 'medium',
-      value_min: 75,
-      value_max: 90,
-      color: themes.default.palette?.systemColor2?.main,
-    },
-    {
-      name: 'high',
-      value_min: 0,
-      value_max: 75,
-      color: themes.default.palette?.systemColor3?.main,
-    },
-  ],
-};
-
-export const doughnutData = {
-  data: {
-    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2],
-        backgroundColor: [
-          themes.default?.palette?.systemColor1?.main,
-          themes.default?.palette?.systemColor2?.main,
-          themes.default?.palette?.systemColor3?.main,
-          themes.default?.palette?.systemColor4?.main,
-          themes.default?.palette?.systemColor5?.c50,
-        ],
-        cutout: '80%',
-        borderWidth: 1,
-      },
-    ],
-  },
-};
-
-export const piechartData = {
-  data: {
-    labels: ['Blue', 'Red', 'Purple', 'Green', 'Yello'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2],
-        backgroundColor: [
-          themes.default?.palette?.systemColor1?.main,
-          themes.default?.palette?.systemColor2?.main,
-          themes.default?.palette?.systemColor3?.main,
-          themes.default?.palette?.systemColor4?.main,
-          themes.default?.palette?.systemColor5?.c100,
-        ],
-        borderWidth: 1,
-      },
-      // {
-      //   label: '# of ',
-      //   data: [null, null, null, null, null],
-      //   backgroundColor: [
-      //     themes.default?.palette?.systemColor1?.main,
-      //     themes.default?.palette?.systemColor2?.main,
-      //     themes.default?.palette?.systemColor3?.main,
-      //     themes.default?.palette?.systemColor4?.main,
-      //     themes.default?.palette?.systemColor5?.main,
-      //   ],
-
-      //   borderWidth: 1,
-      // },
-    ],
-  },
-};
-
-export const radarData = {
-  data: {
-    labels: [
-      'Eating',
-      'Drinking',
-      'Sleeping',
-      'Designing',
-      'Coding',
-      'Cycling',
-    ],
-    datasets: [
-      {
-        label: '1st Dataset',
-        data: [65, 59, 90, 81, 56, 55],
-        fill: true,
-        backgroundColor: themes.default?.palette?.systemColor2?.main,
-        borderColor: themes.default?.palette?.systemColor2?.light,
-        borderWidth: 1,
-      },
-      // {
-      //   label: '2nd Dataset',
-      //   data: [28, 48, 40, 19, 96, 27],
-      //   backgroundColor: themes.default?.palette?.systemColor1?.main,
-      //   borderColor: themes.default?.palette?.systemColor1?.light,
-      //   borderWidth: 1,
-      // },
-    ],
+  chartProps: {
+    background_color: themes.default?.palette?.background?.bacopWhite,
+    legend_text_color: themes.default?.palette?.text?.tex400,
   },
 };

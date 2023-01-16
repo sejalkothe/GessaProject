@@ -1,74 +1,127 @@
-import { Box, IconButton, InputBase, InputLabel, Paper } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { IconComponent } from '@gessa/component-library';
+import { InputBase, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
-import { useState } from 'react';
-import { ITheme } from 'apps/pages-gessa/src/theme';
+import themes from 'apps/pages-gessa/src/theme';
+import { useEffect, useState } from 'react';
+import './SearchBox.css';
 
+interface IAnyProps {
+  [key: string]: string | number | any;
+}
 export interface ISearchInputTypes {
   label: string;
   placeholder: string;
   value: string;
   onChange?: (e: any) => void;
+  chartProps?: IAnyProps;
 }
 
 export const SearchInput = (props: ISearchInputTypes) => {
   const [searchText, setSearchText] = useState<string>('');
-  const theme: ITheme = useTheme();
+  const theme = themes.default;
+
+  useEffect(() => {
+    setSearchText(props.value);
+  }, [props]);
+
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         position: 'relative',
         width: '100%',
-        background: theme.palette?.light?.c50,
+        background:
+          props?.chartProps?.background_color ||
+          themes.default?.palette?.background?.bacopWhite,
       }}
-      className="Search_Field"
     >
-      <Box sx={{ position: 'relative', width: '100%' }}>
-        <Paper
-          component="form"
-          sx={{
-            p: '2px 4px',
-            display: 'flex',
-            alignItems: 'center',
-            height: 34,
-            width: '100%',
-            background: theme.palette?.light?.c50,
-            border: `1px solid ${theme.palette?.text?.c100}`,
-            boxShadow: 'none',
-          }}
-        >
-          <IconButton sx={{ p: '10px' }} aria-label="search">
-            <SearchIcon
-              sx={{
-                color: theme?.palette?.text?.disabled,
-              }}
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          background:
+            props?.chartProps?.background_color ||
+            themes.default?.palette?.background?.bacopWhite,
+          borderColor:
+            props?.chartProps?.border_color || theme.palette?.neutral?.neu100,
+        }}
+      >
+        <Typography variant={'body1'}>
+          <div
+            style={{
+              padding: '2px 4px',
+              display: 'flex',
+              alignItems: 'center',
+              height: 34,
+              width: '100%',
+              // border: `1px solid ${theme.palette.text.c100} !important`,
+              border: 1,
+              borderStyle: 'solid',
+              borderColor:
+                props?.chartProps?.border_color ||
+                theme.palette?.neutral?.neu100,
+              backgroundColor: theme.palette?.background?.bacopWhite,
+            }}
+          >
+            <IconComponent
+              name={'search_black_24dp-1'}
+              size={20}
+              label={'search'}
+              color={theme?.palette?.neutral?.neu500}
             />
-          </IconButton>
-          <InputBase
-            sx={{
-              fontWeight: '400',
-              ml: 1,
-              flex: 1,
-              y: 25,
-              fontSize: '12px',
-              background: theme.palette?.light?.c50,
-              color: theme?.palette?.text?.primary,
-            }}
-            placeholder={props.placeholder}
-            value={searchText}
-            name="search"
-            onChange={(e: any) => {
-              setSearchText(e.target.value);
-              props && props.onChange && props.onChange(e.target.value);
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Paper>
-      </Box>
-    </Box>
+
+            {/* <IconButton sx={{ p: '10px' }} aria-label="search">
+            <SearchIcon style={{ color: theme?.palette?.text?.disabled }} />
+          </IconButton> */}
+            {/* <input
+              style={{
+                fontWeight: '400',
+                marginLeft: 1,
+                flex: 1,
+                fontSize: '12px',
+                background:
+                  props?.chartProps?.background_color ||
+                  themes.default?.palette?.background?.bacopWhite,
+                color: theme?.palette?.text?.tex300Main,
+              }}
+              
+              placeholder={props.placeholder}
+              value={searchText}
+              name="search"
+            ></input> */}
+            <InputBase
+              sx={{
+                fontWeight: '400',
+                ml: 1,
+                flex: 1,
+                y: 25,
+                fontSize: '12px',
+                background:
+                  props?.chartProps?.background_color ||
+                  themes.default?.palette?.background?.bacopWhite,
+                color: theme?.palette?.text?.tex300Main,
+              }}
+              style={{
+                background:
+                  props?.chartProps?.background_color ||
+                  themes.default?.palette?.background?.bacopWhite,
+                color: theme?.palette?.text?.tex300Main,
+              }}
+              placeholder={props.placeholder}
+              value={searchText}
+              name="search"
+              onChange={(e: any) => {
+                setSearchText(e.target.value);
+                props.onChange && props.onChange(e.target.value);
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+        </Typography>
+      </div>
+    </div>
   );
 };
 

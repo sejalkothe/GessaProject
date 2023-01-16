@@ -1,32 +1,19 @@
 import { useTheme } from '@mui/system';
 import ConfigFormProvider from 'apps/view-page/src/context/form';
-import { cardheaderData } from 'apps/view-page/src/fake-db/scatterData';
 import { IRootState } from 'apps/view-page/src/store';
-import { selectThemeContext } from 'apps/view-page/src/store/themeContextSlice';
 import themes from 'apps/view-page/src/theme';
-import {
-  constStackVerticalBarChartType,
-  constStackVerticalFullBarChartType,
-  constStackHorizontalBarChartType,
-  constStackHorizontalFullBarChart,
-  constLineChartWithTension,
-  constLineChartWithFilled,
-  constLineChartWithTensionFilled,
-} from 'apps/view-page/src/utils/constantString';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomSnackbar from '../../components/CustomSnackbar';
 import Demo2Ui from './components/Demo2Ui';
-import {
-  getChartDataResource,
-  getGridDataResource,
-} from './store/gridDataRenderSlice';
+import { getPageDataByIdApi } from './newStore/pageDetail';
+import { selectPageWidgetDataById } from './newStore/pageWidgetData';
+import { selectThemeContext } from './newStore/themeContextSlice';
+import { getChartDataResource } from './store/gridDataRenderSlice';
 import {
   deleteAllStore,
-  getPageDataByIdApi,
   savePageConfigurationApi,
   selectGridData,
-  setGridDatatore,
 } from './store/gridSlice';
 import { getAllReportsLabelApi } from './store/reportLabelSlice';
 import { getAllReportsApi, selectAllReports } from './store/reportSlice';
@@ -44,11 +31,15 @@ const DemoWrapper = (props: IGridProps) => {
   const themeData = selectThemeContext(rootState);
   const [fontData, setFontData] = useState<any>();
 
-  const gridDataStore: any = selectGridData(rootState);
+  const gridDataStore = selectPageWidgetDataById(
+    rootState,
+    props.page_id || ''
+  );
   const [gridData, setGridData] = useState<any>([]);
   const widgets = selectAllWidgets(rootState);
   const reports = selectAllReports(rootState);
   // const reportLabels = selectAllReportsLabel(rootState);
+  const [report_label_collection, setReportLabelCollection] = useState<any>([]);
   const [snackData, setSnackData]: any = useState({
     open: false,
     msg: '',
@@ -64,6 +55,10 @@ const DemoWrapper = (props: IGridProps) => {
       duration: 0,
     });
   }, []);
+
+  useEffect(() => {
+    // console.log(report_label_collection);
+  }, [report_label_collection]);
 
   useEffect(() => {
     if (themeData && themeData.length > 0 && themeData[0].font.result) {
@@ -85,13 +80,16 @@ const DemoWrapper = (props: IGridProps) => {
     const keysArray: any = [];
     const promiseArray: any = [];
     setGridData([]);
-    if (gridDataStore && gridDataStore.length && gridDataStore[0].widgets) {
-      for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
+    if (gridDataStore && gridDataStore && gridDataStore.widgets) {
+      for (let i = 0; i < gridDataStore.widgets.length; i += 1) {
         keysArray.push([
-          gridDataStore[0].widgets[i].key,
-          gridDataStore[0].widgets[i].value,
+          gridDataStore.widgets[i].key,
+          gridDataStore.widgets[i].value,
         ]);
       }
+      const collectionReportLabel: any = [];
+
+      setReportLabelCollection(collectionReportLabel);
 
       const obj = keysArray.reduce(function (o: any, currentArray: any) {
         const key = currentArray[0];
@@ -100,42 +98,37 @@ const DemoWrapper = (props: IGridProps) => {
         return o;
       }, {});
 
-      if (gridDataStore && gridDataStore.length) {
+      if (gridDataStore && gridDataStore.widgets.length) {
         const gridLoadWidget: any = [];
-        for (let i = 0; i < gridDataStore[0].widgets.length; i += 1) {
+        for (let i = 0; i < gridDataStore.widgets.length; i += 1) {
           const payload: any = {
-            id: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'id'
-            ).value,
-            type: gridDataStore[0].widgets[i].layout.find(
+            id: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'id')
+              .value,
+            type: gridDataStore.widgets[i].layout.find(
               (o: any) => o.key === 'type'
             ).value,
-            w: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'w'
-            ).value,
-            h: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'h'
-            ).value,
-            x: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'x'
-            ).value,
-            y: gridDataStore[0].widgets[i].layout.find(
-              (o: any) => o.key === 'y'
-            ).value,
-            widgetHeight: gridDataStore[0].widgets[i].layout.find(
+            w: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'w')
+              .value,
+            h: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'h')
+              .value,
+            x: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'x')
+              .value,
+            y: gridDataStore.widgets[i].layout.find((o: any) => o.key === 'y')
+              .value,
+            widgetHeight: gridDataStore.widgets[i].layout.find(
               (o: any) => o.key === 'widgetHeight'
             ).value,
-            widgetWidth: gridDataStore[0].widgets[i].layout.find(
+            widgetWidth: gridDataStore.widgets[i].layout.find(
               (o: any) => o.key === 'widgetWidth'
             ).value,
           };
-          const dataIndex = gridDataStore[0].widgets[i].layout.findIndex(
+          const dataIndex = gridDataStore.widgets[i].layout.findIndex(
             (value: any) => value.key === 'formData'
           );
 
           if (dataIndex !== -1) {
             const data = JSON.parse(
-              gridDataStore[0].widgets[i].layout.find(
+              gridDataStore.widgets[i].layout.find(
                 (o: any) => o.key === 'formData'
               ).value
             );
@@ -151,849 +144,15 @@ const DemoWrapper = (props: IGridProps) => {
                   icon: {
                     name: 'Search',
                     size: 30,
-                    color: themes.default.palette?.primary?.main,
+                    color: theme?.default?.palette?.primary?.pri400,
                   },
                 };
               } else {
-                payload.formProps = {};
+                // payload.formProps = {};
               }
-              gridLoadWidget.push(payload);
             }
-            promiseArray.push(
-              new Promise((resolve, reject) => {
-                if (
-                  data.formData.label &&
-                  data.formData.report &&
-                  payload.type.toLowerCase() !== 'grid'
-                ) {
-                  resolve(
-                    dispatch(
-                      getChartDataResource({
-                        label: data.formData.label,
-                        report: data.formData.report,
-                        widget_id: payload.id,
-                      })
-                    )
-                  );
-                } else if (payload.type.toLowerCase() === 'grid') {
-                  resolve(
-                    dispatch(
-                      getGridDataResource({
-                        label: '',
-                        report: data.formData.report,
-                        widget_id: payload.id,
-                        projections: '',
-                        filter: '',
-                        size: '10',
-                        page: '0',
-                      })
-                    )
-                  );
-                } else {
-                  const obj = {
-                    payload: {
-                      data: [],
-                    },
-                  };
-                  resolve(obj);
-                }
-              }).then((_response: any) => {
-                const response = JSON.parse(JSON.stringify(_response));
 
-                if (response && response.payload && response.payload.data) {
-                  if (payload.type) {
-                    if (response.payload.data) {
-                      switch (payload.type.toLowerCase()) {
-                        case 'barchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              stacked: false,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              fontData: fontData,
-                            },
-                          };
-
-                          // payload.formProps = {
-                          //   data: response.payload.data,
-                          //   xLabel: data.formData.X_axis_label,
-                          //   yLabel: data.formData.Y_axis_label,
-                          // };
-                          break;
-                        case 'linechart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.c50;
-                                // element.fill = true;
-                                element.pointRadius = 2;
-                                element.borderWidth = 1;
-                                // element.tension = 0.5;
-
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              fontData: fontData,
-                            },
-                          };
-
-                          break;
-                        case 'card':
-                          const defaultProps = {
-                            // title: 'This si title',
-                            // stat: 'asdfg',
-                            // iconName: 'Search',
-                            link: 'View All',
-                            title:
-                              data?.formData?.Title ||
-                              payload.formData.Title ||
-                              '',
-                            stat: 600,
-                            icon: {
-                              name: 'Search',
-                              size: 30,
-                              color: themes.default.palette?.primary?.main,
-                            },
-                          };
-
-                          payload.formProps = defaultProps;
-                          break;
-                        case 'grid':
-                          // payload.formProps = response.payload.data;
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              searchData: {
-                                label: 'Search',
-                                placeholder:
-                                  'Search by Customer Name, SSE ID, Phone Numbe',
-                                value: '',
-                              },
-
-                              actions: [
-                                {
-                                  menu: 'Filter',
-                                  icon: {
-                                    name: 'filter_alt_black_24dp',
-                                    size: 25,
-                                    color: '#0958fa',
-                                    label: 'Filter',
-                                  },
-                                  submenu: [],
-                                },
-                                {
-                                  menu: 'Download',
-                                  icon: {
-                                    name: 'file_upload_black_24dp-1',
-                                    size: 25,
-                                    color: '#0958fa',
-                                    label: 'Download',
-                                  },
-                                  submenu: [],
-                                },
-                              ],
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              columnResizable: true,
-                              pagination: true,
-                              height: payload.widgetHeight,
-                              width: payload.widgetWidth,
-                            },
-                          };
-                          break;
-                        case 'radarchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                            },
-                          };
-                          break;
-                        case 'doughnutchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                const bgColorArr = [];
-                                for (
-                                  let i = 0;
-                                  i < response.payload.data.labels.length;
-                                  i += 1
-                                ) {
-                                  const color = themeObj.palette?.[
-                                    `systemColor${i + 1}`
-                                  ]?.main
-                                    ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.main
-                                    : '#' +
-                                      (Math.random() * 0xfffff * 1000000)
-                                        .toString(16)
-                                        .slice(0, 6);
-
-                                  bgColorArr.push(color);
-                                }
-                                return (element.backgroundColor = bgColorArr);
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                            },
-                          };
-                          break;
-                        case 'piechart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                const bgColorArr = [];
-                                for (
-                                  let i = 0;
-                                  i < response.payload.data.labels.length;
-                                  i += 1
-                                ) {
-                                  const color = themeObj.palette?.[
-                                    `systemColor${i + 1}`
-                                  ]?.main
-                                    ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.main
-                                    : '#' +
-                                      (Math.random() * 0xfffff * 1000000)
-                                        .toString(16)
-                                        .slice(0, 6);
-
-                                  bgColorArr.push(color);
-                                }
-                                return (element.backgroundColor = bgColorArr);
-                              }
-                            );
-                            payload.formProps = {
-                              headerData: {
-                                title: data?.formData?.Title,
-                                actions: cardheaderData.actions,
-                              },
-                              chartData: {
-                                data: response.payload.data,
-                              },
-                            };
-                          }
-                          break;
-                        case 'scatterchart':
-                          let finalObj: any = {
-                            labels: [],
-                            datasets: [],
-                          };
-
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            const _rawData = JSON.parse(
-                              JSON.stringify(response.payload.data)
-                            );
-                            for (
-                              let i = 0;
-                              i < _rawData.datasets.length;
-                              i += 1
-                            ) {
-                              const newDataset = _rawData.datasets[i];
-                              const datasetDataArr = [];
-
-                              for (
-                                let j = 0;
-                                j < newDataset.data.length;
-                                j += 1
-                              ) {
-                                const obj = {
-                                  x: +newDataset.data[j],
-                                  y: +newDataset.data[j],
-                                  r: 14,
-                                };
-                                datasetDataArr.push(obj);
-                              }
-                              const datasetObj = {
-                                label: newDataset.label,
-                                data: datasetDataArr,
-                                backgroundColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
-                                pointRadius: 5,
-                                borderColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
-                              };
-                              finalObj.datasets.push(datasetObj);
-                              finalObj.labels = _rawData.labels;
-                            }
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: finalObj,
-                            },
-                          };
-
-                          break;
-                        case 'heatmapchart':
-                          payload.formProps = {
-                            data: response.payload.data,
-                            fontData: fontData,
-                          };
-                          break;
-                        case 'polarchart':
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                const bgColorArr = [];
-                                for (
-                                  let i = 0;
-                                  i < response.payload.data.labels.length;
-                                  i += 1
-                                ) {
-                                  const color = themeObj.palette?.[
-                                    `systemColor${i + 1}`
-                                  ]?.main
-                                    ? themeObj.palette?.[`systemColor${i + 1}`]
-                                        ?.main
-                                    : '#' +
-                                      (Math.random() * 0xfffff * 1000000)
-                                        .toString(16)
-                                        .slice(0, 6);
-
-                                  bgColorArr.push(color);
-                                }
-                                return (element.backgroundColor = bgColorArr);
-                              }
-                            );
-                          }
-
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                            },
-                          };
-                          break;
-                        case 'bubblechart':
-                          let finalObjBubble: any = {
-                            labels: [],
-                            datasets: [],
-                          };
-
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets
-                          ) {
-                            const _rawData = JSON.parse(
-                              JSON.stringify(response.payload.data)
-                            );
-                            for (
-                              let i = 0;
-                              i < _rawData.datasets.length;
-                              i += 1
-                            ) {
-                              const newDataset = _rawData.datasets[i];
-                              const datasetDataArrBubble = [];
-
-                              for (
-                                let j = 0;
-                                j < newDataset.data.length;
-                                j += 1
-                              ) {
-                                const obj = {
-                                  x: +newDataset.data[j],
-                                  y: +newDataset.data[j],
-                                  r: Math.floor(Math.random() * 20),
-                                };
-                                datasetDataArrBubble.push(obj);
-                              }
-                              const datasetObj = {
-                                label: newDataset.label,
-                                data: datasetDataArrBubble,
-                                backgroundColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
-                                pointRadius: 5,
-                                borderColor:
-                                  themeObj.palette?.[`systemColor${i + 1}`]
-                                    ?.main,
-                              };
-                              finalObjBubble.datasets.push(datasetObj);
-                              finalObjBubble.labels = _rawData.labels;
-                            }
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: finalObjBubble,
-                              fontData: fontData,
-                            },
-                          };
-                          break;
-
-                        case constStackVerticalBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              stacked: true,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                            },
-                          };
-                          break;
-                        case constStackVerticalBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              stacked: true,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                            },
-                          };
-                          break;
-                        case constStackVerticalFullBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                            },
-                          };
-                          break;
-                        case constStackHorizontalBarChartType:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              stacked: true,
-                            },
-                          };
-                          break;
-                        case constStackHorizontalFullBarChart:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.main;
-                                element.borderRadius = 5;
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.main
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              stacked: true,
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                              horizontal: true,
-                            },
-                          };
-                          break;
-                        case constLineChartWithTension:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.c50;
-                                // element.fill = true;
-                                element.pointRadius = 2;
-                                element.borderWidth = 1;
-                                element.tension = 0.5;
-
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.c50
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                            },
-                          };
-                          break;
-                        case constLineChartWithFilled:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.c100;
-                                element.pointRadius = 2;
-                                element.fill = true;
-                                element.pointStyle = 'circle';
-
-                                element.borderWidth = 1;
-                                // element.tension = 0.5;
-
-                                element.backgroundColor = themeObj.palette?.[
-                                  `systemColor${index + 1}`
-                                ]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.c50
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6);
-                                return element;
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                            },
-                          };
-                          break;
-                        case constLineChartWithTensionFilled:
-                          if (
-                            response &&
-                            response.payload &&
-                            response.payload.data &&
-                            response.payload.data.datasets &&
-                            response.payload.data.datasets.length > 0
-                          ) {
-                            response.payload.data.datasets.map(
-                              (element: any, index: number) => {
-                                element.borderColor =
-                                  themeObj.palette?.[
-                                    `systemColor${index + 1}`
-                                  ]?.c100;
-                                element.fill = true;
-                                element.pointRadius = 2;
-                                element.borderWidth = 1;
-                                element.tension = 0.5;
-
-                                return (element.backgroundColor = themeObj
-                                  .palette?.[`systemColor${index + 1}`]?.main
-                                  ? themeObj.palette?.[
-                                      `systemColor${index + 1}`
-                                    ]?.c50
-                                  : '#' +
-                                    (Math.random() * 0xfffff * 1000000)
-                                      .toString(16)
-                                      .slice(0, 6));
-                              }
-                            );
-                          }
-                          payload.formProps = {
-                            headerData: {
-                              title: data?.formData?.Title,
-                              actions: cardheaderData.actions,
-                            },
-                            chartData: {
-                              data: response.payload.data,
-                              xLabel: data.formData.X_axis_label,
-                              yLabel: data.formData.Y_axis_label,
-                            },
-                          };
-                          break;
-
-                        default:
-                          payload.formProps = {};
-                      }
-                    }
-                  }
-                  gridLoadWidget.push(payload);
-                } else {
-                  gridLoadWidget.push(payload);
-                }
-              })
-            );
+            gridLoadWidget.push(payload);
           } else {
             // payload.formProps = {};
 
@@ -1006,6 +165,8 @@ const DemoWrapper = (props: IGridProps) => {
       }
     }
   }, [gridDataStore]);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const payload = {
@@ -1023,8 +184,6 @@ const DemoWrapper = (props: IGridProps) => {
         page: 0,
         size: 100,
       };
-      // if (gridDataStore && gridDataStore.length > 0) {
-      // } else {
       dispatch(deleteAllStore());
 
       dispatch(getPageDataByIdApi(payload2));
@@ -1120,7 +279,7 @@ const DemoWrapper = (props: IGridProps) => {
       params: {
         projections: '',
         filter: '',
-        size: 0,
+        size: 2,
         page: 0,
       },
     };

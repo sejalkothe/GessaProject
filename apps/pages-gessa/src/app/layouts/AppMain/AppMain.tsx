@@ -31,10 +31,12 @@ const Nest = () => {
 // };
 
 const AppMain = (props: any) => {
+  // console.log('page props', props);
   return props && props.pageId && props.pageId.length > 0 ? (
     <ViewPageUi tabData={props}></ViewPageUi>
   ) : (
-    <></>
+    // <>no data</>
+    <>no data</>
   );
 };
 

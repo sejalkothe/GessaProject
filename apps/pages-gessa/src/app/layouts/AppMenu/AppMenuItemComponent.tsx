@@ -7,7 +7,7 @@ interface Props {
   className?: string;
   onClick: () => void;
   link: string | undefined;
-  children: React.ReactNode;
+  children: any;
 }
 
 function AppMenuItemComponent(props: Props) {

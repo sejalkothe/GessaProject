@@ -72,9 +72,18 @@ function AppMenu(props: Props) {
   }, [selectedPage]);
 
   return (
-    <div>
+    <div
+      style={{
+        width: '100%',
+        position: 'relative',
+        top: '15px',
+        overflowY: 'auto',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+      }}
+    >
       {props.menuType === 'classic' ? (
-        <List component="nav" disablePadding>
+        <List component="div" disablePadding>
           {childMenus && childMenus.length !== 0 ? (
             childMenus?.map((item: any, index: number) => (
               <Link
@@ -89,12 +98,15 @@ function AppMenu(props: Props) {
                   setSealectedPage(item);
                 }}
               >
+                {/* {item.name} */}
                 <AppMenuItem
                   label={item.name}
                   icon={item.icon}
                   key={index}
                   isSelected={
-                    item.name === selectedPage.name ||
+                    (item.name === selectedPage &&
+                      selectedPage.name &&
+                      selectedPage.name) ||
                     item.name === params.subMenuId
                   }
                 />
@@ -114,7 +126,9 @@ function AppMenu(props: Props) {
           )}
         </List>
       ) : (
-        <NavMenuItem appMenuItems={appMenuItems} />
+        <>
+          <NavMenuItem appMenuItems={appMenuItems} />
+        </>
       )}
     </div>
   );
