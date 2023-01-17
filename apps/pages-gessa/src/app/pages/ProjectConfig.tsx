@@ -30,13 +30,23 @@ const MyRoutes = {
               ),
               children: [
                 {
-                  path: ':subMenuId',
+                  path: ':subMenuId/*',
                   element: (
                     <Suspense fallback={<>...</>}>
                       <ProjectWrapper />
                     </Suspense>
                   ),
-                  children: [],
+                  children: [
+                    {
+                      path: '*',
+                      element: (
+                        <Suspense fallback={<>...</>}>
+                          <ProjectWrapper />
+                        </Suspense>
+                      ),
+                      children: [],
+                    },
+                  ],
                 },
               ],
             },

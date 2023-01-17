@@ -78,6 +78,7 @@ export const BubbleChartComponent = (props: any) => {
         labels={chartData?.data?.labels}
         chartProps={chartData.chartProps}
         fontData={fontData}
+        onChartClick={props.onChartClick}
       />
     ) : (
       <LoadingData />

@@ -71,7 +71,8 @@ export const CardComponent = (props: any) => {
 
   return props ? (
     chartData ? (
-      <StatCard data={chartData?.data} chartProps={chartData?.chartProps} />
+      <StatCard data={chartData?.data} chartProps={chartData?.chartProps}         onChartClick={props.onChartClick}
+      />
     ) : (
       <LoadingData />
     )

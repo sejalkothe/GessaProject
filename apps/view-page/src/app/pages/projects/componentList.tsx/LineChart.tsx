@@ -74,7 +74,11 @@ export const LineChartComponent = (props: any) => {
 
   return props ? (
     chartData ? (
-      <LineChart {...chartData} fontData={fontData} />
+      <LineChart
+        {...chartData}
+        fontData={fontData}
+        onChartClick={props.onChartClick}
+      />
     ) : (
       <LoadingData />
     )

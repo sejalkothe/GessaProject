@@ -11,6 +11,7 @@ import { Button, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { environment } from 'apps/view-page/src/environments/environment';
 import generateRandomString from 'apps/view-page/src/utils/randomString';
+import { useNavigate } from 'react-router-dom';
 
 export interface Demo2Props {
   data: any;
@@ -24,6 +25,7 @@ export interface Demo2Props {
 
 export const Demo2Ui = (props: Demo2Props) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const {
     formConfig,
@@ -158,6 +160,11 @@ export const Demo2Ui = (props: Demo2Props) => {
     props.fetchReportLabelData(data);
   };
 
+  const onChartClick = (data: any) => {
+    console.log(data);
+    // navigate('detail');
+  };
+
   return (
     <div className="relative flex flex-col h-screen">
       <div className="grid grid-cols-12 " style={{ overflow: 'hidden' }}>
@@ -219,6 +226,8 @@ export const Demo2Ui = (props: Demo2Props) => {
                           searchAction={(e: any) => {
                             console.log(e);
                           }}
+                          onChartClick={onChartClick}
+                          rowClicked={onChartClick}
                         />
                       </GridCard>
                     )

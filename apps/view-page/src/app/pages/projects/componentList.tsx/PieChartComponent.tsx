@@ -74,7 +74,11 @@ export const PieChartComponent = (props: any) => {
 
   return props ? (
     chartData ? (
-      <PieChart {...chartData} fontData={fontData} />
+      <PieChart
+        {...chartData}
+        fontData={fontData}
+        onChartClick={props.onChartClick}
+      />
     ) : (
       <LoadingData />
     )

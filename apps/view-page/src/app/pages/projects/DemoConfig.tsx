@@ -3,6 +3,7 @@ import { Navigate } from 'react-router';
 import { IPageConfig } from '../../../types/pageConfig';
 
 const Demo2Wrapper = lazy(() => import('./DemoWrapper'));
+const ChartDetails = lazy(() => import('./components/ChartDetails'));
 
 const ProjectConfig: IPageConfig = {
   settings: {
@@ -19,6 +20,14 @@ const ProjectConfig: IPageConfig = {
       element: (
         <Suspense fallback={<>...</>}>
           <Demo2Wrapper page_id="1" />
+        </Suspense>
+      ),
+    },
+    {
+      path: 'detail',
+      element: (
+        <Suspense fallback={<>...</>}>
+          <ChartDetails data={{}} />
         </Suspense>
       ),
     },

@@ -74,7 +74,11 @@ export const StackVerticalBarChart = (props: any) => {
 
   return props ? (
     chartData ? (
-      <Barchart {...chartData} fontData={fontData} />
+      <Barchart
+        {...chartData}
+        fontData={fontData}
+        onChartClick={props.onChartClick}
+      />
     ) : (
       <LoadingData />
     )

@@ -77,7 +77,7 @@ const Grid = ({
     gridRef.current = GridStack.init({
       cellHeight: 10,
       cellHeightUnit: 'px',
-      minRow: 200, // don't collapse when empty
+      minRow: 10, // don't collapse when empty
       animate: true,
       margin: 4,
       acceptWidgets: true,
