@@ -62,6 +62,26 @@ export const getAllWidgets = createAsyncThunk(
   }
 );
 
+export const uploadImageApi = createAsyncThunk(
+  'login-theme',
+  async (params: any, { dispatch }) => {
+    const response: any = await axios.post(
+      `${environment.NX_FILE_SERVICE_BASE_URL}?isPublic=true`,
+      params.data,
+      {
+        headers: {
+          storageid: 'aws',
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    const data: any = response.data;
+    if (response.status === 201) {
+      return response;
+    } else return 'error';
+  }
+);
 const widgetSliceAdapter = createEntityAdapter<IWidget>({
   selectId: ({ _id }) => _id,
 });
