@@ -77,6 +77,8 @@ export default function GridCard(props: IGridCard) {
   const menuArray = ['Preview', 'Share', 'Download'];
   const { widgets } = props;
   const theme = useTheme();
+  const inputFile = useRef<any>(null);
+
   const dispatch = useDispatch();
   const themeChart = themes.default;
   const ref = useRef(null);
@@ -138,6 +140,7 @@ export default function GridCard(props: IGridCard) {
     })
       .then(function (canvas) {
         // It will return a canvas element
+        // let image = canvas.toDataURL('image/png', 0.5);
         let image = canvas.toDataURL('image/png', 0.5);
         const href = image;
         const link = document.createElement('a');
@@ -151,12 +154,14 @@ export default function GridCard(props: IGridCard) {
           duration: 3000,
         });
 
-        link.click();
+        // link.click();
+        inputFile?.current?.click();
+
         const formData = new FormData();
-        formData.append('files', image);
+        formData.append('files', href);
         const Payload1 = { data: formData };
 
-        // dispatch(uploadImageApi(Payload1));
+        dispatch(uploadImageApi(Payload1));
         setRawData(image);
         setOpenShareTray(true);
       })
@@ -164,6 +169,34 @@ export default function GridCard(props: IGridCard) {
         // Handle errors
         console.log(e);
       });
+  };
+
+  const shareAsPngJpeg2 = (input: any) => {
+    const abc: any = document.getElementById(input?.ref?.current?.id);
+    html2canvas(abc, {
+      allowTaint: true,
+      useCORS: true,
+    }).then(function (canvasElt: any) {
+      const imageUrl = canvasElt.toBlob((blob: any) => {
+        const file = new File([blob], 'mycanvas.png');
+        const dT: any = new DataTransfer();
+        dT.items.add(file);
+        // document.querySelector( "input" ).files = dT.files;
+        const formData = new FormData();
+        formData.append('files', dT.files[0]);
+        const Payload1 = { data: formData };
+        new Promise((resolve, reject) => {
+          resolve(dispatch(uploadImageApi(Payload1)));
+        }).then((responseObj: any) => {
+          if (responseObj?.payload?.data?.result) {
+            setRawData(responseObj?.payload?.data?.result[0].file_path);
+            setOpenShareTray(true);
+          }
+          console.log(responseObj);
+        });
+      });
+      // dispatch(uploadImageApi(Payload1));
+    });
   };
 
   const menuCategoryClicked = (input: any) => {
@@ -180,7 +213,8 @@ export default function GridCard(props: IGridCard) {
           break;
         case 'share':
           if (_selectedWidget) {
-            shareAsPngJpeg(input);
+            // shareAsPngJpeg(input);
+            shareAsPngJpeg2(input);
           } else {
           }
           break;
@@ -647,6 +681,22 @@ export default function GridCard(props: IGridCard) {
           severity={snackData.severity}
         />
       </div>
+      {/* <input
+        id="file_upload"
+        style={{ display: 'hidden' }}
+        type="file"
+        accept="image/png, image/x-png,image/gif, image/jpeg, image/svg+xml"
+        onChange={(e: any) => {
+          setImageLoader(true);
+          if (e && e.target && e.target.value && e.target.value !== '') {
+            props.uploadImage && props.uploadImage(e);
+          } else {
+            setImageLoader(false);
+          }
+          e.target.value = null;
+        }}
+        ref={inputFile}
+      /> */}
     </div>
   );
 }

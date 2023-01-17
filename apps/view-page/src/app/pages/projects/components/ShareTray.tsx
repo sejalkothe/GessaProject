@@ -1,5 +1,5 @@
 import { IconComponent } from '@gessa/component-library';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import themes from 'apps/view-page/src/theme';
 import React from 'react';
 import {
@@ -40,13 +40,30 @@ const ShareTray = (props: IShareTray) => {
           display: 'flex',
           flexDirection: 'row',
           height: '48px',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
           alignItems: 'center',
           padding: 10,
+          width: '100%',
 
           borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`,
         }}
       >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <div
+            style={{ position: 'relative' }}
+            onClick={() => {
+              props && props.onClose && props.onClose();
+            }}
+          >
+            <Typography>Share link with</Typography>
+          </div>
+        </Box>
         <Box sx={{ ml: 'auto' }}>
           <div
             style={{ position: 'relative' }}
@@ -77,7 +94,7 @@ const ShareTray = (props: IShareTray) => {
           width: '100%',
         }}
       >
-        Share document with:
+        Share link with:
         <div
           style={{
             width: '100%',
@@ -90,37 +107,19 @@ const ShareTray = (props: IShareTray) => {
             gap: 10,
           }}
         >
-          <FacebookShareButton
-            url={
-              'https://s3.amazonaws.com/images.seroundtable.com/google-rainbow-texture-1491566442.jpg'
-            }
-          >
+          <FacebookShareButton url={props.data}>
             <FacebookIcon size={32} round />
           </FacebookShareButton>
-          <EmailShareButton
-            url={''}
-            body={`<link>https://s3.amazonaws.com/images.seroundtable.com/google-rainbow-texture-1491566442.jpg</link>`}
-          >
+          <EmailShareButton url={''} body={props.data}>
             <EmailIcon size={32} round />
           </EmailShareButton>
-          <WhatsappShareButton
-            url={`<link>https://s3.amazonaws.com/images.seroundtable.com/google-rainbow-texture-1491566442.jpg</link>
-              `}
-          >
+          <WhatsappShareButton url={props.data}>
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
-          <TwitterShareButton
-            url={
-              'https://s3.amazonaws.com/images.seroundtable.com/google-rainbow-texture-1491566442.jpg'
-            }
-          >
+          <TwitterShareButton url={props.data}>
             <TwitterIcon size={32} round />
           </TwitterShareButton>
-          <LinkedinShareButton
-            url={
-              'https://s3.amazonaws.com/images.seroundtable.com/google-rainbow-texture-1491566442.jpg'
-            }
-          >
+          <LinkedinShareButton url={props.data}>
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
         </div>
