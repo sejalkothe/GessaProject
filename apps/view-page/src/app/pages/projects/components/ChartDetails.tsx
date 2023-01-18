@@ -1,11 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export interface IChartDetails {
-  data: any;
-}
+export interface IChartDetails {}
 
 const ChartDetails = (props: IChartDetails) => {
-  return <div style={{ backgroundColor: 'red' }}>ChartDetails page</div>;
+  const navigate = useNavigate();
+  return (
+    <div
+      onClick={(e: any) => {
+        navigate('detail');
+      }}
+    >
+      ChartDetails
+    </div>
+  );
 };
 
 export default ChartDetails;

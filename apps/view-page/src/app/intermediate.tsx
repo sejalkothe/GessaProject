@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import ChartDetails from './pages/projects/components/ChartDetails';
 import ChartDetails2 from './pages/projects/components/ChartDetails2';
 import DemoWrapper from './pages/projects/DemoWrapper';
@@ -10,16 +10,14 @@ export interface Props {
 
 const Intermediate = (props: Props) => {
   return (
-    <div>
+    <div style={{ height: '100%', width: '100%' }}>
       <Routes>
-        {/* <Route
-          path=""
+        <Route
+          path={''}
           element={<DemoWrapper page_id={props.page_id} />}
-        ></Route> */}
-        <Route path="" element={<ChartDetails2 />}></Route>
-        <Route path="detail" element={<ChartDetails data={{}} />}></Route>
+        ></Route>
+        <Route path={'detail'} element={<ChartDetails2 />}></Route>
       </Routes>
-      <Outlet />
     </div>
   );
 };

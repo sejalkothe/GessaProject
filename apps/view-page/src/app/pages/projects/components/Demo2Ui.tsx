@@ -162,7 +162,7 @@ export const Demo2Ui = (props: Demo2Props) => {
 
   const onChartClick = (data: any) => {
     console.log(data);
-    // navigate('detail');
+    navigate('detail');
   };
 
   return (

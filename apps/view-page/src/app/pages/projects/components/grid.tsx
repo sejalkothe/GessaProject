@@ -78,7 +78,6 @@ const Grid = ({
       cellHeight: 10,
       cellHeightUnit: 'px',
       minRow: 10, // don't collapse when empty
-      animate: true,
       margin: 4,
       acceptWidgets: true,
       disableDrag: true,

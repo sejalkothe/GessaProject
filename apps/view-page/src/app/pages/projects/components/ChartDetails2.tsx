@@ -7,11 +7,21 @@ const ChartDetails2 = (props: Props) => {
   const navigate = useNavigate();
   return (
     <div
+      style={{
+        position: 'relative',
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 100,
+      }}
       onClick={(e: any) => {
-        navigate('detail');
+        navigate(-1);
       }}
     >
-      ChartDetails2
+      Coming Soon
     </div>
   );
 };

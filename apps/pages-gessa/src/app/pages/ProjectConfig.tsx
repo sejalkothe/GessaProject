@@ -9,44 +9,68 @@ const ProjectWrapper = lazy(
 
 const MyRoutes = {
   routes: [
+    // {
+    //   path: 'project/:projectId/:menuId/:subMenuId/detail',
+    //   element: <ProjectWrapper />,
+    //   children: [
+    //     {
+    //       path: ':projectId/',
+    //       element: (
+    //         <Suspense fallback={<>...</>}>
+    //           <ProjectWrapper />
+    //         </Suspense>
+    //       ),
+    //       children: [
+    //         {
+    //           path: ':menuId/',
+    //           element: (
+    //             <Suspense fallback={<>...</>}>
+    //               <ProjectWrapper />
+    //             </Suspense>
+    //           ),
+    //           children: [
+    //             {
+    //               path: ':subMenuId/*',
+    //               element: (
+    //                 <Suspense fallback={<>...</>}>
+    //                   <ProjectWrapper />
+    //                 </Suspense>
+    //               ),
+    //               children: [
+    //                 {
+    //                   path: 'detail',
+    //                   element: (
+    //                     <Suspense fallback={<>...</>}>
+    //                       <ProjectWrapper />
+    //                     </Suspense>
+    //                   ),
+    //                   children: [],
+    //                 },
+    //               ],
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
+
     {
       path: 'project/:projectId/:menuId/:subMenuId/',
       element: <ProjectWrapper />,
       children: [
         {
           path: ':projectId/',
-          element: (
-            <Suspense fallback={<>...</>}>
-              <ProjectWrapper />
-            </Suspense>
-          ),
+          element: <></>,
           children: [
             {
               path: ':menuId/',
-              element: (
-                <Suspense fallback={<>...</>}>
-                  <ProjectWrapper />
-                </Suspense>
-              ),
+              element: <></>,
               children: [
                 {
-                  path: ':subMenuId/*',
-                  element: (
-                    <Suspense fallback={<>...</>}>
-                      <ProjectWrapper />
-                    </Suspense>
-                  ),
-                  children: [
-                    {
-                      path: '*',
-                      element: (
-                        <Suspense fallback={<>...</>}>
-                          <ProjectWrapper />
-                        </Suspense>
-                      ),
-                      children: [],
-                    },
-                  ],
+                  path: ':subMenuId/',
+                  element: <></>,
+                  children: [],
                 },
               ],
             },
@@ -54,6 +78,7 @@ const MyRoutes = {
         },
       ],
     },
+
     {
       path: 'project/:projectId/:menuId',
       element: (
