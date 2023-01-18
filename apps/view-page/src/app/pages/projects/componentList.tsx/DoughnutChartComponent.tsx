@@ -77,6 +77,7 @@ export const DoughnutChartComponent = (props: any) => {
         {...chartData}
         chartProps={chartData.chartProps}
         fontData={fontData}
+        onChartClick={props.onChartClick}
       />
     ) : (
       <LoadingData />

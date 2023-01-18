@@ -1,8 +1,10 @@
 import { lazy, Suspense } from 'react';
 import { Navigate } from 'react-router';
 import { IPageConfig } from '../../../types/pageConfig';
+import ChartDetails2 from './components/ChartDetails2';
 
 const Demo2Wrapper = lazy(() => import('./DemoWrapper'));
+const ChartDetails = lazy(() => import('./components/ChartDetails'));
 
 const ProjectConfig: IPageConfig = {
   settings: {
@@ -11,17 +13,34 @@ const ProjectConfig: IPageConfig = {
   },
   routes: [
     {
-      path: '*',
-      element: <Navigate to="demo" />,
+      path: '',
+      element: <Navigate to={'project/:projectId/:menuId/:subMenuId/demo'} />,
     },
     {
-      path: 'demo',
+      path: 'project/:projectId/:menuId/:subMenuId/demo',
       element: (
         <Suspense fallback={<>...</>}>
-          <Demo2Wrapper page_id="1" />
+          <ChartDetails />
+        </Suspense>
+      ),
+      children: [],
+    },
+    {
+      path: 'project/:projectId/:menuId/:subMenuId/detail',
+      element: (
+        <Suspense fallback={<>...</>}>
+          <ChartDetails2 />
         </Suspense>
       ),
     },
+    // {
+    //   path: 'detail',
+    //   element: (
+    //     <Suspense fallback={<>...</>}>
+    //       <ChartDetails data={{}} />
+    //     </Suspense>
+    //   ),
+    // },
   ],
 };
 

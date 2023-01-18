@@ -76,7 +76,11 @@ export const StackHorizontalFullBarChart = (props: any) => {
 
   return props ? (
     chartData ? (
-      <Barchart {...chartData} fontData={fontData} />
+      <Barchart
+        {...chartData}
+        fontData={fontData}
+        onChartClick={props.onChartClick}
+      />
     ) : (
       <LoadingData />
     )

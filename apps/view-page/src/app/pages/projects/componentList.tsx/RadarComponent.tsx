@@ -73,7 +73,11 @@ export const RadarChartComponent = (props: any) => {
 
   return props ? (
     chartData ? (
-      <RadarChart {...chartData} fontData={fontData} />
+      <RadarChart
+        {...chartData}
+        fontData={fontData}
+        onChartClick={props.onChartClick}
+      />
     ) : (
       <LoadingData />
     )

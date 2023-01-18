@@ -90,6 +90,7 @@ export const DataGridComponent = (props: any) => {
             chartProps={tableData?.chartData?.chartProps}
             menuClicked={tableData?.chartData?.menuClicked}
             onSearchInput={tableData?.chartData?.onSearchInput}
+            rowClicked={props.rowClicked}
           />
         </div>
       </div>

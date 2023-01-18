@@ -1,7 +1,7 @@
 import { CssBaseline } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Outlet } from 'react-router-dom';
 import {
   RouteProvider,
   SettingProvider,
@@ -10,6 +10,7 @@ import {
   MicroFrontendProvider,
   ReduxProvider,
 } from '../context';
+import Intermediate from './intermediate';
 import LayoutWrapper from './layout/layout';
 import DemoWrapper from './pages/projects/DemoWrapper';
 export interface IAppProps {
@@ -32,9 +33,14 @@ export function App(props: any) {
                 <StyledEngineProvider injectFirst>
                   <CssBaseline />
                   {/* <div>hello{JSON.parse(JSON.stringify(props)).pageId} </div> */}
-                  <DemoWrapper
+                  {/* <DemoWrapper
+                    page_id={JSON.parse(JSON.stringify(props)).pageId}
+                  /> */}
+
+                  <Intermediate
                     page_id={JSON.parse(JSON.stringify(props)).pageId}
                   />
+                  {/* <LayoutWrapper /> */}
                 </StyledEngineProvider>
                 {/* </HashRouter> */}
               </RouteProvider>

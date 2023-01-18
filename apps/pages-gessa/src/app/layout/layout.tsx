@@ -11,7 +11,7 @@
 // export default LayoutWrapper;
 
 import { useContext, useEffect } from 'react';
-import { useRoutes } from 'react-router';
+import { Outlet, useRoutes } from 'react-router';
 import { RouteContext } from '../../context';
 import { RouteContextType } from '../../types/routes';
 const Layout = (props: any) => {
