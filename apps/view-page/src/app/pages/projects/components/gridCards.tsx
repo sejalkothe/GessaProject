@@ -171,6 +171,23 @@ export default function GridCard(props: IGridCard) {
       });
   };
 
+  const localDownload = (data: any) => {
+    if (data && data.type === 'localDownload') {
+      var link = document.createElement('a');
+      link.href = data.data;
+      link.download = 'Download.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setSnackData({
+        msg: 'File downloaded successfully',
+        open: true,
+        severity: 'success',
+        duration: 3000,
+      });
+    }
+  };
+
   const shareAsPngJpeg2 = (input: any) => {
     const abc: any = document.getElementById(input?.ref?.current?.id);
     html2canvas(abc, {
@@ -670,6 +687,7 @@ export default function GridCard(props: IGridCard) {
             data={rawData}
             onClose={(data: any) => {
               setOpenShareTray(!openShareTray);
+              localDownload(data);
             }}
           />
         </Dialog>
