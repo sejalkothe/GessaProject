@@ -1,5 +1,5 @@
 import { IconComponent } from '@gessa/component-library';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import themes from 'apps/view-page/src/theme';
 import React, { useCallback, useState } from 'react';
 import {
@@ -155,7 +155,50 @@ const ShareTray = (props: IShareTray) => {
             ></IconComponent>
           </button>
         </div>
-        <br />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 16,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              backgroundColor: themeChart.palette?.background?.bacmain,
+              border: '1px solid ' + themeChart.palette?.neutral?.neu100,
+              borderRadius: '4px',
+              padding: '5px',
+              width: '80%',
+            }}
+          >
+            <Typography>{props.data}</Typography>
+          </div>
+          <div style={{ display: 'flex', width: '20%' }}>
+            <Button
+              sx={{
+                height: '40px',
+                borderRadius: '4px',
+                color: themeChart.palette?.text?.tex100,
+                borderColor: themeChart.palette?.primary?.pri300,
+
+                fontStyle: 'normal',
+                fontWeight: '500',
+                fontSize: '14px',
+                lineHeight: '16px',
+                textTransform: 'capitalize',
+              }}
+              variant="contained"
+              onClick={() => {
+                navigator.clipboard.writeText(props.data);
+              }}
+            >
+              Copy Link
+            </Button>{' '}
+          </div>
+        </div>
       </div>
     </div>
   );

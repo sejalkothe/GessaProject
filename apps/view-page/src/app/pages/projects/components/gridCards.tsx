@@ -2,6 +2,7 @@ import { SearchInput } from '@gessa/component-library';
 import {
   Box,
   Button,
+  CircularProgress,
   createStyles,
   Dialog,
   DialogContent,
@@ -34,6 +35,7 @@ import { tabeldata } from 'apps/view-page/src/fake-db/table';
 import CustomSnackbar from '../../../components/CustomSnackbar';
 import ShareTray from './ShareTray';
 import { uploadImageApi } from '../store/widgetsSlice';
+import LoadingData from './LoadingData';
 export interface IMenuClicked {
   menu: string;
   data: any;
@@ -87,6 +89,7 @@ export default function GridCard(props: IGridCard) {
   const [openDialog, setOpenDialog] = useState(false);
   const [openShareTray, setOpenShareTray] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [loadingData, setloadingData] = useState<any>(false);
   const [snackData, setSnackData]: any = useState({
     open: false,
     msg: '',
@@ -163,7 +166,6 @@ export default function GridCard(props: IGridCard) {
 
         dispatch(uploadImageApi(Payload1));
         setRawData(image);
-        setOpenShareTray(true);
       })
       .catch((e) => {
         // Handle errors
@@ -204,13 +206,17 @@ export default function GridCard(props: IGridCard) {
         const Payload1 = { data: formData };
         new Promise((resolve, reject) => {
           resolve(dispatch(uploadImageApi(Payload1)));
-        }).then((responseObj: any) => {
-          if (responseObj?.payload?.data?.result) {
-            setRawData(responseObj?.payload?.data?.result[0].file_path);
-            setOpenShareTray(true);
-          }
-          console.log(responseObj);
-        });
+        })
+          .then((responseObj: any) => {
+            setloadingData(false);
+            if (responseObj?.payload?.data?.result) {
+              setRawData(responseObj?.payload?.data?.result[0].file_path);
+              setOpenShareTray(true);
+            }
+          })
+          .catch((error: any) => {
+            setloadingData(false);
+          });
       });
       // dispatch(uploadImageApi(Payload1));
     });
@@ -315,7 +321,6 @@ export default function GridCard(props: IGridCard) {
         link.click();
       })
       .catch((err: any) => {
-        console.log(err);
         setSnackData({
           msg: 'Error while downloading file.',
           open: true,
@@ -691,6 +696,7 @@ export default function GridCard(props: IGridCard) {
             }}
           />
         </Dialog>
+
         <CustomSnackbar
           msg={snackData.msg}
           open={snackData.open}
