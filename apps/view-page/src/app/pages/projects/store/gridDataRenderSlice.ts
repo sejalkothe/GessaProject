@@ -135,7 +135,8 @@ const getResposeDataAltered = (data: any): any => {
 
   return gridObj;
 };
-export const getGridDataResource = createAsyncThunk(
+
+export const downloadWidgetDataApi = createAsyncThunk(
   'get chart resource',
   async (params: any, { dispatch }) => {
     // const response: any = {};
@@ -150,6 +151,51 @@ export const getGridDataResource = createAsyncThunk(
         },
       }
     );
+      const myData = [
+        {
+          impact: '4',
+          count: 22556,
+        },
+        {
+          impact: '5',
+          count: 16741,
+        },
+        {
+          impact: '3',
+          count: 5234,
+        },
+        {
+          impact: '2',
+          count: 692,
+        },
+        {
+          impact: '1',
+          count: 3,
+        },
+      ];
+
+
+
+      // return myData;
+    return response;
+  }
+);
+
+export const getGridDataResource = createAsyncThunk(
+  'get chart resource',
+  async (params: any, { dispatch }) => {
+    const response: any = {};
+    // const response: any = await axios.post(
+    //   environment.NX_SCHEMA_SERVICE + `/queryReport/${params.report}`,
+    //   {
+    //     params: {
+    //       projections: '',
+    //       filter: '',
+    //       size: '1000',
+    //       page: '0',
+    //     },
+    //   }
+    // );
     if (response && response.data) {
       const data: IWidgetDataRender = response.data;
       const alteredObject = getResposeDataAltered(data);
@@ -200,6 +246,7 @@ export const getGridDataResource = createAsyncThunk(
       };
       // dispatch(setGridDataRender(payload));
       // return responseNew;
+      return myData;
     }
     return response;
   }
