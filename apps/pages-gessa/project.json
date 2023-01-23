@@ -18,10 +18,11 @@
         "polyfills": "apps/pages-gessa/src/polyfills.ts",
         "tsConfig": "apps/pages-gessa/tsconfig.app.json",
         "assets": [
-          "apps/pages-gessa/src/favicon.ico",
-          "apps/pages-gessa/src/assets"
+          "apps/pages-gessa/src/favicon.ico"
         ],
-        "styles": [],
+        "styles": [
+          "node_modules/@gessa/icons-material/lib/assets/icomoon/style.css"
+        ],
         "scripts": [],
         "webpackConfigOld": "@nrwl/react/plugins/webpack",
         "webpackConfig": "apps/pages-gessa/webpack.config.js"
