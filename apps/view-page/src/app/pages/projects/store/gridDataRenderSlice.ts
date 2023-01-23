@@ -151,32 +151,30 @@ export const downloadWidgetDataApi = createAsyncThunk(
         },
       }
     );
-      const myData = [
-        {
-          impact: '4',
-          count: 22556,
-        },
-        {
-          impact: '5',
-          count: 16741,
-        },
-        {
-          impact: '3',
-          count: 5234,
-        },
-        {
-          impact: '2',
-          count: 692,
-        },
-        {
-          impact: '1',
-          count: 3,
-        },
-      ];
+    const myData = [
+      {
+        impact: '4',
+        count: 22556,
+      },
+      {
+        impact: '5',
+        count: 16741,
+      },
+      {
+        impact: '3',
+        count: 5234,
+      },
+      {
+        impact: '2',
+        count: 692,
+      },
+      {
+        impact: '1',
+        count: 3,
+      },
+    ];
 
-
-
-      // return myData;
+    // return myData;
     return response;
   }
 );
