@@ -2,4 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 @import '../dist/gridstack.css';
-@import '../../../node_modules/@gessa/component-library/static/assets/icons/icomoon/style.css';
