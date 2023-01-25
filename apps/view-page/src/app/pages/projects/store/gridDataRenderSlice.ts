@@ -151,6 +151,7 @@ export const downloadWidgetDataApi = createAsyncThunk(
         },
       }
     );
+    console.log('immediate response', response);
     const myData = [
       {
         impact: '4',

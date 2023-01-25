@@ -10,4 +10,5 @@ export const environment = {
   NX_KEYCLOCK_SECRET_KEY: 'v52XsV7Hn3XRuf1ZJJlmmAekRJL1nDR9',
 
   NX_VIEW_PAGE_MF: 'https://project-pages-mf.gessa.io/remoteEntry.js',
+  // NX_VIEW_PAGE_MF: 'http://localhost:4209/remoteEntry.js',
 };

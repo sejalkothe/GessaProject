@@ -15,7 +15,7 @@ import {
   Popover,
   Select,
   styled,
-  Typography
+  Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { useConfigForm } from 'apps/view-page/src/context/form';
@@ -28,7 +28,7 @@ import IconComponent from '../../../components/gridComponents/icon-component/ico
 import {
   downloadWidgetDataApi,
   getChartDataResource,
-  getGridDataResource
+  getGridDataResource,
 } from '../store/gridDataRenderSlice';
 import CustomModal, { BootstrapDialogTitle } from './customModal';
 import html2canvas from 'html2canvas';
@@ -60,19 +60,19 @@ export interface IGridCard {
 const StyledIconComponent = styled(Menu)(({ theme }) => {
   return {
     '& .MuiMenu-list': {
-      padding: 0
-    }
+      padding: 0,
+    },
   };
 });
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => {
   return {
     '& .MuiDialogContent-root': {
-      padding: 2
+      padding: 2,
     },
     '& .MuiDialogActions-root': {
-      padding: 2
-    }
+      padding: 2,
+    },
   };
 });
 
@@ -95,7 +95,7 @@ export default function GridCard(props: IGridCard) {
     open: false,
     msg: '',
     duration: 3000,
-    severity: ''
+    severity: '',
   });
   const [rawData, setRawData] = useState<any>({});
 
@@ -104,7 +104,7 @@ export default function GridCard(props: IGridCard) {
       msg: '',
       open: false,
       severity: '',
-      duration: 0
+      duration: 0,
     });
   }, []);
   const [currentCompomponent, setCurrentComponent] = useState<any>(
@@ -140,7 +140,7 @@ export default function GridCard(props: IGridCard) {
     const abc: any = document.getElementById(input?.ref?.current?.id);
     html2canvas(abc, {
       allowTaint: true,
-      useCORS: true
+      useCORS: true,
     })
       .then(function (canvas) {
         // It will return a canvas element
@@ -155,7 +155,7 @@ export default function GridCard(props: IGridCard) {
           msg: newFileName + ' downloaded successfully',
           open: true,
           severity: 'success',
-          duration: 3000
+          duration: 3000,
         });
 
         // link.click();
@@ -186,7 +186,7 @@ export default function GridCard(props: IGridCard) {
         msg: 'File downloaded successfully',
         open: true,
         severity: 'success',
-        duration: 3000
+        duration: 3000,
       });
     }
   };
@@ -195,7 +195,7 @@ export default function GridCard(props: IGridCard) {
     const abc: any = document.getElementById(input?.ref?.current?.id);
     html2canvas(abc, {
       allowTaint: true,
-      useCORS: true
+      useCORS: true,
     }).then(function (canvasElt: any) {
       const imageUrl = canvasElt.toBlob((blob: any) => {
         const file = new File([blob], 'mycanvas.png');
@@ -281,7 +281,7 @@ export default function GridCard(props: IGridCard) {
             projections: '',
             filter: '',
             size: '1000',
-            page: '0'
+            page: '0',
           })
         )
       );
@@ -289,9 +289,10 @@ export default function GridCard(props: IGridCard) {
     })
       .then((response: any) => {
         const json = JSON.parse(JSON.stringify(response?.payload || []));
+        console.log('after response', response);
         const csv = convertToCSV(json);
         const blob = new Blob([csv], {
-          type: 'application/csv'
+          type: 'application/csv',
         });
         const href = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -306,7 +307,7 @@ export default function GridCard(props: IGridCard) {
           msg: newFileName + ' downloaded successfully',
           open: true,
           severity: 'success',
-          duration: 3000
+          duration: 3000,
         });
         link.click();
       })
@@ -315,7 +316,7 @@ export default function GridCard(props: IGridCard) {
           msg: 'Error while downloading file.',
           open: true,
           severity: 'error',
-          duration: 3000
+          duration: 3000,
         });
 
         return err;
@@ -325,7 +326,7 @@ export default function GridCard(props: IGridCard) {
     if (data && data.formProps) {
       const json = JSON.stringify(data.formProps);
       const blob = new Blob([json], {
-        type: 'application/json'
+        type: 'application/json',
       });
       const href = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -347,7 +348,7 @@ export default function GridCard(props: IGridCard) {
     <div
       className="grid-stack-item "
       style={{
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
       id={props.id} // convert to string
       w={props.w}
@@ -365,12 +366,12 @@ export default function GridCard(props: IGridCard) {
           // border: `1px solid ${theme?.palette['light']['c50']} !important`,
           backgroundColor: themeChart.palette?.background?.bacopWhite,
           // padding: '10px',
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
       >
         <div
           style={{
-            borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`
+            borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`,
           }}
         >
           {_selectedWidget && _selectedWidget.type != 'card' && (
@@ -381,7 +382,7 @@ export default function GridCard(props: IGridCard) {
                 overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
               <Typography
@@ -395,7 +396,7 @@ export default function GridCard(props: IGridCard) {
                   fontWeight: 700,
                   lineHeight: '20px',
 
-                  color: themes?.default?.palette?.text?.tex600
+                  color: themes?.default?.palette?.text?.tex600,
                 }}
               >
                 {_selectedWidget &&
@@ -412,7 +413,7 @@ export default function GridCard(props: IGridCard) {
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}
               >
                 <div
@@ -420,7 +421,7 @@ export default function GridCard(props: IGridCard) {
                     position: 'relative',
                     paddingTop: '5px',
                     paddingBottom: '5px',
-                    marginRight: '5px'
+                    marginRight: '5px',
                   }}
                   onClick={(e: any) => {}}
                 >
@@ -429,7 +430,7 @@ export default function GridCard(props: IGridCard) {
                       style={{
                         width: '100%',
                         backgroundColor:
-                          themes.default?.palette?.background?.bacopWhite
+                          themes.default?.palette?.background?.bacopWhite,
                       }}
                     >
                       <SearchInput
@@ -439,7 +440,7 @@ export default function GridCard(props: IGridCard) {
                         chartProps={{
                           background_color:
                             themes.default.palette?.background?.bacopWhite,
-                          border_color: themes.default.palette?.neutral?.neu100
+                          border_color: themes.default.palette?.neutral?.neu100,
                         }}
                         onChange={(e: any) => {}}
                       />
@@ -451,7 +452,7 @@ export default function GridCard(props: IGridCard) {
                   style={{ position: 'relative' }}
                   onClick={(e: any) => {
                     const payload: any = {
-                      menu: 'preview'
+                      menu: 'preview',
                     };
                     menuCategoryClicked(payload);
                   }}
@@ -461,7 +462,7 @@ export default function GridCard(props: IGridCard) {
                       name: 'fullscreen_black_24dp',
                       color: themes?.default?.palette?.neutral?.neu400,
                       size: 27,
-                      label: 'Full Screen'
+                      label: 'Full Screen',
                     }}
                   ></IconComponent>
                 </div>
@@ -470,7 +471,7 @@ export default function GridCard(props: IGridCard) {
                   onClick={(e: any) => {
                     const payload: any = {
                       menu: 'download',
-                      input: ref
+                      input: ref,
                     };
                     menuCategoryClicked(payload);
                   }}
@@ -480,7 +481,7 @@ export default function GridCard(props: IGridCard) {
                       name: 'file_download_black_24dp-1-1',
                       color: themes?.default?.palette?.neutral?.neu400,
                       size: 26,
-                      label: 'Download'
+                      label: 'Download',
                     }}
                   ></IconComponent>
                 </div>
@@ -495,7 +496,7 @@ export default function GridCard(props: IGridCard) {
                       name: 'more_vert_black_24dp',
                       color: themes?.default?.palette?.neutral?.neu400,
                       size: 27,
-                      label: 'More'
+                      label: 'More',
                     }}
                   ></IconComponent>
                 </div>
@@ -512,18 +513,18 @@ export default function GridCard(props: IGridCard) {
                 }}
                 anchorOrigin={{
                   vertical: 'top',
-                  horizontal: 'left'
+                  horizontal: 'left',
                 }}
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'left'
+                  horizontal: 'left',
                 }}
               >
                 <div
                   style={{
                     padding: '0px',
                     backgroundColor: themeChart.palette?.background?.bacopWhite,
-                    color: themes?.default?.palette?.text?.tex600
+                    color: themes?.default?.palette?.text?.tex600,
                   }}
                 >
                   {menuArray &&
@@ -534,7 +535,7 @@ export default function GridCard(props: IGridCard) {
                             const payload: any = {
                               menu,
                               data: e,
-                              ref: ref
+                              ref: ref,
                             };
                             menuCategoryClicked(payload);
                           }}
@@ -557,7 +558,7 @@ export default function GridCard(props: IGridCard) {
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           {currentCompomponent}
@@ -569,8 +570,8 @@ export default function GridCard(props: IGridCard) {
           PaperProps={{
             sx: {
               width: '95%',
-              height: '95%'
-            }
+              height: '95%',
+            },
           }}
         >
           <div
@@ -579,12 +580,12 @@ export default function GridCard(props: IGridCard) {
               backgroundColor: themeChart.palette?.background?.bacopWhite,
               color: themes?.default?.palette?.text?.tex600,
               height: '100%',
-              width: '100%'
+              width: '100%',
             }}
           >
             <div
               style={{
-                borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`
+                borderBottom: `1px solid${themeChart.palette?.neutral?.neu100}`,
               }}
             >
               <div
@@ -597,7 +598,7 @@ export default function GridCard(props: IGridCard) {
                   alignItems: 'center',
                   overflow: 'hidden',
                   padding: 10,
-                  backgroundColor: theme.palette?.light?.c50
+                  backgroundColor: theme.palette?.light?.c50,
                 }}
               >
                 <header
@@ -608,7 +609,7 @@ export default function GridCard(props: IGridCard) {
                     overflow: 'hidden',
                     display: 'flex',
                     flexDirection: 'row',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}
                 >
                   <Typography
@@ -622,7 +623,7 @@ export default function GridCard(props: IGridCard) {
                       fontWeight: 700,
                       lineHeight: '20px',
 
-                      color: themes?.default?.palette?.text?.tex600
+                      color: themes?.default?.palette?.text?.tex600,
                     }}
                   >
                     {_selectedWidget &&
@@ -646,7 +647,7 @@ export default function GridCard(props: IGridCard) {
                           name: 'close_black_24dp',
                           color: themes?.default?.palette?.text?.tex600,
                           size: 25,
-                          label: 'Close'
+                          label: 'Close',
                         }}
                       ></IconComponent>
                     </div>
@@ -663,7 +664,7 @@ export default function GridCard(props: IGridCard) {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                boxSizing: 'border-box'
+                boxSizing: 'border-box',
               }}
             >
               {currentCompomponent}
