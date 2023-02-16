@@ -36,7 +36,7 @@ export function App() {
     // On Logout
     if (event === 'onAuthLogout') {
       // Cleanup stored Keycloak realm name
-      localStorage.removeItem('userInfo');
+      sessionStorage.removeItem('userInfo');
       setInitKeycloak(false);
 
       // Cleanup keycloak instance

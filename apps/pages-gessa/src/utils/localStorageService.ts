@@ -1,17 +1,17 @@
 const setLocalStorage = (label: string, data: any) => {
-    localStorage.setItem(label, JSON.stringify(data));
-  };
-  
-  const getLocalStorage = (label: string): any => {
-    return JSON.parse(localStorage.getItem(label) || '{}');
-  };
-  
-  const removeItem = (label: string) => {
-    localStorage.removeItem(label);
-  };
-  
-  const clearLocalStorage = () => {
-    localStorage.clear();
-  };
-  
-  export { setLocalStorage, getLocalStorage, removeItem, clearLocalStorage };
+  sessionStorage.setItem(label, JSON.stringify(data));
+};
+
+const getLocalStorage = (label: string): any => {
+  return JSON.parse(sessionStorage.getItem(label) || '{}');
+};
+
+const removeItem = (label: string) => {
+  sessionStorage.removeItem(label);
+};
+
+const clearLocalStorage = () => {
+  sessionStorage.clear();
+};
+
+export { setLocalStorage, getLocalStorage, removeItem, clearLocalStorage };
