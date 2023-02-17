@@ -312,6 +312,7 @@ export default function GridCard(props: IGridCard) {
         link.click();
       })
       .catch((err: any) => {
+        console.log('after response', err);
         setSnackData({
           msg: 'Error while downloading file.',
           open: true,
