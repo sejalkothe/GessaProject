@@ -288,8 +288,7 @@ export default function GridCard(props: IGridCard) {
       // }
     })
       .then((response: any) => {
-        const json = JSON.parse(JSON.stringify(response?.payload || []));
-        console.log('after response', response);
+        const json = JSON.parse(JSON.stringify(response?.payload?.data || []));
         const csv = convertToCSV(json);
         const blob = new Blob([csv], {
           type: 'application/csv',
