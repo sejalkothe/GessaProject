@@ -109,14 +109,12 @@ export function Project() {
             if (sortedArr && sortedArr[0].data) {
               if (sortedArr[0].child && sortedArr[0].child.length > 0) {
                 navigate(
-                  `/project/${params.projectId}/${
-                    params.menuId || sortedArr[0].data.name
+                  `/project/${params.projectId}/${params.menuId || sortedArr[0].data.name
                   }/${params.subMenuId || sortedArr[0].child[0].name}`
                 );
               } else {
                 navigate(
-                  `/project/${params.projectId}/${
-                    params.menuId || sortedArr[0].data.name
+                  `/project/${params.projectId}/${params.menuId || sortedArr[0].data.name
                   }`
                 );
               }
@@ -148,11 +146,31 @@ export function Project() {
     return { menu, menuChild };
   }, [appMenu, urlParams, params]);
 
-  useEffect(() => {}, [appMenu]);
+  useEffect(() => { }, [appMenu]);
 
   const logoutUser = (data?: any): any => {
     clearLocalStorage();
     keycloak.logout();
+  };
+
+  useEffect(() => {
+    setInterval(() => {
+      try {
+        const logoutSession = getLocalStorage('logout');
+        if (logoutSession && logoutSession === true) {
+
+
+          setLocalStorage('logout', false);
+          handleKeycloakLogout();
+        }
+      } catch (err: any) { }
+    }, 200);
+  }, []);
+  const handleKeycloakLogout = () => {
+    navigate(`/project/${params.projectId}`);
+    clearLocalStorage();
+
+    keycloak.logout().then(() => { });
   };
 
   return (

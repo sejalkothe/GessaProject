@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
-import { clearLocalStorage, getLocalStorage } from './localStorageService';
+import { clearLocalStorage, getLocalStorage, setLocalStorage } from './localStorageService';
 
 const instance = axios.create();
 
@@ -21,25 +21,24 @@ instance.interceptors.request.use(
   }
 );
 
-// instance.interceptors.response.use(
-//   (response: AxiosResponse) => {
-//     return response;
-//   },
-//   (error: any) => {
-//     const status = error.response?.status || 500;
-//     switch (status) {
-//       case 401:
-//         clearLocalStorage();
-//         window.location.replace(environment.NX_KEYCLOK_LOGOUT_BASE_URL);
-//         break;
-//       case 404:
-//         break;
-//       case 500:
-//         break;
-//       default:
-//         break;
-//     }
-//     return error;
-//   }
-// );
+instance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response;
+  },
+  (error: any) => {
+    const status = error.response?.status || 500;
+    switch (status) {
+      case 401:
+        setLocalStorage('logout', true);
+        break;
+      case 404:
+        break;
+      case 500:
+        break;
+      default:
+        break;
+    }
+    return error;
+  }
+);
 export default instance;
