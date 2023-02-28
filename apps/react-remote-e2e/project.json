@@ -1,0 +1,34 @@
+{
+  "root": "apps/react-remote-e2e",
+  "sourceRoot": "apps/react-remote-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/react-remote-e2e/cypress.json",
+        "devServerTarget": "react-remote:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "react-remote:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/react-remote-e2e/**/*.{js,ts}"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": [
+    "react-remote"
+  ]
+}

@@ -1,13 +1,13 @@
 {
   "version": 2,
   "projects": {
-    "pages-gessa": "apps/pages-gessa",
-    "pages-gessa-e2e": "apps/pages-gessa-e2e",
-    "pages-gessa1": "apps/pages-gessa1",
-    "pages-gessa1-e2e": "apps/pages-gessa1-e2e",
-    "view-page": "apps/view-page",
-    "view-page-e2e": "apps/view-page-e2e",
-    "view-page1": "apps/view-page1",
-    "view-page1-e2e": "apps/view-page1-e2e"
+    "react-host": "apps/react-host",
+    "react-host-e2e": "apps/react-host-e2e",
+    "react-host1": "apps/react-host1",
+    "react-host1-e2e": "apps/react-host1-e2e",
+    "react-remote": "apps/react-remote",
+    "react-remote-e2e": "apps/react-remote-e2e",
+    "react-remote1": "apps/react-remote1",
+    "react-remote1-e2e": "apps/react-remote1-e2e"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "npmScope": "pages-gessa-workspace",
+  "npmScope": "react-host-workspace",
   "affected": {
     "defaultBase": "main"
   },
@@ -51,5 +51,5 @@
       }
     }
   },
-  "defaultProject": "pages-gessa"
+  "defaultProject": "react-host"
 }

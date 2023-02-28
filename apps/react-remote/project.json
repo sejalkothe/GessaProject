@@ -1,0 +1,126 @@
+{
+  "root": "apps/react-remote",
+  "sourceRoot": "apps/react-remote/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/react-remote",
+        "index": "apps/react-remote/src/index.html",
+        "baseHref": "/",
+        "main": "apps/react-remote/src/main.tsx",
+        "polyfills": "apps/react-remote/src/polyfills.ts",
+        "tsConfig": "apps/react-remote/tsconfig.app.json",
+        "assets": [
+          "apps/react-remote/src/favicon.ico"
+        ],
+        "styles": [
+          "node_modules/@gessa/icons-material/lib/assets/icomoon/style.css"
+        ],
+        "scripts": [],
+        "webpackConfigOld": "@nrwl/react/plugins/webpack",
+        "webpackConfig": "apps/react-remote/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/react-remote/src/environments/environment.ts",
+              "with": "apps/react-remote/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "staging": {
+          "fileReplacements": [
+            {
+              "replace": "apps/react-remote/src/environments/environment.ts",
+              "with": "apps/react-remote/src/environments/environment.stage.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "development": {
+          "fileReplacements": [
+            {
+              "replace": "apps/react-remote/src/environments/environment.ts",
+              "with": "apps/react-remote/src/environments/environment.dev.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "local": {
+          "fileReplacements": [
+            {
+              "replace": "apps/react-remote/src/environments/environment.ts",
+              "with": "apps/react-remote/src/environments/environment.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "react-remote:build",
+        "hmr": true,
+        "port": 8001
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "react-remote:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/react-remote/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/react-remote"
+      ],
+      "options": {
+        "jestConfig": "apps/react-remote/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

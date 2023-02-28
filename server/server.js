@@ -5,17 +5,17 @@ const expressStaticGzip = require('express-static-gzip');
 
 const port = process.env.PORT || 80;
 
-const mf = process.env.MF_NAME || 'pages-gessa';
+const mf = process.env.MF_NAME || 'react-host';
 
 const app = express();
 app.use(compression());
 
 var destinationDir = '';
 
-if (mf == 'pages-gessa') {
-  destinationDir = path.join(__dirname, 'pages-gessa/');
-} else if (mf == 'view-page') {
-  destinationDir = path.join(__dirname, 'view-page/');
+if (mf == 'react-host') {
+  destinationDir = path.join(__dirname, 'react-host/');
+} else if (mf == 'react-remote') {
+  destinationDir = path.join(__dirname, 'react-remote/');
 }
 
 app.use(
