@@ -1,23 +1,21 @@
 import { createTheme, Theme } from '@mui/material';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
-import themes, { ITheme, ThemeContextType } from '../theme';
+import { useDispatch, useSelector } from 'react-redux';
 import WebFont from 'webfontloader';
-import { useAppDispatch } from './redux';
-import {
-  getTheme,
-  selectThemeContext,
-  IRTheme,
-  setThemeContext,
-} from '../app/pages/projects/newStore/themeContextSlice';
 import {
   getThemePalette,
   IRThemePalette,
   selectThemePaletteContext,
   setThemePaletteContext,
 } from '../app/pages/projects/newStore/colorPalleteSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  IRTheme,
+  selectThemeContext,
+  setThemeContext,
+} from '../app/pages/projects/newStore/themeContextSlice';
 import { IRootState } from '../store/index';
+import themes, { ThemeContextType } from '../theme';
 import { setLocalStorage } from '../utils/localStorageService';
 
 export const ThemeContext = React.createContext<ThemeContextType | null>(null);
@@ -42,7 +40,7 @@ export const ThemeProvider: React.FC<React.ReactNode> | any = ({
     } else {
       const apicall = new Promise((resolve, reject) => {
         const someThunkCall = new Promise((resolve, reject) => {
-          resolve(dispatch(getTheme(projectId)));
+          // resolve(dispatch(getTheme(projectId)));
         }).then((res: any) => {
           if (res && res.payload && res.payload.data) {
             const themeObject: IRTheme = {

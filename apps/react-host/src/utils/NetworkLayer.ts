@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { useParams } from 'react-router-dom';
-import { clearLocalStorage, getLocalStorage, setLocalStorage } from './localStorageService';
+import { getLocalStorage } from './localStorageService';
 
 const instance = axios.create();
 
@@ -29,7 +28,7 @@ instance.interceptors.response.use(
     const status = error.response?.status || 500;
     switch (status) {
       case 401:
-        setLocalStorage('logout', true);
+        // setLocalStorage('logout', true);
         break;
       case 404:
         break;

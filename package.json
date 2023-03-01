@@ -24,6 +24,7 @@
     "bson-objectid": "^2.0.3",
     "canvas2image": "^1.0.5",
     "core-js": "^3.6.5",
+    "nx":"14.3.5",
     "gridstack": "^4.4.0",
     "html2canvas": "^1.4.1",
     "keycloak-js": "^19.0.3",
