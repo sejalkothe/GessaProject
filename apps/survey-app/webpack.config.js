@@ -20,14 +20,19 @@ module.exports = (config, context) => {
   config.context = process.cwd();
   config.plugins.push(
     new ModuleFederationPlugin({
-      name: 'pagesGessaApp',
+      name: 'SurveyPage',
       filename: 'remoteEntry.js',
-      remotes: {
-        //TODO: Need fix this issue later
-        ViewPageApp: `ViewPageApp@//http://localhost:8001/remoteEntry.js`,
-        SurveyPage: `SurveyPage@//http://localhost:8002/remoteEntry.js`,
+      exposes: {
+        // Module
+        './SurveyAppComponent': './apps/survey-app/src/app/app.js',
+
+        // Slice
+        // './grid': './apps/survey-app/src/app/pages/projects/store/index.js',
+
+        // Route
+        // './RoutingDemoConfig':
+        // './apps/survey-app/src/app/pages/projects/DemoConfig.js',
       },
-      exposes: {},
       shared: {
         ..._shared,
       },
@@ -36,7 +41,7 @@ module.exports = (config, context) => {
   config.optimization.runtimeChunk = false;
   config.output = {
     ...config.output,
-    uniqueName: 'pagesGessaApp',
+    uniqueName: 'react-survey',
     publicPath: 'auto',
   };
 

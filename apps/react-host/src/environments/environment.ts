@@ -12,4 +12,5 @@ export const environment = {
   NX_KEYCLOCK_SECRET_KEY: 'v52XsV7Hn3XRuf1ZJJlmmAekRJL1nDR9',
 
   NX_VIEW_PAGE_MF: 'http://localhost:8001/remoteEntry.js',
+  SURVAY_URL: 'http://localhost:8002/remoteEntry.js'
 };

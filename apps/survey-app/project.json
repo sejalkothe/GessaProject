@@ -1,0 +1,126 @@
+{
+  "root": "apps/survey-app",
+  "sourceRoot": "apps/survey-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/survey-app",
+        "index": "apps/survey-app/src/index.html",
+        "baseHref": "/",
+        "main": "apps/survey-app/src/main.js",
+        "polyfills": "apps/survey-app/src/polyfills.js",
+        "tsConfig": "apps/survey-app/tsconfig.app.json",
+        "assets": [
+          "apps/survey-app/src/favicon.ico"
+        ],
+        "styles": [
+          "node_modules/@gessa/icons-material/lib/assets/icomoon/style.css"
+        ],
+        "scripts": [],
+        "webpackConfigOld": "@nrwl/react/plugins/webpack",
+        "webpackConfig": "apps/survey-app/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/survey-app/src/environments/environment.js",
+              "with": "apps/survey-app/src/environments/environment.prod.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "staging": {
+          "fileReplacements": [
+            {
+              "replace": "apps/survey-app/src/environments/environment.js",
+              "with": "apps/survey-app/src/environments/environment.stage.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "development": {
+          "fileReplacements": [
+            {
+              "replace": "apps/survey-app/src/environments/environment.js",
+              "with": "apps/survey-app/src/environments/environment.dev.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "local": {
+          "fileReplacements": [
+            {
+              "replace": "apps/survey-app/src/environments/environment.js",
+              "with": "apps/survey-app/src/environments/environment.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "survey-app:build",
+        "hmr": true,
+        "port": 8002
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "survey-app:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/survey-app/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/survey-app"
+      ],
+      "options": {
+        "jestConfig": "apps/survey-app/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -15,6 +15,8 @@ import {
 import keycloak from '../keycloak/keycloak';
 import { setLocalStorage } from '../utils/localStorageService';
 import LayoutWrapper from './layout/layout';
+// import SurvayUi from './layouts/AppMain/Page-ui/survayUi';
+
 
 const keycloakProviderInitConfig = {
   onLoad: 'login-required',
@@ -79,7 +81,6 @@ export function App() {
                     <HashRouter>
                       <StyledEngineProvider injectFirst>
                         <CssBaseline />
-                        {/* <div>Hello</div> */}
                         <LayoutWrapper />
                       </StyledEngineProvider>
                     </HashRouter>
