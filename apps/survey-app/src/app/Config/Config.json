@@ -1,6 +1,6 @@
 {
     "api": {
-        "formApi": "http://localhost:5000/form",
+        "formApi": "https://api.qa.gessa.io/cms/survey",
         "userApi": "http://localhost:5000/user/",
         "resApi": "http://localhost:5000/response"
     }
