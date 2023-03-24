@@ -3,50 +3,54 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import formApi from "../../API/FormData.js";
 import "./Home.css";
+import Card from './Survey/Cards/card.js';
+import SurveyTable from './Survey/SurveyTable/surveyTable.js';
 
-const Home = (props) => {
-  const [forms, setForms] = useState([]);
+ const Home = (props) => {
+//   const [forms, setForms] = useState([]);
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  const { email } = useParams()
+//   const { email } = useParams()
 
-  const accessToken = localStorage.getItem(email);
+//   const accessToken = localStorage.getItem(email);
 
-  const getForms = async () => {
+//   const getForms = async () => {
 
-    const querRes = await formApi.get('/', {
-      params: { page: 0, size: 10, filters: { "userID": "user1" } }, headers: {
-        'x-tenant-id': '63f72b21f9dfbe6751b8875e'
-      }
-    })
+//     const querRes = await formApi.get('/', {
+//       params: { page: 0, size: 10, filters: { "userID": "user1" } }, headers: {
+//         'x-tenant-id': '63f72b21f9dfbe6751b8875e'
+//       }
+//     })
 
-    console.log("query res :", querRes.data.result.data)
-    setForms(querRes.data.result.data)
-  }
+//     console.log("query res :", querRes.data.result.data)
+//     setForms(querRes.data.result.data)
+//   }
 
-  const handleDeleteForm = async (e) => {
-    const querRes = await formApi.delete('/deleteFormByID', { params: { email: email, formID: e.target.id }, headers: { 'authorization': accessToken } })
+//   const handleDeleteForm = async (e) => {
+//     const querRes = await formApi.delete('/deleteFormByID', { params: { email: email, formID: e.target.id }, headers: { 'authorization': accessToken } })
 
-    console.log("delete form query res :", querRes.data.massage)
-  }
+//     console.log("delete form query res :", querRes.data.massage)
+//   }
 
 
-  useEffect(() => {
-    getForms();
-  }, [])
+  // useEffect(() => {
+  //   getForms();
+  // }, [])
 
   return (
 
-    <div className="home-root">
-
-      <div>
+    // <div className="home-root">
+    <>
+      <SurveyTable />
+    </>
+      /* <div>
         <div className="container-left">
 
 
 
           <div className="main" style={{ marginBottom: "20px" }}><span>Created Forms</span></div>
-          {
+          {<t>
             forms?.map((form, index) => {
               return <div className="subItem" key={index} style={{ marginBottom: "20px" }} >
                 <span id={form._id} onClick={(e) => {
@@ -66,7 +70,7 @@ const Home = (props) => {
           navigate(`/edit`)
         }}><i className="fa fa-solid fa-plus" aria-hidden="true"></i><br />Create New</button>
       </div>
-    </div >
+    </div > */
 
   );
 };

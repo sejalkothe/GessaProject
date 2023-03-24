@@ -26,7 +26,7 @@ import {
   setLocalStorage,
 } from 'apps/react-host/src/utils/localStorageService';
 import { useDispatch, useSelector } from 'react-redux';
-import SideNav from './SideNav';
+// import SideNav from './SideNav';
 import {
   selectActiveMenuName,
   selectAllSortedMenuById,
@@ -34,6 +34,7 @@ import {
 import { IRootState } from 'apps/react-host/src/store';
 import keycloak from 'apps/react-host/src/keycloak/keycloak';
 import themes from 'apps/react-host/src/theme';
+import Vectorlogo from '../../../assets/Vectorlogo.svg';
 
 export function Project() {
   const params: any = useParams();
@@ -204,14 +205,33 @@ export function Project() {
             borderRight: `1px solid ${theme.palette?.neutral?.neu100}`,
           }}
         >
+          <div
+            style={{
+              backgroundColor: '#f2f4f8',
+              width: '40px',
+              height: '40px',
+              marginTop: '15px',
+              borderRadius: '3px'
+            }}
+          >
+            <img
+              src={Vectorlogo}
+              style={{
+                height: '25px',
+                width: '25px',
+                marginTop: '8px',
+                marginLeft: '7px',
+              }}
+            />{' '}
+          </div>
           <Stack direction="column">
-            <SideNav
+            {/* <SideNav
               menuList={sortedData}
               selectedMenuName={selectedMenu}
               setSelectedMenuName={(data: any) => {
                 setSelectedMenu(data);
               }}
-            />
+            /> */}
           </Stack>
         </Box>
         <Box

@@ -1,0 +1,20 @@
+.Table {
+  width: 100%;
+  height: 100%;
+  color: red;
+  background-color: white;
+
+}
+
+.cell{
+    
+    color:black;
+}
+
+/* .MuiTable-root {
+  color: 'white';
+}
+
+.MuiTableRoot {
+  background-color: 'white';
+}  */

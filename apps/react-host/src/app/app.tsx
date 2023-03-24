@@ -71,7 +71,7 @@ export function App() {
       onEvent={onKeycloakEvent}
       onTokens={onKeycloakTokens}
     >
-      {initKeycloak && (
+      {initKeycloak && ( 
         <MicroFrontendProvider>
           <ReduxProvider>
             <ThemeProvider>
@@ -90,8 +90,8 @@ export function App() {
             </ThemeProvider>
           </ReduxProvider>
         </MicroFrontendProvider>
-      )}
-    </KeycloakProvider>
+       )} 
+     </KeycloakProvider>
   );
 }
 

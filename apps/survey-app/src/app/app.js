@@ -18,7 +18,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route index element={<Home email={email} />} path="/" />
+        <Route index element={<Home />} path="/" />
         <Route element={<CreateForm email={email} />} path="/edit" />
         <Route element={<Preview />} path="/preview" />
         <Route element={<AboutUs />} path="/about" />

@@ -5,7 +5,7 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 // import './header-component.css';
 import { Divider, Popover, Typography } from '@mui/material';
 import { IconComponent, IconComponentProps } from '@gessa/component-library';
-import SearchInput, { ISearchInputTypes } from '../SearchBox';
+// import SearchInput, { ISearchInputTypes } from '../SearchBox';
 import themes from 'apps/react-host/src/theme';
 import UserAvatar from './UserAvatar';
 interface IAnyProps {
@@ -13,7 +13,7 @@ interface IAnyProps {
 }
 export interface IHeaderComponentProps {
   logoImagePath?: string;
-  searchData: ISearchInputTypes;
+  // searchData: ISearchInputTypes;
   headerBackgroundColor?: string;
   userData: any;
   notificationData: IconComponentProps;
@@ -110,15 +110,15 @@ export const HeaderComponent = (props: IHeaderComponentProps) => {
           backgroundColor: themes.default?.palette?.background?.bacopWhite,
         }}
       >
-        {props && props.searchData && (
+        {/* {props && props.searchData && (
           <SearchInput
             label={props.searchData.label || 'Search'}
             placeholder={props.searchData.placeholder || 'Search'}
             value={props.searchData.value || ''}
             chartProps={props.chartProps}
             onChange={(e: any) => inputHandler(e)}
-          />
-        )}
+          /> */}
+        {/* )} */}
       </div>
       <div
         style={{

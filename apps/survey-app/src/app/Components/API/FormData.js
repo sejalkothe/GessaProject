@@ -13,4 +13,4 @@ const formApi = axios.create({
     },
   });
 
-export default formApi
+export default formApi;
