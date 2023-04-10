@@ -15,12 +15,14 @@ import Dots from '../../../../../../assets/VectorDots.svg';
 import formApi from '../../../../API/FormData';
 import './survey.css';
 import Card from '../Cards/card';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function SurveyTable() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
+  const navigate = useNavigate();
   ///////////////////////////////////////////////`  
 
   const [forms, setForms] = useState([]);
@@ -44,9 +46,9 @@ function SurveyTable() {
       }
     })
     console.log("query res :", querRes.data.result.data)
-      setForms(querRes.data.result.data)
-    }
-  
+    setForms(querRes.data.result.data)
+  }
+
 
   const counts = forms.reduce((acc, form) => {
     if (form.status === "completed") {
@@ -57,104 +59,111 @@ function SurveyTable() {
       acc.typeCCount++;
     }
     return acc;
-  }, { typeACount: 0, typeBCount: 0 , typeCCount: 0});
-
-    
-
-    const handleDeleteForm = async (e) => {
-      const querRes = await formApi.delete('/deleteFormByID', { params: { email: email, formID: e.target.id }, headers: { 'authorization': accessToken } })
-
-      console.log("delete form query res :", querRes.data.massage)
-    }
+  }, { typeACount: 0, typeBCount: 0, typeCCount: 0 });
 
 
-    useEffect(() => {
-      getForms();
-    }, [])
-  
-    /////////////////////////////////////////////////////////////
-    const Search = styled('div')(({ theme }) => ({
-      position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: alpha(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
+
+  async function handleDeleteForm(e, id) {
+    console.log(e.target.id)
+    const querRes = await formApi.delete(`/${id}`, {
+      headers: {
+        'x-tenant-id': '63f72b21f9dfbe6751b8875e'
+      }
+    });
+  }
+    // console.log("delete form query res :", querRes.data.massage);
+    // setTimeout(() => { getForms() }, 1500);
+
+
+  useEffect(() => {
+    getForms();
+
+  }, [])
+
+  /////////////////////////////////////////////////////////////
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
       },
-    }));
+    },
+  }));
 
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-      padding: theme.spacing(0, 2),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }));
-  
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-      color: 'inherit',
-      '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-          width: '20ch',
-        },
-      },
-    }));
- 
 
-    // const surveyCount = createContext();
- 
-  const Array = [{ name: 'card1', count:  forms.length , title: 'Total Surveys', logo: FactCheck },
-    { name: 'card2', count: counts.typeBCount , title: 'Ongoing Surveys', logo: TimeAccess },
-    { name: 'card3', count: counts.typeCCount , title: 'Draft Surveys', logo: Reschedule },
-    { name: 'card4', count: counts.typeACount, title: 'Completed Surveys', logo: CheckCircle }]
+  // const surveyCount = createContext();
+
+  const Array = [{ name: 'card1', count: forms.length, title: 'Total Surveys', logo: FactCheck },
+  { name: 'card2', count: counts.typeBCount, title: 'Ongoing Surveys', logo: TimeAccess },
+  { name: 'card3', count: counts.typeCCount, title: 'Draft Surveys', logo: Reschedule },
+  { name: 'card4', count: counts.typeACount, title: 'Completed Surveys', logo: CheckCircle }]
 
   return (
-      <div>
-        {/* <Navbar /> */}
-        {/* <Sidebar /> */}
+    <div>
+      {/* <Navbar /> */}
+      {/* <Sidebar /> */}
+
+      {Array.map((arrayName) => {
+        return <Card className={arrayName.name} count={arrayName.count} title={arrayName.title} logo={arrayName.logo} />
+      })}
+
+
+
+      <div className='SurveyTable'>
+        <h1 className='Heading1'> Surveys ({forms.length}) </h1>
+        <Search style={{ backgroundColor: '#f2f4f8', marginRight: '10%', marginTop: '-3%', width: '25%' }} >
+          <SearchIconWrapper>
+            <SearchIcon style={{ color: 'gray' }} />
+          </SearchIconWrapper>
+          <StyledInputBase placeholder="Search by Survey Name" inputProps={{ 'aria-label': 'search' }} />
+        </Search>
+        <button style={{ position: 'fix', marginTop: '-50px', marginRight: '100px' }} onClick={(e) => { e.preventDefault(); navigate(`/project/63f72b21f9dfbe6751b8875e/edit`) }}> <AddSharpIcon style={{ color: '#131CA2' }} /></button>
+        <button style={{ position: 'fix', marginTop: '-47px', marginRight: '65px', borderWeight: '1px' }}> <FilterAltSharpIcon style={{ color: '#131CA2' }} /></button>
+        {/* <input className='search' placeholder='       Search by Survay Name' type="text" /> */}
+        {/* <FontAwesomeIcon icon={faSearch} className="fa-search"/> */}
+
+        {/* <button  type="button" className="create"  onClick={() => setCount(count + 1)}><FontAwesomeIcon icon={faPlus} className='plus' /></button> */}
+
+        <BasicTable forms={forms} getForms={getForms} />
+        {/* <div className='filter' ><FontAwesomeIcon icon={faFilter} className='ficon' /></div> */}
       
-        {Array.map((arrayName) => {
-          return <Card className={arrayName.name} count={arrayName.count} title={arrayName.title} logo={arrayName.logo} />
-        })}
-
-   
-
-        <div className='SurveyTable'>
-          <h1 className='Heading1'> Surveys ({forms.length}) </h1>
-          <Search style={{ backgroundColor: '#f2f4f8', marginRight: '10%', marginTop: '-3%', width: '25%' }} >
-            <SearchIconWrapper>
-              <SearchIcon style={{ color: 'gray' }} />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder="Search by Survey Name" inputProps={{ 'aria-label': 'search' }} />
-          </Search>
-        <button style={{ position: 'fix', marginTop: '-50px', marginRight: '117px' }} onClick={(e) => { e.preventDefault(); navigate(`/edit`) }}> <AddSharpIcon style={{ color: '#131CA2' }} /></button>
-          <button style={{ position: 'fix', marginTop: '-47px', marginRight: '80px', borderWeight: '1px' }}> <FilterAltSharpIcon style={{ color: '#131CA2' }} /></button>
-          {/* <input className='search' placeholder='       Search by Survay Name' type="text" /> */}
-          {/* <FontAwesomeIcon icon={faSearch} className="fa-search"/> */}
-    
-          {/* <button  type="button" className="create"  onClick={() => setCount(count + 1)}><FontAwesomeIcon icon={faPlus} className='plus' /></button> */}
-    
-          <BasicTable  />
-          {/* <div className='filter' ><FontAwesomeIcon icon={faFilter} className='ficon' /></div> */}
-        </div>
-    
       </div>
 
+    </div>
 
-    );
-  }
 
-  export default SurveyTable;
+  );
+}
+
+export default SurveyTable;

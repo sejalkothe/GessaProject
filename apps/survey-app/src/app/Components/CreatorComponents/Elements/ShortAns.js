@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import Options from "./Options";
 
 const ShortAns = (props) => {
   const [label, setLabel] = useState(props.label);
@@ -10,23 +10,34 @@ const ShortAns = (props) => {
 
   useEffect(() => {
     const field = {
-      id: props.id,
-      type: "shortAns",
-      label: label,
+      questionContent: label,
+      questionNumber: props.id,
+      answerType: "text",
+      required: false,
+      options: [],
     };
     props.addFormConfiguration(field);
   });
 
   return (
-    <div className="element-name">
-      <input
-        className="element-input element-gap element-border-style"
-        value={label}
-        placeholder="Type your question here"
-        onChange={handleLabelChange}
-      />
-      <input className="element-input" type="text"></input>
-    </div>
+    <>
+      <div className="FormTitle">
+        <input
+          className="question-input inputField "
+          value={label}
+          placeholder="Type your question here"
+          onChange={handleLabelChange}
+        />
+      </div>
+      <div className="options">
+        <input className="question-input inputField optionsInput textAns" type="text"
+        />
+      </div>
+      <div>
+        <div className="line2"></div>
+      </div>
+      <Options />
+    </>
   );
 };
 

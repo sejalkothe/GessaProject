@@ -1,9 +1,9 @@
 .card1 {
   box-sizing: border-box;
   
-  width: 382px;
+  width: 342px;
   height: 100px;
-  margin-left: 17.9px;
+  margin-left: 16px;
   margin-top: 16px;
   margin-bottom: 18px;
   color: black;
@@ -22,12 +22,13 @@
   justify-content: space-between; */
 }
 
+
 .card2 {
   box-sizing: border-box;
   color:red !important;
-  width: 382px;
+  width: 342px;
   height: 100px;
-  margin-left: 417px;
+  margin-left: 372px;
   margin-top: -117px;
   margin-bottom: 18px;
 
@@ -49,9 +50,9 @@
 .card3 {
   box-sizing: border-box;
 
-  width: 382px;
+  width: 342px;
   height: 100px;
-  margin-left: 818px;
+  margin-left: 727px;
   margin-top: -118.5px;
   margin-bottom: 18px;
   color: black;
@@ -73,9 +74,9 @@
 .card4 {
   box-sizing: border-box;
   color: black;
-  width: 382px;
+  width: 342px;
   height: 100px;
-  margin-left: 1217px;
+  margin-left: 1085px;
   margin-top: -118.5px;
   margin-bottom: 18px;
 

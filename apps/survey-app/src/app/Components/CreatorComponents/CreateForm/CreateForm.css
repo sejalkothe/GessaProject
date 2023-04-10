@@ -14,7 +14,6 @@
   height: 100vh;
   overflow-x: hidden;
   padding-top: 20px;
-
 }
 
 .container-right {
@@ -27,25 +26,54 @@
   overflow: scroll;
   overflow-x: hidden;
   padding-top: 20px;
-
-
 }
 
 .elements-btn {
-  margin: 0 20px 2px 20px;
+  /* margin: 0 20px 2px 20px;
 
   background-color: black;
   border: 2px solid white;
   color: white;
   padding: 20px;
   width: 90%;
-  border-radius: 5px;
+  border-radius: 5px; */
+
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px 12px 16px;
+  gap: 46px;
+
+  width: 333px;
+  height: 48px;
+
+  /* Color/Text/c100(Line Divider) */
+
+  border: 1px solid #e2e7ef;
+  border-radius: 4px;
+  color: #1d39c4;
+  background-color: white;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+
+  margin-top: 16px;
 }
 
 .elements-btn:hover {
   cursor: -webkit-grab;
   cursor: grab;
-  background-color: black;
+  background-color: #e2e4e8;
+  color: #4f66d8;
 }
 
 .task-header {
@@ -66,7 +94,9 @@
 }
 
 .drag-text {
-  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .added-elements {
@@ -94,8 +124,8 @@
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -140,6 +170,253 @@
   background-color: white;
 } */
 
+/* **************************************************************** */
+
+.Elements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+
+  position: absolute;
+  width: 365px;
+  height: 512px;
+  left: 96px;
+  top: 112px;
+
+  /* Color/Light/c50 */
+
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.DraggableArea {
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px 16px 0px;
+  gap: 16px;
+
+  position: absolute;
+  width: 947px;
+  /* width: 914px; */
+  height: 633px;
+  left: 477px;
+  top: 112px;
+
+  /* background: #15a815; */
+  background: #ffffff;
+
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.FormTitle {
+  display: flex;
+  background-color: white;
+}
+
+.input {
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  padding: 0px 12px;
+  gap: 10px;
+
+  width: 449.5px;
+  height: 40px;
+
+  /* Color/White/main */
+
+  background: #ffffff;
+  /* Color/Text/c100(Line Divider) */
+
+  border: 1px solid #e2e7ef;
+  border-radius: 4px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+  margin-right: 10px;
+}
+
+.input-field.has-value + .input-placeholder,
+.input-field:focus-within + .input-placeholder {
+  display: none;
+}
+
+.input-placeholder {
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  color: #848b96;
+  background-color: white;
+  pointer-events: none;
+  transition: all 0.2s ease-out;
+}
+
+.line {
+  position: relative;
+  left: 0%;
+  right: 0%;
+  margin-top: 16px;
+  /* margin-top: 14px; */
+  /* bottom: 93%; */
+
+  /* Color/Light/main */
+
+  border: 1px solid #f2f4f8;
+  margin-bottom: 16px;
+  width: 400px;
+}
+
+.ElementsHeading {
+  position: relative;
+  /* width: 217px; */
+  height: 30px;
+  margin-top: 14px;
+  font-family: 'Noto Sans';
+  margin-left: 16px;
+  font-style: normal;
+  /* font-weight: 700; */
+  font-size: 8px;
+  line-height: 20px;
+  /* background-color: white; */
+  color: #000000;
+  font-weight: bolder;
+
+  left: 20px;
+}
+
+.orderedList {
+  margin-left: 20px;
+}
+
+.simpleCard {
+  border: 1px solid #e2e4e8;
+}
+
+.addOptionBtn {
+  /* Button */
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 24px;
+  gap: 10px;
+
+  width: 146px;
+  height: 36px;
+
+  border-radius: 4px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 4;
+  flex-grow: 0;
+
+  background-color: white;
+}
+
+.addOptionBtn:hover {
+  cursor: pointer;
+  background-color: rgb(245, 245, 245);
+}
+
+.cancel-btn {
+  /* Frame 13840 */
+
+  /* Auto layout */
+
+  /* display: flex;
+  flex-direction: row;
+  align-items: flex-start; */
+  padding: 0px;
+  gap: 15px;
+
+  /* position: absolute; */
+  width: 92px;
+  height: 36px;
+  margin-left: 16px;
+  margin-top: 14px;
+  border-radius: 5px;
+  color: #131ca2;
+  border: 1px solid #131ca2;
+}
+
 .publish-preview-btn {
   display: flex;
+  gap: 300px;
+}
+
+.publish-btn-div {
+  display: flex;
+  justify-content: space-evenly;
+  width: 500px;
+}
+
+.new-btn {
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 24px;
+  gap: 10px;
+
+  width: 135px;
+  height: 36px;
+
+  /* Color/Dark/c100 */
+
+  border: 1px solid #877878;
+  border-radius: 4px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  color: #877878;
+  border: 1px solid #877878;
+  border-radius: 5px;
+  margin-top: 16px;
+}
+
+.new-btn:hover {
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  cursor: pointer;
+}
+
+.newSurv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 4px;
+
+  position: absolute;
+  width: 200px;
+  height: 20px;
+  left: 96px;
+  top: 70px;
+  /* top: calc(50% - 20px / 2 - 426px); */
 }

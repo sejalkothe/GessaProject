@@ -32,7 +32,8 @@
 .Heading1{
     background: none;
     position: relative;
-    right:1460px;
+    left:-1290px;
+    color:black;
     top: -5px;
     font-family: 'Noto Sans';
     font-style: normal;
@@ -108,4 +109,8 @@
     left: 8%; 
     background: none;  
     border-radius: 5px; 
+}
+
+.MuiPagination-text{
+    color:red;
 }

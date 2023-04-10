@@ -1,4 +1,3 @@
-import React from 'react'
 import "./Preview.css";
 
 const Preview = (props) => {
@@ -6,7 +5,7 @@ const Preview = (props) => {
   return (
     <div>
       <div className="preview-root">
-        <h2 className="preview-heading">Form Preview</h2>
+        <h2 className="preview-heading">{props.heading}</h2>
         <div style={{ textAlign: "center" }}>
           {props.formConf?.map((field, index) => {
             return (
@@ -62,7 +61,7 @@ const Preview = (props) => {
           })}
           <button onClick={(e) => {
             e.preventDefault();
-              props.setShowPreview(false)
+            props.setShowPreview(false)
           }}>Go Back</button>
         </div>
       </div>

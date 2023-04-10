@@ -17,7 +17,6 @@ import { setLocalStorage } from '../utils/localStorageService';
 import LayoutWrapper from './layout/layout';
 // import SurvayUi from './layouts/AppMain/Page-ui/survayUi';
 
-
 const keycloakProviderInitConfig = {
   onLoad: 'login-required',
 };
@@ -61,6 +60,7 @@ export function App() {
       data: tokens,
     };
     setLocalStorage('userInfo', userInfo);
+    setLocalStorage('userId', keycloak.tokenParsed?.name);
     setInitKeycloak(true);
   };
 
@@ -71,7 +71,7 @@ export function App() {
       onEvent={onKeycloakEvent}
       onTokens={onKeycloakTokens}
     >
-      {initKeycloak && ( 
+      {initKeycloak && (
         <MicroFrontendProvider>
           <ReduxProvider>
             <ThemeProvider>
@@ -90,8 +90,8 @@ export function App() {
             </ThemeProvider>
           </ReduxProvider>
         </MicroFrontendProvider>
-       )} 
-     </KeycloakProvider>
+      )}
+    </KeycloakProvider>
   );
 }
 
